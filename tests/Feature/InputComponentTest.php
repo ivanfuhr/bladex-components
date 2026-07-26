@@ -134,3 +134,18 @@ it('renders an input group with prefix and suffix', function () {
         ->toContain('data-input-group-suffix')
         ->toContain('name="website"');
 });
+
+it('forwards disabled, readonly, and loading attributes to the native control', function () {
+    $html = Blade::render(
+        '<x-bladex-components::input name="email" disabled readonly data-loading />',
+    );
+
+    expect($html)
+        ->toContain('data-input-control')
+        ->toContain('disabled')
+        ->toContain('readonly')
+        ->toContain('data-loading')
+        ->toContain('aria-busy="true"')
+        ->toContain('read-only:cursor-default')
+        ->toContain('data-loading:cursor-wait');
+});

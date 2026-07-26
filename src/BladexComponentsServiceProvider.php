@@ -16,6 +16,9 @@ use Ivanfuhr\BladexComponents\Console\Commands\UpdateCommand;
 use Ivanfuhr\BladexComponents\Registry\ComponentInstaller;
 use Ivanfuhr\BladexComponents\Registry\RegistryClient;
 use Ivanfuhr\BladexComponents\Registry\RegistryResolver;
+use Ivanfuhr\BladexComponents\Support\Button\ButtonClassMap;
+use Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateAttributes;
+use Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateClassMap;
 use Ivanfuhr\BladexComponents\Support\ProjectConfig;
 use Ivanfuhr\BladexComponents\Support\ProjectLock;
 use Ivanfuhr\BladexComponents\Support\Typography\GoogleFontsStylesheetBuilder;
@@ -52,6 +55,9 @@ class BladexComponentsServiceProvider extends ServiceProvider
         $this->app->singleton(TypographyConfig::class);
         $this->app->singleton(TypographyScale::class);
         $this->app->singleton(TypographyClassMap::class);
+        $this->app->singleton(ButtonClassMap::class);
+        $this->app->singleton(InteractionStateClassMap::class);
+        $this->app->singleton(InteractionStateAttributes::class);
         $this->app->singleton(GoogleFontsStylesheetBuilder::class);
     }
 

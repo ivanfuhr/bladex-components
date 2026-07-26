@@ -11,9 +11,13 @@
 
 @php
     use Illuminate\View\ComponentSlot;
+    use Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateAttributes;
+    use Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateClassMap;
     use Ivanfuhr\BladexComponents\Support\Typography\TypographyClassMap;
 
     $typography = app(TypographyClassMap::class);
+    $interactionState = app(InteractionStateAttributes::class);
+    $interactionClasses = app(InteractionStateClassMap::class)->classes(includeReadOnly: true);
 
     $prefixText = filled($prefix) ? $prefix : null;
     $suffixText = filled($suffix) ? $suffix : null;
@@ -41,7 +45,7 @@
         $typography->inputControlClasses($size),
         'placeholder:text-zinc-500',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:ring-offset-0',
-        'disabled:cursor-not-allowed disabled:opacity-50',
+        $interactionClasses,
         'dark:border-zinc-800 dark:bg-zinc-950 dark:placeholder:text-zinc-400',
         'dark:focus-visible:ring-zinc-300/20',
         'aria-invalid:border-red-500 aria-invalid:text-red-950 aria-invalid:placeholder:text-red-400',
@@ -74,13 +78,15 @@
 
     $controlExtraClass = $attributes->get('class:input') ?? $attributes->get('input:class');
 
-    $controlAttributes = $attributes
-        ->except(['class', 'class:input', 'input:class', 'prefix', 'suffix', 'leading', 'trailing'])
-        ->class(collect([$controlClasses, $controlExtraClass])->filter()->implode(' '))
-        ->merge([
-            'type' => $type,
-            'data-input-control' => true,
-        ]);
+    $controlAttributes = $interactionState->apply(
+        $attributes
+            ->except(['class', 'class:input', 'input:class', 'prefix', 'suffix', 'leading', 'trailing'])
+            ->class(collect([$controlClasses, $controlExtraClass])->filter()->implode(' '))
+            ->merge([
+                'type' => $type,
+                'data-input-control' => true,
+            ]),
+    );
 
     if ($invalid) {
         $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);

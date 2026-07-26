@@ -78,6 +78,21 @@ final class TypographyClassMap
         ])->implode(' ');
     }
 
+    public function buttonLabelClasses(?string $buttonSize): string
+    {
+        $scaleSize = match ($buttonSize) {
+            'xs', 'sm' => 'sm',
+            'lg' => 'lg',
+            default => 'sm',
+        };
+
+        return collect([
+            $buttonSize === 'xs' ? 'text-xs leading-4' : $this->typographyScale->classes($scaleSize),
+            $this->fontRole('body'),
+            'font-medium',
+        ])->implode(' ');
+    }
+
     private function variantClasses(?string $variant, bool $forHeading): string
     {
         return match ($variant) {

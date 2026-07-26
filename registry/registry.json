@@ -32,6 +32,13 @@
             "title": "Heading",
             "description": "Semantic heading primitive with level-driven size scale and automatic heading font role.",
             "registryDependencies": []
+        },
+        {
+            "name": "button",
+            "type": "registry:ui",
+            "title": "Button",
+            "description": "Composable button primitive with variants, sizes, link mode, and grouped layouts.",
+            "registryDependencies": []
         }
     ]
 }

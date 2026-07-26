@@ -30,7 +30,7 @@ Ship flexible Blade components that consumers assemble from small pieces, while 
 2. **Slots over flags** — Use default and named slots (`{{ $header }}`, `<x-slot:actions>`) instead of props like `showHeader`, `footerText`, or `withIcon`.
 3. **Compound sub-components** — For structured UI (cards, dialogs, fields), use a root plus dot-named children (for example `alert`, `alert.title`, `alert.description`) rather than one template with many optional regions.
 4. **Shared context with `@aware`** — Child components read parent-provided values (variant, size, disabled) via `@aware(['variant'])`. Avoid duplicating the same prop on every child.
-5. **Attributes on the outermost element** — Merge `$attributes` on the root DOM node so consumers can set `class`, `id`, `data-*`, and ARIA. Forward only what sub-pieces need as explicit props.
+5. **Attributes on the outermost element** — Merge `$attributes` on the root DOM node so consumers can set `class`, `id`, `data-*`, and ARIA. Forward only what sub-pieces need as explicit props. Interactive controls (`input`, `button`, and future form primitives) should use `Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateClassMap` and `InteractionStateAttributes` so `disabled`, `readonly`, `data-loading`, and `aria-busy` behave consistently (including `aria-disabled` on link-styled buttons).
 6. **Logic in class components, markup in views** — Use a class component when you need validation, computed state, or type-safe constructor props; keep the Blade file focused on structure and composition.
 7. **Config for defaults, not structure** — Use `config/bladex-components.php` for global defaults (prefixes, themes). Do not use config to replace missing sub-components or slots.
 
