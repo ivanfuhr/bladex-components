@@ -76,7 +76,7 @@
             "vendor/bin/pint --parallel --test"
         ],
         "analyse": [
-            "vendor/bin/phpstan analyse"
+            "vendor/bin/phpstan analyse --memory-limit=512M"
         ],
         "test:types": [
             "vendor/bin/pest --type-coverage --min=100"
@@ -92,6 +92,9 @@
         ],
         "clear": [
             "@php vendor/bin/testbench package:purge-skeleton --ansi"
+        ],
+        "registry:build": [
+            "@php scripts/build-registry.php"
         ]
     },
     "extra": {

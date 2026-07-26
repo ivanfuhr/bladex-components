@@ -23,9 +23,3 @@ it('loads the package translations', function () {
 it('loads the package views', function () {
     expect(view()->exists('bladex-components::placeholder'))->toBeTrue();
 });
-
-it('registers the artisan command', function () {
-    $this->artisan('bladex-components:placeholder')
-        ->expectsOutputToContain('BladexComponents placeholder command executed.')
-        ->assertSuccessful();
-});

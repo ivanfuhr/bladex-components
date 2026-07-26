@@ -1,0 +1,40 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/ivanfuhr/bladex-components/main/registry/schema/bladex-components.json",
+    "title": "BladeX Components project config",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "$schema": {
+            "type": "string"
+        },
+        "registry": {
+            "type": "string",
+            "format": "uri"
+        },
+        "paths": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "ui": {
+                    "type": "string"
+                },
+                "assets": {
+                    "type": "string"
+                },
+                "lang": {
+                    "type": "string"
+                }
+            },
+            "required": ["ui"]
+        },
+        "registries": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "string",
+                "format": "uri"
+            }
+        }
+    },
+    "required": ["registry", "paths"]
+}

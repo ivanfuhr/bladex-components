@@ -5,8 +5,11 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Blade;
 
 it('registers the input anonymous component', function () {
-    expect(Blade::getAnonymousComponentNamespaces())
-        ->toHaveKey('bladex-components');
+    $paths = collect(Blade::getAnonymousComponentPaths())
+        ->pluck('prefix')
+        ->all();
+
+    expect($paths)->toContain('bladex-components');
 });
 
 it('renders a text input with the control name on the native element', function () {

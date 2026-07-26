@@ -1,0 +1,53 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/ivanfuhr/bladex-components/main/registry/schema/registry.json",
+    "title": "BladeX Components registry index",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "$schema": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "homepage": {
+            "type": "string",
+            "format": "uri"
+        },
+        "items": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/indexItem"
+            }
+        }
+    },
+    "required": ["name", "items"],
+    "$defs": {
+        "indexItem": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "registryDependencies": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": ["name", "type"]
+        }
+    }
+}

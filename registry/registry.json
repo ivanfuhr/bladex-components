@@ -1,0 +1,23 @@
+{
+    "$schema": "./schema/registry.json",
+    "name": "ivanfuhr/bladex-components",
+    "homepage": "https://github.com/ivanfuhr/bladex-components",
+    "items": [
+        {
+            "name": "input-group",
+            "type": "registry:ui",
+            "title": "Input Group",
+            "description": "Layout shell for grouped input affixes.",
+            "registryDependencies": []
+        },
+        {
+            "name": "input",
+            "type": "registry:ui",
+            "title": "Input",
+            "description": "Accessible text input primitive with optional affixes and group layout.",
+            "registryDependencies": [
+                "input-group"
+            ]
+        }
+    ]
+}
