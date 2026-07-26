@@ -36,6 +36,24 @@ $catalog = [
         'targetPrefix' => 'input',
         'filesOnly' => ['index.blade.php'],
     ],
+    'text' => [
+        'title' => 'Text',
+        'description' => 'Body copy primitive with standardized size scale and automatic body font role.',
+        'type' => 'registry:ui',
+        'registryDependencies' => [],
+        'source' => 'text',
+        'targetPrefix' => 'text',
+        'filesOnly' => ['index.blade.php'],
+    ],
+    'heading' => [
+        'title' => 'Heading',
+        'description' => 'Semantic heading primitive with level-driven size scale and automatic heading font role.',
+        'type' => 'registry:ui',
+        'registryDependencies' => [],
+        'source' => 'heading',
+        'targetPrefix' => 'heading',
+        'filesOnly' => ['index.blade.php'],
+    ],
 ];
 
 $indexItems = [];

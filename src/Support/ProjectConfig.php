@@ -113,6 +113,22 @@ final class ProjectConfig
     /**
      * @return array<string, mixed>
      */
+    public function typographyOverride(): array
+    {
+        $data = $this->tryRead();
+
+        if (! is_array($data)) {
+            return [];
+        }
+
+        $typography = Arr::get($data, 'typography', []);
+
+        return is_array($typography) ? $typography : [];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
     public function defaultConfig(): array
     {
         return [

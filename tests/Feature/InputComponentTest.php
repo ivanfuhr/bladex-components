@@ -16,8 +16,8 @@ it('renders a text input with the control name on the native element', function 
     $html = Blade::render('<x-bladex-components::input name="email" type="email" placeholder="you@example.com" />');
 
     expect($html)
-        ->toContain('data-bladex-input')
-        ->toContain('data-bladex-input-control')
+        ->toContain('data-input')
+        ->toContain('data-input-control')
         ->toContain('name="email"')
         ->toContain('type="email"')
         ->toContain('placeholder="you@example.com"');
@@ -55,10 +55,10 @@ it('renders leading and trailing slots', function () {
     expect($html)
         ->toContain('data-test="leading-icon"')
         ->toContain('data-test="trailing-action"')
-        ->toContain('bladex-input--with-affixes')
-        ->toContain('bladex-input__leading')
+        ->toContain('input--with-affixes')
+        ->toContain('input__leading')
         ->toContain('w-9')
-        ->toContain('[&_[data-bladex-icon]]:size-4');
+        ->toContain('[&_[data-icon]]:size-4');
 });
 
 it('sizes icons in leading and trailing affixes to match the control', function () {
@@ -71,9 +71,9 @@ it('sizes icons in leading and trailing affixes to match the control', function 
     BLADE);
 
     expect($html)
-        ->toContain('bladex-input__leading')
-        ->toContain('[&_[data-bladex-icon]]:size-4')
-        ->toContain('data-bladex-icon');
+        ->toContain('input__leading')
+        ->toContain('[&_[data-icon]]:size-4')
+        ->toContain('data-icon');
 });
 
 it('renders prefix and suffix from attributes', function () {
@@ -82,10 +82,11 @@ it('renders prefix and suffix from attributes', function () {
     );
 
     expect($html)
-        ->toContain('data-bladex-input-group')
-        ->toContain('data-bladex-input-group-prefix')
+        ->toContain('data-input-group')
+        ->toContain('data-input-group-prefix')
+        ->toContain('data-text')
         ->toContain('https://')
-        ->toContain('data-bladex-input-group-suffix')
+        ->toContain('data-input-group-suffix')
         ->toContain('.test')
         ->toContain('max-w-md')
         ->toContain('name="website"');
@@ -97,9 +98,10 @@ it('renders leading and trailing from attributes', function () {
     );
 
     expect($html)
-        ->toContain('bladex-input__leading-text')
+        ->toContain('input__leading-text')
+        ->toContain('data-text')
         ->toContain('⌕')
-        ->toContain('bladex-input__trailing-text')
+        ->toContain('input__trailing-text')
         ->toContain('⌘K');
 });
 
@@ -127,8 +129,8 @@ it('renders an input group with prefix and suffix', function () {
     BLADE);
 
     expect($html)
-        ->toContain('data-bladex-input-group')
-        ->toContain('data-bladex-input-group-prefix')
-        ->toContain('data-bladex-input-group-suffix')
+        ->toContain('data-input-group')
+        ->toContain('data-input-group-prefix')
+        ->toContain('data-input-group-suffix')
         ->toContain('name="website"');
 });

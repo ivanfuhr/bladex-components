@@ -11,6 +11,9 @@
 
 @php
     use Illuminate\View\ComponentSlot;
+    use Ivanfuhr\BladexComponents\Support\Typography\TypographyClassMap;
+
+    $typography = app(TypographyClassMap::class);
 
     $prefixText = filled($prefix) ? $prefix : null;
     $suffixText = filled($suffix) ? $suffix : null;
@@ -33,18 +36,18 @@
     [$hasTrailing, $trailingContent] = $resolveAffix($trailing ?? null);
 
     $controlClasses = collect([
-        'bladex-input__control',
-        'flex w-full min-w-0 rounded-md border border-zinc-200 bg-white px-3 py-1 text-base text-zinc-950 shadow-sm transition-colors',
-        'file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-zinc-950',
+        'input__control',
+        'flex w-full min-w-0 rounded-md border border-zinc-200 bg-white px-3 py-1 shadow-sm transition-colors',
+        $typography->inputControlClasses($size),
         'placeholder:text-zinc-500',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:ring-offset-0',
         'disabled:cursor-not-allowed disabled:opacity-50',
-        'dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 dark:placeholder:text-zinc-400 dark:file:text-zinc-50',
+        'dark:border-zinc-800 dark:bg-zinc-950 dark:placeholder:text-zinc-400',
         'dark:focus-visible:ring-zinc-300/20',
         'aria-invalid:border-red-500 aria-invalid:text-red-950 aria-invalid:placeholder:text-red-400',
         'aria-invalid:focus-visible:ring-red-500/20',
         'dark:aria-invalid:border-red-500 dark:aria-invalid:text-red-50',
-        $size === 'sm' ? 'h-8 px-2.5 text-sm' : 'h-9',
+        $size === 'sm' ? 'h-8 px-2.5' : 'h-9',
         $hasLeading ? 'pl-9' : null,
         $hasTrailing ? 'pr-9' : null,
         $invalid ? 'border-red-500 focus-visible:ring-red-500/20 dark:border-red-500' : null,
@@ -56,15 +59,15 @@
     ])->filter()->implode(' ');
 
     $wrapperClasses = collect([
-        'bladex-input',
+        'input',
         'relative flex w-full min-w-0 items-stretch',
         $hasGroupAffix ? 'flex-1' : null,
-        $hasLeading || $hasTrailing ? 'bladex-input--with-affixes' : null,
+        $hasLeading || $hasTrailing ? 'input--with-affixes' : null,
         $hasGroupAffix ? null : $attributes->get('class'),
     ])->filter()->implode(' ');
 
     $groupClasses = collect([
-        'bladex-input-group',
+        'input-group',
         'flex w-full min-w-0 items-stretch',
         $hasGroupAffix ? $attributes->get('class') : null,
     ])->filter()->implode(' ');
@@ -76,7 +79,7 @@
         ->class(collect([$controlClasses, $controlExtraClass])->filter()->implode(' '))
         ->merge([
             'type' => $type,
-            'data-bladex-input-control' => true,
+            'data-input-control' => true,
         ]);
 
     if ($invalid) {
@@ -84,47 +87,47 @@
     }
 
     $affixIconClasses = $size === 'sm'
-        ? '[&_[data-bladex-icon]]:size-3.5'
-        : '[&_[data-bladex-icon]]:size-4';
+        ? '[&_[data-icon]]:size-3.5'
+        : '[&_[data-icon]]:size-4';
 
     $leadingAffixClasses = collect([
-        'bladex-input__leading',
+        'input__leading',
         'pointer-events-none absolute inset-y-0 left-0 flex w-9 items-center justify-center',
         $affixIconClasses,
-        'text-zinc-500 dark:text-zinc-400',
+        '[&_[data-icon]]:text-zinc-500 dark:[&_[data-icon]]:text-zinc-400',
     ])->implode(' ');
 
     $trailingAffixClasses = collect([
-        'bladex-input__trailing',
+        'input__trailing',
         'absolute inset-y-0 right-0 flex w-9 items-center justify-center',
         $affixIconClasses,
-        'text-zinc-500 dark:text-zinc-400',
+        '[&_[data-icon]]:text-zinc-500 dark:[&_[data-icon]]:text-zinc-400',
     ])->implode(' ');
 @endphp
 
 @if ($hasGroupAffix)
-    <div @class([$groupClasses]) data-bladex-input-group>
+    <div @class([$groupClasses]) data-input-group>
         @if ($prefixText !== null)
             <div
                 @class([
-                    'bladex-input-group__prefix',
-                    'inline-flex shrink-0 items-center rounded-l-md border border-r-0 border-zinc-200 bg-zinc-50 px-3 text-sm text-zinc-600',
-                    'dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400',
+                    'input-group__prefix',
+                    'inline-flex shrink-0 items-center rounded-l-md border border-r-0 border-zinc-200 bg-zinc-50 px-3',
+                    'dark:border-zinc-800 dark:bg-zinc-900',
                 ])
-                data-bladex-input-group-prefix
+                data-input-group-prefix
             >
-                {{ $prefixText }}
+                <x-bladex-components::text inline size="sm" variant="subtle">{{ $prefixText }}</x-bladex-components::text>
             </div>
         @endif
 @endif
 
-<div @class([$wrapperClasses]) data-bladex-input>
+<div @class([$wrapperClasses]) data-input>
     @if ($hasLeading)
         <div @class([$leadingAffixClasses])>
             @if ($leadingContent instanceof ComponentSlot)
                 {{ $leadingContent }}
             @else
-                <span class="bladex-input__leading-text">{{ $leadingContent }}</span>
+                <x-bladex-components::text inline size="sm" variant="subtle" class="input__leading-text">{{ $leadingContent }}</x-bladex-components::text>
             @endif
         </div>
     @endif
@@ -136,7 +139,7 @@
             @if ($trailingContent instanceof ComponentSlot)
                 {{ $trailingContent }}
             @else
-                <span class="bladex-input__trailing-text">{{ $trailingContent }}</span>
+                <x-bladex-components::text inline size="sm" variant="subtle" class="input__trailing-text">{{ $trailingContent }}</x-bladex-components::text>
             @endif
         </div>
     @endif
@@ -146,13 +149,13 @@
         @if ($suffixText !== null)
             <div
                 @class([
-                    'bladex-input-group__suffix',
-                    'inline-flex shrink-0 items-center rounded-r-md border border-l-0 border-zinc-200 bg-zinc-50 px-3 text-sm text-zinc-600',
-                    'dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400',
+                    'input-group__suffix',
+                    'inline-flex shrink-0 items-center rounded-r-md border border-l-0 border-zinc-200 bg-zinc-50 px-3',
+                    'dark:border-zinc-800 dark:bg-zinc-900',
                 ])
-                data-bladex-input-group-suffix
+                data-input-group-suffix
             >
-                {{ $suffixText }}
+                <x-bladex-components::text inline size="sm" variant="subtle">{{ $suffixText }}</x-bladex-components::text>
             </div>
         @endif
     </div>

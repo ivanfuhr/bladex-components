@@ -55,6 +55,14 @@ Owned mode requires `bladex-components.json` at the project root. The package re
 
 Default registry URL: `config('bladex-components.default_registry_url')` (overridable in `bladex-components.json`).
 
+### Typography
+
+- Shared size scale: `sm`, `default`, `lg`, `xl` — configured in `config/bladex-components.php` (`typography.scale`), overridable in `bladex-components.json`.
+- Pairing defaults: `typography.defaults.text_size` + `heading_level`; default heading is one scale step above default text.
+- Google Fonts (CDN): `typography.fonts` + `typography.roles` (`body`, `heading`). Include `<x-bladex-components::fonts />` in the layout once.
+- Components: `<x-bladex-components::text />`, `<x-bladex-components::heading />` — font role is automatic; heading size follows `level` (no `size`/`font` props).
+- Owned: `bladex-components:add text heading` → `<x-ui::text />`, `<x-ui::heading />`.
+
 ## Rules, References, and Templates
 
 Read before executing:

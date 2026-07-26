@@ -18,6 +18,10 @@ use Ivanfuhr\BladexComponents\Registry\RegistryClient;
 use Ivanfuhr\BladexComponents\Registry\RegistryResolver;
 use Ivanfuhr\BladexComponents\Support\ProjectConfig;
 use Ivanfuhr\BladexComponents\Support\ProjectLock;
+use Ivanfuhr\BladexComponents\Support\Typography\GoogleFontsStylesheetBuilder;
+use Ivanfuhr\BladexComponents\Support\Typography\TypographyClassMap;
+use Ivanfuhr\BladexComponents\Support\Typography\TypographyConfig;
+use Ivanfuhr\BladexComponents\Support\Typography\TypographyScale;
 use Throwable;
 
 class BladexComponentsServiceProvider extends ServiceProvider
@@ -44,6 +48,11 @@ class BladexComponentsServiceProvider extends ServiceProvider
         });
         $this->app->singleton(RegistryResolver::class);
         $this->app->singleton(ComponentInstaller::class);
+
+        $this->app->singleton(TypographyConfig::class);
+        $this->app->singleton(TypographyScale::class);
+        $this->app->singleton(TypographyClassMap::class);
+        $this->app->singleton(GoogleFontsStylesheetBuilder::class);
     }
 
     /**

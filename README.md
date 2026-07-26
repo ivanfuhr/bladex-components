@@ -129,6 +129,51 @@ Maintainers can rebuild the published registry from package sources with:
 composer registry:build
 ```
 
+### Typography
+
+Body copy and headings use a shared size scale: `sm`, `default`, `lg`, and `xl`. Package components resolve sizes through this scale — configure the Tailwind class mapping once in `config/bladex-components.php` (or override in `bladex-components.json` under `typography.scale`).
+
+Font families are configured declaratively (Google Fonts CDN in v1). Define families under `typography.fonts`, map roles under `typography.roles` (`body` for text, `heading` for headings), and include the layout helper once:
+
+```blade
+<head>
+    <x-bladex-components::fonts />
+</head>
+```
+
+Map the CSS variables in your app stylesheet (Tailwind v4 example):
+
+```css
+@theme {
+    --font-sans: var(--font-sans);
+}
+```
+
+```blade
+<x-bladex-components::heading>Page title</x-bladex-components::heading>
+
+<x-bladex-components::text class="mt-2">
+    This is body copy with the default size and body font role.
+</x-bladex-components::text>
+
+<x-bladex-components::text size="sm" variant="subtle">Meta text</x-bladex-components::text>
+<x-bladex-components::text color="blue">Colored text</x-bladex-components::text>
+```
+
+Defaults live under `typography.defaults`: `text_size` (`default` → `text-base`) and `heading_level` (`2` → `h2`). The default heading is always **one step larger** on the scale than default body text (`lg` over `default`), and other levels step up or down from that anchor.
+
+Heading visual size follows `level` relative to that anchor (`1` → `xl`, `2` → `lg`, `3` → `default`, `4`–`6` → `sm` with the package defaults). There is no `size` or `font` prop on these primitives — family comes from the configured role.
+
+Owned mode:
+
+```bash
+php artisan bladex-components:add text heading
+```
+
+```blade
+<x-ui::text>Owned copy</x-ui::text>
+```
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.

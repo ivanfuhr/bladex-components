@@ -1,9 +1,9 @@
 <div
     {{ $attributes->class([
-        'bladex-input-group',
+        'input-group',
         'flex w-full min-w-0 items-stretch',
     ]) }}
-    data-bladex-input-group
+    data-input-group
 >
     {{ $slot }}
 </div>

@@ -1,0 +1,16 @@
+{
+    "$schema": "../schema/registry-item.json",
+    "name": "heading",
+    "type": "registry:ui",
+    "title": "Heading",
+    "description": "Semantic heading primitive with level-driven size scale and automatic heading font role.",
+    "registryDependencies": [],
+    "files": [
+        {
+            "path": "heading/index.blade.php",
+            "type": "registry:ui",
+            "target": "heading/index.blade.php",
+            "content": "@props([\n    'level' => null,\n    'variant' => null,\n])\n\n@php\n    use Ivanfuhr\\BladexComponents\\Support\\Typography\\TypographyClassMap;\n    use Ivanfuhr\\BladexComponents\\Support\\Typography\\TypographyConfig;\n\n    $level = max(1, min(6, (int) ($level ?? app(TypographyConfig::class)->defaultHeadingLevel())));\n    $classes = app(TypographyClassMap::class)->headingClasses($level, $variant);\n@endphp\n\n<h{{ $level }} {{ $attributes->class($classes) }} data-heading>{{ $slot }}</h{{ $level }}>\n"
+        }
+    ]
+}

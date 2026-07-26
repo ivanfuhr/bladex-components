@@ -84,7 +84,7 @@ it('renders owned ui input component after install', function () {
 
     $html = Blade::render('<x-ui::input name="email" />');
 
-    expect($html)->toContain('data-bladex-input-control');
+    expect($html)->toContain('data-input-control');
     expect($html)->toContain('name="email"');
 });
 

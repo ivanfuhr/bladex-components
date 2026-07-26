@@ -95,7 +95,7 @@ Ship flexible Blade components that consumers assemble from small pieces, while 
 ```blade
 @props(['name' => null])
 
-<div {{ $attributes->merge(['class' => 'bladex-field']) }} data-bladeX-field>
+<div {{ $attributes->merge(['class' => 'field']) }} data-field>
     {{ $slot }}
 </div>
 ```
@@ -105,7 +105,7 @@ Ship flexible Blade components that consumers assemble from small pieces, while 
 ```blade
 @aware(['name'])
 
-<label {{ $attributes->merge(['class' => 'bladex-field__label']) }} @if($name) for="{{ $name }}" @endif>
+<label {{ $attributes->merge(['class' => 'field__label']) }} @if($name) for="{{ $name }}" @endif>
     {{ $slot }}
 </label>
 ```

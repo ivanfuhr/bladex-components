@@ -37,6 +37,79 @@
                 "type": "string",
                 "format": "uri"
             }
+        },
+        "typography": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "scale": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "sm": { "$ref": "#/$defs/typographyScaleEntry" },
+                        "default": { "$ref": "#/$defs/typographyScaleEntry" },
+                        "lg": { "$ref": "#/$defs/typographyScaleEntry" },
+                        "xl": { "$ref": "#/$defs/typographyScaleEntry" }
+                    }
+                },
+                "fonts": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/$defs/typographyFontEntry"
+                    }
+                },
+                "roles": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "body": { "type": "string" },
+                        "heading": { "type": "string" }
+                    }
+                },
+                "defaults": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "text_size": {
+                            "type": "string",
+                            "enum": ["sm", "default", "lg", "xl"]
+                        },
+                        "heading_level": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 6
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "$defs": {
+        "typographyScaleEntry": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "text": { "type": "string" },
+                "leading": { "type": "string" }
+            }
+        },
+        "typographyFontEntry": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "provider": { "type": "string", "enum": ["google"] },
+                "family": { "type": "string" },
+                "weights": {
+                    "type": "array",
+                    "items": { "type": "integer" }
+                },
+                "subsets": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                },
+                "fallback": { "type": "string" }
+            },
+            "required": ["provider", "family"]
         }
     },
     "required": ["registry", "paths"]

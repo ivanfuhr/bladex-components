@@ -18,6 +18,20 @@
             "registryDependencies": [
                 "input-group"
             ]
+        },
+        {
+            "name": "text",
+            "type": "registry:ui",
+            "title": "Text",
+            "description": "Body copy primitive with standardized size scale and automatic body font role.",
+            "registryDependencies": []
+        },
+        {
+            "name": "heading",
+            "type": "registry:ui",
+            "title": "Heading",
+            "description": "Semantic heading primitive with level-driven size scale and automatic heading font role.",
+            "registryDependencies": []
         }
     ]
 }

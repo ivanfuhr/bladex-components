@@ -10,19 +10,19 @@
             "path": "input/group/index.blade.php",
             "type": "registry:ui",
             "target": "input/group/index.blade.php",
-            "content": "<div\n    {{ $attributes->class([\n        'bladex-input-group',\n        'flex w-full min-w-0 items-stretch',\n    ]) }}\n    data-bladex-input-group\n>\n    {{ $slot }}\n</div>\n"
+            "content": "<div\n    {{ $attributes->class([\n        'input-group',\n        'flex w-full min-w-0 items-stretch',\n    ]) }}\n    data-input-group\n>\n    {{ $slot }}\n</div>\n"
         },
         {
             "path": "input/group/prefix.blade.php",
             "type": "registry:ui",
             "target": "input/group/prefix.blade.php",
-            "content": "<div\n    {{ $attributes->class([\n        'bladex-input-group__prefix',\n        'inline-flex shrink-0 items-center rounded-l-md border border-r-0 border-zinc-200 bg-zinc-50 px-3 text-sm text-zinc-600',\n        'dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400',\n    ]) }}\n    data-bladex-input-group-prefix\n>\n    {{ $slot }}\n</div>\n"
+            "content": "<div\n    {{ $attributes->class([\n        'input-group__prefix',\n        'inline-flex shrink-0 items-center rounded-l-md border border-r-0 border-zinc-200 bg-zinc-50 px-3 text-sm text-zinc-600',\n        'dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400',\n    ]) }}\n    data-input-group-prefix\n>\n    {{ $slot }}\n</div>\n"
         },
         {
             "path": "input/group/suffix.blade.php",
             "type": "registry:ui",
             "target": "input/group/suffix.blade.php",
-            "content": "<div\n    {{ $attributes->class([\n        'bladex-input-group__suffix',\n        'inline-flex shrink-0 items-center rounded-r-md border border-l-0 border-zinc-200 bg-zinc-50 px-3 text-sm text-zinc-600',\n        'dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400',\n    ]) }}\n    data-bladex-input-group-suffix\n>\n    {{ $slot }}\n</div>\n"
+            "content": "<div\n    {{ $attributes->class([\n        'input-group__suffix',\n        'inline-flex shrink-0 items-center rounded-r-md border border-l-0 border-zinc-200 bg-zinc-50 px-3 text-sm text-zinc-600',\n        'dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400',\n    ]) }}\n    data-input-group-suffix\n>\n    {{ $slot }}\n</div>\n"
         }
     ]
 }

@@ -23,3 +23,12 @@ it('loads the package translations', function () {
 it('loads the package views', function () {
     expect(view()->exists('bladex-components::placeholder'))->toBeTrue();
 });
+
+it('renders the placeholder view with typography components', function () {
+    $html = view('bladex-components::placeholder')->render();
+
+    expect($html)
+        ->toContain('data-heading')
+        ->toContain('data-text')
+        ->toContain('BladexComponents placeholder translation.');
+});

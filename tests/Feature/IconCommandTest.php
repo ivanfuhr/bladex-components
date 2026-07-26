@@ -52,7 +52,7 @@ it('renders the packaged loading icon', function (): void {
     $html = Blade::render('<x-bladex-components::icon.loading class="text-zinc-500" />');
 
     expect($html)
-        ->toContain('data-bladex-icon')
+        ->toContain('data-icon')
         ->toContain('width="16"')
         ->toContain('height="16"')
         ->toContain('animate-spin')
@@ -91,8 +91,8 @@ it('renders an imported ui icon and dynamic wrapper', function (): void {
     $direct = Blade::render('<x-ui::icons.bolt />');
     $dynamic = Blade::render('<x-bladex-components::icon name="bolt" />');
 
-    expect($direct)->toContain('data-bladex-icon')
-        ->and($dynamic)->toContain('data-bladex-icon');
+    expect($direct)->toContain('data-icon')
+        ->and($dynamic)->toContain('data-icon');
 
     File::deleteDirectory($iconsPath);
 
