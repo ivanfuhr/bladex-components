@@ -25,3 +25,25 @@ it('falls back to the package registry when a remote index returns 404', functio
 
     expect($index['name'])->toBe('ivanfuhr/bladex-components');
 });
+
+it('merges package registry items that are missing from a remote index', function () {
+    Http::fake([
+        'https://example.test/registry/registry.json' => Http::response([
+            'name' => 'remote-registry',
+            'items' => [
+                ['name' => 'input-group', 'title' => 'Input Group'],
+                ['name' => 'input', 'title' => 'Input'],
+                ['name' => 'text', 'title' => 'Text'],
+                ['name' => 'heading', 'title' => 'Heading'],
+                ['name' => 'button', 'title' => 'Button'],
+            ],
+        ]),
+    ]);
+
+    $client = app(RegistryClient::class);
+
+    $index = $client->fetchIndex('https://example.test/registry/registry.json');
+
+    expect($index['name'])->toBe('remote-registry');
+    expect(collect($index['items'])->pluck('name')->all())->toContain('select');
+});

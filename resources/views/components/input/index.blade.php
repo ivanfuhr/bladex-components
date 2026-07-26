@@ -11,13 +11,16 @@
 
 @php
     use Illuminate\View\ComponentSlot;
+    use Ivanfuhr\BladexComponents\Support\Form\FormControlClassMap;
     use Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateAttributes;
-    use Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateClassMap;
     use Ivanfuhr\BladexComponents\Support\Typography\TypographyClassMap;
 
     $typography = app(TypographyClassMap::class);
+    $formControl = app(FormControlClassMap::class);
     $interactionState = app(InteractionStateAttributes::class);
-    $interactionClasses = app(InteractionStateClassMap::class)->classes(includeReadOnly: true);
+
+    $userClass = $attributes->get('class');
+    $applyFullWidth = ! filled($userClass);
 
     $prefixText = filled($prefix) ? $prefix : null;
     $suffixText = filled($suffix) ? $suffix : null;
@@ -41,17 +44,10 @@
 
     $controlClasses = collect([
         'input__control',
-        'flex w-full min-w-0 rounded-md border border-zinc-200 bg-white px-3 py-1 shadow-sm transition-colors',
-        $typography->inputControlClasses($size),
-        'placeholder:text-zinc-500',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:ring-offset-0',
-        $interactionClasses,
-        'dark:border-zinc-800 dark:bg-zinc-950 dark:placeholder:text-zinc-400',
-        'dark:focus-visible:ring-zinc-300/20',
-        'aria-invalid:border-red-500 aria-invalid:text-red-950 aria-invalid:placeholder:text-red-400',
-        'aria-invalid:focus-visible:ring-red-500/20',
-        'dark:aria-invalid:border-red-500 dark:aria-invalid:text-red-50',
-        $size === 'sm' ? 'h-8 px-2.5' : 'h-9',
+        'flex w-full min-w-0',
+        $formControl->fieldSurfaceClasses($size),
+        'placeholder:text-zinc-500 dark:placeholder:text-zinc-400',
+        $formControl->invalidFieldClasses(),
         $hasLeading ? 'pl-9' : null,
         $hasTrailing ? 'pr-9' : null,
         $invalid ? 'border-red-500 focus-visible:ring-red-500/20 dark:border-red-500' : null,
@@ -64,16 +60,18 @@
 
     $wrapperClasses = collect([
         'input',
-        'relative flex w-full min-w-0 items-stretch',
+        'relative flex min-w-0 items-stretch',
+        $applyFullWidth && ! $hasGroupAffix ? 'w-full' : null,
         $hasGroupAffix ? 'flex-1' : null,
         $hasLeading || $hasTrailing ? 'input--with-affixes' : null,
-        $hasGroupAffix ? null : $attributes->get('class'),
+        ! $hasGroupAffix ? $userClass : null,
     ])->filter()->implode(' ');
 
     $groupClasses = collect([
         'input-group',
-        'flex w-full min-w-0 items-stretch',
-        $hasGroupAffix ? $attributes->get('class') : null,
+        'flex min-w-0 items-stretch',
+        $applyFullWidth && $hasGroupAffix ? 'w-full' : null,
+        $hasGroupAffix ? $userClass : null,
     ])->filter()->implode(' ');
 
     $controlExtraClass = $attributes->get('class:input') ?? $attributes->get('input:class');
@@ -81,7 +79,7 @@
     $controlAttributes = $interactionState->apply(
         $attributes
             ->except(['class', 'class:input', 'input:class', 'prefix', 'suffix', 'leading', 'trailing'])
-            ->class(collect([$controlClasses, $controlExtraClass])->filter()->implode(' '))
+            ->class([$controlClasses, $controlExtraClass])
             ->merge([
                 'type' => $type,
                 'data-input-control' => true,

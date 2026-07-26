@@ -39,6 +39,13 @@
             "title": "Button",
             "description": "Composable button primitive with variants, sizes, link mode, and grouped layouts.",
             "registryDependencies": []
+        },
+        {
+            "name": "select",
+            "type": "registry:ui",
+            "title": "Select",
+            "description": "Accessible custom listbox select with compound sub-components and optional Flux-style shortcut.",
+            "registryDependencies": []
         }
     ]
 }

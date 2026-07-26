@@ -154,6 +154,8 @@ Maintainers can rebuild the published registry from package sources with:
 composer registry:build
 ```
 
+New UI primitives must be listed in the `$catalog` array in [`scripts/build-registry.php`](scripts/build-registry.php) before running that command; otherwise they are omitted from `registry/registry.json`.
+
 ### Typography
 
 Body copy and headings use a shared size scale: `sm`, `default`, `lg`, and `xl`. Package components resolve sizes through this scale — configure the Tailwind class mapping once in `config/bladex-components.php` (or override in `bladex-components.json` under `typography.scale`).
@@ -199,13 +201,59 @@ php artisan bladex-components:add text heading
 <x-ui::text>Owned copy</x-ui::text>
 ```
 
+### Select (listbox)
+
+Custom listbox select (not a native `<select>`). Markup is compound Blade; **keyboard and open/close behavior require the vanilla script** (no Alpine).
+
+Publish or import the script once:
+
+```bash
+php artisan vendor:publish --tag=bladex-components-assets
+```
+
+```js
+// Vite (adjust the vendor path)
+import '../../vendor/ivanfuhr/bladex-components/resources/assets/js/select.js';
+```
+
+**Shortcut** (default `shortcut` prop): wrap `select.item` children with trigger + content automatically:
+
+```blade
+<x-bladex-components::select name="industry" placeholder="Choose industry…">
+    <x-bladex-components::select.item value="photo">Photography</x-bladex-components::select.item>
+    <x-bladex-components::select.item value="design">Design services</x-bladex-components::select.item>
+</x-bladex-components::select>
+```
+
+**Full composition** (`:shortcut="false"`): assemble trigger, value, content, groups, and items yourself (shadcn-style):
+
+```blade
+<x-bladex-components::select name="industry" :shortcut="false">
+    <x-bladex-components::select.trigger>
+        <x-bladex-components::select.value placeholder="Choose industry…" />
+    </x-bladex-components::select.trigger>
+    <x-bladex-components::select.content>
+        <x-bladex-components::select.group>
+            <x-bladex-components::select.label>Services</x-bladex-components::select.label>
+            <x-bladex-components::select.item value="photo">Photography</x-bladex-components::select.item>
+        </x-bladex-components::select.group>
+    </x-bladex-components::select.content>
+</x-bladex-components::select>
+```
+
+Owned mode: `php artisan bladex-components:add select` → `<x-ui::select />` and subcomponents under `select.*`.
+
 ## Development
 
 Maintainers can preview components in the local Orchestra workbench playbook:
 
 ```bash
-composer workbench:assets   # or: cd workbench && npm ci && npm run build
-composer serve              # visit /playbook
+composer playbook              # build workbench assets + serve (visit /playbook)
+# or: ./scripts/playbook.sh
+
+composer workbench:assets      # first-time / clean install: npm ci && npm run build
+composer workbench:build         # vite build only (workbench/)
+composer serve                 # testbench build + serve (no frontend rebuild)
 ```
 
 ## Changelog

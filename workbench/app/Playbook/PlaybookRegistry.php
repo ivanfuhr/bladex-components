@@ -48,6 +48,7 @@ final class PlaybookRegistry
         $definitions = [
             $this->button(),
             $this->input(),
+            $this->select(),
             $this->text(),
             $this->heading(),
         ];
@@ -127,6 +128,36 @@ final class PlaybookRegistry
                 'show_prefix_suffix' => false,
             ],
             previewView: 'workbench::playbook.previews.input',
+        );
+    }
+
+    private function select(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
+            new PlaybookControl('disabled', 'Disabled', 'checkbox', [], false),
+            new PlaybookControl('size', 'Size', 'select', [
+                'default' => 'Default',
+                'sm' => 'Small',
+            ], 'default'),
+            new PlaybookControl('placeholder', 'Placeholder', 'select', [
+                'Choose industry…' => 'Choose industry…',
+                'Select a role…' => 'Select a role…',
+            ], 'Choose industry…'),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'select',
+            title: 'Select',
+            description: 'Custom listbox select with compound sub-components. Requires the package select.js script.',
+            controls: $controls,
+            defaultState: [
+                'invalid' => false,
+                'disabled' => false,
+                'size' => 'default',
+                'placeholder' => 'Choose industry…',
+            ],
+            previewView: 'workbench::playbook.previews.select',
         );
     }
 

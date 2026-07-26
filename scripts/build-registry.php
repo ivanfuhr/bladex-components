@@ -54,6 +54,22 @@ $catalog = [
         'targetPrefix' => 'heading',
         'filesOnly' => ['index.blade.php'],
     ],
+    'button' => [
+        'title' => 'Button',
+        'description' => 'Composable button primitive with variants, sizes, link mode, and grouped layouts.',
+        'type' => 'registry:ui',
+        'registryDependencies' => [],
+        'source' => 'button',
+        'targetPrefix' => 'button',
+    ],
+    'select' => [
+        'title' => 'Select',
+        'description' => 'Accessible custom listbox select with compound sub-components and optional Flux-style shortcut.',
+        'type' => 'registry:ui',
+        'registryDependencies' => [],
+        'source' => 'select',
+        'targetPrefix' => 'select',
+    ],
 ];
 
 $indexItems = [];

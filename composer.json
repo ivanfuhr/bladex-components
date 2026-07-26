@@ -68,6 +68,14 @@
         "workbench:assets": [
             "cd workbench && npm ci && npm run build"
         ],
+        "workbench:build": [
+            "cd workbench && npm run build"
+        ],
+        "playbook": [
+            "Composer\\Config::disableProcessTimeout",
+            "@workbench:build",
+            "@serve"
+        ],
         "serve": [
             "Composer\\Config::disableProcessTimeout",
             "@build",

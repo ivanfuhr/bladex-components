@@ -17,6 +17,7 @@ use Ivanfuhr\BladexComponents\Registry\ComponentInstaller;
 use Ivanfuhr\BladexComponents\Registry\RegistryClient;
 use Ivanfuhr\BladexComponents\Registry\RegistryResolver;
 use Ivanfuhr\BladexComponents\Support\Button\ButtonClassMap;
+use Ivanfuhr\BladexComponents\Support\Form\FormControlClassMap;
 use Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateAttributes;
 use Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateClassMap;
 use Ivanfuhr\BladexComponents\Support\ProjectConfig;
@@ -57,6 +58,7 @@ class BladexComponentsServiceProvider extends ServiceProvider
         $this->app->singleton(TypographyScale::class);
         $this->app->singleton(TypographyClassMap::class);
         $this->app->singleton(ButtonClassMap::class);
+        $this->app->singleton(FormControlClassMap::class);
         $this->app->singleton(InteractionStateClassMap::class);
         $this->app->singleton(InteractionStateAttributes::class);
         $this->app->singleton(TailwindIntegrationValidator::class);

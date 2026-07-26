@@ -34,6 +34,7 @@ final class PlaybookController
         return view('workbench::playbook.show', [
             'playbook' => $playbook,
             'initialPreview' => $this->preview->render($component),
+            'initialSnippet' => $this->preview->renderSnippet($component),
             'previewUrl' => route('playbook.preview'),
         ]);
     }

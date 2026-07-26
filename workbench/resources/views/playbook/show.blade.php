@@ -14,6 +14,7 @@
             state: @js($defaultState),
             previewUrl: @js($previewUrl),
             initialHtml: @js($initialPreview),
+            initialSnippet: @js($initialSnippet),
         })"
         x-init="init()"
     >
@@ -30,7 +31,7 @@
 
             <div class="space-y-2">
                 <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">
-                    &lt;x-bladex-components::<span class="text-zinc-800 dark:text-zinc-200">{{ $playbook->slug }}</span> /&gt;
+                    &lt;x-ui::<span class="text-zinc-800 dark:text-zinc-200">{{ $playbook->slug }}</span> /&gt;
                 </p>
                 <x-bladex-components::heading :level="1">
                     {{ $playbook->title }}
@@ -97,11 +98,29 @@
 
             <div
                 id="playbook-canvas"
-                class="playbook-stage mt-4 flex min-h-[min(24rem,50vh)] items-center justify-center rounded-2xl border border-zinc-200/80 bg-white p-8 shadow-sm ring-1 ring-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-900/50 dark:ring-white/5 sm:p-12"
+                class="playbook-stage mt-4 flex min-h-[min(24rem,50vh)] items-start justify-center overflow-visible rounded-2xl border border-zinc-200/80 bg-white p-8 shadow-sm ring-1 ring-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-900/50 dark:ring-white/5 sm:p-12"
                 aria-live="polite"
                 aria-atomic="true"
             >
-                <div class="w-full max-w-full" x-html="html"></div>
+                <div class="w-full max-w-md" x-html="html"></div>
+            </div>
+
+            <div class="mt-8 min-w-0" x-show="snippet.length > 0">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <h2 class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+                        Code
+                    </h2>
+                    <button
+                        type="button"
+                        class="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-700 shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20"
+                        @click="copySnippet()"
+                    >
+                        <span x-text="copied ? 'Copied' : 'Copy'"></span>
+                    </button>
+                </div>
+                <div class="playbook-code mt-3 min-w-0 overflow-hidden rounded-2xl border border-zinc-200/80 shadow-sm ring-1 ring-zinc-950/5 dark:border-zinc-800 dark:ring-white/5">
+                    <pre class="playbook-code__pre max-h-[min(28rem,50vh)] overflow-auto"><code class="playbook-code__content" x-text="snippet">{{ $initialSnippet }}</code></pre>
+                </div>
             </div>
         </section>
     </div>

@@ -31,4 +31,25 @@ final class PlaybookPreviewRenderer
             ->make($playbook->previewView, ['state' => $validated])
             ->render();
     }
+
+    /**
+     * @param  array<string, mixed>  $state
+     */
+    public function renderSnippet(string $slug, array $state = []): string
+    {
+        $playbook = $this->registry->get($slug);
+        $view = 'workbench::playbook.snippets.'.$slug;
+
+        if (! $this->views->exists($view)) {
+            return '';
+        }
+
+        if ($state === []) {
+            $state = $playbook->defaultState;
+        }
+
+        $validated = $this->validator->validate($playbook, $state);
+
+        return trim($this->views->make($view, ['state' => $validated])->render());
+    }
 }

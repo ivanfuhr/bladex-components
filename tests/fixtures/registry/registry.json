@@ -18,6 +18,34 @@
             "registryDependencies": [
                 "input-group"
             ]
+        },
+        {
+            "name": "text",
+            "type": "registry:ui",
+            "title": "Text",
+            "description": "Body copy primitive with standardized size scale and automatic body font role.",
+            "registryDependencies": []
+        },
+        {
+            "name": "heading",
+            "type": "registry:ui",
+            "title": "Heading",
+            "description": "Semantic heading primitive with level-driven size scale and automatic heading font role.",
+            "registryDependencies": []
+        },
+        {
+            "name": "button",
+            "type": "registry:ui",
+            "title": "Button",
+            "description": "Composable button primitive with variants, sizes, link mode, and grouped layouts.",
+            "registryDependencies": []
+        },
+        {
+            "name": "select",
+            "type": "registry:ui",
+            "title": "Select",
+            "description": "Accessible custom listbox select with compound sub-components and optional Flux-style shortcut.",
+            "registryDependencies": []
         }
     ]
 }

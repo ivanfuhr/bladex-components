@@ -32,11 +32,16 @@ final class PlaybookPreviewController
         }
 
         try {
-            $html = $this->preview->render($slug, (array) ($payload['state'] ?? []));
+            $state = (array) ($payload['state'] ?? []);
+            $html = $this->preview->render($slug, $state);
+            $snippet = $this->preview->renderSnippet($slug, $state);
         } catch (ValidationException $exception) {
             throw $exception;
         }
 
-        return response()->json(['html' => $html]);
+        return response()->json([
+            'html' => $html,
+            'snippet' => $snippet,
+        ]);
     }
 }

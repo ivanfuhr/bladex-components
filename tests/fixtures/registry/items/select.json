@@ -1,0 +1,58 @@
+{
+    "$schema": "../schema/registry-item.json",
+    "name": "select",
+    "type": "registry:ui",
+    "title": "Select",
+    "description": "Accessible custom listbox select with compound sub-components and optional Flux-style shortcut.",
+    "registryDependencies": [],
+    "files": [
+        {
+            "path": "select/content.blade.php",
+            "type": "registry:ui",
+            "target": "select/content.blade.php",
+            "content": "@aware([\n    'listboxId' => null,\n    'size' => null,\n])\n\n@php\n    $contentClasses = collect([\n        'select__content',\n        'z-[200] max-h-60 min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-md border border-zinc-200 bg-white p-1 shadow-lg ring-1 ring-zinc-950/5',\n        'focus:outline-none',\n        'dark:border-zinc-800 dark:bg-zinc-950 dark:ring-white/10',\n        $size === 'sm' ? 'text-sm' : null,\n    ])->filter()->implode(' ');\n\n    $contentAttributes = $attributes\n        ->class($contentClasses)\n        ->merge([\n            'role' => 'listbox',\n            'tabindex' => '-1',\n            'data-select-content' => true,\n            'hidden' => true,\n        ]);\n\n    if (filled($listboxId)) {\n        $contentAttributes = $contentAttributes->merge(['id' => $listboxId]);\n    }\n@endphp\n\n<div {{ $contentAttributes }}>\n    {{ $slot }}\n</div>\n"
+        },
+        {
+            "path": "select/group.blade.php",
+            "type": "registry:ui",
+            "target": "select/group.blade.php",
+            "content": "<div\n    {{ $attributes->class(['select__group', 'py-1'])->merge(['role' => 'group', 'data-select-group' => true]) }}\n>\n    {{ $slot }}\n</div>\n"
+        },
+        {
+            "path": "select/index.blade.php",
+            "type": "registry:ui",
+            "target": "select/index.blade.php",
+            "content": "@props([\n    'name' => null,\n    'value' => null,\n    'placeholder' => null,\n    'size' => null,\n    'invalid' => false,\n    'disabled' => false,\n    'selectId' => null,\n    'listboxId' => null,\n    'shortcut' => true,\n])\n\n@php\n    $selectId = filled($selectId)\n        ? $selectId\n        : 'select-'.str_replace('.', '', uniqid('', true));\n    $listboxId = filled($listboxId) ? $listboxId : $selectId.'-listbox';\n\n    $wrapperClasses = collect([\n        'select',\n        'relative w-full min-w-0',\n        $attributes->get('class'),\n    ])->filter()->implode(' ');\n@endphp\n\n<div\n    {{ $attributes->except(['class', 'shortcut'])->class($wrapperClasses) }}\n    data-select\n    data-select-id=\"{{ $selectId }}\"\n>\n    @if (filled($name))\n        <input\n            type=\"hidden\"\n            name=\"{{ $name }}\"\n            value=\"{{ $value }}\"\n            data-select-hidden-input\n        />\n    @else\n        <input\n            type=\"hidden\"\n            value=\"{{ $value }}\"\n            data-select-hidden-input\n        />\n    @endif\n\n    @if ($shortcut)\n        <x-bladex-components::select.trigger>\n            <x-bladex-components::select.value :placeholder=\"$placeholder\" />\n        </x-bladex-components::select.trigger>\n\n        <x-bladex-components::select.content>\n            {{ $slot }}\n        </x-bladex-components::select.content>\n    @else\n        {{ $slot }}\n    @endif\n</div>\n"
+        },
+        {
+            "path": "select/item.blade.php",
+            "type": "registry:ui",
+            "target": "select/item.blade.php",
+            "content": "@props([\n    'value' => null,\n    'disabled' => false,\n])\n\n@aware([\n    'size' => null,\n])\n\n@php\n    $itemClasses = collect([\n        'select__item',\n        'relative flex w-full cursor-default select-none items-center gap-2 rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none',\n        'text-zinc-950 dark:text-zinc-50',\n        'data-[highlighted]:bg-zinc-100 data-[highlighted]:text-zinc-900',\n        'dark:data-[highlighted]:bg-zinc-800 dark:data-[highlighted]:text-zinc-50',\n        'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',\n        'aria-selected:font-medium',\n        '[&[aria-selected=true]_[data-select-item-check]]:opacity-100',\n        $size === 'sm' ? 'py-1 text-xs' : null,\n    ])->filter()->implode(' ');\n\n    $itemAttributes = $attributes\n        ->class($itemClasses)\n        ->merge([\n            'role' => 'option',\n            'data-select-item' => true,\n            'aria-selected' => 'false',\n            'tabindex' => '-1',\n        ]);\n\n    if (filled($value)) {\n        $itemAttributes = $itemAttributes->merge(['data-value' => $value]);\n    }\n\n    if ($disabled) {\n        $itemAttributes = $itemAttributes\n            ->merge([\n                'data-disabled' => true,\n                'aria-disabled' => 'true',\n            ]);\n    }\n@endphp\n\n<div {{ $itemAttributes }}>\n    <span class=\"min-w-0 flex-1 truncate\" data-select-item-label>{{ $slot }}</span>\n    <svg\n        class=\"pointer-events-none absolute right-2 top-1/2 size-4 -translate-y-1/2 text-zinc-900 opacity-0 dark:text-zinc-50\"\n        xmlns=\"http://www.w3.org/2000/svg\"\n        viewBox=\"0 0 24 24\"\n        fill=\"none\"\n        stroke=\"currentColor\"\n        stroke-width=\"2\"\n        stroke-linecap=\"round\"\n        stroke-linejoin=\"round\"\n        aria-hidden=\"true\"\n        data-select-item-check\n    >\n        <path d=\"M20 6 9 17l-5-5\" />\n    </svg>\n</div>\n"
+        },
+        {
+            "path": "select/label.blade.php",
+            "type": "registry:ui",
+            "target": "select/label.blade.php",
+            "content": "@aware([\n    'size' => null,\n])\n\n@php\n    $labelClasses = collect([\n        'select__label',\n        'px-2 py-1.5 text-xs font-medium text-zinc-500 dark:text-zinc-400',\n    ])->implode(' ');\n@endphp\n\n<div\n    {{ $attributes->class($labelClasses)->merge([\n        'role' => 'presentation',\n        'data-select-label' => true,\n    ]) }}\n>\n    {{ $slot }}\n</div>\n"
+        },
+        {
+            "path": "select/separator.blade.php",
+            "type": "registry:ui",
+            "target": "select/separator.blade.php",
+            "content": "<div\n    {{ $attributes->class([\n        'select__separator',\n        'my-1 h-px bg-zinc-200 dark:bg-zinc-800',\n    ])->merge([\n        'role' => 'separator',\n        'aria-orientation' => 'horizontal',\n        'data-select-separator' => true,\n    ]) }}\n></div>\n"
+        },
+        {
+            "path": "select/trigger.blade.php",
+            "type": "registry:ui",
+            "target": "select/trigger.blade.php",
+            "content": "@aware([\n    'size' => null,\n    'invalid' => false,\n    'disabled' => false,\n    'selectId' => null,\n    'listboxId' => null,\n])\n\n@php\n    use Ivanfuhr\\BladexComponents\\Support\\Interaction\\InteractionStateAttributes;\n    use Ivanfuhr\\BladexComponents\\Support\\Interaction\\InteractionStateClassMap;\n    use Ivanfuhr\\BladexComponents\\Support\\Typography\\TypographyClassMap;\n\n    $typography = app(TypographyClassMap::class);\n    $interactionState = app(InteractionStateAttributes::class);\n    $interactionClasses = app(InteractionStateClassMap::class)->classes(includeReadOnly: true);\n\n    $triggerClasses = collect([\n        'select__trigger',\n        'flex w-full min-w-0 items-center justify-between gap-2 rounded-md border border-zinc-200 bg-white px-3 py-1 shadow-sm transition-colors',\n        $typography->inputControlClasses($size),\n        'text-left',\n        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:ring-offset-0',\n        $interactionClasses,\n        'dark:border-zinc-800 dark:bg-zinc-950',\n        'dark:focus-visible:ring-zinc-300/20',\n        'aria-expanded:border-zinc-300 aria-expanded:ring-2 aria-expanded:ring-zinc-950/10',\n        'dark:aria-expanded:border-zinc-600 dark:aria-expanded:ring-zinc-300/20',\n        'aria-invalid:border-red-500 aria-invalid:text-red-950',\n        'aria-invalid:focus-visible:ring-red-500/20',\n        'dark:aria-invalid:border-red-500 dark:aria-invalid:text-red-50',\n        $size === 'sm' ? 'h-8 px-2.5' : 'h-9',\n        $invalid ? 'border-red-500 focus-visible:ring-red-500/20 dark:border-red-500' : null,\n        'disabled:cursor-not-allowed disabled:opacity-50',\n        'aria-disabled:cursor-not-allowed aria-disabled:opacity-50',\n        'group',\n    ])->filter()->implode(' ');\n\n    $triggerAttributes = $interactionState->apply(\n        $attributes\n            ->class($triggerClasses)\n            ->merge([\n                'type' => 'button',\n                'aria-haspopup' => 'listbox',\n                'aria-expanded' => 'false',\n            ]),\n        ['nativeDisabled' => true],\n    );\n\n    if ($invalid) {\n        $triggerAttributes = $triggerAttributes->merge(['aria-invalid' => 'true']);\n    }\n\n    if ($disabled) {\n        $triggerAttributes = $triggerAttributes->merge(['disabled' => true]);\n    }\n\n    if (filled($selectId)) {\n        $triggerAttributes = $triggerAttributes->merge(['id' => $selectId.'-trigger']);\n    }\n\n    if (filled($listboxId)) {\n        $triggerAttributes = $triggerAttributes->merge(['aria-controls' => $listboxId]);\n    }\n\n    $chevronClasses = $size === 'sm' ? 'size-3.5 shrink-0 opacity-50' : 'size-4 shrink-0 opacity-50';\n@endphp\n\n<button {{ $triggerAttributes }} data-select-trigger>\n    <span class=\"select__trigger-inner flex min-w-0 flex-1 items-center gap-2\">\n        {{ $slot }}\n    </span>\n    <svg\n        class=\"{{ $chevronClasses }} text-zinc-500 transition-transform duration-200 group-aria-expanded:rotate-180 dark:text-zinc-400\"\n        xmlns=\"http://www.w3.org/2000/svg\"\n        viewBox=\"0 0 24 24\"\n        fill=\"none\"\n        stroke=\"currentColor\"\n        stroke-width=\"2\"\n        stroke-linecap=\"round\"\n        stroke-linejoin=\"round\"\n        aria-hidden=\"true\"\n        data-select-chevron\n    >\n        <path d=\"m6 9 6 6 6-6\" />\n    </svg>\n</button>\n"
+        },
+        {
+            "path": "select/value.blade.php",
+            "type": "registry:ui",
+            "target": "select/value.blade.php",
+            "content": "@aware([\n    'placeholder' => null,\n    'size' => null,\n])\n\n@props([\n    'placeholder' => null,\n])\n\n@php\n    $resolvedPlaceholder = filled($placeholder) ? $placeholder : null;\n\n    $valueClasses = collect([\n        'select__value',\n        'block min-w-0 flex-1 truncate text-sm leading-5',\n        'text-zinc-950 dark:text-zinc-50',\n        'data-placeholder:text-zinc-500 dark:data-placeholder:text-zinc-400',\n    ])->implode(' ');\n@endphp\n\n<span\n    {{ $attributes->class($valueClasses)->merge([\n        'data-select-value' => true,\n        'data-placeholder' => $resolvedPlaceholder !== null ? 'true' : null,\n    ]) }}\n>\n    @if ($slot->isEmpty())\n        {{ $resolvedPlaceholder }}\n    @else\n        {{ $slot }}\n    @endif\n</span>\n"
+        }
+    ]
+}

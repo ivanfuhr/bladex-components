@@ -90,6 +90,25 @@ Ship flexible Blade components that consumers assemble from small pieces, while 
 </x-bladex-components::field>
 ```
 
+### Select listbox (shortcut + full composition)
+
+```blade
+{{-- Shortcut: only items in the default slot (loads select.js in the app) --}}
+<x-bladex-components::select name="industry" placeholder="Choose industry…">
+    <x-bladex-components::select.item value="photo">Photography</x-bladex-components::select.item>
+</x-bladex-components::select>
+
+{{-- Full: :shortcut="false" and explicit trigger / content tree --}}
+<x-bladex-components::select name="industry" :shortcut="false">
+    <x-bladex-components::select.trigger>
+        <x-bladex-components::select.value placeholder="Choose industry…" />
+    </x-bladex-components::select.trigger>
+    <x-bladex-components::select.content>
+        <x-bladex-components::select.item value="photo">Photography</x-bladex-components::select.item>
+    </x-bladex-components::select.content>
+</x-bladex-components::select>
+```
+
 ### Root with `@aware` for children (`field/index.blade.php`)
 
 ```blade

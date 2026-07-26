@@ -45,6 +45,8 @@ Owned mode requires `bladex-components.json` at the project root. The package re
 
 **Tailwind:** Button variants resolve utilities from PHP class maps (`src/Support/`). Import `vendor/ivanfuhr/bladex-components/resources/tailwind/bladex.css` in the app stylesheet (v4) or add package `views` + `src/Support` to Tailwind v3 `content`. With `APP_DEBUG=true`, missing integration throws on HTTP requests; set `validate_tailwind_integration` to `false` in config to opt out. Use `class="dark"` on the layout for dark UIs.
 
+**Select:** Listbox markup is Blade-only; import `resources/assets/js/select.js` (or publish `bladex-components-assets`) so open/close and keyboard work. Default `shortcut` wraps `select.item` children; set `:shortcut="false"` for full `select.trigger` / `select.content` composition.
+
 ### 3. Registry CLI
 
 | Command | Purpose |

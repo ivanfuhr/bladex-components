@@ -22,6 +22,54 @@ final class RegistryClient
             return $this->fetchIndexFromPackage();
         }
 
+        return $this->fetchIndexFromRemote($registryUrl);
+    }
+
+    /**
+     * @param  array{name: string, homepage?: string|null, items: list<array<string, mixed>>}  $index
+     * @return array{name: string, homepage?: string|null, items: list<array<string, mixed>>}
+     */
+    private function mergeMissingPackageItems(array $index): array
+    {
+        if (! is_dir($this->packageRegistryPath)) {
+            return $index;
+        }
+
+        try {
+            $packageIndex = $this->fetchIndexFromPackage();
+        } catch (RuntimeException) {
+            return $index;
+        }
+
+        $known = [];
+
+        foreach ($index['items'] as $item) {
+            $name = $item['name'] ?? null;
+
+            if (is_string($name) && $name !== '') {
+                $known[$name] = true;
+            }
+        }
+
+        foreach ($packageIndex['items'] as $item) {
+            $name = $item['name'] ?? null;
+
+            if (! is_string($name) || $name === '' || isset($known[$name])) {
+                continue;
+            }
+
+            $index['items'][] = $item;
+            $known[$name] = true;
+        }
+
+        return $index;
+    }
+
+    /**
+     * @return array{name: string, homepage?: string|null, items: list<array<string, mixed>>}
+     */
+    private function fetchIndexFromRemote(string $registryUrl): array
+    {
         $response = Http::timeout(30)->get($registryUrl);
 
         if ($response->failed()) {
@@ -39,11 +87,13 @@ final class RegistryClient
             throw new RuntimeException('Registry index is missing an items array.');
         }
 
-        return [
+        $index = [
             'name' => (string) ($data['name'] ?? 'registry'),
             'homepage' => isset($data['homepage']) ? (string) $data['homepage'] : null,
             'items' => array_values($data['items']),
         ];
+
+        return $this->mergeMissingPackageItems($index);
     }
 
     /**
