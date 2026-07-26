@@ -1,0 +1,144 @@
+---
+name: composing-blade-components
+description: >-
+  Build BladeX Components using composition: small primitives, slots, and compound
+  sub-components instead of monolithic prop APIs. Use when adding or changing package
+  Blade views, anonymous or class components, or consumer-facing component examples.
+license: MIT
+metadata:
+  author: Ivan Führ
+---
+
+# Composing BladeX Components
+
+Use this skill when implementing or extending UI in `ivanfuhr/bladex-components`. Prefer **composition** (nested components and slots) over a single component with many boolean or variant props.
+
+## Primary Goal
+
+Ship flexible Blade components that consumers assemble from small pieces, while keeping each piece’s public surface minimal and testable.
+
+## When to Apply
+
+- Adding a new UI primitive or compound component to the package
+- Refactoring a component that has grown a large `@props` list
+- Writing usage examples for README, workbench, or tests
+- Publishing or overriding views under the `bladex-components` namespace
+
+## Composition Principles
+
+1. **Small primitives first** — One visual or behavioral concern per component (label, icon, control, layout shell). Compose them at the call site or in a thin wrapper.
+2. **Slots over flags** — Use default and named slots (`{{ $header }}`, `<x-slot:actions>`) instead of props like `showHeader`, `footerText`, or `withIcon`.
+3. **Compound sub-components** — For structured UI (cards, dialogs, fields), use a root plus dot-named children (for example `alert`, `alert.title`, `alert.description`) rather than one template with many optional regions.
+4. **Shared context with `@aware`** — Child components read parent-provided values (variant, size, disabled) via `@aware(['variant'])`. Avoid duplicating the same prop on every child.
+5. **Attributes on the outermost element** — Merge `$attributes` on the root DOM node so consumers can set `class`, `id`, `data-*`, and ARIA. Forward only what sub-pieces need as explicit props.
+6. **Logic in class components, markup in views** — Use a class component when you need validation, computed state, or type-safe constructor props; keep the Blade file focused on structure and composition.
+7. **Config for defaults, not structure** — Use `config/bladex-components.php` for global defaults (prefixes, themes). Do not use config to replace missing sub-components or slots.
+
+## Package Conventions
+
+| Concern | Location |
+| -------- | -------- |
+| View namespace | `bladex-components::` (from `loadViewsFrom`) |
+| Anonymous components | `resources/views/components/{name}.blade.php` |
+| Compound components | `resources/views/components/{name}/index.blade.php` and siblings |
+| Class components | `src/View/Components/` (register or auto-discover via namespace) |
+| Published overrides | `resources/views/vendor/bladex-components` (`bladex-components-views` tag) |
+| Translations | `lang/` keys referenced from components, not hard-coded copy |
+
+**Tag naming:** `<x-bladex-components::{component}>` and `<x-bladex-components::{component}.{piece}>` for nested anonymous components.
+
+## Workflow
+
+### 1. Model the UI as a tree
+
+- List the **root** (single wrapper + attribute merge target).
+- List **optional regions** as named slots or sub-components, not props.
+- List **shared state** (variant, size) for `@aware` on children.
+
+### 2. Implement the root
+
+- Declare only essential `@props` (for example `variant` with a sensible default).
+- Provide `@aware` defaults for children when the root owns the variant.
+- Render `{{ $slot }}` and named slots; avoid `@if($showX)` branches driven by boolean props when a slot can be empty.
+
+### 3. Implement children
+
+- Each child does one job; use `@aware` for inherited context.
+- Do not require consumers to repeat parent props on every child unless overriding is a documented feature.
+
+### 4. Wire and verify
+
+- Ensure views load via `BladexComponentsServiceProvider` (no extra registration for standard anonymous components under `resources/views/components`).
+- Add a Pest feature test that renders the composed markup (assert key classes, slots, or accessible roles).
+- If behavior is user-facing, add a minimal workbench or README example showing **composition**, not a prop laundry list.
+
+## Examples
+
+### Preferred: compound + slots
+
+```blade
+<x-bladex-components::field>
+    <x-bladex-components::field.label for="email">Email</x-bladex-components::field.label>
+
+    <x-bladex-components::field.control>
+        <input id="email" type="email" {{ $attributes }} />
+    </x-bladex-components::field.control>
+
+    <x-bladex-components::field.message>
+        {{ $message }}
+    </x-bladex-components::field.message>
+</x-bladex-components::field>
+```
+
+### Root with `@aware` for children (`field/index.blade.php`)
+
+```blade
+@props(['name' => null])
+
+<div {{ $attributes->merge(['class' => 'bladex-field']) }} data-bladeX-field>
+    {{ $slot }}
+</div>
+```
+
+### Child (`field/label.blade.php`)
+
+```blade
+@aware(['name'])
+
+<label {{ $attributes->merge(['class' => 'bladex-field__label']) }} @if($name) for="{{ $name }}" @endif>
+    {{ $slot }}
+</label>
+```
+
+### Avoid: monolithic props
+
+```blade
+{{-- Do not standardize on this pattern in BladeX --}}
+<x-bladex-components::field
+    label="Email"
+    name="email"
+    :error="$errors->first('email')"
+    hint="We never share your email"
+    required
+    icon="mail"
+/>
+```
+
+Refactor toward sub-components and slots so consumers control order, optional pieces, and custom markup.
+
+## Anti-Patterns
+
+- Encoding layout or optional regions as many boolean props on one component.
+- Passing HTML strings in props instead of slots or dedicated sub-components.
+- Duplicating `variant` / `size` on every child when `@aware` from the root is enough.
+- Leaking package internals (service provider paths, unpublished partials) in consumer docs.
+- Adding PHP helpers or facades for markup that belongs in composable Blade components.
+- Breaking published view overrides by renaming slot names or sub-component paths without a changelog note.
+
+## References
+
+- `resources/views/components/` — component templates
+- `src/BladexComponentsServiceProvider.php` — view namespace and publish tags
+- `config/bladex-components.php` — package defaults
+- `resources/boost/skills/bladex-components-development/SKILL.md` — install, publish, and integration
+- Laravel docs: Blade components, slots, `@aware`, and anonymous component directories
