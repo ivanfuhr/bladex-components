@@ -24,13 +24,13 @@ Use this skill when a Laravel application needs to integrate the BladeX Componen
 
 ### 2. Choose adoption mode
 
-**Vendor mode** — `composer require ivanfuhr/bladex-components` only:
+**Owned mode (recommended)** — `composer require --dev ivanfuhr/bladex-components`:
 
 ```blade
 <x-bladex-components::input name="email" />
 ```
 
-**Owned mode** — shadcn-style registry install into `resources/views/ui`:
+**Owned mode** — shadcn-style registry install into `resources/views/ui` (production runs without the package):
 
 ```bash
 php artisan bladex-components:init
@@ -41,17 +41,17 @@ php artisan bladex-components:add input
 <x-ui::input name="email" />
 ```
 
-Owned mode requires `bladex-components.json` at the project root. The package registers `Blade::anonymousComponentPath` for `paths.ui` (default `resources/views/ui`).
+Owned mode runs `init` scaffolding: `app/Support/Bladex` class maps, `resources/css/bladex.css`, `App\Providers\BladexUiServiceProvider`, and marked patches in `resources/css/app.css` / `resources/js/app.js`. Registry `add` installs owned Blade (`x-ui::`) and co-located scripts such as `resources/views/ui/select/select.js`.
 
-**Tailwind:** Button variants resolve utilities from PHP class maps (`src/Support/`). Import `vendor/ivanfuhr/bladex-components/resources/tailwind/bladex.css` in the app stylesheet (v4) or add package `views` + `src/Support` to Tailwind v3 `content`. With `APP_DEBUG=true`, missing integration throws on HTTP requests; set `validate_tailwind_integration` to `false` in config to opt out. Use `class="dark"` on the layout for dark UIs.
+**Tailwind:** Scan app paths via `resources/css/bladex.css` (created by `init`). Do not import Tailwind sources from `vendor/`. With `APP_DEBUG=true` and the dev package installed, missing integration throws on HTTP requests; set `validate_tailwind_integration` to `false` in config to opt out. Use `class="dark"` on the layout for dark UIs.
 
-**Select:** Listbox markup is Blade-only; import `resources/assets/js/select.js` (or publish `bladex-components-assets`) so open/close and keyboard work. Default `shortcut` wraps `select.item` children; set `:shortcut="false"` for full `select.trigger` / `select.content` composition.
+**Select:** `bladex-components:add select` copies `select.js` and patches the Vite entry. Default `shortcut` wraps `select.item` children; set `:shortcut="false"` for full `select.trigger` / `select.content` composition.
 
 ### 3. Registry CLI
 
 | Command | Purpose |
 | --- | --- |
-| `bladex-components:init` | Create `bladex-components.json` + empty `bladex-components.lock` |
+| `bladex-components:init` | Create `bladex-components.json`, scaffold owned support/CSS, and empty `bladex-components.lock` |
 | `bladex-components:add {names}` | Fetch items from the remote registry; resolve `registryDependencies` |
 | `bladex-components:update {name?}` | Sync installed files; use `--overwrite` if edited locally |
 | `bladex-components:remove {names}` | Remove lock entries and files (`--keep-files` optional) |

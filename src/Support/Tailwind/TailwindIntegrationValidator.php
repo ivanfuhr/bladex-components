@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace Ivanfuhr\BladexComponents\Support\Tailwind;
 
 use Illuminate\Contracts\Foundation\Application;
+use Ivanfuhr\BladexComponents\Registry\ProjectIntegrator;
 use RuntimeException;
 
 final class TailwindIntegrationValidator
 {
     /** @var list<string> */
     private const array INTEGRATION_MARKERS = [
-        'bladex-components/resources/tailwind/bladex.css',
-        'resources/tailwind/bladex.css',
-        'bladex-components/src/Support',
+        'resources/css/bladex.css',
+        'bladex-components-start',
+        'app/Support/Bladex',
     ];
 
     public function assertConfigured(Application $app): void
@@ -27,6 +28,10 @@ final class TailwindIntegrationValidator
 
     public function isConfigured(Application $app): bool
     {
+        if (is_file($app->basePath('resources/css/bladex.css'))) {
+            return true;
+        }
+
         foreach ($this->candidateFiles($app) as $path) {
             $contents = @file_get_contents($path);
 
@@ -88,20 +93,19 @@ final class TailwindIntegrationValidator
 
     private function explanation(): string
     {
-        return <<<'TEXT'
-BladeX Components: Tailwind CSS is not configured to scan package class maps.
+        $start = ProjectIntegrator::CSS_START;
+        $end = ProjectIntegrator::CSS_END;
 
-Button and other primitives resolve utilities from PHP under vendor/ivanfuhr/bladex-components/src/Support. Without Tailwind sources, variant styles (for example bg-zinc-900 on variant="primary") are missing from your compiled CSS.
+        return <<<TEXT
+BladeX Components: owned Tailwind integration is missing.
 
-Fix (Tailwind v4) — add to your app stylesheet (adjust the vendor path):
+Run bladex-components:init (once) and bladex-components:add for the components you use. That scaffolds resources/css/bladex.css and patches your app stylesheet.
 
-    @import "tailwindcss";
-    @import "../../vendor/ivanfuhr/bladex-components/resources/tailwind/bladex.css";
+If resources/css/app.css exists, add:
 
-Fix (Tailwind v3) — add to tailwind.config.js content:
-
-    './vendor/ivanfuhr/bladex-components/resources/views/**/*.blade.php',
-    './vendor/ivanfuhr/bladex-components/src/Support/**/*.php',
+    {$start}
+    @import "./bladex.css";
+    {$end}
 
 Then rebuild assets (npm run dev / npm run build).
 

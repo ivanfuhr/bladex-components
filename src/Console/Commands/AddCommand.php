@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ivanfuhr\BladexComponents\Console\Commands;
 
 use Ivanfuhr\BladexComponents\Registry\ComponentInstaller;
+use Ivanfuhr\BladexComponents\Registry\ProjectIntegrator;
 use Ivanfuhr\BladexComponents\Registry\RegistryClient;
 use Ivanfuhr\BladexComponents\Registry\RegistryResolver;
 use Ivanfuhr\BladexComponents\Support\ProjectConfig;
@@ -26,6 +27,7 @@ class AddCommand extends RegistryCommand
         RegistryClient $registryClient,
         RegistryResolver $registryResolver,
         ComponentInstaller $installer,
+        ProjectIntegrator $integrator,
     ): int {
         if (! $projectConfig->exists()) {
             $this->components->error('Project config not found. Run bladex-components:init first.');
@@ -35,7 +37,7 @@ class AddCommand extends RegistryCommand
 
         $names = $this->argument('names');
 
-        if (! is_array($names) || $names === []) {
+        if ($names === []) {
             $this->components->error('Provide at least one registry item name.');
 
             return self::FAILURE;
@@ -88,6 +90,7 @@ class AddCommand extends RegistryCommand
         if ($dryRun) {
             $this->components->info('Dry run complete. No files were written.');
         } else {
+            $integrator->syncFromLock($projectConfig, $projectLock);
             $this->components->info('Registry items installed.');
         }
 

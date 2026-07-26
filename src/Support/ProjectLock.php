@@ -54,7 +54,7 @@ final class ProjectLock
     }
 
     /**
-     * @param  array{items: list<array<string, mixed>>, files: array<string, string>}  $data
+     * @param  array{items: list<array<string, mixed>>, files: array<string, string>, scaffold?: array<string, mixed>}  $data
      */
     public function write(array $data): void
     {
@@ -62,6 +62,10 @@ final class ProjectLock
             'items' => $data['items'],
             'files' => $data['files'],
         ];
+
+        if (array_key_exists('scaffold', $data)) {
+            $payload['scaffold'] = $data['scaffold'];
+        }
 
         $encoded = json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 

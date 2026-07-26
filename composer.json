@@ -94,7 +94,8 @@
             "vendor/bin/pest --type-coverage --min=100"
         ],
         "test:unit": [
-            "vendor/bin/pest --parallel"
+            "vendor/bin/pest --parallel --exclude-group=registry-isolated",
+            "vendor/bin/pest --group=registry-isolated"
         ],
         "test": [
             "@analyse",
@@ -106,6 +107,7 @@
             "@php vendor/bin/testbench package:purge-skeleton --ansi"
         ],
         "registry:build": [
+            "@php scripts/build-stubs.php",
             "@php scripts/build-registry.php"
         ]
     },

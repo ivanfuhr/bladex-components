@@ -4,11 +4,27 @@
     "homepage": "https://github.com/ivanfuhr/bladex-components",
     "items": [
         {
+            "name": "field",
+            "type": "registry:ui",
+            "title": "Field Message",
+            "description": "Hint and error message primitive for form fields.",
+            "registryDependencies": []
+        },
+        {
+            "name": "icon",
+            "type": "registry:ui",
+            "title": "Icon",
+            "description": "Lucide icon dispatcher and built-in loading spinner.",
+            "registryDependencies": []
+        },
+        {
             "name": "input-group",
             "type": "registry:ui",
             "title": "Input Group",
             "description": "Layout shell for grouped input affixes.",
-            "registryDependencies": []
+            "registryDependencies": [
+                "text"
+            ]
         },
         {
             "name": "input",
@@ -16,7 +32,8 @@
             "title": "Input",
             "description": "Accessible text input primitive with optional affixes and group layout.",
             "registryDependencies": [
-                "input-group"
+                "input-group",
+                "field"
             ]
         },
         {
@@ -38,7 +55,9 @@
             "type": "registry:ui",
             "title": "Button",
             "description": "Composable button primitive with variants, sizes, link mode, and grouped layouts.",
-            "registryDependencies": []
+            "registryDependencies": [
+                "icon"
+            ]
         },
         {
             "name": "select",

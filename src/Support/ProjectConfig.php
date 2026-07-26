@@ -83,6 +83,46 @@ final class ProjectConfig
         return $this->basePath($this->uiPath());
     }
 
+    public function assetsPath(): string
+    {
+        $data = $this->tryRead();
+
+        if (is_array($data)) {
+            $fromProject = Arr::get($data, 'paths.assets');
+
+            if (is_string($fromProject) && $fromProject !== '') {
+                return $fromProject;
+            }
+        }
+
+        return (string) config('bladex-components.default_assets_path', 'resources/js/ui');
+    }
+
+    public function resolvedAssetsPath(): string
+    {
+        return $this->basePath($this->assetsPath());
+    }
+
+    public function supportPath(): string
+    {
+        $data = $this->tryRead();
+
+        if (is_array($data)) {
+            $fromProject = Arr::get($data, 'paths.support');
+
+            if (is_string($fromProject) && $fromProject !== '') {
+                return $fromProject;
+            }
+        }
+
+        return (string) config('bladex-components.default_support_path', 'app/Support/Bladex');
+    }
+
+    public function resolvedSupportPath(): string
+    {
+        return $this->basePath($this->supportPath());
+    }
+
     public function iconsPath(): string
     {
         $data = $this->tryRead();
@@ -137,6 +177,8 @@ final class ProjectConfig
             'paths' => [
                 'ui' => config('bladex-components.default_ui_path', 'resources/views/ui'),
                 'icons' => config('bladex-components.default_icons_path', 'resources/views/ui/icons'),
+                'assets' => config('bladex-components.default_assets_path', 'resources/js/ui'),
+                'support' => config('bladex-components.default_support_path', 'app/Support/Bladex'),
             ],
         ];
     }

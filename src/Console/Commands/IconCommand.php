@@ -108,7 +108,7 @@ class IconCommand extends Command
     {
         $argument = $this->argument('names');
 
-        if (is_array($argument) && $argument !== []) {
+        if ($argument !== []) {
             return array_values($argument);
         }
 

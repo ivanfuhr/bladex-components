@@ -19,13 +19,13 @@
                 "ui": {
                     "type": "string"
                 },
+                "icons": {
+                    "type": "string"
+                },
                 "assets": {
                     "type": "string"
                 },
-                "lang": {
-                    "type": "string"
-                },
-                "icons": {
+                "support": {
                     "type": "string"
                 }
             },

@@ -1,4 +1,4 @@
-import { initSelects } from '../../../resources/assets/js/select.js';
+import { initSelects } from '../views/ui/select/select.js';
 
 document.addEventListener('alpine:init', () => {
     window.Alpine.data('playbookPreview', (config) => ({

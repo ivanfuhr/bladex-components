@@ -29,10 +29,8 @@ final class ComponentInstaller
             throw new RuntimeException('Registry item is missing a files array.');
         }
 
-        $uiPath = $config->resolvedUiPath();
         $written = [];
         $lockData = $lock->read();
-        $relativeUi = $config->uiPath();
         $itemPaths = [];
 
         foreach ($files as $file) {
@@ -40,15 +38,15 @@ final class ComponentInstaller
                 continue;
             }
 
-            $relativeTarget = $this->targetPath($file);
-            $absoluteTarget = $uiPath.'/'.$relativeTarget;
+            $locations = $this->resolveFileLocations($config, $file);
+            $absoluteTarget = $locations['absolute'];
+            $appRelativePath = $locations['appRelative'];
             $content = $file['content'] ?? null;
 
             if (! is_string($content)) {
-                throw new RuntimeException("Registry file [{$relativeTarget}] is missing content.");
+                throw new RuntimeException("Registry file [{$appRelativePath}] is missing content.");
             }
 
-            $appRelativePath = $relativeUi.'/'.$relativeTarget;
             $hash = hash('sha256', $content);
 
             if (is_file($absoluteTarget) && ! $overwrite) {
@@ -139,23 +137,20 @@ final class ComponentInstaller
                 continue;
             }
 
-            $uiPath = $config->resolvedUiPath();
-            $relativeUi = $config->uiPath();
-
             foreach ($files as $file) {
                 if (! is_array($file)) {
                     continue;
                 }
 
-                $relativeTarget = $this->targetPath($file);
-                $absoluteTarget = $uiPath.'/'.$relativeTarget;
+                $locations = $this->resolveFileLocations($config, $file);
+                $absoluteTarget = $locations['absolute'];
+                $appRelativePath = $locations['appRelative'];
                 $content = $file['content'] ?? null;
 
                 if (! is_string($content)) {
                     continue;
                 }
 
-                $appRelativePath = $relativeUi.'/'.$relativeTarget;
                 $newHash = hash('sha256', $content);
                 $lockHash = $lockData['files'][$appRelativePath] ?? null;
 
@@ -196,7 +191,7 @@ final class ComponentInstaller
 
             $installed['itemHash'] = $this->itemHash($item);
             $installed['registry'] = $registryUrl;
-            $installed['paths'] = $this->pathsFromItem($item, $relativeUi);
+            $installed['paths'] = $this->pathsFromItem($item, $config);
 
             $lockData['items'] = array_map(
                 static function (array $entry) use ($installed, $name): array {
@@ -267,7 +262,7 @@ final class ComponentInstaller
      * @param  array<string, mixed>  $item
      * @return list<string>
      */
-    private function pathsFromItem(array $item, string $relativeUi): array
+    private function pathsFromItem(array $item, ProjectConfig $config): array
     {
         $files = $item['files'] ?? [];
 
@@ -282,11 +277,26 @@ final class ComponentInstaller
                 continue;
             }
 
-            $relativeTarget = $this->targetPath($file);
-            $paths[] = $relativeUi.'/'.$relativeTarget;
+            $paths[] = $this->resolveFileLocations($config, $file)['appRelative'];
         }
 
         return array_values(array_unique($paths));
+    }
+
+    /**
+     * @param  array<string, mixed>  $file
+     * @return array{absolute: string, appRelative: string}
+     */
+    private function resolveFileLocations(ProjectConfig $config, array $file): array
+    {
+        $relativeTarget = $this->targetPath($file);
+        $type = (string) ($file['type'] ?? 'registry:ui');
+        $baseRelative = $type === 'registry:asset' ? $config->assetsPath() : $config->uiPath();
+
+        return [
+            'absolute' => $config->basePath($baseRelative.'/'.$relativeTarget),
+            'appRelative' => $baseRelative.'/'.$relativeTarget,
+        ];
     }
 
     /**

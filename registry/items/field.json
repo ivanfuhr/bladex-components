@@ -1,0 +1,16 @@
+{
+    "$schema": "../schema/registry-item.json",
+    "name": "field",
+    "type": "registry:ui",
+    "title": "Field Message",
+    "description": "Hint and error message primitive for form fields.",
+    "registryDependencies": [],
+    "files": [
+        {
+            "path": "field/message.blade.php",
+            "type": "registry:ui",
+            "target": "field/message.blade.php",
+            "content": "@props([\n    'variant' => 'hint',\n])\n\n@php\n    use App\\Support\\Bladex\\Typography\\TypographyClassMap;\n\n    $isError = $variant === 'error';\n\n    $classes = app(TypographyClassMap::class)->textClasses(\n        'sm',\n        $isError ? 'error' : 'subtle',\n        null,\n    );\n\n    $messageAttributes = $attributes\n        ->class($classes)\n        ->merge([\n            'data-field-message' => true,\n            'data-field-message-variant' => $isError ? 'error' : 'hint',\n        ]);\n\n    if ($isError) {\n        $messageAttributes = $messageAttributes->merge(['role' => 'alert']);\n    }\n@endphp\n\n<p {{ $messageAttributes }}>{{ $slot }}</p>\n"
+        }
+    ]
+}

@@ -17,8 +17,12 @@ Powerful components for Laravel Blade.
 You can install the package via Composer:
 
 ```bash
-composer require ivanfuhr/bladex-components
+composer require --dev ivanfuhr/bladex-components
 ```
+
+The package is a **development dependency**: it provides the registry CLI. After `init` and `add`, your application runs from copied files under `resources/views/ui`, `app/Support/Bladex`, and related assets — production deploys can use `composer install --no-dev` without this package.
+
+For quick experiments in the same repo you may still use vendor components (`x-bladex-components::`) while the package is installed.
 
 You may publish all of the package's resources at once:
 
@@ -83,7 +87,7 @@ Registry commands:
 
 | Command | Description |
 | --- | --- |
-| `bladex-components:init` | Create `bladex-components.json` and an empty lock file |
+| `bladex-components:init` | Create `bladex-components.json`, scaffold owned support/CSS, and an empty lock file |
 | `bladex-components:add {names}` | Install components from the registry |
 | `bladex-components:update {name?}` | Refresh installed files from the registry |
 | `bladex-components:remove {names}` | Remove installed components |
@@ -117,30 +121,23 @@ Supported Lucide variants: `outline` (default, 16px), `mini` (20px), and `micro`
 
 ### Tailwind CSS
 
-Several primitives resolve utility classes from **PHP class maps** (for example `ButtonClassMap`) in addition to Blade templates. If your Tailwind `content` / `@source` paths only include `resources/views/**/*.blade.php`, **button backgrounds and variant colors will not be generated** and controls can look unstyled on dark layouts.
+Owned components use PHP class maps copied into `app/Support/Bladex` during `init`. Tailwind must scan your app paths, not `vendor/`.
 
-Include the package sources in your Tailwind build.
-
-**Tailwind v4** — import the bundled source file from your app stylesheet (adjust the vendor path if needed):
+`bladex-components:init` creates `resources/css/bladex.css` and patches `resources/css/app.css` with a marked import block:
 
 ```css
 @import "tailwindcss";
-@import "../../vendor/ivanfuhr/bladex-components/resources/tailwind/bladex.css";
+
+/* bladex-components-start */
+@import "./bladex.css";
+/* bladex-components-end */
 ```
 
-**Tailwind v3** — extend `content`:
-
-```js
-content: [
-    './resources/views/**/*.blade.php',
-    './vendor/ivanfuhr/bladex-components/resources/views/**/*.blade.php',
-    './vendor/ivanfuhr/bladex-components/src/Support/**/*.php',
-],
-```
+`resources/css/bladex.css` tells Tailwind to scan `resources/views` and `app/Support/Bladex` (PHP class maps).
 
 Dark UIs should use Tailwind’s `dark` variant (`class="dark"` on `<html>` or a layout wrapper) so `variant="primary"` inverts correctly (`bg-zinc-50` text on dark, `bg-zinc-900` on light). Rebuild CSS after changing Tailwind sources (`npm run build` / `npm run dev`).
 
-With `APP_DEBUG=true`, HTTP requests throw a clear exception if this integration is missing (set `bladex-components.validate_tailwind_integration` to `false` in config to disable).
+With `APP_DEBUG=true` and the package installed locally, HTTP requests throw a clear exception if this integration is missing (set `bladex-components.validate_tailwind_integration` to `false` in config to disable).
 
 The default registry is the copy shipped inside the installed package (`package://registry.json` in `bladex-components.json` after `init`). If `registry` points to a remote URL that returns 404, the CLI falls back to the package registry automatically.
 
@@ -205,16 +202,7 @@ php artisan bladex-components:add text heading
 
 Custom listbox select (not a native `<select>`). Markup is compound Blade; **keyboard and open/close behavior require the vanilla script** (no Alpine).
 
-Publish or import the script once:
-
-```bash
-php artisan vendor:publish --tag=bladex-components-assets
-```
-
-```js
-// Vite (adjust the vendor path)
-import '../../vendor/ivanfuhr/bladex-components/resources/assets/js/select.js';
-```
+Installing `select` via the registry copies `resources/views/ui/select/select.js` next to the Blade files and patches your Vite entry (`resources/js/app.js`) with a marked import. The script auto-initializes on `DOMContentLoaded`.
 
 **Shortcut** (default `shortcut` prop): wrap `select.item` children with trigger + content automatically:
 

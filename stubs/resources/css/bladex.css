@@ -1,0 +1,5 @@
+/**
+ * BladeX Components — Tailwind v4 @source paths for owned UI.
+ */
+@source "../../views/**/*.blade.php";
+@source "../../../app/Support/Bladex/**/*.php";

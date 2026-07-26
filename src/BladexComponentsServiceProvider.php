@@ -14,6 +14,9 @@ use Ivanfuhr\BladexComponents\Console\Commands\ListCommand;
 use Ivanfuhr\BladexComponents\Console\Commands\RemoveCommand;
 use Ivanfuhr\BladexComponents\Console\Commands\UpdateCommand;
 use Ivanfuhr\BladexComponents\Registry\ComponentInstaller;
+use Ivanfuhr\BladexComponents\Registry\OwnedArtifactCompiler;
+use Ivanfuhr\BladexComponents\Registry\ProjectIntegrator;
+use Ivanfuhr\BladexComponents\Registry\ProjectScaffolder;
 use Ivanfuhr\BladexComponents\Registry\RegistryClient;
 use Ivanfuhr\BladexComponents\Registry\RegistryResolver;
 use Ivanfuhr\BladexComponents\Support\Button\ButtonClassMap;
@@ -53,6 +56,9 @@ class BladexComponentsServiceProvider extends ServiceProvider
         });
         $this->app->singleton(RegistryResolver::class);
         $this->app->singleton(ComponentInstaller::class);
+        $this->app->singleton(OwnedArtifactCompiler::class);
+        $this->app->singleton(ProjectIntegrator::class);
+        $this->app->singleton(ProjectScaffolder::class);
 
         $this->app->singleton(TypographyConfig::class);
         $this->app->singleton(TypographyScale::class);

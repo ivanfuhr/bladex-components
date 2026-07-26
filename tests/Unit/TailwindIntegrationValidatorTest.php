@@ -4,31 +4,21 @@ declare(strict_types=1);
 
 use Ivanfuhr\BladexComponents\Support\Tailwind\TailwindIntegrationValidator;
 
-it('detects the v4 bladex tailwind import', function (): void {
+it('detects owned bladex tailwind markers in app stylesheets', function (): void {
     $validator = new TailwindIntegrationValidator;
 
-    $css = '@import "tailwindcss"; @import "../../vendor/ivanfuhr/bladex-components/resources/tailwind/bladex.css";';
+    $css = '@import "tailwindcss"; /* bladex-components-start */ @import "./bladex.css"; /* bladex-components-end */';
 
     expect($validator->contentsIndicateIntegration($css))->toBeTrue();
 });
 
-it('detects v3 content paths that scan package support php', function (): void {
+it('detects resources/css/bladex.css marker text', function (): void {
     $validator = new TailwindIntegrationValidator;
 
-    $config = "content: ['./vendor/ivanfuhr/bladex-components/src/Support/**/*.php']";
-
-    expect($validator->contentsIndicateIntegration($config))->toBeTrue();
+    expect($validator->contentsIndicateIntegration('@source "resources/css/bladex.css";'))->toBeTrue();
 });
 
-it('detects monorepo workbench imports of package tailwind sources', function (): void {
-    $validator = new TailwindIntegrationValidator;
-
-    $css = '@import "tailwindcss"; @import "../../../resources/tailwind/bladex.css";';
-
-    expect($validator->contentsIndicateIntegration($css))->toBeTrue();
-});
-
-it('rejects host stylesheets without bladex tailwind sources', function (): void {
+it('rejects host stylesheets without owned bladex integration', function (): void {
     $validator = new TailwindIntegrationValidator;
 
     expect($validator->contentsIndicateIntegration('@import "tailwindcss";'))->toBeFalse();

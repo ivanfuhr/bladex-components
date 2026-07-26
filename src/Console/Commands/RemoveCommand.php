@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ivanfuhr\BladexComponents\Console\Commands;
 
 use Ivanfuhr\BladexComponents\Registry\ComponentInstaller;
+use Ivanfuhr\BladexComponents\Registry\ProjectIntegrator;
 use Ivanfuhr\BladexComponents\Support\ProjectConfig;
 use Ivanfuhr\BladexComponents\Support\ProjectLock;
 use Throwable;
@@ -21,6 +22,7 @@ class RemoveCommand extends RegistryCommand
         ProjectConfig $projectConfig,
         ProjectLock $projectLock,
         ComponentInstaller $installer,
+        ProjectIntegrator $integrator,
     ): int {
         if (! $projectConfig->exists()) {
             $this->components->error('Project config not found. Run bladex-components:init first.');
@@ -30,7 +32,7 @@ class RemoveCommand extends RegistryCommand
 
         $names = $this->argument('names');
 
-        if (! is_array($names) || $names === []) {
+        if ($names === []) {
             $this->components->error('Provide at least one registry item name.');
 
             return self::FAILURE;
@@ -39,10 +41,6 @@ class RemoveCommand extends RegistryCommand
         $keepFiles = (bool) $this->option('keep-files');
 
         foreach ($names as $name) {
-            if (! is_string($name)) {
-                continue;
-            }
-
             try {
                 $removed = $installer->remove($projectConfig, $projectLock, $name, $keepFiles);
             } catch (Throwable $exception) {
@@ -61,6 +59,8 @@ class RemoveCommand extends RegistryCommand
                 $this->line($keepFiles ? 'Unlocked '.$path : 'Removed '.$path);
             }
         }
+
+        $integrator->syncFromLock($projectConfig, $projectLock);
 
         $this->components->info('Remove complete.');
 
