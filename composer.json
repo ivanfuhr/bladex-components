@@ -16,9 +16,19 @@
             "role": "Developer"
         }
     ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../bladex",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "require": {
         "php": "^8.3",
-        "illuminate/support": "^12.0||^13.0"
+        "illuminate/support": "^12.0||^13.0",
+        "ivanfuhr/bladex": "@dev"
     },
     "require-dev": {
         "larastan/larastan": "^3.9",

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ivanfuhr\BladexComponents;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Ivanfuhr\BladexComponents\Console\Commands\BladexComponentsCommand;
 
@@ -25,6 +26,11 @@ class BladexComponentsServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'bladex-components');
+
+        Blade::anonymousComponentNamespace(
+            __DIR__.'/../resources/views/components',
+            'bladex-components',
+        );
 
         $this->loadTranslationsFrom(__DIR__.'/../lang', 'bladex-components');
 
