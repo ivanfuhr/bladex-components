@@ -82,6 +82,24 @@
     if ($invalid) {
         $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);
     }
+
+    $affixIconClasses = $size === 'sm'
+        ? '[&_[data-bladex-icon]]:size-3.5'
+        : '[&_[data-bladex-icon]]:size-4';
+
+    $leadingAffixClasses = collect([
+        'bladex-input__leading',
+        'pointer-events-none absolute inset-y-0 left-0 flex w-9 items-center justify-center',
+        $affixIconClasses,
+        'text-zinc-500 dark:text-zinc-400',
+    ])->implode(' ');
+
+    $trailingAffixClasses = collect([
+        'bladex-input__trailing',
+        'absolute inset-y-0 right-0 flex w-9 items-center justify-center',
+        $affixIconClasses,
+        'text-zinc-500 dark:text-zinc-400',
+    ])->implode(' ');
 @endphp
 
 @if ($hasGroupAffix)
@@ -102,7 +120,7 @@
 
 <div @class([$wrapperClasses]) data-bladex-input>
     @if ($hasLeading)
-        <div class="bladex-input__leading pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-zinc-500 dark:text-zinc-400">
+        <div @class([$leadingAffixClasses])>
             @if ($leadingContent instanceof ComponentSlot)
                 {{ $leadingContent }}
             @else
@@ -114,7 +132,7 @@
     <input {{ $controlAttributes }} />
 
     @if ($hasTrailing)
-        <div class="bladex-input__trailing absolute inset-y-0 right-0 flex items-center pr-2 text-zinc-500 dark:text-zinc-400">
+        <div @class([$trailingAffixClasses])>
             @if ($trailingContent instanceof ComponentSlot)
                 {{ $trailingContent }}
             @else

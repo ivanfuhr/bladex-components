@@ -83,6 +83,26 @@ final class ProjectConfig
         return $this->basePath($this->uiPath());
     }
 
+    public function iconsPath(): string
+    {
+        $data = $this->tryRead();
+
+        if (is_array($data)) {
+            $fromProject = Arr::get($data, 'paths.icons');
+
+            if (is_string($fromProject) && $fromProject !== '') {
+                return $fromProject;
+            }
+        }
+
+        return (string) config('bladex-components.default_icons_path', 'resources/views/ui/icons');
+    }
+
+    public function resolvedIconsPath(): string
+    {
+        return $this->basePath($this->iconsPath());
+    }
+
     public function registryUrl(): string
     {
         $data = $this->read();
@@ -100,6 +120,7 @@ final class ProjectConfig
             'registry' => config('bladex-components.default_registry_url'),
             'paths' => [
                 'ui' => config('bladex-components.default_ui_path', 'resources/views/ui'),
+                'icons' => config('bladex-components.default_icons_path', 'resources/views/ui/icons'),
             ],
         ];
     }

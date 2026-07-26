@@ -55,7 +55,25 @@ it('renders leading and trailing slots', function () {
     expect($html)
         ->toContain('data-test="leading-icon"')
         ->toContain('data-test="trailing-action"')
-        ->toContain('bladex-input--with-affixes');
+        ->toContain('bladex-input--with-affixes')
+        ->toContain('bladex-input__leading')
+        ->toContain('w-9')
+        ->toContain('[&_[data-bladex-icon]]:size-4');
+});
+
+it('sizes icons in leading and trailing affixes to match the control', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-bladex-components::input name="search">
+            <x-slot:leading>
+                <x-bladex-components::icon.loading />
+            </x-slot:leading>
+        </x-bladex-components::input>
+    BLADE);
+
+    expect($html)
+        ->toContain('bladex-input__leading')
+        ->toContain('[&_[data-bladex-icon]]:size-4')
+        ->toContain('data-bladex-icon');
 });
 
 it('renders prefix and suffix from attributes', function () {

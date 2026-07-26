@@ -24,6 +24,9 @@
                 },
                 "lang": {
                     "type": "string"
+                },
+                "icons": {
+                    "type": "string"
                 }
             },
             "required": ["ui"]

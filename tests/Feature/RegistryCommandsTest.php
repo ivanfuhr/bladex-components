@@ -36,6 +36,7 @@ it('creates project config and lock via init', function () {
     $config = json_decode(file_get_contents($configPath), true);
 
     expect($config['paths']['ui'])->toBe('resources/views/ui');
+    expect($config['paths']['icons'])->toBe('resources/views/ui/icons');
     expect($config['registry'])->toBe(config('bladex-components.default_registry_url'));
 });
 

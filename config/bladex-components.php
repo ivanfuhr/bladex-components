@@ -12,6 +12,10 @@ return [
 
     'default_ui_path' => 'resources/views/ui',
 
+    'default_icons_path' => 'resources/views/ui/icons',
+
+    'lucide_raw_url' => 'https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/{name}.svg',
+
     'package_registry_path' => null,
 
     'default_registry_url' => 'package://registry.json',

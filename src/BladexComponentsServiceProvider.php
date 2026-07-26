@@ -8,6 +8,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Ivanfuhr\BladexComponents\Console\Commands\AddCommand;
+use Ivanfuhr\BladexComponents\Console\Commands\IconCommand;
 use Ivanfuhr\BladexComponents\Console\Commands\InitCommand;
 use Ivanfuhr\BladexComponents\Console\Commands\ListCommand;
 use Ivanfuhr\BladexComponents\Console\Commands\RemoveCommand;
@@ -68,19 +69,37 @@ class BladexComponentsServiceProvider extends ServiceProvider
 
     private function registerOwnedUiNamespace(): void
     {
+        $registered = false;
+
         $projectConfig = new ProjectConfig($this->app);
 
-        if (! $projectConfig->exists()) {
+        if ($projectConfig->exists()) {
+            try {
+                Blade::anonymousComponentPath(
+                    $projectConfig->resolvedUiPath(),
+                    'ui',
+                );
+
+                $registered = true;
+            } catch (Throwable) {
+                //
+            }
+        }
+
+        if ($registered) {
             return;
         }
 
-        try {
-            Blade::anonymousComponentPath(
-                $projectConfig->resolvedUiPath(),
-                'ui',
-            );
-        } catch (Throwable) {
-            //
+        $defaultUiPath = $this->app->basePath(
+            (string) config('bladex-components.default_ui_path', 'resources/views/ui'),
+        );
+
+        if (is_dir($defaultUiPath)) {
+            try {
+                Blade::anonymousComponentPath($defaultUiPath, 'ui');
+            } catch (Throwable) {
+                //
+            }
         }
     }
 
@@ -108,6 +127,7 @@ class BladexComponentsServiceProvider extends ServiceProvider
             UpdateCommand::class,
             RemoveCommand::class,
             ListCommand::class,
+            IconCommand::class,
         ]);
     }
 }

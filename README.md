@@ -88,6 +88,34 @@ Registry commands:
 | `bladex-components:update {name?}` | Refresh installed files from the registry |
 | `bladex-components:remove {names}` | Remove installed components |
 | `bladex-components:list` | List registry items (`--installed` for installed only) |
+| `bladex-components:icon {names?}` | Import Lucide icons into `resources/views/ui/icons` |
+
+### Icons (Lucide)
+
+Icons are imported on demand from [Lucide](https://lucide.dev/icons/) — only the icons you install are added to your app.
+
+```bash
+php artisan bladex-components:icon search grip-vertical
+```
+
+Imported icons are written to `resources/views/ui/icons` by default (override with `paths.icons` in `bladex-components.json` or `--path=` on the command).
+
+```blade
+<x-ui::icons.search />
+<x-ui::icons.search variant="mini" class="text-amber-500" />
+<x-bladex-components::icon name="search" />
+<x-bladex-components::icon.loading class="animate-spin" />
+
+<x-bladex-components::input name="search" placeholder="Search…">
+    <x-slot:leading>
+        <x-ui::icons.search />
+    </x-slot:leading>
+</x-bladex-components::input>
+```
+
+Supported Lucide variants: `outline` (default, 16px), `mini` (20px), and `micro` (12px). Icons always render at a sensible default size via intrinsic `width`/`height` even when Tailwind does not scan your `resources/views/ui/icons` path. Override with Tailwind `size-*`, `h-*`/`w-*`, and `text-*` classes on the component.
+
+If you customize sizing with Tailwind, add your icons directory to the Tailwind `content` paths so utilities are generated. Re-import icons with `--force` after upgrading the package so stubs use the shared `icon.lucide` shell.
 
 The default registry is the copy shipped inside the installed package (`package://registry.json` in `bladex-components.json` after `init`). If `registry` points to a remote URL that returns 404, the CLI falls back to the package registry automatically.
 
