@@ -43,6 +43,8 @@ php artisan bladex-components:add input
 
 Owned mode requires `bladex-components.json` at the project root. The package registers `Blade::anonymousComponentPath` for `paths.ui` (default `resources/views/ui`).
 
+**Tailwind:** Button variants resolve utilities from PHP class maps (`src/Support/`). If Tailwind only scans `resources/views/ui`, variant colors are omitted from the CSS and buttons look unstyled on dark pages. Tailwind v4: `@import "../../vendor/ivanfuhr/bladex-components/resources/tailwind/bladex.css";` in the app stylesheet. Tailwind v3: add `vendor/ivanfuhr/bladex-components/resources/views/**/*.blade.php` and `vendor/ivanfuhr/bladex-components/src/Support/**/*.php` to `content`. Use `class="dark"` on the layout for dark UIs so `variant="primary"` inverts correctly.
+
 ### 3. Registry CLI
 
 | Command | Purpose |

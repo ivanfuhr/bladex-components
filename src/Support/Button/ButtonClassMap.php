@@ -76,6 +76,35 @@ final class ButtonClassMap
         };
     }
 
+    /**
+     * Flat class string for Tailwind content scanning (see resources/views/components/_tailwind/).
+     */
+    public function tailwindContentProbe(): string
+    {
+        $classes = collect();
+
+        $variants = ['outline', 'primary', 'secondary', 'danger', 'ghost', 'subtle', 'link', 'filled'];
+        $sizes = [null, 'sm', 'xs', 'lg'];
+
+        foreach ($variants as $variant) {
+            foreach ($sizes as $size) {
+                $classes->push($this->classes($variant, $size));
+                $classes->push($this->classes($variant, $size, options: ['iconOnly' => true, 'square' => true]));
+            }
+        }
+
+        foreach (self::PALETTE as $color) {
+            $classes->push($this->classes('primary', color: $color));
+        }
+
+        return $classes
+            ->flatMap(static fn (string $chunk) => preg_split('/\s+/', trim($chunk)) ?: [])
+            ->filter()
+            ->unique()
+            ->sort()
+            ->implode(' ');
+    }
+
     private function sizeClasses(
         string $size,
         bool $square,
@@ -127,9 +156,9 @@ final class ButtonClassMap
                 'dark:bg-red-600 dark:hover:bg-red-500',
             ]),
             'ghost' => implode(' ', [
-                'border border-transparent bg-transparent text-zinc-900 shadow-none',
-                'hover:bg-zinc-100',
-                'dark:text-zinc-50 dark:hover:bg-zinc-800',
+                'border border-transparent bg-transparent text-current shadow-none',
+                'hover:bg-zinc-100 hover:text-zinc-900',
+                'dark:hover:bg-zinc-800 dark:hover:text-zinc-50',
             ]),
             'subtle' => implode(' ', [
                 'border border-transparent bg-zinc-100/80 text-zinc-900 shadow-none',
@@ -156,9 +185,9 @@ final class ButtonClassMap
 
         if ($color === 'zinc' || ! in_array($color, self::PALETTE, true)) {
             return implode(' ', [
-                'border border-transparent bg-zinc-900 text-zinc-50 shadow-sm',
-                'hover:bg-zinc-800',
-                'dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200',
+                'border border-transparent bg-zinc-900 text-zinc-50 shadow-sm ring-1 ring-white/15',
+                'hover:bg-zinc-800 hover:ring-white/25',
+                'dark:bg-zinc-50 dark:text-zinc-900 dark:ring-zinc-950/10 dark:hover:bg-zinc-200',
             ]);
         }
 

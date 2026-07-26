@@ -115,6 +115,37 @@ Imported icons are written to `resources/views/ui/icons` by default (override wi
 
 Supported Lucide variants: `outline` (default, 16px), `mini` (20px), and `micro` (12px). Icons always render at a sensible default size via intrinsic `width`/`height` even when Tailwind does not scan your `resources/views/ui/icons` path. Override with Tailwind `size-*`, `h-*`/`w-*`, and `text-*` classes on the component.
 
+### Tailwind CSS
+
+Several primitives resolve utility classes from **PHP class maps** (for example `ButtonClassMap`) in addition to Blade templates. If your Tailwind `content` / `@source` paths only include `resources/views/**/*.blade.php`, **button backgrounds and variant colors will not be generated** and controls can look unstyled on dark layouts.
+
+Include the package sources in your Tailwind build.
+
+**Tailwind v4** — import the bundled source file from your app stylesheet (adjust the vendor path if needed):
+
+```css
+@import "tailwindcss";
+@import "../../vendor/ivanfuhr/bladex-components/resources/tailwind/bladex.css";
+```
+
+**Tailwind v3** — extend `content`:
+
+```js
+content: [
+    './resources/views/**/*.blade.php',
+    './vendor/ivanfuhr/bladex-components/resources/views/**/*.blade.php',
+    './vendor/ivanfuhr/bladex-components/src/Support/**/*.php',
+],
+```
+
+Dark UIs should use Tailwind’s `dark` variant (`class="dark"` on `<html>` or a layout wrapper) so `variant="primary"` inverts correctly (`bg-zinc-50` text on dark, `bg-zinc-900` on light). Rebuild CSS after changing Tailwind sources (`npm run build` / `npm run dev`).
+
+Regenerate scan partials after changing button variants (maintainers):
+
+```bash
+composer tailwind:scan
+```
+
 If you customize sizing with Tailwind, add your icons directory to the Tailwind `content` paths so utilities are generated. Re-import icons with `--force` after upgrading the package so stubs use the shared `icon.lucide` shell.
 
 The default registry is the copy shipped inside the installed package (`package://registry.json` in `bladex-components.json` after `init`). If `registry` points to a remote URL that returns 404, the CLI falls back to the package registry automatically.

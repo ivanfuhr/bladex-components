@@ -1,0 +1,12 @@
+/**
+ * Import this file from your app stylesheet so Tailwind generates utilities used by
+ * package PHP class maps (button variants, interaction states, typography).
+ *
+ * Tailwind v4 (app.css):
+ *   @import "../../vendor/ivanfuhr/bladex-components/resources/tailwind/bladex.css";
+ *
+ * Adjust the path if your Composer vendor directory differs.
+ */
+
+@source "../views/**/*.blade.php";
+@source "../../src/Support/**/*.php";
