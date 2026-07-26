@@ -22,6 +22,14 @@ return [
 
     'default_schema_url' => 'https://raw.githubusercontent.com/ivanfuhr/bladex-components/main/registry/schema/bladex-components.json',
 
+    /*
+    | When APP_DEBUG is true, HTTP requests fail fast if Tailwind is not set up to
+    | scan BladeX package sources (see resources/tailwind/bladex.css). Artisan and
+    | unit tests are not checked. Override in the host app config or set
+    | validate_tailwind_integration => false to disable.
+    */
+    'validate_tailwind_integration' => true,
+
     'typography' => [
         'scale' => [
             'sm' => ['text' => 'text-sm', 'leading' => 'leading-5'],

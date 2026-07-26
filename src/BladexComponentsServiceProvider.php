@@ -21,6 +21,7 @@ use Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateAttributes;
 use Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateClassMap;
 use Ivanfuhr\BladexComponents\Support\ProjectConfig;
 use Ivanfuhr\BladexComponents\Support\ProjectLock;
+use Ivanfuhr\BladexComponents\Support\Tailwind\TailwindIntegrationValidator;
 use Ivanfuhr\BladexComponents\Support\Typography\GoogleFontsStylesheetBuilder;
 use Ivanfuhr\BladexComponents\Support\Typography\TypographyClassMap;
 use Ivanfuhr\BladexComponents\Support\Typography\TypographyConfig;
@@ -58,6 +59,7 @@ class BladexComponentsServiceProvider extends ServiceProvider
         $this->app->singleton(ButtonClassMap::class);
         $this->app->singleton(InteractionStateClassMap::class);
         $this->app->singleton(InteractionStateAttributes::class);
+        $this->app->singleton(TailwindIntegrationValidator::class);
         $this->app->singleton(GoogleFontsStylesheetBuilder::class);
     }
 
@@ -76,6 +78,8 @@ class BladexComponentsServiceProvider extends ServiceProvider
         $this->registerOwnedUiNamespace();
 
         $this->loadTranslationsFrom(__DIR__.'/../lang', 'bladex-components');
+
+        $this->ensureTailwindIntegrationInDebug();
 
         if ($this->app->runningInConsole()) {
             $this->registerConsoleResources();
@@ -116,6 +120,27 @@ class BladexComponentsServiceProvider extends ServiceProvider
                 //
             }
         }
+    }
+
+    private function ensureTailwindIntegrationInDebug(): void
+    {
+        if (! config('app.debug')) {
+            return;
+        }
+
+        if (! config('bladex-components.validate_tailwind_integration', true)) {
+            return;
+        }
+
+        if ($this->app->runningInConsole()) {
+            return;
+        }
+
+        if ($this->app->runningUnitTests()) {
+            return;
+        }
+
+        $this->app->make(TailwindIntegrationValidator::class)->assertConfigured($this->app);
     }
 
     private function registerConsoleResources(): void

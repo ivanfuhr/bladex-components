@@ -30,12 +30,3 @@ it('sizes icon-only buttons as squares', function (): void {
         ->and($map->classes('outline', 'sm', options: ['iconOnly' => true]))
         ->toContain('size-8');
 });
-
-it('exposes a tailwind content probe with primary utilities', function (): void {
-    $map = app(ButtonClassMap::class);
-
-    expect($map->tailwindContentProbe())
-        ->toContain('bg-zinc-900')
-        ->toContain('text-zinc-50')
-        ->toContain('ring-white/15');
-});

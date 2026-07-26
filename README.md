@@ -140,13 +140,7 @@ content: [
 
 Dark UIs should use Tailwind’s `dark` variant (`class="dark"` on `<html>` or a layout wrapper) so `variant="primary"` inverts correctly (`bg-zinc-50` text on dark, `bg-zinc-900` on light). Rebuild CSS after changing Tailwind sources (`npm run build` / `npm run dev`).
 
-Regenerate scan partials after changing button variants (maintainers):
-
-```bash
-composer tailwind:scan
-```
-
-If you customize sizing with Tailwind, add your icons directory to the Tailwind `content` paths so utilities are generated. Re-import icons with `--force` after upgrading the package so stubs use the shared `icon.lucide` shell.
+With `APP_DEBUG=true`, HTTP requests throw a clear exception if this integration is missing (set `bladex-components.validate_tailwind_integration` to `false` in config to disable).
 
 The default registry is the copy shipped inside the installed package (`package://registry.json` in `bladex-components.json` after `init`). If `registry` points to a remote URL that returns 404, the CLI falls back to the package registry automatically.
 

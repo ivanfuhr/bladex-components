@@ -96,9 +96,6 @@
         ],
         "registry:build": [
             "@php scripts/build-registry.php"
-        ],
-        "tailwind:scan": [
-            "@php scripts/build-tailwind-scan.php"
         ]
     },
     "extra": {

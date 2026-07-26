@@ -76,35 +76,6 @@ final class ButtonClassMap
         };
     }
 
-    /**
-     * Flat class string for Tailwind content scanning (see resources/views/components/_tailwind/).
-     */
-    public function tailwindContentProbe(): string
-    {
-        $classes = collect();
-
-        $variants = ['outline', 'primary', 'secondary', 'danger', 'ghost', 'subtle', 'link', 'filled'];
-        $sizes = [null, 'sm', 'xs', 'lg'];
-
-        foreach ($variants as $variant) {
-            foreach ($sizes as $size) {
-                $classes->push($this->classes($variant, $size));
-                $classes->push($this->classes($variant, $size, options: ['iconOnly' => true, 'square' => true]));
-            }
-        }
-
-        foreach (self::PALETTE as $color) {
-            $classes->push($this->classes('primary', color: $color));
-        }
-
-        return $classes
-            ->flatMap(static fn (string $chunk) => preg_split('/\s+/', trim($chunk)) ?: [])
-            ->filter()
-            ->unique()
-            ->sort()
-            ->implode(' ');
-    }
-
     private function sizeClasses(
         string $size,
         bool $square,
