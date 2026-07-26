@@ -65,6 +65,9 @@
         "build": [
             "@php vendor/bin/testbench workbench:build --ansi"
         ],
+        "workbench:assets": [
+            "cd workbench && npm ci && npm run build"
+        ],
         "serve": [
             "Composer\\Config::disableProcessTimeout",
             "@build",

@@ -12,6 +12,7 @@ final class TailwindIntegrationValidator
     /** @var list<string> */
     private const array INTEGRATION_MARKERS = [
         'bladex-components/resources/tailwind/bladex.css',
+        'resources/tailwind/bladex.css',
         'bladex-components/src/Support',
     ];
 
@@ -71,6 +72,16 @@ final class TailwindIntegrationValidator
             $base.'/vite.config.ts',
             $base.'/vite.config.mjs',
         ];
+
+        if (\function_exists('Orchestra\Testbench\workbench_path')) {
+            $paths = array_merge($paths, [
+                \Orchestra\Testbench\workbench_path('resources/css/app.css'),
+                \Orchestra\Testbench\workbench_path('resources/css/app.scss'),
+                \Orchestra\Testbench\workbench_path('vite.config.js'),
+                \Orchestra\Testbench\workbench_path('vite.config.ts'),
+                \Orchestra\Testbench\workbench_path('vite.config.mjs'),
+            ]);
+        }
 
         return array_values(array_filter($paths, static fn (string $path): bool => is_file($path)));
     }

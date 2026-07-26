@@ -1,8 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Workbench\App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Ivanfuhr\BladexComponents\BladexComponentsServiceProvider;
+use Workbench\App\Playbook\PlaybookPreviewRenderer;
+use Workbench\App\Playbook\PlaybookRegistry;
+use Workbench\App\Playbook\PlaybookStateValidator;
 
 class WorkbenchServiceProvider extends ServiceProvider
 {
@@ -11,7 +17,11 @@ class WorkbenchServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->register(BladexComponentsServiceProvider::class);
+
+        $this->app->singleton(PlaybookRegistry::class);
+        $this->app->singleton(PlaybookStateValidator::class);
+        $this->app->singleton(PlaybookPreviewRenderer::class);
     }
 
     /**
@@ -19,6 +29,6 @@ class WorkbenchServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'workbench');
     }
 }

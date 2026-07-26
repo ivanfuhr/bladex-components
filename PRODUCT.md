@@ -65,7 +65,7 @@ Neighboring kits may offer one side or the other; BladeX is explicitly built to 
 | Changelog (sparse) | `CHANGELOG.md` |
 | Composition & development agent skills | `resources/boost/skills/` |
 | Contributing & security policies | `.github/CONTRIBUTING.md`, `.github/SECURITY.md` |
-| Workbench demo route | `workbench/routes/web.php` → `welcome` view |
+| Workbench component playbook | `workbench/routes/web.php` → `/playbook` (interactive previews) |
 
 **Do not fabricate:** customer logos, testimonials, download benchmarks, pricing, or production case studies — none are present in the repository.
 

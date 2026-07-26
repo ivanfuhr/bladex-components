@@ -199,6 +199,15 @@ php artisan bladex-components:add text heading
 <x-ui::text>Owned copy</x-ui::text>
 ```
 
+## Development
+
+Maintainers can preview components in the local Orchestra workbench playbook:
+
+```bash
+composer workbench:assets   # or: cd workbench && npm ci && npm run build
+composer serve              # visit /playbook
+```
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.

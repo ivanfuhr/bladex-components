@@ -21,6 +21,7 @@
         </testsuite>
         <testsuite name="Feature">
             <directory>tests/Feature</directory>
+            <directory>tests/Workbench</directory>
         </testsuite>
         <testsuite name="Unit">
             <directory>tests/Unit</directory>

@@ -41,3 +41,18 @@ Run all tests:
 ```bash
 composer test
 ```
+
+## Workbench playbook
+
+Visual, interactive previews for package components (workbench only — not shipped to consumers).
+
+```bash
+cd workbench && npm ci && npm run build   # first run or after CSS/JS changes
+composer serve                            # package root; opens at /playbook
+```
+
+Or build frontend assets with:
+
+```bash
+composer workbench:assets
+```

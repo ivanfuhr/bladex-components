@@ -20,6 +20,14 @@ it('detects v3 content paths that scan package support php', function (): void {
     expect($validator->contentsIndicateIntegration($config))->toBeTrue();
 });
 
+it('detects monorepo workbench imports of package tailwind sources', function (): void {
+    $validator = new TailwindIntegrationValidator;
+
+    $css = '@import "tailwindcss"; @import "../../../resources/tailwind/bladex.css";';
+
+    expect($validator->contentsIndicateIntegration($css))->toBeTrue();
+});
+
 it('rejects host stylesheets without bladex tailwind sources', function (): void {
     $validator = new TailwindIntegrationValidator;
 
