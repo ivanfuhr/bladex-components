@@ -99,33 +99,6 @@ With `APP_DEBUG=true` and the package still installed, missing integration throw
 
 <br>
 
-## Development
-
-<h3 id="development"></h3>
-
-```bash
-composer playbook              # /playbook — interactive playground
-composer workbench:build
-composer serve
-```
-
-Package registry rebuild (contributors):
-
-```bash
-composer registry:build
-```
-
-To refresh README screenshots, run the workbench on port `8001`, then:
-
-```bash
-composer serve -- --port=8001   # separate terminal, if needed
-./scripts/capture-readme-images.sh
-```
-
-The script crops to `#readme-media` (installs `playwright-core` under `scripts/` on first run). Targets: `/playbook/media/{buttons|input|select|typography|icons}` and the same paths with `?dark=1`.
-
-<br>
-
 ---
 
 Component previews match your GitHub theme via `<picture>` (`prefers-color-scheme`).
@@ -259,6 +232,33 @@ php artisan stencil:icon search grip-vertical
 <x-ui::icons.search />
 <x-ui::icons.search variant="mini" class="text-amber-500" />
 ```
+
+<br>
+
+## Development
+
+<h3 id="development"></h3>
+
+```bash
+composer playbook              # /playbook — interactive playground
+composer workbench:build
+composer serve
+```
+
+Package registry rebuild (contributors):
+
+```bash
+composer registry:build
+```
+
+To refresh README screenshots, run the workbench on port `8001`, then:
+
+```bash
+composer serve -- --port=8001   # separate terminal, if needed
+./scripts/capture-readme-images.sh
+```
+
+The script crops to `#readme-media` (installs `playwright-core` under `scripts/` on first run). Targets: `/playbook/media/{buttons|input|select|typography|icons}` and the same paths with `?dark=1`.
 
 <br>
 

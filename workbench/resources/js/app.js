@@ -5,5 +5,5 @@ window.Alpine = Alpine;
 Alpine.start();
 
 // stencil-start
-import '../../../vendor/orchestra/testbench-core/laravel/resources/views/ui/select/select.js';
+import '../views/ui/select/select.js';
 // stencil-end

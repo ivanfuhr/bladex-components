@@ -57,9 +57,8 @@ final class ProjectIntegrator
 
     public function ensureSelectScript(ProjectConfig $config): void
     {
-        $scriptPath = $config->basePath($config->uiPath().'/select/select.js');
-
         foreach ($this->javascriptEntryCandidates($config) as $entry) {
+            $scriptPath = $this->selectScriptPathForEntry($config, $entry);
             $importPath = $this->relativeImportPath(dirname($entry), $scriptPath);
             $this->patchJavascriptImport($entry, $importPath);
         }
@@ -139,6 +138,14 @@ final class ProjectIntegrator
         }
 
         if (str_contains($contents, self::JS_START)) {
+            $pattern = '/'.preg_quote(self::JS_START, '/')."\nimport '[^']*';\n".preg_quote(self::JS_END, '/').'/';
+            $block = self::JS_START."\nimport '{$importPath}';\n".self::JS_END;
+            $updated = preg_replace($pattern, $block, $contents);
+
+            if (is_string($updated) && $updated !== $contents) {
+                file_put_contents($path, $updated);
+            }
+
             return;
         }
 
@@ -146,6 +153,23 @@ final class ProjectIntegrator
         $updated = rtrim($contents)."\n\n".$block;
 
         file_put_contents($path, $updated);
+    }
+
+    private function selectScriptPathForEntry(ProjectConfig $config, string $entryPath): string
+    {
+        $uiRelative = $config->uiPath().'/select/select.js';
+
+        if (\function_exists('Orchestra\Testbench\workbench_path')) {
+            $workbench = str_replace('\\', '/', \Orchestra\Testbench\workbench_path(''));
+            $workbench = rtrim($workbench, '/');
+            $normalizedEntry = str_replace('\\', '/', $entryPath);
+
+            if (str_starts_with($normalizedEntry, $workbench.'/')) {
+                return $workbench.'/'.ltrim(str_replace('\\', '/', $uiRelative), '/');
+            }
+        }
+
+        return $config->basePath($uiRelative);
     }
 
     private function removeMarkedBlock(string $path): void
