@@ -49,6 +49,12 @@ final class PlaybookRegistry
             $this->button(),
             $this->input(),
             $this->select(),
+            $this->label(),
+            $this->field(),
+            $this->textarea(),
+            $this->checkbox(),
+            $this->radio(),
+            $this->switch(),
             $this->text(),
             $this->heading(),
         ];
@@ -227,6 +233,162 @@ final class PlaybookRegistry
                 'variant' => 'default',
             ],
             previewView: 'workbench::playbook.previews.heading',
+        );
+    }
+
+    private function label(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('badge', 'Badge', 'select', [
+                '' => 'None',
+                'Required' => 'Required',
+                'Optional' => 'Optional',
+            ], ''),
+            new PlaybookControl('required', 'Required indicator', 'checkbox', [], false),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'label',
+            title: 'Label',
+            description: 'Accessible label primitive with optional badge and required marker.',
+            controls: $controls,
+            defaultState: [
+                'badge' => '',
+                'required' => false,
+            ],
+            previewView: 'workbench::playbook.previews.label',
+        );
+    }
+
+    private function field(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('orientation', 'Orientation', 'select', [
+                'block' => 'Block',
+                'inline' => 'Inline',
+            ], 'block'),
+            new PlaybookControl('size', 'Input size', 'select', [
+                'default' => 'Default',
+                'sm' => 'Small',
+            ], 'default'),
+            new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
+            new PlaybookControl('show_description', 'Description', 'checkbox', [], true),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'field',
+            title: 'Field',
+            description: 'Composable field shell with label, control, description, and errors.',
+            controls: $controls,
+            defaultState: [
+                'orientation' => 'block',
+                'size' => 'default',
+                'invalid' => false,
+                'show_description' => true,
+            ],
+            previewView: 'workbench::playbook.previews.field',
+        );
+    }
+
+    private function textarea(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('size', 'Size', 'select', [
+                'default' => 'Default',
+                'sm' => 'Small',
+            ], 'default'),
+            new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
+            new PlaybookControl('disabled', 'Disabled', 'checkbox', [], false),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'textarea',
+            title: 'Textarea',
+            description: 'Multi-line text control with validation and disabled states.',
+            controls: $controls,
+            defaultState: [
+                'size' => 'default',
+                'invalid' => false,
+                'disabled' => false,
+            ],
+            previewView: 'workbench::playbook.previews.textarea',
+        );
+    }
+
+    private function checkbox(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('size', 'Size', 'select', [
+                'default' => 'Default',
+                'sm' => 'Small',
+            ], 'default'),
+            new PlaybookControl('checked', 'Checked', 'checkbox', [], true),
+            new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
+            new PlaybookControl('disabled', 'Disabled', 'checkbox', [], false),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'checkbox',
+            title: 'Checkbox',
+            description: 'Native checkbox with Stencil choice-control styling.',
+            controls: $controls,
+            defaultState: [
+                'size' => 'default',
+                'checked' => true,
+                'invalid' => false,
+                'disabled' => false,
+            ],
+            previewView: 'workbench::playbook.previews.checkbox',
+        );
+    }
+
+    private function radio(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('size', 'Size', 'select', [
+                'default' => 'Default',
+                'sm' => 'Small',
+            ], 'default'),
+            new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'radio',
+            title: 'Radio',
+            description: 'Radio group and items for single-choice fields.',
+            controls: $controls,
+            defaultState: [
+                'size' => 'default',
+                'invalid' => false,
+            ],
+            previewView: 'workbench::playbook.previews.radio',
+        );
+    }
+
+    private function switch(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('size', 'Size', 'select', [
+                'default' => 'Default',
+                'sm' => 'Small',
+            ], 'default'),
+            new PlaybookControl('checked', 'Checked', 'checkbox', [], true),
+            new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
+            new PlaybookControl('disabled', 'Disabled', 'checkbox', [], false),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'switch',
+            title: 'Switch',
+            description: 'Binary toggle using role="switch" for settings-style controls.',
+            controls: $controls,
+            defaultState: [
+                'size' => 'default',
+                'checked' => true,
+                'invalid' => false,
+                'disabled' => false,
+            ],
+            previewView: 'workbench::playbook.previews.switch',
         );
     }
 }

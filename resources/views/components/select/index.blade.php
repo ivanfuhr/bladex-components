@@ -10,7 +10,13 @@
     'shortcut' => true,
 ])
 
+@aware([
+    'fieldInvalid' => false,
+])
+
 @php
+    $invalid = $invalid || $fieldInvalid;
+
     $selectId = filled($selectId)
         ? $selectId
         : 'select-'.str_replace('.', '', uniqid('', true));

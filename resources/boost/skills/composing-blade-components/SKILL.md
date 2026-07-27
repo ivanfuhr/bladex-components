@@ -77,15 +77,33 @@ Ship flexible Blade components that consumers assemble from small pieces, while 
 ### Preferred: compound + slots
 
 ```blade
-<x-stencil::field>
-    <x-stencil::field.label for="email">Email</x-stencil::field.label>
+<x-stencil::field name="email">
+    <x-stencil::field.label>Email</x-stencil::field.label>
 
-    <x-stencil::field.control>
-        <input id="email" type="email" {{ $attributes }} />
-    </x-stencil::field.control>
+    <x-stencil::input id="email" name="email" type="email" {{ $attributes }} />
 
+    <x-stencil::field.description>Optional hint copy.</x-stencil::field.description>
     <x-stencil::field.errors name="email" />
 </x-stencil::field>
+
+<x-stencil::field orientation="inline" name="notifications">
+    <x-stencil::switch name="notifications" />
+    <x-stencil::field.label>Enable notifications</x-stencil::field.label>
+</x-stencil::field>
+```
+
+### Textarea, checkbox, radio, switch
+
+```blade
+<x-stencil::textarea name="bio" rows="4" />
+
+<x-stencil::checkbox name="terms" value="1" />
+
+<x-stencil::radio.group name="plan" legend="Plan">
+    <x-stencil::radio value="pro">Pro</x-stencil::radio>
+</x-stencil::radio.group>
+
+<x-stencil::switch name="feature" />
 ```
 
 ### Select listbox (shortcut + full composition)

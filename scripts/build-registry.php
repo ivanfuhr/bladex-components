@@ -25,14 +25,25 @@ if (! is_dir($componentsPath)) {
 
 /** @var array<string, array{title: string, description: string, type: string, registryDependencies: list<string>, source?: string, targetPrefix?: string, filesOnly?: list<string>, assets?: array<string, string>}> $catalog */
 $catalog = [
-    'field' => [
-        'title' => 'Field Message',
-        'description' => 'Hint and error message primitive for form fields.',
+    'label' => [
+        'title' => 'Label',
+        'description' => 'Accessible label primitive with optional badge and required indicator.',
         'type' => 'registry:ui',
-        'registryDependencies' => [],
+        'registryDependencies' => ['text'],
+        'source' => 'label',
+        'targetPrefix' => 'label',
+        'filesOnly' => ['index.blade.php'],
+    ],
+    'field' => [
+        'title' => 'Field',
+        'description' => 'Composable form field shell with label, description, messages, and validation errors.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['label', 'text'],
         'source' => 'field',
         'targetPrefix' => 'field',
-        'filesOnly' => ['message.blade.php', 'errors.blade.php'],
+        'appFiles' => [
+            'stubs/app/View/Components/Ui/Field.php' => 'app/View/Components/Ui/Field.php',
+        ],
     ],
     'icon' => [
         'title' => 'Icon',
@@ -96,6 +107,41 @@ $catalog = [
             'resources/assets/js/select.js' => 'select.js',
         ],
     ],
+    'textarea' => [
+        'title' => 'Textarea',
+        'description' => 'Accessible multi-line text control with validation and disabled states.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['field', 'text'],
+        'source' => 'textarea',
+        'targetPrefix' => 'textarea',
+        'filesOnly' => ['index.blade.php'],
+    ],
+    'checkbox' => [
+        'title' => 'Checkbox',
+        'description' => 'Native checkbox control with Stencil field surface and invalid states.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['field'],
+        'source' => 'checkbox',
+        'targetPrefix' => 'checkbox',
+        'filesOnly' => ['index.blade.php'],
+    ],
+    'radio' => [
+        'title' => 'Radio',
+        'description' => 'Radio group and item primitives for single-choice form fields.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['field', 'label'],
+        'source' => 'radio',
+        'targetPrefix' => 'radio',
+    ],
+    'switch' => [
+        'title' => 'Switch',
+        'description' => 'Toggle switch control using role="switch" for binary settings.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['field'],
+        'source' => 'switch',
+        'targetPrefix' => 'switch',
+        'filesOnly' => ['index.blade.php'],
+    ],
 ];
 
 $indexItems = [];
@@ -129,6 +175,23 @@ foreach ($catalog as $name => $meta) {
             'type' => 'registry:ui',
             'target' => $assetTarget,
             'content' => $assetContent,
+        ];
+    }
+
+    foreach ($meta['appFiles'] ?? [] as $sourceRelative => $target) {
+        $appFilePath = $root.'/'.$sourceRelative;
+        $appFileContent = file_get_contents($appFilePath);
+
+        if ($appFileContent === false) {
+            fwrite(STDERR, "Missing app file for [{$name}]: {$appFilePath}\n");
+            exit(1);
+        }
+
+        $files[] = [
+            'path' => $target,
+            'type' => 'registry:app',
+            'target' => $target,
+            'content' => $appFileContent,
         ];
     }
 

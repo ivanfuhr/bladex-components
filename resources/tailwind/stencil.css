@@ -9,3 +9,45 @@
 
 @source "../views/**/*.blade.php";
 @source "../../src/Support/**/*.php";
+
+@layer components {
+    .switch [data-switch-thumb] {
+        translate: 0;
+    }
+
+    .switch:has(:disabled) {
+        @apply cursor-not-allowed opacity-50;
+    }
+
+    .switch:has(:focus-visible) [data-switch-track] {
+        @apply outline-none ring-2 ring-zinc-950/10 ring-offset-2 ring-offset-white;
+    }
+
+    .dark .switch:has(:focus-visible) [data-switch-track] {
+        @apply ring-zinc-300/20 ring-offset-zinc-950;
+    }
+
+    .switch:has(:checked) [data-switch-track] {
+        @apply bg-zinc-900;
+    }
+
+    .dark .switch:has(:checked) [data-switch-track] {
+        @apply bg-zinc-50;
+    }
+
+    .switch:has(:checked) [data-switch-thumb] {
+        @apply translate-x-5;
+    }
+
+    .dark .switch:has(:checked) [data-switch-thumb] {
+        @apply bg-zinc-900;
+    }
+
+    .switch--sm:has(:checked) [data-switch-thumb] {
+        @apply translate-x-4;
+    }
+
+    .switch:has([aria-invalid="true"]) [data-switch-track] {
+        @apply ring-2 ring-red-500/30;
+    }
+}

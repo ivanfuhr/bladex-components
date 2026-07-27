@@ -55,6 +55,20 @@ it('add installs registry items into resources/views/ui', function () {
     expect(collect($lock['items'])->pluck('name')->all())->toContain('input', 'input-group', 'field');
 });
 
+it('add textarea installs field dependencies including label', function () {
+    useOwnedRegistryProject();
+    fakeRegistryHttp();
+
+    $this->artisan('stencil:add', ['names' => ['textarea']])
+        ->assertSuccessful();
+
+    expect(file_exists($this->app->resourcePath('views/ui/textarea/index.blade.php')))->toBeTrue();
+
+    $lock = json_decode(file_get_contents($this->app->basePath('stencil.lock')), true);
+
+    expect(collect($lock['items'])->pluck('name')->all())->toContain('textarea', 'field', 'label', 'text');
+});
+
 it('add select installs owned javascript asset', function () {
     useOwnedRegistryProject();
     fakeRegistryHttp();

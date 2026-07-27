@@ -30,6 +30,7 @@ use Ivanfuhr\Stencil\Support\Typography\GoogleFontsStylesheetBuilder;
 use Ivanfuhr\Stencil\Support\Typography\TypographyClassMap;
 use Ivanfuhr\Stencil\Support\Typography\TypographyConfig;
 use Ivanfuhr\Stencil\Support\Typography\TypographyScale;
+use Ivanfuhr\Stencil\View\Components\Field;
 use Throwable;
 
 class StencilServiceProvider extends ServiceProvider
@@ -82,6 +83,8 @@ class StencilServiceProvider extends ServiceProvider
             __DIR__.'/../resources/views/components',
             'stencil',
         );
+
+        Blade::component(Field::class, 'stencil::field');
 
         $this->registerOwnedUiNamespace();
 

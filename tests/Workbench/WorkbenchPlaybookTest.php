@@ -8,6 +8,8 @@ it('lists playbook components on the index', function () {
     $response->assertOk();
     $response->assertSee('Button');
     $response->assertSee('Input');
+    $response->assertSee('Field');
+    $response->assertSee('Textarea');
     $response->assertSee('Text');
     $response->assertSee('Heading');
 });

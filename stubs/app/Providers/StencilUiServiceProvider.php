@@ -13,6 +13,7 @@ use App\Support\Stencil\Typography\GoogleFontsStylesheetBuilder;
 use App\Support\Stencil\Typography\TypographyClassMap;
 use App\Support\Stencil\Typography\TypographyConfig;
 use App\Support\Stencil\Typography\TypographyScale;
+use App\View\Components\Ui\Field;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -42,5 +43,7 @@ class StencilUiServiceProvider extends ServiceProvider
         if (is_dir($uiPath)) {
             Blade::anonymousComponentPath($uiPath, 'ui');
         }
+
+        Blade::component(Field::class, 'ui::field');
     }
 }

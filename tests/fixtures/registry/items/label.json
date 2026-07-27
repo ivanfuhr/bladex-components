@@ -1,0 +1,18 @@
+{
+    "$schema": "../schema/registry-item.json",
+    "name": "label",
+    "type": "registry:ui",
+    "title": "Label",
+    "description": "Accessible label primitive with optional badge and required indicator.",
+    "registryDependencies": [
+        "text"
+    ],
+    "files": [
+        {
+            "path": "label/index.blade.php",
+            "type": "registry:ui",
+            "target": "label/index.blade.php",
+            "content": "@props([\n    'for' => null,\n    'badge' => null,\n    'required' => false,\n])\n\n@php\n    use App\\Support\\Stencil\\Form\\FormControlClassMap;\n\n    $classes = collect([\n        'label',\n        'inline-flex items-center gap-2',\n        app(FormControlClassMap::class)->labelClasses(),\n    ])->implode(' ');\n\n    $labelAttributes = $attributes\n        ->class($classes)\n        ->merge([\n            'data-label' => true,\n        ]);\n\n    if (filled($for)) {\n        $labelAttributes = $labelAttributes->merge(['for' => $for]);\n    }\n@endphp\n\n<label {{ $labelAttributes }}>\n    <span class=\"label__text\">{{ $slot }}</span>\n\n    @if ($required)\n        <span class=\"text-red-600 dark:text-red-400\" aria-hidden=\"true\">*</span>\n        <span class=\"sr-only\">{{ __('Required') }}</span>\n    @endif\n\n    @if (filled($badge))\n        <span\n            @class([\n                'label__badge',\n                'rounded-md border border-zinc-200 bg-zinc-50 px-1.5 py-0.5 font-medium text-zinc-600',\n                'dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400',\n                'text-xs',\n            ])\n            data-label-badge\n        >{{ $badge }}</span>\n    @endif\n</label>\n"
+        }
+    ]
+}

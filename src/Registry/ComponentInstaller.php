@@ -291,7 +291,18 @@ final class ComponentInstaller
     {
         $relativeTarget = $this->targetPath($file);
         $type = (string) ($file['type'] ?? 'registry:ui');
-        $baseRelative = $type === 'registry:asset' ? $config->assetsPath() : $config->uiPath();
+        $baseRelative = match ($type) {
+            'registry:asset' => $config->assetsPath(),
+            'registry:app' => '',
+            default => $config->uiPath(),
+        };
+
+        if ($type === 'registry:app') {
+            return [
+                'absolute' => $config->basePath($relativeTarget),
+                'appRelative' => $relativeTarget,
+            ];
+        }
 
         return [
             'absolute' => $config->basePath($baseRelative.'/'.$relativeTarget),

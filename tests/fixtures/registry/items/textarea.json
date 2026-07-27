@@ -1,0 +1,19 @@
+{
+    "$schema": "../schema/registry-item.json",
+    "name": "textarea",
+    "type": "registry:ui",
+    "title": "Textarea",
+    "description": "Accessible multi-line text control with validation and disabled states.",
+    "registryDependencies": [
+        "field",
+        "text"
+    ],
+    "files": [
+        {
+            "path": "textarea/index.blade.php",
+            "type": "registry:ui",
+            "target": "textarea/index.blade.php",
+            "content": "@props([\n    'invalid' => false,\n    'size' => null,\n])\n\n@aware([\n    'fieldInvalid' => false,\n])\n\n@php\n    use App\\Support\\Stencil\\Form\\FormControlClassMap;\n    use App\\Support\\Stencil\\Interaction\\InteractionStateAttributes;\n\n    $isInvalid = $invalid || $fieldInvalid;\n\n    $formControl = app(FormControlClassMap::class);\n    $interactionState = app(InteractionStateAttributes::class);\n\n    $userClass = $attributes->get('class');\n    $applyFullWidth = ! filled($userClass);\n\n    $controlClasses = collect([\n        'textarea__control',\n        'block min-w-0',\n        $formControl->textareaSurfaceClasses($size),\n        'placeholder:text-zinc-500 dark:placeholder:text-zinc-400',\n        $formControl->invalidFieldClasses(),\n        $isInvalid ? 'border-red-500 focus-visible:ring-red-500/20 dark:border-red-500' : null,\n    ])->filter()->implode(' ');\n\n    $wrapperClasses = collect([\n        'textarea',\n        $applyFullWidth ? 'w-full' : null,\n        $userClass,\n    ])->filter()->implode(' ');\n\n    $controlExtraClass = $attributes->get('class:textarea') ?? $attributes->get('textarea:class');\n\n    $controlAttributes = $interactionState->apply(\n        $attributes\n            ->except(['class', 'class:textarea', 'textarea:class'])\n            ->class([$controlClasses, $controlExtraClass])\n            ->merge([\n                'data-textarea-control' => true,\n            ]),\n    );\n\n    if ($isInvalid) {\n        $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);\n    }\n@endphp\n\n<div @class([$wrapperClasses]) data-textarea>\n    <textarea {{ $controlAttributes }}>{{ $slot }}</textarea>\n</div>\n"
+        }
+    ]
+}

@@ -22,7 +22,7 @@
 
 | 🧩 **Components** | 📖 **Guide** | 🛠 **Project** |
 | :--- | :--- | :--- |
-| [Button](#button) · [Input](#input) · [Select](#select) · [Typography](#typography) · [Icons](#icons) | [Installation](#installation) · [Usage](#usage) · [Registry CLI](#registry-cli) · [Tailwind](#tailwind-css) · [Playbook](#development) | [Changelog](CHANGELOG.md) · [Contributing](.github/CONTRIBUTING.md) · [Security](.github/SECURITY.md) · [License](LICENSE.md) |
+| [Button](#button) · [Input](#input) · [Label](#label) · [Field](#field) · [Textarea](#textarea) · [Checkbox](#checkbox) · [Radio](#radio) · [Switch](#switch) · [Select](#select) · [Typography](#typography) · [Icons](#icons) | [Installation](#installation) · [Usage](#usage) · [Registry CLI](#registry-cli) · [Tailwind](#tailwind-css) · [Playbook](#development) | [Changelog](CHANGELOG.md) · [Contributing](.github/CONTRIBUTING.md) · [Security](.github/SECURITY.md) · [License](LICENSE.md) |
 
 <br>
 
@@ -66,7 +66,7 @@ Use the owned Blade namespace in your app:
 <x-ui::input name="email" />
 ```
 
-**Registry UI items:** `button`, `field`, `heading`, `icon`, `input`, `input-group`, `select`, `text`. Lower-level pieces such as `field` and `input-group` are usually installed transitively. **Lucide icons:** run `stencil:add icon` once, then `stencil:icon {name}` per icon (see [Icons](#icons)).
+**Registry UI items:** `button`, `checkbox`, `field`, `heading`, `icon`, `input`, `input-group`, `label`, `radio`, `select`, `switch`, `text`, `textarea`. Lower-level pieces such as `field`, `input-group`, and `label` are usually installed transitively. **Lucide icons:** run `stencil:add icon` once, then `stencil:icon {name}` per icon (see [Icons](#icons)).
 
 ### Registry CLI
 
@@ -154,6 +154,141 @@ Affixes, `prefix` / `suffix`, and `invalid`, `disabled`, and `readonly` states.
 
 ```bash
 php artisan stencil:add input
+```
+
+<br>
+
+## Label
+
+Accessible `<label>` with optional `badge` and `required` marker. Pairs with any control via `for` (see [shadcn Label](https://ui.shadcn.com/docs/components/aria/label) and [Flux label](https://fluxui.dev/components/field)).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/label-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/label-light.png">
+  <img src="docs/images/label-light.png" alt="Label" />
+</picture>
+
+```blade
+<x-ui::label for="email" badge="Required" :required="true">Email</x-ui::label>
+<x-ui::input id="email" name="email" type="email" />
+```
+
+```bash
+php artisan stencil:add label
+```
+
+<br>
+
+## Field
+
+Composable field shell: label, control, description, and Laravel errors — inspired by [shadcn Field](https://ui.shadcn.com/docs/components/radix/field) and [Flux field](https://fluxui.dev/components/field). Use `orientation="inline"` for checkbox/switch rows.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/field-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/field-light.png">
+  <img src="docs/images/field-light.png" alt="Field" />
+</picture>
+
+```blade
+<x-ui::field name="email">
+    <x-ui::field.label>Email</x-ui::field.label>
+    <x-ui::input name="email" type="email" />
+    <x-ui::field.description>We never share your email.</x-ui::field.description>
+    <x-ui::field.errors name="email" />
+</x-ui::field>
+```
+
+```bash
+php artisan stencil:add field
+```
+
+<br>
+
+## Textarea
+
+Multi-line control with the same invalid/disabled behavior as `input` ([shadcn Textarea](https://ui.shadcn.com/docs/components/base/textarea)).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/textarea-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/textarea-light.png">
+  <img src="docs/images/textarea-light.png" alt="Textarea" />
+</picture>
+
+```blade
+<x-ui::textarea name="bio" rows="4" placeholder="About you…" />
+```
+
+```bash
+php artisan stencil:add textarea
+```
+
+<br>
+
+## Checkbox
+
+Native checkbox for forms and multi-select ([Flux checkbox](https://fluxui.dev/docs)).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/checkbox-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/checkbox-light.png">
+  <img src="docs/images/checkbox-light.png" alt="Checkbox" />
+</picture>
+
+```blade
+<x-ui::field name="terms" orientation="inline">
+    <x-ui::checkbox name="terms" value="1" />
+    <x-ui::field.label>Accept terms</x-ui::field.label>
+</x-ui::field>
+```
+
+```bash
+php artisan stencil:add checkbox
+```
+
+<br>
+
+## Radio
+
+`radio.group` + `radio` items for single-choice fields ([shadcn Radio Group](https://ui.shadcn.com/docs)).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/radio-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/radio-light.png">
+  <img src="docs/images/radio-light.png" alt="Radio" />
+</picture>
+
+```blade
+<x-ui::radio.group name="plan" legend="Plan">
+    <x-ui::radio value="free">Free</x-ui::radio>
+    <x-ui::radio value="pro" :checked="true">Pro</x-ui::radio>
+</x-ui::radio.group>
+```
+
+```bash
+php artisan stencil:add radio
+```
+
+<br>
+
+## Switch
+
+`role="switch"` toggle for settings-style UI ([Flux switch](https://fluxui.dev/components/switch)). Prefer `checkbox` inside classic form posts.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/switch-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/switch-light.png">
+  <img src="docs/images/switch-light.png" alt="Switch" />
+</picture>
+
+```blade
+<x-ui::field orientation="inline">
+    <x-ui::field.label>Notifications</x-ui::field.label>
+    <x-ui::switch name="notifications" />
+</x-ui::field>
+```
+
+```bash
+php artisan stencil:add switch
 ```
 
 <br>
@@ -254,11 +389,12 @@ composer registry:build
 To refresh README screenshots, run the workbench on port `8001`, then:
 
 ```bash
-composer serve -- --port=8001   # separate terminal, if needed
+composer build
+php vendor/bin/testbench serve --port=8001   # separate terminal
 ./scripts/capture-readme-images.sh
 ```
 
-The script crops to `#readme-media` (installs `playwright-core` under `scripts/` on first run). Targets: `/playbook/media/{buttons|input|select|typography|icons}` and the same paths with `?dark=1`.
+The script crops to `#readme-media` (installs `playwright-core` under `scripts/` on first run). Targets: `/playbook/media/{buttons|input|label|field|textarea|checkbox|radio|switch|select|typography|icons}` and the same paths with `?dark=1`.
 
 <br>
 

@@ -1,0 +1,18 @@
+{
+    "$schema": "../schema/registry-item.json",
+    "name": "checkbox",
+    "type": "registry:ui",
+    "title": "Checkbox",
+    "description": "Native checkbox control with Stencil field surface and invalid states.",
+    "registryDependencies": [
+        "field"
+    ],
+    "files": [
+        {
+            "path": "checkbox/index.blade.php",
+            "type": "registry:ui",
+            "target": "checkbox/index.blade.php",
+            "content": "@props([\n    'name' => null,\n    'value' => '1',\n    'checked' => false,\n    'invalid' => false,\n    'size' => null,\n])\n\n@aware([\n    'fieldInvalid' => false,\n])\n\n@php\n    use App\\Support\\Stencil\\Form\\FormControlClassMap;\n    use App\\Support\\Stencil\\Interaction\\InteractionStateAttributes;\n\n    $isInvalid = $invalid || $fieldInvalid;\n\n    $formControl = app(FormControlClassMap::class);\n    $interactionState = app(InteractionStateAttributes::class);\n\n    $controlClasses = collect([\n        $formControl->choiceControlClasses('checkbox', $size),\n        'appearance-none grid place-content-center text-transparent',\n        'checked:border-zinc-900 checked:bg-zinc-900 checked:text-white',\n        'dark:checked:border-zinc-50 dark:checked:bg-zinc-50 dark:checked:text-zinc-900',\n        'checked:bg-[length:75%_75%]',\n        'checked:bg-center checked:bg-no-repeat',\n        \"checked:bg-[url(\\\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3E%3Cpath d='M12.207 4.793a1 1 0 0 1 0 1.414l-5 5a1 1 0 0 1-1.414 0l-2.5-2.5a1 1 0 0 1 1.414-1.414L6.5 9.086l4.293-4.293a1 1 0 0 1 1.414 0z'/%3E%3C/svg%3E\\\")]\",\n        \"dark:checked:bg-[url(\\\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2318181b'%3E%3Cpath d='M12.207 4.793a1 1 0 0 1 0 1.414l-5 5a1 1 0 0 1-1.414 0l-2.5-2.5a1 1 0 0 1 1.414-1.414L6.5 9.086l4.293-4.293a1 1 0 0 1 1.414 0z'/%3E%3C/svg%3E\\\")]\",\n    ])->implode(' ');\n\n    $controlAttributes = $interactionState->apply(\n        $attributes\n            ->class($controlClasses)\n            ->merge([\n                'type' => 'checkbox',\n                'data-checkbox-control' => true,\n            ]),\n        ['nativeDisabled' => true],\n    );\n\n    if (filled($name)) {\n        $controlAttributes = $controlAttributes->merge(['name' => $name]);\n    }\n\n    if (filled($value)) {\n        $controlAttributes = $controlAttributes->merge(['value' => $value]);\n    }\n\n    if ($checked) {\n        $controlAttributes = $controlAttributes->merge(['checked' => true]);\n    }\n\n    if ($isInvalid) {\n        $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);\n    }\n@endphp\n\n<div class=\"checkbox inline-flex items-center\" data-checkbox>\n    <input {{ $controlAttributes }} />\n</div>\n"
+        }
+    ]
+}

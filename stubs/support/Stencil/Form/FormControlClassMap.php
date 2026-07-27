@@ -34,6 +34,79 @@ final class FormControlClassMap
         ])->implode(' ');
     }
 
+    public function textareaSurfaceClasses(?string $size, bool $includeReadOnly = true): string
+    {
+        $cursorClasses = $this->interactionState->cursorTextClasses();
+
+        return collect([
+            'rounded-md border border-zinc-200 bg-white px-3 py-2 shadow-sm transition-colors',
+            $cursorClasses,
+            $this->typography->inputControlClasses($size),
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:ring-offset-0',
+            $this->interactionState->classes(includeReadOnly: $includeReadOnly),
+            'dark:border-zinc-800 dark:bg-zinc-950',
+            'dark:focus-visible:ring-zinc-300/20',
+            'min-h-[5rem] w-full resize-y',
+            $size === 'sm' ? 'min-h-[4rem] px-2.5' : null,
+        ])->filter()->implode(' ');
+    }
+
+    public function labelClasses(): string
+    {
+        return collect([
+            $this->typography->textClasses('sm', 'strong', null),
+            'text-zinc-950 dark:text-zinc-50',
+        ])->implode(' ');
+    }
+
+    /**
+     * @param  'checkbox'|'radio'  $type
+     */
+    public function choiceControlClasses(string $type = 'checkbox', ?string $size = null): string
+    {
+        $dimension = $size === 'sm' ? 'size-3.5' : 'size-4';
+        $rounded = $type === 'radio' ? 'rounded-full' : 'rounded-[4px]';
+
+        return collect([
+            'choice-control',
+            $dimension,
+            'shrink-0',
+            $rounded,
+            'border border-zinc-300 bg-white shadow-sm transition-colors',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:ring-offset-2 focus-visible:ring-offset-white',
+            'disabled:cursor-not-allowed disabled:opacity-50',
+            'dark:border-zinc-600 dark:bg-zinc-950 dark:focus-visible:ring-zinc-300/20 dark:focus-visible:ring-offset-zinc-950',
+            'checked:border-zinc-900 checked:bg-zinc-900 checked:text-white',
+            'dark:checked:border-zinc-50 dark:checked:bg-zinc-50 dark:checked:text-zinc-900',
+            'aria-invalid:border-red-500 aria-invalid:ring-red-500/20',
+            'dark:aria-invalid:border-red-500',
+        ])->implode(' ');
+    }
+
+    public function switchTrackClasses(?string $size = null): string
+    {
+        $track = $size === 'sm' ? 'h-5 w-9' : 'h-6 w-11';
+
+        return collect([
+            'switch__track',
+            'relative inline-flex shrink-0 items-center rounded-full border-2 border-transparent p-0.5 transition-colors',
+            $track,
+            'bg-zinc-200 dark:bg-zinc-700',
+        ])->implode(' ');
+    }
+
+    public function switchThumbClasses(?string $size = null): string
+    {
+        $thumb = $size === 'sm' ? 'size-4' : 'size-5';
+
+        return collect([
+            'switch__thumb',
+            'pointer-events-none block rounded-full bg-white shadow-lg ring-0 transition-transform',
+            $thumb,
+            'dark:bg-zinc-950',
+        ])->implode(' ');
+    }
+
     public function invalidFieldClasses(): string
     {
         return implode(' ', [

@@ -9,11 +9,17 @@
     'trailing' => null,
 ])
 
+@aware([
+    'fieldInvalid' => false,
+])
+
 @php
     use Illuminate\View\ComponentSlot;
     use Ivanfuhr\Stencil\Support\Form\FormControlClassMap;
     use Ivanfuhr\Stencil\Support\Interaction\InteractionStateAttributes;
     use Ivanfuhr\Stencil\Support\Typography\TypographyClassMap;
+
+    $invalid = $invalid || $fieldInvalid;
 
     $typography = app(TypographyClassMap::class);
     $formControl = app(FormControlClassMap::class);

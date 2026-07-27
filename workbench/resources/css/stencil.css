@@ -1,9 +1,8 @@
 /**
- * Stencil — Tailwind v4 @source paths for owned UI.
+ * Stencil — Tailwind v4 @source paths for workbench.
  */
-@custom-variant dark (&:where(.dark, .dark *));
+@import "../../../resources/tailwind/stencil.css";
 
 @source "../../views/**/*.blade.php";
-@source "../../../app/Support/Stencil/**/*.php";
 @source "../../../resources/views/**/*.blade.php";
 @source "../../../src/Support/**/*.php";

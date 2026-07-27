@@ -18,6 +18,12 @@ final class PlaybookMediaController
         'select',
         'typography',
         'icons',
+        'label',
+        'field',
+        'textarea',
+        'checkbox',
+        'radio',
+        'switch',
     ];
 
     public function __construct(

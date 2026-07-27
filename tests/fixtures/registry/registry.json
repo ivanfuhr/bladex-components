@@ -4,11 +4,23 @@
     "homepage": "https://github.com/ivanfuhr/stencil",
     "items": [
         {
+            "name": "label",
+            "type": "registry:ui",
+            "title": "Label",
+            "description": "Accessible label primitive with optional badge and required indicator.",
+            "registryDependencies": [
+                "text"
+            ]
+        },
+        {
             "name": "field",
             "type": "registry:ui",
-            "title": "Field Message",
-            "description": "Hint and error message primitive for form fields.",
-            "registryDependencies": []
+            "title": "Field",
+            "description": "Composable form field shell with label, description, messages, and validation errors.",
+            "registryDependencies": [
+                "label",
+                "text"
+            ]
         },
         {
             "name": "icon",
@@ -63,6 +75,44 @@
             "title": "Select",
             "description": "Accessible custom listbox select with compound sub-components and optional Flux-style shortcut.",
             "registryDependencies": []
+        },
+        {
+            "name": "textarea",
+            "type": "registry:ui",
+            "title": "Textarea",
+            "description": "Accessible multi-line text control with validation and disabled states.",
+            "registryDependencies": [
+                "field",
+                "text"
+            ]
+        },
+        {
+            "name": "checkbox",
+            "type": "registry:ui",
+            "title": "Checkbox",
+            "description": "Native checkbox control with Stencil field surface and invalid states.",
+            "registryDependencies": [
+                "field"
+            ]
+        },
+        {
+            "name": "radio",
+            "type": "registry:ui",
+            "title": "Radio",
+            "description": "Radio group and item primitives for single-choice form fields.",
+            "registryDependencies": [
+                "field",
+                "label"
+            ]
+        },
+        {
+            "name": "switch",
+            "type": "registry:ui",
+            "title": "Switch",
+            "description": "Toggle switch control using role=\"switch\" for binary settings.",
+            "registryDependencies": [
+                "field"
+            ]
         }
     ]
 }
