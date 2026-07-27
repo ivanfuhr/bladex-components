@@ -1,8 +1,12 @@
 <div align="center">
-    <h1>BladeX Components</h1>
-</div>
 
-<p align="center">
+![BladeX Components](docs/images/hero.svg)
+
+# BladeX Components
+
+**Composable Blade primitives for Laravel — vendor quick start or shadcn-style owned UI.**
+
+<p>
     <a href="https://packagist.org/packages/ivanfuhr/bladex-components"><img src="https://img.shields.io/packagist/v/ivanfuhr/bladex-components.svg?style=flat-square" alt="Packagist"></a>
     <a href="https://packagist.org/packages/ivanfuhr/bladex-components"><img src="https://img.shields.io/packagist/php-v/ivanfuhr/bladex-components.svg?style=flat-square" alt="PHP from Packagist"></a>
     <a href="https://packagist.org/packages/ivanfuhr/bladex-components"><img src="https://badge.laravel.cloud/badge/ivanfuhr/bladex-components?style=flat" alt="Laravel versions"></a>
@@ -10,59 +14,91 @@
     <a href="https://packagist.org/packages/ivanfuhr/bladex-components"><img src="https://img.shields.io/packagist/dt/ivanfuhr/bladex-components.svg?style=flat-square" alt="Total Downloads"></a>
 </p>
 
-Powerful components for Laravel Blade.
+[Installation](#installation) · [Usage](#usage) · [Components](#components) · [Development](#development) · [Changelog](CHANGELOG.md)
+
+</div>
+
+---
+
+## Why BladeX?
+
+| | |
+| --- | --- |
+| **Two adoption paths** | Use `x-bladex-components::*` from vendor for prototypes, or copy primitives into `resources/views/ui` for full ownership. |
+| **Registry CLI** | `init`, `add`, `update`, and `remove` — same mental model as shadcn/ui, tuned for Blade. |
+| **Tailwind v4 ready** | Class maps live in your app; `bladex.css` wires scanning and class-based dark mode. |
+| **Accessible by default** | Focus rings, interaction states, and compound components (select listbox, input affixes). |
+
+## Components
+
+Real output from the package workbench (light and dark). Run `composer playbook` locally to explore every prop interactively.
+
+### Button variants & sizes
+
+Seven visual variants (`outline`, `primary`, `secondary`, `danger`, `ghost`, `subtle`, `link`), four sizes, square icon mode, and leading/trailing slots.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/button-variants-dark.png">
+  <img src="docs/images/button-variants-light.png" alt="BladeX button variants and sizes in light and dark themes" width="100%">
+</picture>
+
+```blade
+<x-ui::button variant="primary" size="lg">Save changes</x-ui::button>
+<x-ui::button variant="outline" square>
+    <x-ui::icons.search />
+</x-ui::button>
+```
+
+### Forms & typography
+
+Input affixes, custom listbox select, heading scale, and text variants — without sprinkling one-off Tailwind in every view.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/components-overview-dark.png">
+  <img src="docs/images/components-overview-light.png" alt="BladeX input, select, typography, and buttons" width="100%">
+</picture>
+
+```blade
+<x-ui::input name="email" placeholder="you@example.com">
+    <x-slot:leading><x-ui::icons.search /></x-slot:leading>
+</x-ui::input>
+
+<x-ui::select name="industry" placeholder="Choose industry…">
+    <x-ui::select.item value="design">Design services</x-ui::select.item>
+</x-ui::select>
+
+<x-ui::heading>Page title</x-ui::heading>
+<x-ui::text variant="subtle" size="sm">Supporting copy</x-ui::text>
+```
 
 ## Installation
 
-You can install the package via Composer:
+Install via Composer (development dependency — the registry CLI; owned files ship in your app):
 
 ```bash
 composer require --dev ivanfuhr/bladex-components
 ```
 
-The package is a **development dependency**: it provides the registry CLI. After `init` and `add`, your application runs from copied files under `resources/views/ui`, `app/Support/Bladex`, and related assets — production deploys can use `composer install --no-dev` without this package.
+After `init` and `add`, production deploys can use `composer install --no-dev` without this package.
 
-For quick experiments in the same repo you may still use vendor components (`x-bladex-components::`) while the package is installed.
-
-You may publish all of the package's resources at once:
+Publish everything at once:
 
 ```bash
 php artisan vendor:publish --tag="bladex-components"
 ```
 
-Or, you may publish each resource individually:
+Or publish individually:
 
-### Publishing the Configuration File
-
-```bash
-php artisan vendor:publish --tag="bladex-components-config"
-```
-
-### Publishing the Views
-
-```bash
-php artisan vendor:publish --tag="bladex-components-views"
-```
-
-### Publishing the Translations
-
-```bash
-php artisan vendor:publish --tag="bladex-components-lang"
-```
-
-### Publishing the Public Assets
-
-```bash
-php artisan vendor:publish --tag="bladex-components-assets"
-```
+| Tag | Resource |
+| --- | --- |
+| `bladex-components-config` | Configuration |
+| `bladex-components-views` | Package views |
+| `bladex-components-lang` | Translations |
+| `bladex-components-assets` | Public assets |
 
 ## Usage
 
-BladeX Components supports two adoption modes:
-
 ### Vendor mode (quick start)
-
-Install the package and use components from `vendor/` without copying files:
 
 ```blade
 <x-bladex-components::input name="email" />
@@ -70,60 +106,42 @@ Install the package and use components from `vendor/` without copying files:
 
 ### Owned mode (shadcn-style)
 
-Copy only the UI primitives you need into your app from the remote registry:
-
 ```bash
 php artisan bladex-components:init
-php artisan bladex-components:add input
+php artisan bladex-components:add input button select
 ```
-
-Owned components are written to `resources/views/ui` and registered as the `ui` Blade namespace:
 
 ```blade
 <x-ui::input name="email" />
 ```
 
-Registry commands:
-
 | Command | Description |
 | --- | --- |
-| `bladex-components:init` | Create `bladex-components.json`, scaffold owned support/CSS, and an empty lock file |
+| `bladex-components:init` | Create `bladex-components.json`, scaffold support/CSS, empty lock file |
 | `bladex-components:add {names}` | Install components from the registry |
-| `bladex-components:update {name?}` | Refresh installed files from the registry |
+| `bladex-components:update {name?}` | Refresh installed files |
 | `bladex-components:remove {names}` | Remove installed components |
 | `bladex-components:list` | List registry items (`--installed` for installed only) |
 | `bladex-components:icon {names?}` | Import Lucide icons into `resources/views/ui/icons` |
 
 ### Icons (Lucide)
 
-Icons are imported on demand from [Lucide](https://lucide.dev/icons/) — only the icons you install are added to your app.
+On-demand imports from [Lucide](https://lucide.dev/icons/):
 
 ```bash
 php artisan bladex-components:icon search grip-vertical
 ```
 
-Imported icons are written to `resources/views/ui/icons` by default (override with `paths.icons` in `bladex-components.json` or `--path=` on the command).
-
 ```blade
 <x-ui::icons.search />
 <x-ui::icons.search variant="mini" class="text-amber-500" />
-<x-bladex-components::icon name="search" />
-<x-bladex-components::icon.loading class="animate-spin" />
-
-<x-bladex-components::input name="search" placeholder="Search…">
-    <x-slot:leading>
-        <x-ui::icons.search />
-    </x-slot:leading>
-</x-bladex-components::input>
 ```
 
-Supported Lucide variants: `outline` (default, 16px), `mini` (20px), and `micro` (12px). Icons always render at a sensible default size via intrinsic `width`/`height` even when Tailwind does not scan your `resources/views/ui/icons` path. Override with Tailwind `size-*`, `h-*`/`w-*`, and `text-*` classes on the component.
+Supported variants: `outline` (16px), `mini` (20px), `micro` (12px).
 
 ### Tailwind CSS
 
-Owned components use PHP class maps copied into `app/Support/Bladex` during `init`. Tailwind must scan your app paths, not `vendor/`.
-
-`bladex-components:init` creates `resources/css/bladex.css` and patches `resources/css/app.css` with a marked import block:
+`bladex-components:init` creates `resources/css/bladex.css` and patches `resources/css/app.css`:
 
 ```css
 @import "tailwindcss";
@@ -133,31 +151,15 @@ Owned components use PHP class maps copied into `app/Support/Bladex` during `ini
 /* bladex-components-end */
 ```
 
-`resources/css/bladex.css` tells Tailwind to scan `resources/views` and `app/Support/Bladex` (PHP class maps), and registers class-based dark mode (`@custom-variant dark`) so `dark:*` utilities follow a `.dark` ancestor—not the OS `prefers-color-scheme` alone.
+`bladex.css` scans `resources/views` and `app/Support/Bladex`, and registers class-based dark mode (`@custom-variant dark`). Add `class="dark"` on `<html>` (or a layout wrapper) so `dark:*` utilities apply — components default to light styles otherwise.
 
-Without `class="dark"` on `<html>` (or a layout wrapper), components use their default (light) styles. Dark UIs should add that class so `variant="primary"` inverts correctly (`bg-zinc-900` on light, `bg-zinc-50` text on dark). Rebuild CSS after changing Tailwind sources (`npm run build` / `npm run dev`).
+With `APP_DEBUG=true`, HTTP requests throw a clear exception if integration is missing (disable via `bladex-components.validate_tailwind_integration` in config).
 
-With `APP_DEBUG=true` and the package installed locally, HTTP requests throw a clear exception if this integration is missing (set `bladex-components.validate_tailwind_integration` to `false` in config to disable).
-
-The default registry is the copy shipped inside the installed package (`package://registry.json` in `bladex-components.json` after `init`). If `registry` points to a remote URL that returns 404, the CLI falls back to the package registry automatically.
-
-Override `registry` in `bladex-components.json` to use a published remote index (same shape as `registry/registry.json` in this repository), for example after tagging:
-
-`https://raw.githubusercontent.com/ivanfuhr/bladex-components/main/registry/registry.json`
-
-Maintainers can rebuild the published registry from package sources with:
-
-```bash
-composer registry:build
-```
-
-New UI primitives must be listed in the `$catalog` array in [`scripts/build-registry.php`](scripts/build-registry.php) before running that command; otherwise they are omitted from `registry/registry.json`.
+Default registry: `package://registry.json`. Remote URLs that 404 fall back to the package registry. Maintainers rebuild with `composer registry:build` (new primitives must be listed in [`scripts/build-registry.php`](scripts/build-registry.php)).
 
 ### Typography
 
-Body copy and headings use a shared size scale: `sm`, `default`, `lg`, and `xl`. Package components resolve sizes through this scale — configure the Tailwind class mapping once in `config/bladex-components.php` (or override in `bladex-components.json` under `typography.scale`).
-
-Font families are configured declaratively (Google Fonts CDN in v1). Define families under `typography.fonts`, map roles under `typography.roles` (`body` for text, `heading` for headings), and include the layout helper once:
+Sizes: `sm`, `default`, `lg`, `xl`. Configure mappings in `config/bladex-components.php` or `bladex-components.json` → `typography.scale`.
 
 ```blade
 <head>
@@ -165,96 +167,57 @@ Font families are configured declaratively (Google Fonts CDN in v1). Define fami
 </head>
 ```
 
-Map the CSS variables in your app stylesheet (Tailwind v4 example):
-
 ```css
 @theme {
     --font-sans: var(--font-sans);
 }
 ```
 
-```blade
-<x-bladex-components::heading>Page title</x-bladex-components::heading>
-
-<x-bladex-components::text class="mt-2">
-    This is body copy with the default size and body font role.
-</x-bladex-components::text>
-
-<x-bladex-components::text size="sm" variant="subtle">Meta text</x-bladex-components::text>
-<x-bladex-components::text color="blue">Colored text</x-bladex-components::text>
-```
-
-Defaults live under `typography.defaults`: `text_size` (`default` → `text-base`) and `heading_level` (`2` → `h2`). The default heading is always **one step larger** on the scale than default body text (`lg` over `default`), and other levels step up or down from that anchor.
-
-Heading visual size follows `level` relative to that anchor (`1` → `xl`, `2` → `lg`, `3` → `default`, `4`–`6` → `sm` with the package defaults). There is no `size` or `font` prop on these primitives — family comes from the configured role.
-
-Owned mode:
-
-```bash
-php artisan bladex-components:add text heading
-```
-
-```blade
-<x-ui::text>Owned copy</x-ui::text>
-```
+Owned mode: `php artisan bladex-components:add text heading` → `<x-ui::text />`, `<x-ui::heading />`.
 
 ### Select (listbox)
 
-Custom listbox select (not a native `<select>`). Markup is compound Blade; **keyboard and open/close behavior require the vanilla script** (no Alpine).
+Custom listbox (not native `<select>`). Keyboard behavior requires the vanilla `select.js` script (no Alpine). Installing `select` patches Vite (`resources/js/app.js`) with a marked import.
 
-Installing `select` via the registry copies `resources/views/ui/select/select.js` next to the Blade files and patches your Vite entry (`resources/js/app.js`) with a marked import. The script auto-initializes on `DOMContentLoaded`.
-
-**Shortcut** (default `shortcut` prop): wrap `select.item` children with trigger + content automatically:
+**Shortcut** (`shortcut` prop default):
 
 ```blade
 <x-bladex-components::select name="industry" placeholder="Choose industry…">
     <x-bladex-components::select.item value="photo">Photography</x-bladex-components::select.item>
-    <x-bladex-components::select.item value="design">Design services</x-bladex-components::select.item>
 </x-bladex-components::select>
 ```
 
-**Full composition** (`:shortcut="false"`): assemble trigger, value, content, groups, and items yourself (shadcn-style):
-
-```blade
-<x-bladex-components::select name="industry" :shortcut="false">
-    <x-bladex-components::select.trigger>
-        <x-bladex-components::select.value placeholder="Choose industry…" />
-    </x-bladex-components::select.trigger>
-    <x-bladex-components::select.content>
-        <x-bladex-components::select.group>
-            <x-bladex-components::select.label>Services</x-bladex-components::select.label>
-            <x-bladex-components::select.item value="photo">Photography</x-bladex-components::select.item>
-        </x-bladex-components::select.group>
-    </x-bladex-components::select.content>
-</x-bladex-components::select>
-```
-
-Owned mode: `php artisan bladex-components:add select` → `<x-ui::select />` and subcomponents under `select.*`.
+**Full composition** (`:shortcut="false"`): trigger, value, content, groups, and items — see [playbook](workbench/resources/views/playbook/snippets/select.blade.php) or run `composer playbook`.
 
 ## Development
 
-Maintainers can preview components in the local Orchestra workbench playbook:
+Interactive previews:
 
 ```bash
-composer playbook              # build workbench assets + serve (visit /playbook)
-# or: ./scripts/playbook.sh
+composer playbook              # build workbench assets + serve → /playbook
+composer workbench:assets      # npm ci && npm run build (first time)
+composer workbench:build       # vite build only
+composer serve                 # testbench serve (no frontend rebuild)
+```
 
-composer workbench:assets      # first-time / clean install: npm ci && npm run build
-composer workbench:build         # vite build only (workbench/)
-composer serve                 # testbench build + serve (no frontend rebuild)
+Refresh README screenshots (workbench must be running on port 8001):
+
+```bash
+./scripts/capture-readme-images.sh
+# Media pages: /playbook/media/buttons and /playbook/media/overview (?dark=1)
 ```
 
 ## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+See [CHANGELOG](CHANGELOG.md).
 
 ## Contributing
 
-Thank you for considering contributing to BladeX Components! Please review our [contributing guide](.github/CONTRIBUTING.md) to get started.
+See [contributing guide](.github/CONTRIBUTING.md).
 
-## Security Vulnerabilities
+## Security
 
-Please review [our security policy](.github/SECURITY.md) on how to report security vulnerabilities.
+See [security policy](.github/SECURITY.md).
 
 ## Credits
 
@@ -263,4 +226,4 @@ Please review [our security policy](.github/SECURITY.md) on how to report securi
 
 ## License
 
-BladeX Components is open-sourced software licensed under the [MIT license](LICENSE.md).
+MIT — see [LICENSE](LICENSE.md).
