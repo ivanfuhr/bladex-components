@@ -1,6 +1,8 @@
 <div align="center">
 
-![BladeX Components](docs/images/hero.svg)
+<a href="#sumario">
+  <img src="docs/images/hero.svg" alt="BladeX Components" />
+</a>
 
 # BladeX Components
 
@@ -14,119 +16,224 @@
     <a href="https://packagist.org/packages/ivanfuhr/bladex-components"><img src="https://img.shields.io/packagist/dt/ivanfuhr/bladex-components.svg?style=flat-square" alt="Total Downloads"></a>
 </p>
 
-[Installation](#installation) · [Usage](#usage) · [Components](#components) · [Development](#development) · [Changelog](CHANGELOG.md)
-
 </div>
+
+<br>
+
+<h2 id="sumario" align="center">📑 Sumário</h2>
+
+<table width="100%">
+<thead>
+<tr>
+<th width="34%" align="left">🧩 Componentes</th>
+<th width="33%" align="left">📖 Guia</th>
+<th width="33%" align="left">🛠 Projeto</th>
+</tr>
+</thead>
+<tbody>
+<tr valign="top">
+<td>
+
+**Showcase**
+
+- [Button](#button)
+- [Input](#input)
+- [Select](#select)
+- [Typography](#typography)
+- [Icons](#icons)
+
+</td>
+<td>
+
+**Adoção**
+
+- [Instalação](#installation)
+- [Vendor vs owned](#usage)
+- [Registry CLI](#registry-cli)
+- [Tailwind CSS](#tailwind-css)
+- [Playbook local](#development)
+
+</td>
+<td>
+
+**Comunidade**
+
+- [Changelog](CHANGELOG.md)
+- [Contributing](.github/CONTRIBUTING.md)
+- [Security](.github/SECURITY.md)
+- [License](LICENSE.md)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+<br>
 
 ---
 
-## Why BladeX?
+Copie só o que precisa com `bladex-components:add`, use `x-ui::*` no dia a dia e mantenha Tailwind v4 + dark mode alinhados ao design system. As capturas abaixo são **largura total** (clique para abrir em tamanho original).
 
-| | |
-| --- | --- |
-| **Two adoption paths** | Use `x-bladex-components::*` from vendor for prototypes, or copy primitives into `resources/views/ui` for full ownership. |
-| **Registry CLI** | `init`, `add`, `update`, and `remove` — same mental model as shadcn/ui, tuned for Blade. |
-| **Tailwind v4 ready** | Class maps live in your app; `bladex.css` wires scanning and class-based dark mode. |
-| **Accessible by default** | Focus rings, interaction states, and compound components (select listbox, input affixes). |
+<br>
 
-## Components
+## Button
 
-Real output from the package workbench (light and dark). Run `composer playbook` locally to explore every prop interactively.
+Variantes `outline`, `primary`, `secondary`, `danger`, `ghost`, `subtle`, `link` — tamanhos `xs`–`lg`, modo ícone (`square`) e slots `leading` / `trailing`.
 
-### Button variants & sizes
-
-Seven visual variants (`outline`, `primary`, `secondary`, `danger`, `ghost`, `subtle`, `link`), four sizes, square icon mode, and leading/trailing slots.
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/images/button-variants-dark.png">
-  <img src="docs/images/button-variants-light.png" alt="BladeX button variants and sizes in light and dark themes" width="100%">
-</picture>
+<table width="100%">
+<tr>
+<td align="center">
+<a href="docs/images/buttons-light.png"><img src="docs/images/buttons-light.png" alt="Button variants — light theme" width="100%" /></a>
+<br><sub><strong>Light</strong></sub>
+</td>
+</tr>
+<tr>
+<td align="center">
+<a href="docs/images/buttons-dark.png"><img src="docs/images/buttons-dark.png" alt="Button variants — dark theme" width="100%" /></a>
+<br><sub><strong>Dark</strong></sub>
+</td>
+</tr>
+</table>
 
 ```blade
 <x-ui::button variant="primary" size="lg">Save changes</x-ui::button>
+
 <x-ui::button variant="outline" square>
     <x-ui::icons.search />
 </x-ui::button>
 ```
 
-### Forms & typography
+```bash
+php artisan bladex-components:add button
+```
 
-Input affixes, custom listbox select, heading scale, and text variants — without sprinkling one-off Tailwind in every view.
+<br>
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/images/components-overview-dark.png">
-  <img src="docs/images/components-overview-light.png" alt="BladeX input, select, typography, and buttons" width="100%">
-</picture>
+## Input
+
+Affixes, `prefix` / `suffix`, estados `invalid`, `disabled` e `readonly`.
+
+<table width="100%">
+<tr>
+<td align="center">
+<a href="docs/images/input-light.png"><img src="docs/images/input-light.png" alt="Input states — light theme" width="100%" /></a>
+<br><sub><strong>Light</strong></sub>
+</td>
+</tr>
+<tr>
+<td align="center">
+<a href="docs/images/input-dark.png"><img src="docs/images/input-dark.png" alt="Input states — dark theme" width="100%" /></a>
+<br><sub><strong>Dark</strong></sub>
+</td>
+</tr>
+</table>
 
 ```blade
-<x-ui::input name="email" placeholder="you@example.com">
+<x-ui::input name="email" type="email" placeholder="you@example.com">
     <x-slot:leading><x-ui::icons.search /></x-slot:leading>
+    <x-slot:trailing>
+        <x-ui::text inline size="sm" variant="subtle">Clear</x-ui::text>
+    </x-slot:trailing>
 </x-ui::input>
 
+<x-ui::input name="site" prefix="https://" suffix=".com" placeholder="yoursite" />
+```
+
+```bash
+php artisan bladex-components:add input
+```
+
+<br>
+
+## Select
+
+Listbox acessível (não é `<select>` nativo). Subcomponentes `trigger`, `value`, `content`, `group`, `item`. Requer `select.js` no Vite após `add select`.
+
+<table width="100%">
+<tr>
+<td align="center">
+<a href="docs/images/select-light.png"><img src="docs/images/select-light.png" alt="Select listbox — light theme" width="100%" /></a>
+<br><sub><strong>Light</strong></sub>
+</td>
+</tr>
+<tr>
+<td align="center">
+<a href="docs/images/select-dark.png"><img src="docs/images/select-dark.png" alt="Select listbox — dark theme" width="100%" /></a>
+<br><sub><strong>Dark</strong></sub>
+</td>
+</tr>
+</table>
+
+```blade
 <x-ui::select name="industry" placeholder="Choose industry…">
-    <x-ui::select.item value="design">Design services</x-ui::select.item>
+    <x-ui::select.group>
+        <x-ui::select.label>Creative</x-ui::select.label>
+        <x-ui::select.item value="photo">Photography</x-ui::select.item>
+    </x-ui::select.group>
+    <x-ui::select.separator />
+    <x-ui::select.item value="web">Web development</x-ui::select.item>
 </x-ui::select>
-
-<x-ui::heading>Page title</x-ui::heading>
-<x-ui::text variant="subtle" size="sm">Supporting copy</x-ui::text>
 ```
-
-## Installation
-
-Install via Composer (development dependency — the registry CLI; owned files ship in your app):
 
 ```bash
-composer require --dev ivanfuhr/bladex-components
+php artisan bladex-components:add select
 ```
 
-After `init` and `add`, production deploys can use `composer install --no-dev` without this package.
+<br>
 
-Publish everything at once:
+## Typography
 
-```bash
-php artisan vendor:publish --tag="bladex-components"
-```
+`<x-ui::heading />` com níveis semânticos `1`–`6` e `<x-ui::text />` com escala `sm` / `default` / `lg` / `xl`, variantes e cores.
 
-Or publish individually:
-
-| Tag | Resource |
-| --- | --- |
-| `bladex-components-config` | Configuration |
-| `bladex-components-views` | Package views |
-| `bladex-components-lang` | Translations |
-| `bladex-components-assets` | Public assets |
-
-## Usage
-
-### Vendor mode (quick start)
+<table width="100%">
+<tr>
+<td align="center">
+<a href="docs/images/typography-light.png"><img src="docs/images/typography-light.png" alt="Heading and text — light theme" width="100%" /></a>
+<br><sub><strong>Light</strong></sub>
+</td>
+</tr>
+<tr>
+<td align="center">
+<a href="docs/images/typography-dark.png"><img src="docs/images/typography-dark.png" alt="Heading and text — dark theme" width="100%" /></a>
+<br><sub><strong>Dark</strong></sub>
+</td>
+</tr>
+</table>
 
 ```blade
-<x-bladex-components::input name="email" />
-```
+<head>
+    <x-bladex-components::fonts />
+</head>
 
-### Owned mode (shadcn-style)
+<x-ui::heading :level="2">Page title</x-ui::heading>
+<x-ui::text variant="subtle" size="sm">Meta line</x-ui::text>
+<x-ui::text color="blue">Semantic color</x-ui::text>
+```
 
 ```bash
-php artisan bladex-components:init
-php artisan bladex-components:add input button select
+php artisan bladex-components:add text heading
 ```
 
-```blade
-<x-ui::input name="email" />
-```
+<br>
 
-| Command | Description |
-| --- | --- |
-| `bladex-components:init` | Create `bladex-components.json`, scaffold support/CSS, empty lock file |
-| `bladex-components:add {names}` | Install components from the registry |
-| `bladex-components:update {name?}` | Refresh installed files |
-| `bladex-components:remove {names}` | Remove installed components |
-| `bladex-components:list` | List registry items (`--installed` for installed only) |
-| `bladex-components:icon {names?}` | Import Lucide icons into `resources/views/ui/icons` |
+## Icons
 
-### Icons (Lucide)
+Ícones [Lucide](https://lucide.dev/icons/) sob demanda — variantes `outline` (16px), `mini` (20px), `micro` (12px).
 
-On-demand imports from [Lucide](https://lucide.dev/icons/):
+<table width="100%">
+<tr>
+<td align="center">
+<a href="docs/images/icons-light.png"><img src="docs/images/icons-light.png" alt="Lucide icons — light theme" width="100%" /></a>
+<br><sub><strong>Light</strong></sub>
+</td>
+</tr>
+<tr>
+<td align="center">
+<a href="docs/images/icons-dark.png"><img src="docs/images/icons-dark.png" alt="Lucide icons — dark theme" width="100%" /></a>
+<br><sub><strong>Dark</strong></sub>
+</td>
+</tr>
+</table>
 
 ```bash
 php artisan bladex-components:icon search grip-vertical
@@ -137,11 +244,64 @@ php artisan bladex-components:icon search grip-vertical
 <x-ui::icons.search variant="mini" class="text-amber-500" />
 ```
 
-Supported variants: `outline` (16px), `mini` (20px), `micro` (12px).
+<br>
+
+---
+
+## Installation
+
+```bash
+composer require --dev ivanfuhr/bladex-components
+```
+
+O pacote é **dev dependency** (CLI do registry). Depois de `init` + `add`, o app roda com arquivos em `resources/views/ui` e `app/Support/Bladex` — produção pode usar `composer install --no-dev`.
+
+```bash
+php artisan vendor:publish --tag="bladex-components"
+```
+
+| Tag | Recurso |
+| --- | --- |
+| `bladex-components-config` | Configuração |
+| `bladex-components-views` | Views do pacote |
+| `bladex-components-lang` | Traduções |
+| `bladex-components-assets` | Assets públicos |
+
+<br>
+
+## Usage
+
+**Vendor (rápido)**
+
+```blade
+<x-bladex-components::input name="email" />
+```
+
+**Owned (shadcn-style)**
+
+```bash
+php artisan bladex-components:init
+php artisan bladex-components:add input button select
+```
+
+```blade
+<x-ui::input name="email" />
+```
+
+### Registry CLI
+
+| Command | Description |
+| --- | --- |
+| `bladex-components:init` | `bladex-components.json`, support/CSS, lock file |
+| `bladex-components:add {names}` | Instalar do registry |
+| `bladex-components:update {name?}` | Atualizar arquivos instalados |
+| `bladex-components:remove {names}` | Remover componentes |
+| `bladex-components:list` | Listar registry (`--installed`) |
+| `bladex-components:icon {names?}` | Importar ícones Lucide |
 
 ### Tailwind CSS
 
-`bladex-components:init` creates `resources/css/bladex.css` and patches `resources/css/app.css`:
+`init` cria `resources/css/bladex.css` e marca o import em `app.css`. Escaneia `resources/views` + `app/Support/Bladex` e registra dark mode por classe (`.dark` no `<html>`).
 
 ```css
 @import "tailwindcss";
@@ -151,73 +311,36 @@ Supported variants: `outline` (16px), `mini` (20px), `micro` (12px).
 /* bladex-components-end */
 ```
 
-`bladex.css` scans `resources/views` and `app/Support/Bladex`, and registers class-based dark mode (`@custom-variant dark`). Add `class="dark"` on `<html>` (or a layout wrapper) so `dark:*` utilities apply — components default to light styles otherwise.
+Com `APP_DEBUG=true`, falta de integração gera exceção clara (desligue em `bladex-components.validate_tailwind_integration`). Registry padrão: `package://registry.json`. Rebuild: `composer registry:build`.
 
-With `APP_DEBUG=true`, HTTP requests throw a clear exception if integration is missing (disable via `bladex-components.validate_tailwind_integration` in config).
-
-Default registry: `package://registry.json`. Remote URLs that 404 fall back to the package registry. Maintainers rebuild with `composer registry:build` (new primitives must be listed in [`scripts/build-registry.php`](scripts/build-registry.php)).
-
-### Typography
-
-Sizes: `sm`, `default`, `lg`, `xl`. Configure mappings in `config/bladex-components.php` or `bladex-components.json` → `typography.scale`.
-
-```blade
-<head>
-    <x-bladex-components::fonts />
-</head>
-```
-
-```css
-@theme {
-    --font-sans: var(--font-sans);
-}
-```
-
-Owned mode: `php artisan bladex-components:add text heading` → `<x-ui::text />`, `<x-ui::heading />`.
-
-### Select (listbox)
-
-Custom listbox (not native `<select>`). Keyboard behavior requires the vanilla `select.js` script (no Alpine). Installing `select` patches Vite (`resources/js/app.js`) with a marked import.
-
-**Shortcut** (`shortcut` prop default):
-
-```blade
-<x-bladex-components::select name="industry" placeholder="Choose industry…">
-    <x-bladex-components::select.item value="photo">Photography</x-bladex-components::select.item>
-</x-bladex-components::select>
-```
-
-**Full composition** (`:shortcut="false"`): trigger, value, content, groups, and items — see [playbook](workbench/resources/views/playbook/snippets/select.blade.php) or run `composer playbook`.
+<br>
 
 ## Development
 
-Interactive previews:
-
 ```bash
-composer playbook              # build workbench assets + serve → /playbook
-composer workbench:assets      # npm ci && npm run build (first time)
-composer workbench:build       # vite build only
-composer serve                 # testbench serve (no frontend rebuild)
+composer playbook              # /playbook — playground interativo
+composer workbench:build
+composer serve
 ```
 
-Refresh README screenshots (workbench must be running on port 8001):
+Atualizar capturas do README (servidor em `http://127.0.0.1:8001`):
 
 ```bash
 ./scripts/capture-readme-images.sh
-# Media pages: /playbook/media/buttons and /playbook/media/overview (?dark=1)
+# Páginas: /playbook/media/{buttons|input|select|typography|icons}?dark=1
 ```
 
 ## Changelog
 
-See [CHANGELOG](CHANGELOG.md).
+[CHANGELOG](CHANGELOG.md)
 
 ## Contributing
 
-See [contributing guide](.github/CONTRIBUTING.md).
+[Contributing guide](.github/CONTRIBUTING.md)
 
 ## Security
 
-See [security policy](.github/SECURITY.md).
+[Security policy](.github/SECURITY.md)
 
 ## Credits
 
@@ -226,4 +349,4 @@ See [security policy](.github/SECURITY.md).
 
 ## License
 
-MIT — see [LICENSE](LICENSE.md).
+[MIT](LICENSE.md)

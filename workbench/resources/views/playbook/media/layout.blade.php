@@ -11,7 +11,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-full bg-zinc-100/90 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
-    <div class="mx-auto max-w-5xl px-10 py-12">
+    <div class="w-full px-12 py-14">
         @yield('content')
     </div>
 </body>

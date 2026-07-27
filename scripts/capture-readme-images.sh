@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/docs/images"
 BASE_URL="${BLADEX_SCREENSHOT_URL:-http://127.0.0.1:8001}"
+VIEWPORT_WIDTH="${BLADEX_SCREENSHOT_WIDTH:-1440}"
 
 mkdir -p "$OUT"
 
@@ -15,20 +16,20 @@ fi
 capture() {
   local url="$1"
   local file="$2"
-  local width="${3:-1100}"
 
   npx --yes playwright@1.52.0 screenshot \
-    --viewport-size="${width},800" \
+    --viewport-size="${VIEWPORT_WIDTH},900" \
     --wait-for-timeout=1500 \
+    --full-page \
     "$url" \
     "$file"
 }
 
-echo "Capturing from ${BASE_URL}..."
+echo "Capturing from ${BASE_URL} (viewport ${VIEWPORT_WIDTH}px)..."
 
-capture "${BASE_URL}/playbook/media/buttons" "${OUT}/button-variants-light.png" 1100
-capture "${BASE_URL}/playbook/media/buttons?dark=1" "${OUT}/button-variants-dark.png" 1100
-capture "${BASE_URL}/playbook/media/overview" "${OUT}/components-overview-light.png" 1100
-capture "${BASE_URL}/playbook/media/overview?dark=1" "${OUT}/components-overview-dark.png" 1100
+for component in buttons input select typography icons; do
+  capture "${BASE_URL}/playbook/media/${component}" "${OUT}/${component}-light.png"
+  capture "${BASE_URL}/playbook/media/${component}?dark=1" "${OUT}/${component}-dark.png"
+done
 
 echo "Saved screenshots to docs/images/"
