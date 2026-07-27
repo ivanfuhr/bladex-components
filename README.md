@@ -6,7 +6,7 @@
 
 # Stencil
 
-**Composable Blade primitives for Laravel — vendor quick start or shadcn-style owned UI.**
+**Composable Blade primitives for Laravel — registry CLI and owned `x-ui::*` components.**
 
 <p>
     <a href="https://packagist.org/packages/ivanfuhr/stencil"><img src="https://img.shields.io/packagist/v/ivanfuhr/stencil.svg?style=flat-square" alt="Packagist"></a>
@@ -30,7 +30,107 @@
 
 Copy only what you need with `stencil:add`, use `x-ui::*` in your app, and keep Tailwind v4 + class-based dark mode aligned with the design system.
 
-Below, each component uses the same playbook media page in **light** and **dark** mode (append `?dark=1` to set `.dark` on `<html>`). Screenshots are frameless—the page background matches the theme. Click an image for the full-size PNG.
+Follow [Installation](#installation) and [Usage](#usage), then use the component previews further down once items are installed.
+
+---
+
+## Installation
+
+```bash
+composer require --dev ivanfuhr/stencil
+```
+
+The package is a **development dependency** (registry CLI). Run `stencil:init` and `stencil:add` to copy components into your app under `resources/views/ui` and `app/Support/Stencil`. Commit those files so production can run `composer install --no-dev` without the package.
+
+Optional config publish:
+
+```bash
+php artisan vendor:publish --tag=stencil-config
+```
+
+<br>
+
+## Usage
+
+Initialize the project, browse the registry, then install only what you need. `stencil:add` resolves **`registryDependencies`** automatically (for example, `input` also installs `input-group`, `field`, and `text`).
+
+```bash
+php artisan stencil:init
+php artisan stencil:list
+php artisan stencil:add input button select
+```
+
+`stencil:init` scaffolds `stencil.json`, `stencil.lock`, Tailwind integration (`resources/css/stencil.css` + import in `app.css`), support classes, `<x-ui::fonts />`, and registers `App\Providers\StencilUiServiceProvider` in `bootstrap/providers.php` when that file exists.
+
+Use the owned Blade namespace in your app:
+
+```blade
+<x-ui::input name="email" />
+```
+
+**Registry UI items:** `button`, `field`, `heading`, `icon`, `input`, `input-group`, `select`, `text`. Lower-level pieces such as `field` and `input-group` are usually installed transitively. **Lucide icons:** run `stencil:add icon` once, then `stencil:icon {name}` per icon (see [Icons](#icons)).
+
+### Registry CLI
+
+<h3 id="registry-cli"></h3>
+
+| Command | Description |
+| --- | --- |
+| `stencil:init` | Create `stencil.json`, scaffold owned support/CSS, and `stencil.lock` |
+| `stencil:add {names}` | Install from the registry (includes dependencies) |
+| `stencil:update {name?}` | Refresh installed files |
+| `stencil:remove {names}` | Remove installed components |
+| `stencil:list` | List registry items (`--installed`, `--all`) |
+| `stencil:icon {names}` | Import Lucide icon stubs into `resources/views/ui/icons` |
+
+### Tailwind CSS
+
+<h3 id="tailwind-css"></h3>
+
+Owned UI is scanned from `resources/views` and `app/Support/Stencil` via `resources/css/stencil.css`, with class-based dark mode (`.dark` on `<html>`).
+
+```css
+@import "tailwindcss";
+
+/* stencil-start */
+@import "./stencil.css";
+/* stencil-end */
+```
+
+With `APP_DEBUG=true` and the package still installed, missing integration throws a clear exception (disable via `stencil.validate_tailwind_integration` in config). Default registry URL: `package://registry.json` (overridable in `stencil.json`).
+
+<br>
+
+## Development
+
+<h3 id="development"></h3>
+
+```bash
+composer playbook              # /playbook — interactive playground
+composer workbench:build
+composer serve
+```
+
+Package registry rebuild (contributors):
+
+```bash
+composer registry:build
+```
+
+To refresh README screenshots, run the workbench on port `8001`, then:
+
+```bash
+composer serve -- --port=8001   # separate terminal, if needed
+./scripts/capture-readme-images.sh
+```
+
+The script crops to `#readme-media` (installs `playwright-core` under `scripts/` on first run). Targets: `/playbook/media/{buttons|input|select|typography|icons}` and the same paths with `?dark=1`.
+
+<br>
+
+---
+
+Component previews (playbook media pages). Each block is the same page in **light** and **dark** mode (append `?dark=1` for `.dark` on `<html>`). Click an image for the full-size PNG.
 
 <br>
 
@@ -57,6 +157,8 @@ Variants: `outline`, `primary`, `secondary`, `danger`, `ghost`, `subtle`, `link`
 ```bash
 php artisan stencil:add button
 ```
+
+Icon slots in the example need `stencil:add icon` and `stencil:icon search`.
 
 <br>
 
@@ -91,7 +193,7 @@ php artisan stencil:add input
 
 ## Select
 
-Accessible listbox (not a native `<select>`). Subcomponents: `trigger`, `value`, `content`, `group`, `item`. Requires `select.js` in Vite after `add select`.
+Accessible listbox (not a native `<select>`). Subcomponents include `trigger`, `value`, `content`, `group`, `label`, `item`, and `separator`. `stencil:add select` copies `select.js` and patches your Vite entry (for example `resources/js/app.js`) to import it.
 
 **Light**
 
@@ -132,7 +234,7 @@ php artisan stencil:add select
 
 ```blade
 <head>
-    <x-stencil::fonts />
+    <x-ui::fonts />
 </head>
 
 <x-ui::heading :level="2">Page title</x-ui::heading>
@@ -150,6 +252,13 @@ php artisan stencil:add text heading
 
 On-demand [Lucide](https://lucide.dev/icons/) icons — `outline` (16px), `mini` (20px), and `micro` (12px) variants.
 
+Install the icon primitives once, then import only the icons you use:
+
+```bash
+php artisan stencil:add icon
+php artisan stencil:icon search grip-vertical
+```
+
 **Light**
 
 [![Icons — light](docs/images/icons-light.png)](docs/images/icons-light.png)
@@ -158,108 +267,12 @@ On-demand [Lucide](https://lucide.dev/icons/) icons — `outline` (16px), `mini`
 
 [![Icons — dark](docs/images/icons-dark.png)](docs/images/icons-dark.png)
 
-```bash
-php artisan stencil:icon search grip-vertical
-```
-
 ```blade
 <x-ui::icons.search />
 <x-ui::icons.search variant="mini" class="text-amber-500" />
 ```
 
 <br>
-
----
-
-## Installation
-
-```bash
-composer require --dev ivanfuhr/stencil
-```
-
-The package is a **development dependency** (registry CLI). After `init` and `add`, your app runs from files under `resources/views/ui` and `app/Support/Stencil` — production can use `composer install --no-dev`.
-
-```bash
-php artisan vendor:publish --tag="stencil"
-```
-
-| Tag | Resource |
-| --- | --- |
-| `stencil-config` | Configuration |
-| `stencil-views` | Package views |
-| `stencil-lang` | Translations |
-| `stencil-assets` | Public assets |
-
-<br>
-
-## Usage
-
-**Vendor (quick start)**
-
-```blade
-<x-stencil::input name="email" />
-```
-
-**Owned (shadcn-style)**
-
-```bash
-php artisan stencil:init
-php artisan stencil:add input button select
-```
-
-```blade
-<x-ui::input name="email" />
-```
-
-### Registry CLI
-
-<h3 id="registry-cli"></h3>
-
-| Command | Description |
-| --- | --- |
-| `stencil:init` | Create `stencil.json`, support/CSS, and lock file |
-| `stencil:add {names}` | Install from the registry |
-| `stencil:update {name?}` | Refresh installed files |
-| `stencil:remove {names}` | Remove installed components |
-| `stencil:list` | List registry items (`--installed`) |
-| `stencil:icon {names?}` | Import Lucide icons |
-
-### Tailwind CSS
-
-<h3 id="tailwind-css"></h3>
-
-`init` creates `resources/css/stencil.css` and patches the import in `app.css`. Scans `resources/views` and `app/Support/Stencil`, and registers class-based dark mode (`.dark` on `<html>`).
-
-```css
-@import "tailwindcss";
-
-/* stencil-start */
-@import "./stencil.css";
-/* stencil-end */
-```
-
-With `APP_DEBUG=true`, missing integration throws a clear exception (disable via `stencil.validate_tailwind_integration`). Default registry: `package://registry.json`. Rebuild: `composer registry:build`.
-
-<br>
-
-## Development
-
-<h3 id="development"></h3>
-
-```bash
-composer playbook              # /playbook — interactive playground
-composer workbench:build
-composer serve
-```
-
-To refresh README screenshots, run the workbench on port `8001`, then:
-
-```bash
-composer serve -- --port=8001   # separate terminal, if needed
-./scripts/capture-readme-images.sh
-```
-
-The script prefers headless Chromium; it falls back to Playwright. Targets: `/playbook/media/{buttons|input|select|typography|icons}` and the same paths with `?dark=1`.
 
 ## Changelog
 

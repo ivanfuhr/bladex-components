@@ -10,8 +10,13 @@
     <x-stencil::fonts />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
-        html, body { margin: 0; padding: 0; }
-        #readme-media { box-sizing: border-box; padding: 2rem 2.5rem; }
+        html, body { margin: 0; padding: 0; width: fit-content; max-width: 100%; }
+        #readme-media {
+            box-sizing: border-box;
+            width: max-content;
+            max-width: min(56rem, 100vw);
+            padding: 1.5rem 2rem;
+        }
     </style>
 </head>
 <body class="bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
