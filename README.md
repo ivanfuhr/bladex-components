@@ -1,10 +1,8 @@
 <div align="center">
 
 <a href="#table-of-contents">
-  <img src="docs/images/hero.svg" alt="Stencil" />
+  <img src="docs/images/banner.png" alt="Stencil — the modern component system for Laravel Blade" />
 </a>
-
-# Stencil
 
 **Composable Blade primitives for Laravel — registry CLI and owned `x-ui::*` components.**
 
