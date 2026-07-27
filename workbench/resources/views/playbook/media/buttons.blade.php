@@ -3,7 +3,7 @@
 @section('title', 'Button variants — BladeX')
 
 @section('content')
-    <div class="space-y-8 rounded-3xl border border-zinc-200/80 bg-white p-10 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+    <div class="space-y-8">
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::button /&gt;</p>
             <x-bladex-components::heading :level="2">Button variants</x-bladex-components::heading>

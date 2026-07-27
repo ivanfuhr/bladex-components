@@ -18,9 +18,9 @@ capture() {
   local file="$2"
 
   npx --yes playwright@1.52.0 screenshot \
-    --viewport-size="${VIEWPORT_WIDTH},900" \
-    --wait-for-timeout=1500 \
-    --full-page \
+    --viewport-size="${VIEWPORT_WIDTH},720" \
+    --wait-for-timeout=1200 \
+    --selector="#readme-media" \
     "$url" \
     "$file"
 }

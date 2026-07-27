@@ -1,6 +1,6 @@
 <div align="center">
 
-<a href="#sumario">
+<a href="#table-of-contents">
   <img src="docs/images/hero.svg" alt="BladeX Components" />
 </a>
 
@@ -20,80 +20,29 @@
 
 <br>
 
-<h2 id="sumario" align="center">📑 Sumário</h2>
+<h2 id="table-of-contents">📑 Table of contents</h2>
 
-<table width="100%">
-<thead>
-<tr>
-<th width="34%" align="left">🧩 Componentes</th>
-<th width="33%" align="left">📖 Guia</th>
-<th width="33%" align="left">🛠 Projeto</th>
-</tr>
-</thead>
-<tbody>
-<tr valign="top">
-<td>
-
-**Showcase**
-
-- [Button](#button)
-- [Input](#input)
-- [Select](#select)
-- [Typography](#typography)
-- [Icons](#icons)
-
-</td>
-<td>
-
-**Adoção**
-
-- [Instalação](#installation)
-- [Vendor vs owned](#usage)
-- [Registry CLI](#registry-cli)
-- [Tailwind CSS](#tailwind-css)
-- [Playbook local](#development)
-
-</td>
-<td>
-
-**Comunidade**
-
-- [Changelog](CHANGELOG.md)
-- [Contributing](.github/CONTRIBUTING.md)
-- [Security](.github/SECURITY.md)
-- [License](LICENSE.md)
-
-</td>
-</tr>
-</tbody>
-</table>
+| 🧩 **Components** | 📖 **Guide** | 🛠 **Project** |
+| :--- | :--- | :--- |
+| [Button](#button) · [Input](#input) · [Select](#select) · [Typography](#typography) · [Icons](#icons) | [Installation](#installation) · [Usage](#usage) · [Registry CLI](#registry-cli) · [Tailwind](#tailwind-css) · [Playbook](#development) | [Changelog](CHANGELOG.md) · [Contributing](.github/CONTRIBUTING.md) · [Security](.github/SECURITY.md) · [License](LICENSE.md) |
 
 <br>
 
----
-
-Copie só o que precisa com `bladex-components:add`, use `x-ui::*` no dia a dia e mantenha Tailwind v4 + dark mode alinhados ao design system. As capturas abaixo são **largura total** (clique para abrir em tamanho original).
+Copy only what you need with `bladex-components:add`, use `x-ui::*` in your app, and keep Tailwind v4 + class-based dark mode aligned with the design system. Screenshots are frameless — background matches the theme (click to enlarge).
 
 <br>
 
 ## Button
 
-Variantes `outline`, `primary`, `secondary`, `danger`, `ghost`, `subtle`, `link` — tamanhos `xs`–`lg`, modo ícone (`square`) e slots `leading` / `trailing`.
+Variants: `outline`, `primary`, `secondary`, `danger`, `ghost`, `subtle`, `link` — sizes `xs`–`lg`, icon mode (`square`), and `leading` / `trailing` slots.
 
-<table width="100%">
-<tr>
-<td align="center">
-<a href="docs/images/buttons-light.png"><img src="docs/images/buttons-light.png" alt="Button variants — light theme" width="100%" /></a>
-<br><sub><strong>Light</strong></sub>
-</td>
-</tr>
-<tr>
-<td align="center">
-<a href="docs/images/buttons-dark.png"><img src="docs/images/buttons-dark.png" alt="Button variants — dark theme" width="100%" /></a>
-<br><sub><strong>Dark</strong></sub>
-</td>
-</tr>
-</table>
+**Light** · click to enlarge
+
+[![Button variants — light](docs/images/buttons-light.png)](docs/images/buttons-light.png)
+
+**Dark**
+
+[![Button variants — dark](docs/images/buttons-dark.png)](docs/images/buttons-dark.png)
 
 ```blade
 <x-ui::button variant="primary" size="lg">Save changes</x-ui::button>
@@ -111,22 +60,15 @@ php artisan bladex-components:add button
 
 ## Input
 
-Affixes, `prefix` / `suffix`, estados `invalid`, `disabled` e `readonly`.
+Affixes, `prefix` / `suffix`, and `invalid`, `disabled`, and `readonly` states.
 
-<table width="100%">
-<tr>
-<td align="center">
-<a href="docs/images/input-light.png"><img src="docs/images/input-light.png" alt="Input states — light theme" width="100%" /></a>
-<br><sub><strong>Light</strong></sub>
-</td>
-</tr>
-<tr>
-<td align="center">
-<a href="docs/images/input-dark.png"><img src="docs/images/input-dark.png" alt="Input states — dark theme" width="100%" /></a>
-<br><sub><strong>Dark</strong></sub>
-</td>
-</tr>
-</table>
+**Light**
+
+[![Input — light](docs/images/input-light.png)](docs/images/input-light.png)
+
+**Dark**
+
+[![Input — dark](docs/images/input-dark.png)](docs/images/input-dark.png)
 
 ```blade
 <x-ui::input name="email" type="email" placeholder="you@example.com">
@@ -147,22 +89,15 @@ php artisan bladex-components:add input
 
 ## Select
 
-Listbox acessível (não é `<select>` nativo). Subcomponentes `trigger`, `value`, `content`, `group`, `item`. Requer `select.js` no Vite após `add select`.
+Accessible listbox (not a native `<select>`). Subcomponents: `trigger`, `value`, `content`, `group`, `item`. Requires `select.js` in Vite after `add select`.
 
-<table width="100%">
-<tr>
-<td align="center">
-<a href="docs/images/select-light.png"><img src="docs/images/select-light.png" alt="Select listbox — light theme" width="100%" /></a>
-<br><sub><strong>Light</strong></sub>
-</td>
-</tr>
-<tr>
-<td align="center">
-<a href="docs/images/select-dark.png"><img src="docs/images/select-dark.png" alt="Select listbox — dark theme" width="100%" /></a>
-<br><sub><strong>Dark</strong></sub>
-</td>
-</tr>
-</table>
+**Light**
+
+[![Select — light](docs/images/select-light.png)](docs/images/select-light.png)
+
+**Dark**
+
+[![Select — dark](docs/images/select-dark.png)](docs/images/select-dark.png)
 
 ```blade
 <x-ui::select name="industry" placeholder="Choose industry…">
@@ -183,22 +118,15 @@ php artisan bladex-components:add select
 
 ## Typography
 
-`<x-ui::heading />` com níveis semânticos `1`–`6` e `<x-ui::text />` com escala `sm` / `default` / `lg` / `xl`, variantes e cores.
+`<x-ui::heading />` with semantic levels `1`–`6` and `<x-ui::text />` with the `sm` / `default` / `lg` / `xl` scale, variants, and colors.
 
-<table width="100%">
-<tr>
-<td align="center">
-<a href="docs/images/typography-light.png"><img src="docs/images/typography-light.png" alt="Heading and text — light theme" width="100%" /></a>
-<br><sub><strong>Light</strong></sub>
-</td>
-</tr>
-<tr>
-<td align="center">
-<a href="docs/images/typography-dark.png"><img src="docs/images/typography-dark.png" alt="Heading and text — dark theme" width="100%" /></a>
-<br><sub><strong>Dark</strong></sub>
-</td>
-</tr>
-</table>
+**Light**
+
+[![Typography — light](docs/images/typography-light.png)](docs/images/typography-light.png)
+
+**Dark**
+
+[![Typography — dark](docs/images/typography-dark.png)](docs/images/typography-dark.png)
 
 ```blade
 <head>
@@ -218,22 +146,15 @@ php artisan bladex-components:add text heading
 
 ## Icons
 
-Ícones [Lucide](https://lucide.dev/icons/) sob demanda — variantes `outline` (16px), `mini` (20px), `micro` (12px).
+On-demand [Lucide](https://lucide.dev/icons/) icons — `outline` (16px), `mini` (20px), and `micro` (12px) variants.
 
-<table width="100%">
-<tr>
-<td align="center">
-<a href="docs/images/icons-light.png"><img src="docs/images/icons-light.png" alt="Lucide icons — light theme" width="100%" /></a>
-<br><sub><strong>Light</strong></sub>
-</td>
-</tr>
-<tr>
-<td align="center">
-<a href="docs/images/icons-dark.png"><img src="docs/images/icons-dark.png" alt="Lucide icons — dark theme" width="100%" /></a>
-<br><sub><strong>Dark</strong></sub>
-</td>
-</tr>
-</table>
+**Light**
+
+[![Icons — light](docs/images/icons-light.png)](docs/images/icons-light.png)
+
+**Dark**
+
+[![Icons — dark](docs/images/icons-dark.png)](docs/images/icons-dark.png)
 
 ```bash
 php artisan bladex-components:icon search grip-vertical
@@ -254,24 +175,24 @@ php artisan bladex-components:icon search grip-vertical
 composer require --dev ivanfuhr/bladex-components
 ```
 
-O pacote é **dev dependency** (CLI do registry). Depois de `init` + `add`, o app roda com arquivos em `resources/views/ui` e `app/Support/Bladex` — produção pode usar `composer install --no-dev`.
+The package is a **development dependency** (registry CLI). After `init` and `add`, your app runs from files under `resources/views/ui` and `app/Support/Bladex` — production can use `composer install --no-dev`.
 
 ```bash
 php artisan vendor:publish --tag="bladex-components"
 ```
 
-| Tag | Recurso |
+| Tag | Resource |
 | --- | --- |
-| `bladex-components-config` | Configuração |
-| `bladex-components-views` | Views do pacote |
-| `bladex-components-lang` | Traduções |
-| `bladex-components-assets` | Assets públicos |
+| `bladex-components-config` | Configuration |
+| `bladex-components-views` | Package views |
+| `bladex-components-lang` | Translations |
+| `bladex-components-assets` | Public assets |
 
 <br>
 
 ## Usage
 
-**Vendor (rápido)**
+**Vendor (quick start)**
 
 ```blade
 <x-bladex-components::input name="email" />
@@ -290,18 +211,22 @@ php artisan bladex-components:add input button select
 
 ### Registry CLI
 
+<h3 id="registry-cli"></h3>
+
 | Command | Description |
 | --- | --- |
-| `bladex-components:init` | `bladex-components.json`, support/CSS, lock file |
-| `bladex-components:add {names}` | Instalar do registry |
-| `bladex-components:update {name?}` | Atualizar arquivos instalados |
-| `bladex-components:remove {names}` | Remover componentes |
-| `bladex-components:list` | Listar registry (`--installed`) |
-| `bladex-components:icon {names?}` | Importar ícones Lucide |
+| `bladex-components:init` | Create `bladex-components.json`, support/CSS, and lock file |
+| `bladex-components:add {names}` | Install from the registry |
+| `bladex-components:update {name?}` | Refresh installed files |
+| `bladex-components:remove {names}` | Remove installed components |
+| `bladex-components:list` | List registry items (`--installed`) |
+| `bladex-components:icon {names?}` | Import Lucide icons |
 
 ### Tailwind CSS
 
-`init` cria `resources/css/bladex.css` e marca o import em `app.css`. Escaneia `resources/views` + `app/Support/Bladex` e registra dark mode por classe (`.dark` no `<html>`).
+<h3 id="tailwind-css"></h3>
+
+`init` creates `resources/css/bladex.css` and patches the import in `app.css`. Scans `resources/views` and `app/Support/Bladex`, and registers class-based dark mode (`.dark` on `<html>`).
 
 ```css
 @import "tailwindcss";
@@ -311,23 +236,25 @@ php artisan bladex-components:add input button select
 /* bladex-components-end */
 ```
 
-Com `APP_DEBUG=true`, falta de integração gera exceção clara (desligue em `bladex-components.validate_tailwind_integration`). Registry padrão: `package://registry.json`. Rebuild: `composer registry:build`.
+With `APP_DEBUG=true`, missing integration throws a clear exception (disable via `bladex-components.validate_tailwind_integration`). Default registry: `package://registry.json`. Rebuild: `composer registry:build`.
 
 <br>
 
 ## Development
 
+<h3 id="development"></h3>
+
 ```bash
-composer playbook              # /playbook — playground interativo
+composer playbook              # /playbook — interactive playground
 composer workbench:build
 composer serve
 ```
 
-Atualizar capturas do README (servidor em `http://127.0.0.1:8001`):
+Refresh README screenshots (server at `http://127.0.0.1:8001`):
 
 ```bash
 ./scripts/capture-readme-images.sh
-# Páginas: /playbook/media/{buttons|input|select|typography|icons}?dark=1
+# Pages: /playbook/media/{buttons|input|select|typography|icons}?dark=1
 ```
 
 ## Changelog
