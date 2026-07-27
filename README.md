@@ -28,7 +28,9 @@
 
 <br>
 
-Copy only what you need with `stencil:add`, use `x-ui::*` in your app, and keep Tailwind v4 + class-based dark mode aligned with the design system. Screenshots are frameless — background matches the theme (click to enlarge).
+Copy only what you need with `stencil:add`, use `x-ui::*` in your app, and keep Tailwind v4 + class-based dark mode aligned with the design system.
+
+Below, each component uses the same playbook media page in **light** and **dark** mode (append `?dark=1` to set `.dark` on `<html>`). Screenshots are frameless—the page background matches the theme. Click an image for the full-size PNG.
 
 <br>
 
@@ -36,7 +38,7 @@ Copy only what you need with `stencil:add`, use `x-ui::*` in your app, and keep 
 
 Variants: `outline`, `primary`, `secondary`, `danger`, `ghost`, `subtle`, `link` — sizes `xs`–`lg`, icon mode (`square`), and `leading` / `trailing` slots.
 
-**Light** · click to enlarge
+**Light**
 
 [![Button variants — light](docs/images/buttons-light.png)](docs/images/buttons-light.png)
 
@@ -250,12 +252,14 @@ composer workbench:build
 composer serve
 ```
 
-Refresh README screenshots (server at `http://127.0.0.1:8001`):
+To refresh README screenshots, run the workbench on port `8001`, then:
 
 ```bash
+composer serve -- --port=8001   # separate terminal, if needed
 ./scripts/capture-readme-images.sh
-# Pages: /playbook/media/{buttons|input|select|typography|icons}?dark=1
 ```
+
+The script prefers headless Chromium; it falls back to Playwright. Targets: `/playbook/media/{buttons|input|select|typography|icons}` and the same paths with `?dark=1`.
 
 ## Changelog
 
