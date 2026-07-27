@@ -43,7 +43,7 @@ php artisan bladex-components:add input
 
 Owned mode runs `init` scaffolding: `app/Support/Bladex` class maps, `resources/css/bladex.css`, `App\Providers\BladexUiServiceProvider`, and marked patches in `resources/css/app.css` / `resources/js/app.js`. Registry `add` installs owned Blade (`x-ui::`) and co-located scripts such as `resources/views/ui/select/select.js`.
 
-**Tailwind:** Scan app paths via `resources/css/bladex.css` (created by `init`). Do not import Tailwind sources from `vendor/`. With `APP_DEBUG=true` and the dev package installed, missing integration throws on HTTP requests; set `validate_tailwind_integration` to `false` in config to opt out. Use `class="dark"` on the layout for dark UIs.
+**Tailwind:** Scan app paths via `resources/css/bladex.css` (created by `init`; includes `@custom-variant dark` for class-based `dark:*`). Do not import Tailwind sources from `vendor/`. With `APP_DEBUG=true` and the dev package installed, missing integration throws on HTTP requests; set `validate_tailwind_integration` to `false` in config to opt out. Components default to light styles; add `class="dark"` on the layout for dark UIs.
 
 **Select:** `bladex-components:add select` copies `select.js` and patches the Vite entry. Default `shortcut` wraps `select.item` children; set `:shortcut="false"` for full `select.trigger` / `select.content` composition.
 

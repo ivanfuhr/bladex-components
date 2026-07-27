@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Support\Bladex\Typography;
 
-use App\Support\Bladex\ProjectConfig;
 use Illuminate\Support\Arr;
+use App\Support\Bladex\ProjectConfig;
 
 final class TypographyConfig
 {

@@ -5,5 +5,7 @@
  *   @import "../../../resources/tailwind/bladex.css";
  */
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @source "../views/**/*.blade.php";
 @source "../../src/Support/**/*.php";

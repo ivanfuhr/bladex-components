@@ -1,5 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full antialiased" x-data="{ dark: true }" x-bind:class="dark ? 'dark' : ''">
+<html
+    lang="en"
+    class="h-full antialiased"
+    x-data="{
+        dark: localStorage.getItem('bladex-playbook-dark') === '1',
+    }"
+    x-init="$watch('dark', (value) => localStorage.setItem('bladex-playbook-dark', value ? '1' : '0'))"
+    x-bind:class="dark ? 'dark scheme-dark' : 'scheme-light'"
+>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

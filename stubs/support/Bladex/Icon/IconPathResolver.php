@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Support\Bladex\Icon;
 
-use App\Support\Bladex\ProjectConfig;
 use Illuminate\Contracts\Foundation\Application;
 use InvalidArgumentException;
+use App\Support\Bladex\ProjectConfig;
 
 final class IconPathResolver
 {

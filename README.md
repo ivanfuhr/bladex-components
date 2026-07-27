@@ -133,9 +133,9 @@ Owned components use PHP class maps copied into `app/Support/Bladex` during `ini
 /* bladex-components-end */
 ```
 
-`resources/css/bladex.css` tells Tailwind to scan `resources/views` and `app/Support/Bladex` (PHP class maps).
+`resources/css/bladex.css` tells Tailwind to scan `resources/views` and `app/Support/Bladex` (PHP class maps), and registers class-based dark mode (`@custom-variant dark`) so `dark:*` utilities follow a `.dark` ancestor—not the OS `prefers-color-scheme` alone.
 
-Dark UIs should use Tailwind’s `dark` variant (`class="dark"` on `<html>` or a layout wrapper) so `variant="primary"` inverts correctly (`bg-zinc-50` text on dark, `bg-zinc-900` on light). Rebuild CSS after changing Tailwind sources (`npm run build` / `npm run dev`).
+Without `class="dark"` on `<html>` (or a layout wrapper), components use their default (light) styles. Dark UIs should add that class so `variant="primary"` inverts correctly (`bg-zinc-900` on light, `bg-zinc-50` text on dark). Rebuild CSS after changing Tailwind sources (`npm run build` / `npm run dev`).
 
 With `APP_DEBUG=true` and the package installed locally, HTTP requests throw a clear exception if this integration is missing (set `bladex-components.validate_tailwind_integration` to `false` in config to disable).
 

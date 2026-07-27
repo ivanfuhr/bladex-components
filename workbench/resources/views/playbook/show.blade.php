@@ -118,8 +118,8 @@
                         <span x-text="copied ? 'Copied' : 'Copy'"></span>
                     </button>
                 </div>
-                <div class="playbook-code mt-3 min-w-0 overflow-hidden rounded-2xl border border-zinc-200/80 shadow-sm ring-1 ring-zinc-950/5 dark:border-zinc-800 dark:ring-white/5">
-                    <pre class="playbook-code__pre max-h-[min(28rem,50vh)] overflow-auto"><code class="playbook-code__content" x-text="snippet">{{ $initialSnippet }}</code></pre>
+                <div class="playbook-code mt-3 min-w-0 overflow-hidden rounded-2xl border border-zinc-200/80 bg-zinc-50 shadow-sm ring-1 ring-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950 dark:ring-white/5">
+                    <pre class="playbook-code__pre max-h-[min(28rem,50vh)] overflow-auto p-4 font-mono text-xs leading-relaxed text-zinc-800 dark:text-zinc-200"><code class="playbook-code__content block whitespace-pre-wrap" x-text="snippet">{{ $initialSnippet }}</code></pre>
                 </div>
             </div>
         </section>

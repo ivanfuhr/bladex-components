@@ -57,7 +57,10 @@ it('renders leading and trailing slots', function () {
         ->toContain('data-test="trailing-action"')
         ->toContain('input--with-affixes')
         ->toContain('input__leading')
+        ->toContain('!pl-9')
+        ->toContain('!pr-14')
         ->toContain('w-9')
+        ->toContain('w-14')
         ->toContain('[&_[data-icon]]:size-4');
 });
 

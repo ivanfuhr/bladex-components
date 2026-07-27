@@ -42,14 +42,29 @@
     [$hasLeading, $leadingContent] = $resolveAffix($leading ?? null);
     [$hasTrailing, $trailingContent] = $resolveAffix($trailing ?? null);
 
+    $trailingSlotIsIcon = false;
+    if ($hasTrailing && $trailingContent instanceof ComponentSlot && ! $trailingContent->isEmpty()) {
+        $trailingSlotIsIcon = str_contains($trailingContent->toHtml(), 'data-icon');
+    }
+
+    $trailingAffixWidth = $trailingSlotIsIcon ? 'w-9' : 'w-14';
+
+    $leadingControlPadding = $hasLeading ? '!pl-9' : null;
+
+    $trailingControlPadding = match (true) {
+        ! $hasTrailing => null,
+        $trailingSlotIsIcon => '!pr-9',
+        default => '!pr-14',
+    };
+
     $controlClasses = collect([
         'input__control',
         'flex w-full min-w-0',
         $formControl->fieldSurfaceClasses($size),
         'placeholder:text-zinc-500 dark:placeholder:text-zinc-400',
         $formControl->invalidFieldClasses(),
-        $hasLeading ? 'pl-9' : null,
-        $hasTrailing ? 'pr-9' : null,
+        $leadingControlPadding,
+        $trailingControlPadding,
         $invalid ? 'border-red-500 focus-visible:ring-red-500/20 dark:border-red-500' : null,
         $useInGroup ? 'shadow-none focus-visible:z-10' : null,
         $prefixText !== null && $suffixText !== null ? 'rounded-none border-l-0 border-r-0' : null,
@@ -60,7 +75,7 @@
 
     $wrapperClasses = collect([
         'input',
-        'relative flex min-w-0 items-stretch',
+        'relative flex min-w-0 items-stretch overflow-visible',
         $applyFullWidth && ! $hasGroupAffix ? 'w-full' : null,
         $hasGroupAffix ? 'flex-1' : null,
         $hasLeading || $hasTrailing ? 'input--with-affixes' : null,
@@ -103,7 +118,8 @@
 
     $trailingAffixClasses = collect([
         'input__trailing',
-        'absolute inset-y-0 right-0 flex w-9 items-center justify-center',
+        'absolute inset-y-0 right-0 z-10 flex items-center justify-center',
+        $trailingAffixWidth,
         $affixIconClasses,
         '[&_[data-icon]]:text-zinc-500 dark:[&_[data-icon]]:text-zinc-400',
     ])->implode(' ');

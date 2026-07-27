@@ -23,7 +23,7 @@
             <x-bladex-components::icon.loading />
         </x-slot:leading>
         <x-slot:trailing>
-            <span class="text-xs font-medium text-zinc-500">Clear</span>
+            <x-bladex-components::text inline size="sm" variant="subtle">Clear</x-bladex-components::text>
         </x-slot:trailing>
     @endif
 </x-bladex-components::input>

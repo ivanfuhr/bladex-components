@@ -105,6 +105,8 @@ PHP,
 /**
  * BladeX Components — Tailwind v4 @source paths for owned UI.
  */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @source "../../views/**/*.blade.php";
 @source "../../../app/Support/Bladex/**/*.php";
 
