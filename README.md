@@ -128,7 +128,7 @@ The script crops to `#readme-media` (installs `playwright-core` under `scripts/`
 
 ---
 
-Component previews follow your GitHub theme (light or dark). Click an image for the full-size PNG.
+Component previews match your GitHub theme via `<picture>` (`prefers-color-scheme`).
 
 <br>
 
@@ -136,8 +136,11 @@ Component previews follow your GitHub theme (light or dark). Click an image for 
 
 Variants: `outline`, `primary`, `secondary`, `danger`, `ghost`, `subtle`, `link` — sizes `xs`–`lg`, icon mode (`square`), and `leading` / `trailing` slots.
 
-[![Button variants](docs/images/buttons-light.png#gh-light-mode-only)](docs/images/buttons-light.png)
-[![Button variants](docs/images/buttons-dark.png#gh-dark-mode-only)](docs/images/buttons-dark.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/buttons-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/buttons-light.png">
+  <img src="docs/images/buttons-light.png" alt="Button variants" />
+</picture>
 
 ```blade
 <x-ui::button variant="primary" size="lg">Save changes</x-ui::button>
@@ -159,8 +162,11 @@ Icon slots in the example need `stencil:add icon` and `stencil:icon search`.
 
 Affixes, `prefix` / `suffix`, and `invalid`, `disabled`, and `readonly` states.
 
-[![Input](docs/images/input-light.png#gh-light-mode-only)](docs/images/input-light.png)
-[![Input](docs/images/input-dark.png#gh-dark-mode-only)](docs/images/input-dark.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/input-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/input-light.png">
+  <img src="docs/images/input-light.png" alt="Input" />
+</picture>
 
 ```blade
 <x-ui::input name="email" type="email" placeholder="you@example.com">
@@ -183,8 +189,11 @@ php artisan stencil:add input
 
 Accessible listbox (not a native `<select>`). Subcomponents include `trigger`, `value`, `content`, `group`, `label`, `item`, and `separator`. `stencil:add select` copies `select.js` and patches your Vite entry (for example `resources/js/app.js`) to import it.
 
-[![Select](docs/images/select-light.png#gh-light-mode-only)](docs/images/select-light.png)
-[![Select](docs/images/select-dark.png#gh-dark-mode-only)](docs/images/select-dark.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/select-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/select-light.png">
+  <img src="docs/images/select-light.png" alt="Select" />
+</picture>
 
 ```blade
 <x-ui::select name="industry" placeholder="Choose industry…">
@@ -207,8 +216,11 @@ php artisan stencil:add select
 
 `<x-ui::heading />` with semantic levels `1`–`6` and `<x-ui::text />` with the `sm` / `default` / `lg` / `xl` scale, variants, and colors.
 
-[![Typography](docs/images/typography-light.png#gh-light-mode-only)](docs/images/typography-light.png)
-[![Typography](docs/images/typography-dark.png#gh-dark-mode-only)](docs/images/typography-dark.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/typography-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/typography-light.png">
+  <img src="docs/images/typography-light.png" alt="Typography" />
+</picture>
 
 ```blade
 <head>
@@ -237,8 +249,11 @@ php artisan stencil:add icon
 php artisan stencil:icon search grip-vertical
 ```
 
-[![Icons](docs/images/icons-light.png#gh-light-mode-only)](docs/images/icons-light.png)
-[![Icons](docs/images/icons-dark.png#gh-dark-mode-only)](docs/images/icons-dark.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/icons-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/icons-light.png">
+  <img src="docs/images/icons-light.png" alt="Icons" />
+</picture>
 
 ```blade
 <x-ui::icons.search />
