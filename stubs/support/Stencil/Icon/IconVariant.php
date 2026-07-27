@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Support\Bladex\Icon;
+namespace App\Support\Stencil\Icon;
 
 final class IconVariant
 {

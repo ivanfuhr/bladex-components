@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Ivanfuhr\BladexComponents\Support\Typography\TypographyClassMap;
-use Ivanfuhr\BladexComponents\Support\Typography\TypographyConfig;
-use Ivanfuhr\BladexComponents\Support\Typography\TypographyScale;
+use Ivanfuhr\Stencil\Support\Typography\TypographyClassMap;
+use Ivanfuhr\Stencil\Support\Typography\TypographyConfig;
+use Ivanfuhr\Stencil\Support\Typography\TypographyScale;
 
 it('steps through the scale for heading levels relative to defaults', function (): void {
     $map = app(TypographyClassMap::class);
@@ -31,7 +31,7 @@ it('pairs default heading level with one step above default text size', function
 });
 
 it('recomputes heading sizes when default text size changes', function (): void {
-    config(['bladex-components.typography.defaults.text_size' => 'lg']);
+    config(['stencil.typography.defaults.text_size' => 'lg']);
 
     $this->app->forgetInstance(TypographyConfig::class);
     $this->app->forgetInstance(TypographyScale::class);

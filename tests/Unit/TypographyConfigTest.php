@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Ivanfuhr\BladexComponents\Support\Typography\TypographyConfig;
+use Ivanfuhr\Stencil\Support\Typography\TypographyConfig;
 
 it('falls back heading role to sans when display font is missing', function (): void {
     $roles = app(TypographyConfig::class)->roles();
@@ -12,7 +12,7 @@ it('falls back heading role to sans when display font is missing', function (): 
 });
 
 it('merges typography roles from project config', function (): void {
-    $configPath = app()->basePath('bladex-components.json');
+    $configPath = app()->basePath('stencil.json');
 
     file_put_contents($configPath, json_encode([
         'registry' => 'package://registry.json',

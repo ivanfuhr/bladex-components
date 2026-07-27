@@ -3,5 +3,5 @@
 ])
 
 @error($name)
-    <x-bladex-components::field.message variant="error">{{ $message }}</x-bladex-components::field.message>
+    <x-stencil::field.message variant="error">{{ $message }}</x-stencil::field.message>
 @enderror

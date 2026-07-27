@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Console\Commands;
+namespace Ivanfuhr\Stencil\Console\Commands;
 
-use Ivanfuhr\BladexComponents\Registry\RegistryClient;
-use Ivanfuhr\BladexComponents\Support\ProjectConfig;
-use Ivanfuhr\BladexComponents\Support\ProjectLock;
+use Ivanfuhr\Stencil\Registry\RegistryClient;
+use Ivanfuhr\Stencil\Support\ProjectConfig;
+use Ivanfuhr\Stencil\Support\ProjectLock;
 use Throwable;
 
 class ListCommand extends RegistryCommand
 {
-    protected $signature = 'bladex-components:list
+    protected $signature = 'stencil:list
                             {--installed : Only show installed items}
                             {--all : Show every registry item including installed state}';
 
@@ -40,7 +40,7 @@ class ListCommand extends RegistryCommand
         }
 
         if (! $projectConfig->exists()) {
-            $this->components->error('Project config not found. Run bladex-components:init first.');
+            $this->components->error('Project config not found. Run stencil:init first.');
 
             return self::FAILURE;
         }

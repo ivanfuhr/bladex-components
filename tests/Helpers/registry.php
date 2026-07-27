@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-use App\Providers\BladexUiServiceProvider;
+use App\Providers\StencilUiServiceProvider;
 use Composer\Autoload\ClassLoader;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
-use Ivanfuhr\BladexComponents\Support\ProjectConfig;
+use Ivanfuhr\Stencil\Support\ProjectConfig;
 
 function registryFixturePath(string $relative): string
 {
@@ -53,7 +53,7 @@ function fakeRegistryHttp(): void
 function useRegistryProjectConfig(string $registryUrl = 'https://registry.test/registry.json'): void
 {
     $config = [
-        '$schema' => 'https://example.test/schema/bladex-components.json',
+        '$schema' => 'https://example.test/schema/stencil.json',
         'registry' => $registryUrl,
         'paths' => [
             'ui' => 'resources/views/ui',
@@ -61,7 +61,7 @@ function useRegistryProjectConfig(string $registryUrl = 'https://registry.test/r
     ];
 
     file_put_contents(
-        app()->basePath('bladex-components.json'),
+        app()->basePath('stencil.json'),
         json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)."\n",
     );
 }
@@ -74,7 +74,7 @@ function registerOwnedUiNamespace(): void
     );
 }
 
-function bootOwnedBladexScaffold(): void
+function bootOwnedStencilScaffold(): void
 {
     static $autoloadRegistered = false;
     $appPath = app()->basePath('app');
@@ -86,31 +86,31 @@ function bootOwnedBladexScaffold(): void
         $autoloadRegistered = true;
     }
 
-    if (class_exists(BladexUiServiceProvider::class)) {
-        app()->register(BladexUiServiceProvider::class);
+    if (class_exists(StencilUiServiceProvider::class)) {
+        app()->register(StencilUiServiceProvider::class);
     }
 }
 
 function useOwnedRegistryProject(string $registryUrl = 'https://registry.test/registry.json'): void
 {
-    Artisan::call('bladex-components:init');
+    Artisan::call('stencil:init');
 
-    $path = app()->basePath('bladex-components.json');
+    $path = app()->basePath('stencil.json');
     $config = json_decode((string) file_get_contents($path), true);
     $config['registry'] = $registryUrl;
     file_put_contents($path, json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)."\n");
 
-    bootOwnedBladexScaffold();
+    bootOwnedStencilScaffold();
 }
 
 function cleanupOwnedProjectArtifacts(): void
 {
     $paths = [
-        app()->basePath('bladex-components.json'),
-        app()->basePath('bladex-components.lock'),
-        app()->basePath('config/bladex-ui.php'),
-        app()->basePath('resources/css/bladex.css'),
-        app()->basePath('app/Providers/BladexUiServiceProvider.php'),
+        app()->basePath('stencil.json'),
+        app()->basePath('stencil.lock'),
+        app()->basePath('config/stencil-ui.php'),
+        app()->basePath('resources/css/stencil.css'),
+        app()->basePath('app/Providers/StencilUiServiceProvider.php'),
     ];
 
     foreach ($paths as $path) {
@@ -120,7 +120,7 @@ function cleanupOwnedProjectArtifacts(): void
     }
 
     File::deleteDirectory(app()->resourcePath('views/ui'));
-    File::deleteDirectory(app()->basePath('app/Support/Bladex'));
+    File::deleteDirectory(app()->basePath('app/Support/Stencil'));
 
     $providersPath = app()->basePath('bootstrap/providers.php');
 

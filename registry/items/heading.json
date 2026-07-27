@@ -10,7 +10,7 @@
             "path": "heading/index.blade.php",
             "type": "registry:ui",
             "target": "heading/index.blade.php",
-            "content": "@props([\n    'level' => null,\n    'variant' => null,\n])\n\n@php\n    use App\\Support\\Bladex\\Typography\\TypographyClassMap;\n    use App\\Support\\Bladex\\Typography\\TypographyConfig;\n\n    $level = max(1, min(6, (int) ($level ?? app(TypographyConfig::class)->defaultHeadingLevel())));\n    $classes = app(TypographyClassMap::class)->headingClasses($level, $variant);\n@endphp\n\n<h{{ $level }} {{ $attributes->class($classes) }} data-heading>{{ $slot }}</h{{ $level }}>\n"
+            "content": "@props([\n    'level' => null,\n    'variant' => null,\n])\n\n@php\n    use App\\Support\\Stencil\\Typography\\TypographyClassMap;\n    use App\\Support\\Stencil\\Typography\\TypographyConfig;\n\n    $level = max(1, min(6, (int) ($level ?? app(TypographyConfig::class)->defaultHeadingLevel())));\n    $classes = app(TypographyClassMap::class)->headingClasses($level, $variant);\n@endphp\n\n<h{{ $level }} {{ $attributes->class($classes) }} data-heading>{{ $slot }}</h{{ $level }}>\n"
         }
     ]
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Registry;
+namespace Ivanfuhr\Stencil\Registry;
 
 use Illuminate\Support\Facades\Http;
 use RuntimeException;

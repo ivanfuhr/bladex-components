@@ -6,5 +6,5 @@
     ]) }}
     data-input-group-suffix
 >
-    <x-bladex-components::text inline size="sm" variant="subtle">{{ $slot }}</x-bladex-components::text>
+    <x-stencil::text inline size="sm" variant="subtle">{{ $slot }}</x-stencil::text>
 </div>

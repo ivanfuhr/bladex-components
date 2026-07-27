@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Support\Typography;
+namespace Ivanfuhr\Stencil\Support\Typography;
 
 use Illuminate\Support\Arr;
-use Ivanfuhr\BladexComponents\Support\ProjectConfig;
+use Ivanfuhr\Stencil\Support\ProjectConfig;
 
 final class TypographyConfig
 {
@@ -21,7 +21,7 @@ final class TypographyConfig
      */
     public function all(): array
     {
-        $base = config('bladex-components.typography', []);
+        $base = config('stencil.typography', []);
 
         if (! is_array($base)) {
             $base = [];

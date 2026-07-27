@@ -2,41 +2,41 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Registry;
+namespace Ivanfuhr\Stencil\Registry;
 
-use Ivanfuhr\BladexComponents\Support\ProjectConfig;
-use Ivanfuhr\BladexComponents\Support\ProjectLock;
+use Ivanfuhr\Stencil\Support\ProjectConfig;
+use Ivanfuhr\Stencil\Support\ProjectLock;
 use RuntimeException;
 
 final class ProjectIntegrator
 {
-    public const string CSS_START = '/* bladex-components-start */';
+    public const string CSS_START = '/* stencil-start */';
 
-    public const string CSS_END = '/* bladex-components-end */';
+    public const string CSS_END = '/* stencil-end */';
 
-    public const string JS_START = '// bladex-components-start';
+    public const string JS_START = '// stencil-start';
 
-    public const string JS_END = '// bladex-components-end';
+    public const string JS_END = '// stencil-end';
 
     public function ensureTailwind(ProjectConfig $config): void
     {
-        $bladexCssRelative = 'resources/css/bladex.css';
-        $bladexCssPath = $config->basePath($bladexCssRelative);
+        $stencilCssRelative = 'resources/css/stencil.css';
+        $stencilCssPath = $config->basePath($stencilCssRelative);
 
-        if (! is_file($bladexCssPath)) {
-            $stub = dirname(__DIR__, 2).'/stubs/resources/css/bladex.css';
+        if (! is_file($stencilCssPath)) {
+            $stub = dirname(__DIR__, 2).'/stubs/resources/css/stencil.css';
 
             if (! is_file($stub)) {
-                throw new RuntimeException('Missing bladex.css stub. Run composer registry:build.');
+                throw new RuntimeException('Missing stencil.css stub. Run composer registry:build.');
             }
 
-            $directory = dirname($bladexCssPath);
+            $directory = dirname($stencilCssPath);
 
             if (! is_dir($directory)) {
                 mkdir($directory, 0755, true);
             }
 
-            copy($stub, $bladexCssPath);
+            copy($stub, $stencilCssPath);
         }
 
         foreach ($this->stylesheetCandidates($config) as $stylesheet) {
@@ -124,7 +124,7 @@ final class ProjectIntegrator
             return;
         }
 
-        $block = self::CSS_START."\n@import \"./bladex.css\";\n".self::CSS_END."\n";
+        $block = self::CSS_START."\n@import \"./stencil.css\";\n".self::CSS_END."\n";
         $updated = rtrim($contents)."\n\n".$block;
 
         file_put_contents($path, $updated);

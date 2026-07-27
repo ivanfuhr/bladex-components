@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/ivanfuhr/bladex-components/main/registry/schema/bladex-components.json",
-    "title": "BladeX Components project config",
+    "$id": "https://raw.githubusercontent.com/ivanfuhr/stencil/main/registry/schema/stencil.json",
+    "title": "Stencil project config",
     "type": "object",
     "additionalProperties": false,
     "properties": {

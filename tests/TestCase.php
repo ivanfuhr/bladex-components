@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Tests;
+namespace Ivanfuhr\Stencil\Tests;
 
-use Ivanfuhr\BladexComponents\BladexComponentsServiceProvider;
+use Ivanfuhr\Stencil\StencilServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
@@ -12,7 +12,7 @@ abstract class TestCase extends Orchestra
     protected function getPackageProviders($app): array
     {
         return [
-            BladexComponentsServiceProvider::class,
+            StencilServiceProvider::class,
         ];
     }
 }

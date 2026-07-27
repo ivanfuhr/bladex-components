@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Support;
+namespace Ivanfuhr\Stencil\Support;
 
 use Illuminate\Contracts\Foundation\Application;
 use RuntimeException;
@@ -20,7 +20,7 @@ final class ProjectLock
 
     public function path(): string
     {
-        return $this->app->basePath(config('bladex-components.project_lock_file', 'bladex-components.lock'));
+        return $this->app->basePath(config('stencil.project_lock_file', 'stencil.lock'));
     }
 
     /**

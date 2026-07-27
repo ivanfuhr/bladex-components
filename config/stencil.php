@@ -6,9 +6,9 @@ return [
 
     'placeholder' => 'default',
 
-    'project_config_file' => 'bladex-components.json',
+    'project_config_file' => 'stencil.json',
 
-    'project_lock_file' => 'bladex-components.lock',
+    'project_lock_file' => 'stencil.lock',
 
     'default_ui_path' => 'resources/views/ui',
 
@@ -16,7 +16,7 @@ return [
 
     'default_assets_path' => 'resources/js/ui',
 
-    'default_support_path' => 'app/Support/Bladex',
+    'default_support_path' => 'app/Support/Stencil',
 
     'lucide_raw_url' => 'https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/{name}.svg',
 
@@ -24,11 +24,11 @@ return [
 
     'default_registry_url' => 'package://registry.json',
 
-    'default_schema_url' => 'https://raw.githubusercontent.com/ivanfuhr/bladex-components/main/registry/schema/bladex-components.json',
+    'default_schema_url' => 'https://raw.githubusercontent.com/ivanfuhr/stencil/main/registry/schema/stencil.json',
 
     /*
     | When APP_DEBUG is true and the package is installed locally, HTTP requests fail
-    | fast if owned Tailwind scaffolding is missing (see resources/css/bladex.css).
+    | fast if owned Tailwind scaffolding is missing (see resources/css/stencil.css).
     | Artisan and unit tests are not checked. Override in the host app config or set
     | validate_tailwind_integration => false to disable.
     */

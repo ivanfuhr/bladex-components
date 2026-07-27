@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Registry;
+namespace Ivanfuhr\Stencil\Registry;
 
 use FilesystemIterator;
 use Illuminate\Support\Facades\File;
-use Ivanfuhr\BladexComponents\Support\ProjectConfig;
-use Ivanfuhr\BladexComponents\Support\ProjectLock;
+use Ivanfuhr\Stencil\Support\ProjectConfig;
+use Ivanfuhr\Stencil\Support\ProjectLock;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RuntimeException;
@@ -47,8 +47,8 @@ final class ProjectScaffolder
             $relative = substr($file->getPathname(), strlen($stubsRoot) + 1);
             $relative = str_replace('\\', '/', $relative);
 
-            if (str_starts_with($relative, 'support/Bladex/')) {
-                $supportRelative = substr($relative, strlen('support/Bladex/'));
+            if (str_starts_with($relative, 'support/Stencil/')) {
+                $supportRelative = substr($relative, strlen('support/Stencil/'));
                 $appRelative = $config->supportPath().'/'.$supportRelative;
             } elseif (str_starts_with($relative, 'resources/')) {
                 $appRelative = $relative;
@@ -71,14 +71,14 @@ final class ProjectScaffolder
             $written[] = $appRelative;
         }
 
-        $this->registerBladexUiProvider($config, $force);
+        $this->registerStencilUiProvider($config, $force);
         $this->integrator->ensureTailwind($config);
         $this->recordScaffold($lock, $written);
 
         return $written;
     }
 
-    private function registerBladexUiProvider(ProjectConfig $config, bool $force): void
+    private function registerStencilUiProvider(ProjectConfig $config, bool $force): void
     {
         $providersPath = $config->basePath('bootstrap/providers.php');
 
@@ -86,7 +86,7 @@ final class ProjectScaffolder
             return;
         }
 
-        $marker = 'App\\Providers\\BladexUiServiceProvider::class';
+        $marker = 'App\\Providers\\StencilUiServiceProvider::class';
         $contents = file_get_contents($providersPath);
 
         if ($contents === false) {
@@ -97,12 +97,12 @@ final class ProjectScaffolder
             return;
         }
 
-        if (! $force && str_contains($contents, 'BladexUiServiceProvider')) {
+        if (! $force && str_contains($contents, 'StencilUiServiceProvider')) {
             return;
         }
 
         $needle = "return [\n";
-        $insertion = "return [\n    App\\Providers\\BladexUiServiceProvider::class,\n";
+        $insertion = "return [\n    App\\Providers\\StencilUiServiceProvider::class,\n";
 
         if (str_contains($contents, $needle)) {
             $contents = str_replace($needle, $insertion, $contents, $count);

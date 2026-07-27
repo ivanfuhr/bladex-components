@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Support\Bladex;
+namespace App\Support\Stencil;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Arr;
@@ -21,7 +21,7 @@ final class ProjectConfig
 
     public function path(): string
     {
-        return $this->app->basePath(config('bladex-components.project_config_file', 'bladex-components.json'));
+        return $this->app->basePath(config('stencil.project_config_file', 'stencil.json'));
     }
 
     public function basePath(string $path = ''): string
@@ -35,7 +35,7 @@ final class ProjectConfig
     public function read(): array
     {
         if (! $this->exists()) {
-            throw new RuntimeException('Project config not found. Run bladex-components:init first.');
+            throw new RuntimeException('Project config not found. Run stencil:init first.');
         }
 
         $contents = file_get_contents($this->path());
@@ -75,7 +75,7 @@ final class ProjectConfig
     {
         $data = $this->read();
 
-        return (string) Arr::get($data, 'paths.ui', config('bladex-components.default_ui_path', 'resources/views/ui'));
+        return (string) Arr::get($data, 'paths.ui', config('stencil.default_ui_path', 'resources/views/ui'));
     }
 
     public function resolvedUiPath(): string
@@ -95,7 +95,7 @@ final class ProjectConfig
             }
         }
 
-        return (string) config('bladex-components.default_assets_path', 'resources/js/ui');
+        return (string) config('stencil.default_assets_path', 'resources/js/ui');
     }
 
     public function resolvedAssetsPath(): string
@@ -115,7 +115,7 @@ final class ProjectConfig
             }
         }
 
-        return (string) config('bladex-components.default_support_path', 'app/Support/Bladex');
+        return (string) config('stencil.default_support_path', 'app/Support/Stencil');
     }
 
     public function resolvedSupportPath(): string
@@ -135,7 +135,7 @@ final class ProjectConfig
             }
         }
 
-        return (string) config('bladex-components.default_icons_path', 'resources/views/ui/icons');
+        return (string) config('stencil.default_icons_path', 'resources/views/ui/icons');
     }
 
     public function resolvedIconsPath(): string
@@ -147,7 +147,7 @@ final class ProjectConfig
     {
         $data = $this->read();
 
-        return (string) Arr::get($data, 'registry', config('bladex-components.default_registry_url'));
+        return (string) Arr::get($data, 'registry', config('stencil.default_registry_url'));
     }
 
     /**
@@ -172,13 +172,13 @@ final class ProjectConfig
     public function defaultConfig(): array
     {
         return [
-            '$schema' => config('bladex-components.default_schema_url'),
-            'registry' => config('bladex-components.default_registry_url'),
+            '$schema' => config('stencil.default_schema_url'),
+            'registry' => config('stencil.default_registry_url'),
             'paths' => [
-                'ui' => config('bladex-components.default_ui_path', 'resources/views/ui'),
-                'icons' => config('bladex-components.default_icons_path', 'resources/views/ui/icons'),
-                'assets' => config('bladex-components.default_assets_path', 'resources/js/ui'),
-                'support' => config('bladex-components.default_support_path', 'app/Support/Bladex'),
+                'ui' => config('stencil.default_ui_path', 'resources/views/ui'),
+                'icons' => config('stencil.default_icons_path', 'resources/views/ui/icons'),
+                'assets' => config('stencil.default_assets_path', 'resources/js/ui'),
+                'support' => config('stencil.default_support_path', 'app/Support/Stencil'),
             ],
         ];
     }

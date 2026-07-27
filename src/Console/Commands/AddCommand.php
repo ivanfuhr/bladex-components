@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Console\Commands;
+namespace Ivanfuhr\Stencil\Console\Commands;
 
-use Ivanfuhr\BladexComponents\Registry\ComponentInstaller;
-use Ivanfuhr\BladexComponents\Registry\ProjectIntegrator;
-use Ivanfuhr\BladexComponents\Registry\RegistryClient;
-use Ivanfuhr\BladexComponents\Registry\RegistryResolver;
-use Ivanfuhr\BladexComponents\Support\ProjectConfig;
-use Ivanfuhr\BladexComponents\Support\ProjectLock;
+use Ivanfuhr\Stencil\Registry\ComponentInstaller;
+use Ivanfuhr\Stencil\Registry\ProjectIntegrator;
+use Ivanfuhr\Stencil\Registry\RegistryClient;
+use Ivanfuhr\Stencil\Registry\RegistryResolver;
+use Ivanfuhr\Stencil\Support\ProjectConfig;
+use Ivanfuhr\Stencil\Support\ProjectLock;
 use Throwable;
 
 class AddCommand extends RegistryCommand
 {
-    protected $signature = 'bladex-components:add
+    protected $signature = 'stencil:add
                             {names* : Registry item names to install}
                             {--overwrite : Replace files that differ from the registry}
                             {--dry-run : Resolve dependencies and show files without writing}';
@@ -30,7 +30,7 @@ class AddCommand extends RegistryCommand
         ProjectIntegrator $integrator,
     ): int {
         if (! $projectConfig->exists()) {
-            $this->components->error('Project config not found. Run bladex-components:init first.');
+            $this->components->error('Project config not found. Run stencil:init first.');
 
             return self::FAILURE;
         }

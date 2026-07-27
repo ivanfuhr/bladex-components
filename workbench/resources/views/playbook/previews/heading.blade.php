@@ -3,6 +3,6 @@
     $variant = $state['variant'] === 'default' ? null : $state['variant'];
 @endphp
 
-<x-bladex-components::heading :level="$level" :variant="$variant">
+<x-stencil::heading :level="$level" :variant="$variant">
     Page title at level {{ $level }}
-</x-bladex-components::heading>
+</x-stencil::heading>

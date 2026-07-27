@@ -8,7 +8,7 @@
     $showAffixes = (bool) ($state['show_affixes'] ?? false);
 @endphp
 
-<x-bladex-components::button
+<x-stencil::button
     :variant="$variant"
     :size="$size"
     :type="$type"
@@ -18,11 +18,11 @@
 >
     @if ($showAffixes)
         <x-slot:leading>
-            <x-bladex-components::icon.loading class="animate-spin" />
+            <x-stencil::icon.loading class="animate-spin" />
         </x-slot:leading>
     @endif
     @if ($square && ! $showAffixes)
-        <x-bladex-components::icon.loading />
+        <x-stencil::icon.loading />
     @else
         Save changes
     @endif
@@ -31,4 +31,4 @@
             <span aria-hidden="true">→</span>
         </x-slot:trailing>
     @endif
-</x-bladex-components::button>
+</x-stencil::button>

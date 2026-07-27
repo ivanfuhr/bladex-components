@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Support\Typography;
+namespace Ivanfuhr\Stencil\Support\Typography;
 
 final class TypographyClassMap
 {

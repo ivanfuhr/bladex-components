@@ -1,6 +1,6 @@
 @php
-    use Ivanfuhr\BladexComponents\Support\Typography\GoogleFontsStylesheetBuilder;
-    use Ivanfuhr\BladexComponents\Support\Typography\TypographyConfig;
+    use Ivanfuhr\Stencil\Support\Typography\GoogleFontsStylesheetBuilder;
+    use Ivanfuhr\Stencil\Support\Typography\TypographyConfig;
 
     $typographyConfig = app(TypographyConfig::class);
     $stylesheetUrl = app(GoogleFontsStylesheetBuilder::class)->buildUrl();

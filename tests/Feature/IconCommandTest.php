@@ -7,19 +7,19 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
-use Ivanfuhr\BladexComponents\Support\Icon\LucideIconStubGenerator;
-use Ivanfuhr\BladexComponents\Support\ProjectConfig;
+use Ivanfuhr\Stencil\Support\Icon\LucideIconStubGenerator;
+use Ivanfuhr\Stencil\Support\ProjectConfig;
 
 afterEach(function (): void {
     Http::swap(new Factory);
 });
 
 it('registers the icon artisan command', function (): void {
-    expect(Artisan::all())->toHaveKey('bladex-components:icon');
+    expect(Artisan::all())->toHaveKey('stencil:icon');
 });
 
 it('imports lucide icons into the default icons path', function (): void {
-    $relativePath = 'storage/framework/testing/bladex-icons-'.getmypid();
+    $relativePath = 'storage/framework/testing/stencil-icons-'.getmypid();
     $iconsPath = app()->basePath($relativePath);
 
     if (is_dir($iconsPath)) {
@@ -33,7 +33,7 @@ it('imports lucide icons into the default icons path', function (): void {
         ),
     ]);
 
-    Artisan::call('bladex-components:icon', [
+    Artisan::call('stencil:icon', [
         'names' => ['search'],
         '--path' => $relativePath,
     ]);
@@ -49,7 +49,7 @@ it('imports lucide icons into the default icons path', function (): void {
 });
 
 it('renders the packaged loading icon', function (): void {
-    $html = Blade::render('<x-bladex-components::icon.loading class="text-zinc-500" />');
+    $html = Blade::render('<x-stencil::icon.loading class="text-zinc-500" />');
 
     expect($html)
         ->toContain('data-icon')
@@ -67,12 +67,12 @@ it('renders an imported ui icon and dynamic wrapper', function (): void {
 
     File::ensureDirectoryExists($iconsPath);
 
-    $configPath = app()->basePath('bladex-components.json');
+    $configPath = app()->basePath('stencil.json');
     $hadConfig = is_file($configPath);
     $previousConfig = $hadConfig ? file_get_contents($configPath) : null;
 
     file_put_contents($configPath, json_encode([
-        'registry' => config('bladex-components.default_registry_url'),
+        'registry' => config('stencil.default_registry_url'),
         'paths' => [
             'ui' => $relativeUi,
             'icons' => $relativeIcons,
@@ -89,7 +89,7 @@ it('renders an imported ui icon and dynamic wrapper', function (): void {
     Blade::anonymousComponentPath($uiPath, 'ui');
 
     $direct = Blade::render('<x-ui::icons.bolt />');
-    $dynamic = Blade::render('<x-bladex-components::icon name="bolt" />');
+    $dynamic = Blade::render('<x-stencil::icon name="bolt" />');
 
     expect($direct)->toContain('data-icon')
         ->and($dynamic)->toContain('data-icon');
@@ -107,7 +107,7 @@ it('renders an imported ui icon and dynamic wrapper', function (): void {
 
 it('resolves icons path from project config when present', function (): void {
     $base = app()->basePath();
-    $configPath = $base.'/bladex-components.json';
+    $configPath = $base.'/stencil.json';
 
     file_put_contents($configPath, json_encode([
         'registry' => 'package://registry.json',

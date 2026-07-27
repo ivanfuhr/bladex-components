@@ -13,32 +13,32 @@ beforeEach(function () {
 });
 
 it('creates project config and lock via init', function () {
-    $configPath = $this->app->basePath('bladex-components.json');
-    $lockPath = $this->app->basePath('bladex-components.lock');
+    $configPath = $this->app->basePath('stencil.json');
+    $lockPath = $this->app->basePath('stencil.lock');
 
     expect(file_exists($configPath))->toBeFalse();
 
-    $this->artisan('bladex-components:init')
+    $this->artisan('stencil:init')
         ->assertSuccessful();
 
     expect(file_exists($configPath))->toBeTrue();
     expect(file_exists($lockPath))->toBeTrue();
-    expect(file_exists($this->app->basePath('resources/css/bladex.css')))->toBeTrue();
+    expect(file_exists($this->app->basePath('resources/css/stencil.css')))->toBeTrue();
 
     $config = json_decode(file_get_contents($configPath), true);
 
     expect($config['paths']['ui'])->toBe('resources/views/ui');
     expect($config['paths']['icons'])->toBe('resources/views/ui/icons');
     expect($config['paths']['assets'])->toBe('resources/js/ui');
-    expect($config['paths']['support'])->toBe('app/Support/Bladex');
-    expect($config['registry'])->toBe(config('bladex-components.default_registry_url'));
+    expect($config['paths']['support'])->toBe('app/Support/Stencil');
+    expect($config['registry'])->toBe(config('stencil.default_registry_url'));
 });
 
 it('add installs registry items into resources/views/ui', function () {
     useOwnedRegistryProject();
     fakeRegistryHttp();
 
-    $this->artisan('bladex-components:add', ['names' => ['input']])
+    $this->artisan('stencil:add', ['names' => ['input']])
         ->assertSuccessful();
 
     $inputPath = $this->app->resourcePath('views/ui/input/index.blade.php');
@@ -47,10 +47,10 @@ it('add installs registry items into resources/views/ui', function () {
 
     expect(file_exists($inputPath))->toBeTrue();
     expect(file_exists($groupPath))->toBeTrue();
-    expect($inputContents)->toContain('App\\Support\\Bladex');
-    expect($inputContents)->not->toContain('Ivanfuhr\\BladexComponents');
+    expect($inputContents)->toContain('App\\Support\\Stencil');
+    expect($inputContents)->not->toContain('Ivanfuhr\\Stencil');
 
-    $lock = json_decode(file_get_contents($this->app->basePath('bladex-components.lock')), true);
+    $lock = json_decode(file_get_contents($this->app->basePath('stencil.lock')), true);
 
     expect(collect($lock['items'])->pluck('name')->all())->toContain('input', 'input-group', 'field');
 });
@@ -59,7 +59,7 @@ it('add select installs owned javascript asset', function () {
     useOwnedRegistryProject();
     fakeRegistryHttp();
 
-    $this->artisan('bladex-components:add', ['names' => ['select']])
+    $this->artisan('stencil:add', ['names' => ['select']])
         ->assertSuccessful();
 
     $scriptPath = $this->app->resourcePath('views/ui/select/select.js');
@@ -71,7 +71,7 @@ it('renders owned button loading state without the icon loading component', func
     useOwnedRegistryProject();
     fakeRegistryHttp();
 
-    $this->artisan('bladex-components:add', ['names' => ['button']])
+    $this->artisan('stencil:add', ['names' => ['button']])
         ->assertSuccessful();
 
     registerOwnedUiNamespace();
@@ -90,13 +90,13 @@ it('renders owned button loading state without the icon loading component', func
 it('fails add when project config is missing', function () {
     fakeRegistryHttp();
 
-    $configPath = $this->app->basePath('bladex-components.json');
+    $configPath = $this->app->basePath('stencil.json');
 
     if (file_exists($configPath)) {
         unlink($configPath);
     }
 
-    $this->artisan('bladex-components:add', ['names' => ['input']])
+    $this->artisan('stencil:add', ['names' => ['input']])
         ->expectsOutputToContain('Project config not found')
         ->assertFailed();
 });
@@ -105,7 +105,7 @@ it('renders owned ui input component after install', function () {
     useOwnedRegistryProject();
     fakeRegistryHttp();
 
-    $this->artisan('bladex-components:add', ['names' => ['input']])
+    $this->artisan('stencil:add', ['names' => ['input']])
         ->assertSuccessful();
 
     registerOwnedUiNamespace();
@@ -121,13 +121,13 @@ it('updates installed files from the registry', function () {
     useOwnedRegistryProject();
     fakeRegistryHttp();
 
-    $this->artisan('bladex-components:add', ['names' => ['input']])
+    $this->artisan('stencil:add', ['names' => ['input']])
         ->assertSuccessful();
 
     $inputPath = $this->app->resourcePath('views/ui/input/index.blade.php');
     File::put($inputPath, '@owned marker');
 
-    $this->artisan('bladex-components:update', ['--overwrite' => true])
+    $this->artisan('stencil:update', ['--overwrite' => true])
         ->assertSuccessful();
 
     expect(file_get_contents($inputPath))->not->toBe('@owned marker');
@@ -137,19 +137,19 @@ it('removes installed registry items and files', function () {
     useOwnedRegistryProject();
     fakeRegistryHttp();
 
-    $this->artisan('bladex-components:add', ['names' => ['input']])
+    $this->artisan('stencil:add', ['names' => ['input']])
         ->assertSuccessful();
 
     $inputPath = $this->app->resourcePath('views/ui/input/index.blade.php');
 
     expect(file_exists($inputPath))->toBeTrue();
 
-    $this->artisan('bladex-components:remove', ['names' => ['input-group']])
+    $this->artisan('stencil:remove', ['names' => ['input-group']])
         ->assertSuccessful();
 
     expect(file_exists($this->app->resourcePath('views/ui/input/group/index.blade.php')))->toBeFalse();
 
-    $lock = json_decode(file_get_contents($this->app->basePath('bladex-components.lock')), true);
+    $lock = json_decode(file_get_contents($this->app->basePath('stencil.lock')), true);
 
     expect(collect($lock['items'])->pluck('name')->all())->toContain('input');
     expect(collect($lock['items'])->pluck('name')->all())->not->toContain('input-group');
@@ -159,7 +159,7 @@ it('lists registry items', function () {
     useOwnedRegistryProject();
     fakeRegistryHttp();
 
-    $this->artisan('bladex-components:list')
+    $this->artisan('stencil:list')
         ->expectsOutputToContain('input')
         ->assertSuccessful();
 });

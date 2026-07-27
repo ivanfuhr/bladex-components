@@ -1,5 +1,5 @@
 <div class="space-y-2">
-    <x-bladex-components::heading :level="2">{{ __('bladex-components::messages.placeholder_heading') }}</x-bladex-components::heading>
+    <x-stencil::heading :level="2">{{ __('stencil::messages.placeholder_heading') }}</x-stencil::heading>
 
-    <x-bladex-components::text>{{ __('bladex-components::messages.placeholder') }}</x-bladex-components::text>
+    <x-stencil::text>{{ __('stencil::messages.placeholder') }}</x-stencil::text>
 </div>

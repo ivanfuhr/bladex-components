@@ -9,11 +9,11 @@ it('registers the input anonymous component', function () {
         ->pluck('prefix')
         ->all();
 
-    expect($paths)->toContain('bladex-components');
+    expect($paths)->toContain('stencil');
 });
 
 it('renders a text input with the control name on the native element', function () {
-    $html = Blade::render('<x-bladex-components::input name="email" type="email" placeholder="you@example.com" />');
+    $html = Blade::render('<x-stencil::input name="email" type="email" placeholder="you@example.com" />');
 
     expect($html)
         ->toContain('data-input')
@@ -25,7 +25,7 @@ it('renders a text input with the control name on the native element', function 
 
 it('merges wrapper class and forwards input:class to the control', function () {
     $html = Blade::render(
-        '<x-bladex-components::input name="q" class="max-w-xs" input:class="font-mono" />',
+        '<x-stencil::input name="q" class="max-w-xs" input:class="font-mono" />',
     );
 
     expect($html)
@@ -35,21 +35,21 @@ it('merges wrapper class and forwards input:class to the control', function () {
 });
 
 it('marks the control invalid when the invalid prop is true', function () {
-    $html = Blade::render('<x-bladex-components::input name="title" :invalid="true" />');
+    $html = Blade::render('<x-stencil::input name="title" :invalid="true" />');
 
     expect($html)->toContain('aria-invalid="true"');
 });
 
 it('renders leading and trailing slots', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-bladex-components::input name="search">
+        <x-stencil::input name="search">
             <x-slot:leading>
                 <span data-test="leading-icon">⌕</span>
             </x-slot:leading>
             <x-slot:trailing>
                 <span data-test="trailing-action">Clear</span>
             </x-slot:trailing>
-        </x-bladex-components::input>
+        </x-stencil::input>
     BLADE);
 
     expect($html)
@@ -66,11 +66,11 @@ it('renders leading and trailing slots', function () {
 
 it('sizes icons in leading and trailing affixes to match the control', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-bladex-components::input name="search">
+        <x-stencil::input name="search">
             <x-slot:leading>
-                <x-bladex-components::icon.loading />
+                <x-stencil::icon.loading />
             </x-slot:leading>
-        </x-bladex-components::input>
+        </x-stencil::input>
     BLADE);
 
     expect($html)
@@ -81,7 +81,7 @@ it('sizes icons in leading and trailing affixes to match the control', function 
 
 it('renders prefix and suffix from attributes', function () {
     $html = Blade::render(
-        '<x-bladex-components::input name="website" prefix="https://" suffix=".test" class="max-w-md" placeholder="example.com" />',
+        '<x-stencil::input name="website" prefix="https://" suffix=".test" class="max-w-md" placeholder="example.com" />',
     );
 
     expect($html)
@@ -97,7 +97,7 @@ it('renders prefix and suffix from attributes', function () {
 
 it('renders leading and trailing from attributes', function () {
     $html = Blade::render(
-        '<x-bladex-components::input name="q" leading="⌕" trailing="⌘K" placeholder="Search" />',
+        '<x-stencil::input name="q" leading="⌕" trailing="⌘K" placeholder="Search" />',
     );
 
     expect($html)
@@ -110,11 +110,11 @@ it('renders leading and trailing from attributes', function () {
 
 it('prefers leading and trailing slots over attribute shorthands', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-bladex-components::input name="q" leading="ignored">
+        <x-stencil::input name="q" leading="ignored">
             <x-slot:leading>
                 <span data-test="slot-leading">from-slot</span>
             </x-slot:leading>
-        </x-bladex-components::input>
+        </x-stencil::input>
     BLADE);
 
     expect($html)
@@ -124,11 +124,11 @@ it('prefers leading and trailing slots over attribute shorthands', function () {
 
 it('renders an input group with prefix and suffix', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-bladex-components::input.group>
-            <x-bladex-components::input.group.prefix>https://</x-bladex-components::input.group.prefix>
-            <x-bladex-components::input name="website" in-group placeholder="example.com" />
-            <x-bladex-components::input.group.suffix>.test</x-bladex-components::input.group.suffix>
-        </x-bladex-components::input.group>
+        <x-stencil::input.group>
+            <x-stencil::input.group.prefix>https://</x-stencil::input.group.prefix>
+            <x-stencil::input name="website" in-group placeholder="example.com" />
+            <x-stencil::input.group.suffix>.test</x-stencil::input.group.suffix>
+        </x-stencil::input.group>
     BLADE);
 
     expect($html)
@@ -140,7 +140,7 @@ it('renders an input group with prefix and suffix', function () {
 
 it('forwards disabled, readonly, and loading attributes to the native control', function () {
     $html = Blade::render(
-        '<x-bladex-components::input name="email" disabled readonly data-loading />',
+        '<x-stencil::input name="email" disabled readonly data-loading />',
     );
 
     expect($html)

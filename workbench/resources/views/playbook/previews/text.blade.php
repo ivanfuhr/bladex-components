@@ -5,11 +5,11 @@
     $inline = (bool) ($state['inline'] ?? false);
 @endphp
 
-<x-bladex-components::text
+<x-stencil::text
     :size="$size"
     :variant="$variant"
     :color="$color"
     :inline="$inline"
 >
     Body copy with the configured size, variant, and color.
-</x-bladex-components::text>
+</x-stencil::text>

@@ -1,5 +1,5 @@
 /**
- * BladeX Components — custom listbox select (vanilla JS, no Alpine).
+ * Stencil — custom listbox select (vanilla JS, no Alpine).
  */
 
 const SELECT_SELECTOR = '[data-select]';
@@ -41,7 +41,7 @@ function bindSelect(root) {
         return;
     }
 
-    const portalMarker = document.createComment('bladex-select-portal');
+    const portalMarker = document.createComment('stencil-select-portal');
     let portalInserted = false;
 
     const options = () =>

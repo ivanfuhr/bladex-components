@@ -8,7 +8,7 @@
 ])
 
 @php
-    use Ivanfuhr\BladexComponents\Support\Typography\TypographyClassMap;
+    use Ivanfuhr\Stencil\Support\Typography\TypographyClassMap;
 
     $isError = $variant === 'error' || $invalid || $fieldInvalid;
 

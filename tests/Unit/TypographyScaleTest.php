@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Ivanfuhr\BladexComponents\Support\Typography\TypographyConfig;
-use Ivanfuhr\BladexComponents\Support\Typography\TypographyScale;
+use Ivanfuhr\Stencil\Support\Typography\TypographyConfig;
+use Ivanfuhr\Stencil\Support\Typography\TypographyScale;
 
 it('resolves the four standardized size tokens', function (): void {
     $scale = app(TypographyScale::class);
@@ -20,7 +20,7 @@ it('rejects unknown size tokens', function (): void {
 })->throws(InvalidArgumentException::class);
 
 it('merges partial scale overrides from project config', function (): void {
-    $configPath = app()->basePath('bladex-components.json');
+    $configPath = app()->basePath('stencil.json');
 
     file_put_contents($configPath, json_encode([
         'registry' => 'package://registry.json',

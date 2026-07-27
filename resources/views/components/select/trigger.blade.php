@@ -7,8 +7,8 @@
 ])
 
 @php
-    use Ivanfuhr\BladexComponents\Support\Form\FormControlClassMap;
-    use Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateAttributes;
+    use Ivanfuhr\Stencil\Support\Form\FormControlClassMap;
+    use Ivanfuhr\Stencil\Support\Interaction\InteractionStateAttributes;
 
     $formControl = app(FormControlClassMap::class);
     $interactionState = app(InteractionStateAttributes::class);

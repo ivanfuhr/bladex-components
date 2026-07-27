@@ -13,8 +13,8 @@
 
 @php
     use Illuminate\View\ComponentSlot;
-    use Ivanfuhr\BladexComponents\Support\Button\ButtonClassMap;
-    use Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateAttributes;
+    use Ivanfuhr\Stencil\Support\Button\ButtonClassMap;
+    use Ivanfuhr\Stencil\Support\Interaction\InteractionStateAttributes;
 
     $interactionState = app(InteractionStateAttributes::class);
 
@@ -101,7 +101,7 @@
 
     @if ($isLoading)
         <span @class(['button__loading', 'inline-flex shrink-0 items-center']) data-button-loading aria-hidden="true">
-            @include('bladex-components::internals.loading-icon')
+            @include('stencil::internals.loading-icon')
         </span>
     @elseif ($hasTrailing)
         <span @class(['button__trailing', 'inline-flex shrink-0 items-center']) data-button-trailing>

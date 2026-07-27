@@ -2,17 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Registry;
+namespace Ivanfuhr\Stencil\Registry;
+
+use RuntimeException;
 
 final class OwnedArtifactCompiler
 {
-    private const string INTERNAL_LOADING_ICON_INCLUDE = "@include('bladex-components::internals.loading-icon')";
+    private const string INTERNAL_LOADING_ICON_INCLUDE = "@include('stencil::internals.loading-icon')";
 
-    public const string PACKAGE_SUPPORT_NAMESPACE = 'Ivanfuhr\\BladexComponents\\Support';
+    public const string PACKAGE_SUPPORT_NAMESPACE = 'Ivanfuhr\\Stencil\\Support';
 
-    public const string OWNED_SUPPORT_NAMESPACE = 'App\\Support\\Bladex';
+    public const string OWNED_SUPPORT_NAMESPACE = 'App\\Support\\Stencil';
 
-    public const string PACKAGE_COMPONENT_PREFIX = 'x-bladex-components::';
+    public const string PACKAGE_COMPONENT_PREFIX = 'x-stencil::';
 
     public const string OWNED_COMPONENT_PREFIX = 'x-ui::';
 
@@ -50,7 +52,7 @@ final class OwnedArtifactCompiler
         $partial = file_get_contents($partialPath);
 
         if ($partial === false) {
-            throw new \RuntimeException("Unable to read internal loading icon partial: {$partialPath}");
+            throw new RuntimeException("Unable to read internal loading icon partial: {$partialPath}");
         }
 
         $partial = $this->compileBlade($partial, $ownedSupportNamespace);

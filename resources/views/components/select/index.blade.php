@@ -41,13 +41,13 @@
     @endif
 
     @if ($shortcut)
-        <x-bladex-components::select.trigger>
-            <x-bladex-components::select.value :placeholder="$placeholder" />
-        </x-bladex-components::select.trigger>
+        <x-stencil::select.trigger>
+            <x-stencil::select.value :placeholder="$placeholder" />
+        </x-stencil::select.trigger>
 
-        <x-bladex-components::select.content>
+        <x-stencil::select.content>
             {{ $slot }}
-        </x-bladex-components::select.content>
+        </x-stencil::select.content>
     @else
         {{ $slot }}
     @endif

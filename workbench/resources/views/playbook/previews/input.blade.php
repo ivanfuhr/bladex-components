@@ -8,7 +8,7 @@
     $suffix = $showPrefixSuffix ? '.com' : null;
 @endphp
 
-<x-bladex-components::input
+<x-stencil::input
     name="email"
     type="email"
     placeholder="you@example.com"
@@ -20,10 +20,10 @@
 >
     @if ($showAffixes)
         <x-slot:leading>
-            <x-bladex-components::icon.loading />
+            <x-stencil::icon.loading />
         </x-slot:leading>
         <x-slot:trailing>
-            <x-bladex-components::text inline size="sm" variant="subtle">Clear</x-bladex-components::text>
+            <x-stencil::text inline size="sm" variant="subtle">Clear</x-stencil::text>
         </x-slot:trailing>
     @endif
-</x-bladex-components::input>
+</x-stencil::input>

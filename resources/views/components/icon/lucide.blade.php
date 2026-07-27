@@ -3,7 +3,7 @@
 ])
 
 @php
-    use Ivanfuhr\BladexComponents\Support\Icon\IconVariant;
+    use Ivanfuhr\Stencil\Support\Icon\IconVariant;
 
     $normalizedVariant = IconVariant::normalize($variant);
     $iconClasses = IconVariant::classString($normalizedVariant);

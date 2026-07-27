@@ -6,8 +6,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'BladeX Media')</title>
-    <x-bladex-components::fonts />
+    <title>@yield('title', 'Stencil Media')</title>
+    <x-stencil::fonts />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         html, body { margin: 0; padding: 0; }

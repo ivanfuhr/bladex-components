@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Support\Bladex\Typography;
+namespace App\Support\Stencil\Typography;
 
+use App\Support\Stencil\ProjectConfig;
 use Illuminate\Support\Arr;
-use App\Support\Bladex\ProjectConfig;
 
 final class TypographyConfig
 {
@@ -21,7 +21,7 @@ final class TypographyConfig
      */
     public function all(): array
     {
-        $base = config('bladex-ui.typography', []);
+        $base = config('stencil-ui.typography', []);
 
         if (! is_array($base)) {
             $base = [];

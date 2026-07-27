@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Support\Bladex\Button\ButtonClassMap;
-use App\Support\Bladex\Form\FormControlClassMap;
-use App\Support\Bladex\Interaction\InteractionStateAttributes;
-use App\Support\Bladex\Interaction\InteractionStateClassMap;
-use App\Support\Bladex\ProjectConfig;
-use App\Support\Bladex\Typography\GoogleFontsStylesheetBuilder;
-use App\Support\Bladex\Typography\TypographyClassMap;
-use App\Support\Bladex\Typography\TypographyConfig;
-use App\Support\Bladex\Typography\TypographyScale;
+use App\Support\Stencil\Button\ButtonClassMap;
+use App\Support\Stencil\Form\FormControlClassMap;
+use App\Support\Stencil\Interaction\InteractionStateAttributes;
+use App\Support\Stencil\Interaction\InteractionStateClassMap;
+use App\Support\Stencil\ProjectConfig;
+use App\Support\Stencil\Typography\GoogleFontsStylesheetBuilder;
+use App\Support\Stencil\Typography\TypographyClassMap;
+use App\Support\Stencil\Typography\TypographyConfig;
+use App\Support\Stencil\Typography\TypographyScale;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
-class BladexUiServiceProvider extends ServiceProvider
+class StencilUiServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        if (is_file(config_path('bladex-ui.php'))) {
-            $this->mergeConfigFrom(config_path('bladex-ui.php'), 'bladex-ui');
+        if (is_file(config_path('stencil-ui.php'))) {
+            $this->mergeConfigFrom(config_path('stencil-ui.php'), 'stencil-ui');
         }
 
         $this->app->bind(ProjectConfig::class, fn ($app) => new ProjectConfig($app));

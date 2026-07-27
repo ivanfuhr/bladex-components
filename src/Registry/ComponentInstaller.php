@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Registry;
+namespace Ivanfuhr\Stencil\Registry;
 
 use Illuminate\Support\Facades\File;
-use Ivanfuhr\BladexComponents\Support\ProjectConfig;
-use Ivanfuhr\BladexComponents\Support\ProjectLock;
+use Ivanfuhr\Stencil\Support\ProjectConfig;
+use Ivanfuhr\Stencil\Support\ProjectLock;
 use RuntimeException;
 
 final class ComponentInstaller

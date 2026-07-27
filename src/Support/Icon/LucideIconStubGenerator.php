@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Support\Icon;
+namespace Ivanfuhr\Stencil\Support\Icon;
 
 use InvalidArgumentException;
 use RuntimeException;
@@ -22,9 +22,9 @@ final class LucideIconStubGenerator
     'variant' => 'outline',
 ])
 
-<x-bladex-components::icon.lucide :variant="\$variant" {{ \$attributes }}>
+<x-stencil::icon.lucide :variant="\$variant" {{ \$attributes }}>
 {$inner}
-</x-bladex-components::icon.lucide>
+</x-stencil::icon.lucide>
 BLADE;
     }
 

@@ -1,6 +1,6 @@
 @extends('workbench::layouts.playbook')
 
-@section('title', $playbook->title.' — BladeX Playbook')
+@section('title', $playbook->title.' — Stencil Playbook')
 
 @section('content')
     @php
@@ -33,12 +33,12 @@
                 <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">
                     &lt;x-ui::<span class="text-zinc-800 dark:text-zinc-200">{{ $playbook->slug }}</span> /&gt;
                 </p>
-                <x-bladex-components::heading :level="1">
+                <x-stencil::heading :level="1">
                     {{ $playbook->title }}
-                </x-bladex-components::heading>
-                <x-bladex-components::text size="sm" variant="subtle" class="max-w-prose">
+                </x-stencil::heading>
+                <x-stencil::text size="sm" variant="subtle" class="max-w-prose">
                     {{ $playbook->description }}
-                </x-bladex-components::text>
+                </x-stencil::text>
             </div>
 
             <div class="mt-8 rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80">

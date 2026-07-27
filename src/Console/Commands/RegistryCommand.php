@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Console\Commands;
+namespace Ivanfuhr\Stencil\Console\Commands;
 
 use Illuminate\Console\Command;
-use Ivanfuhr\BladexComponents\Support\ProjectConfig;
-use Ivanfuhr\BladexComponents\Support\ProjectLock;
+use Ivanfuhr\Stencil\Support\ProjectConfig;
+use Ivanfuhr\Stencil\Support\ProjectLock;
 
 abstract class RegistryCommand extends Command
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Ivanfuhr\BladexComponents\Support\Button\ButtonClassMap;
+use Ivanfuhr\Stencil\Support\Button\ButtonClassMap;
 
 it('maps shadcn destructive and default variants to package names', function (): void {
     $map = app(ButtonClassMap::class);

@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Ivanfuhr\BladexComponents\Support\Typography\GoogleFontsStylesheetBuilder;
-use Ivanfuhr\BladexComponents\Support\Typography\TypographyConfig;
+use Ivanfuhr\Stencil\Support\Typography\GoogleFontsStylesheetBuilder;
+use Ivanfuhr\Stencil\Support\Typography\TypographyConfig;
 
 it('builds a google fonts stylesheet url for configured families', function (): void {
     $url = app(GoogleFontsStylesheetBuilder::class)->buildUrl();
@@ -15,7 +15,7 @@ it('builds a google fonts stylesheet url for configured families', function (): 
 });
 
 it('returns null when no google fonts are configured', function (): void {
-    config(['bladex-components.typography.fonts' => []]);
+    config(['stencil.typography.fonts' => []]);
 
     $this->app->forgetInstance(GoogleFontsStylesheetBuilder::class);
     $this->app->forgetInstance(TypographyConfig::class);
@@ -25,7 +25,7 @@ it('returns null when no google fonts are configured', function (): void {
 
 it('combines multiple google families in one url', function (): void {
     config([
-        'bladex-components.typography.fonts' => [
+        'stencil.typography.fonts' => [
             'sans' => [
                 'provider' => 'google',
                 'family' => 'Inter',

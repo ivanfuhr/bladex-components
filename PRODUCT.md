@@ -12,7 +12,7 @@ Primary audience: solo developers and small Laravel teams building custom server
 
 ## Product Purpose
 
-BladeX Components is a Composer package that ships Blade UI components for Laravel applications. Success means consumers can install the package, publish or reference views, and assemble accessible, keyboard-complete interfaces quickly while keeping markup and styling under their control. The package stays idiomatic Laravel: service provider wiring, publish tags, config merges, translations, and a local Orchestra Testbench workbench for development and demos.
+Stencil is a Composer package that ships Blade UI components for Laravel applications. Success means consumers can install the package, publish or reference views, and assemble accessible, keyboard-complete interfaces quickly while keeping markup and styling under their control. The package stays idiomatic Laravel: service provider wiring, publish tags, config merges, translations, and a local Orchestra Testbench workbench for development and demos.
 
 ## Positioning
 
@@ -21,11 +21,11 @@ The product combines two proven models in one Laravel-native package:
 - **shadcn-style ownership** — Tailwind-native markup consumers can publish into their app and customize (copy, theme, extend) rather than treating components as opaque black boxes.
 - **Flux-style ergonomics** — A clear, composable component API (slots, compound children, minimal prop surfaces) instead of sprawling boolean and variant props.
 
-Neighboring kits may offer one side or the other; BladeX is explicitly built to deliver both simplicity of adoption and depth of customization for Blade-first Laravel apps.
+Neighboring kits may offer one side or the other; Stencil is explicitly built to deliver both simplicity of adoption and depth of customization for Blade-first Laravel apps.
 
 ## Operating Context
 
-- **Distribution:** Packagist package `ivanfuhr/bladex-components`, MIT license, GitHub at `ivanfuhr/bladex-components`.
+- **Distribution:** Packagist package `ivanfuhr/stencil`, MIT license, GitHub at `ivanfuhr/stencil`.
 - **Runtime:** PHP ^8.3, Laravel Illuminate ^12 || ^13; components render as Blade views in the host application.
 - **Development:** Local workbench via `composer build` and `composer serve`; validation via `composer test` (PHPStan, Pint, Pest, type coverage).
 - **Documentation & agent guidance:** README and publish tags for config, views, lang, and assets; bundled Laravel Boost skills under `resources/boost/skills/` (including composition conventions).
@@ -35,7 +35,7 @@ Neighboring kits may offer one side or the other; BladeX is explicitly built to 
 
 **Confirmed today**
 
-- Service provider registers config, views (`bladex-components::`), translations, and console publish tags.
+- Service provider registers config, views (`stencil::`), translations, and console publish tags.
 - Composition-first conventions documented for contributors and agents (primitives, slots, compound dot-named children, `@aware`, attribute merging).
 - Config currently minimal (`placeholder` default); global defaults expected to grow, not to encode component structure.
 
@@ -52,7 +52,7 @@ Neighboring kits may offer one side or the other; BladeX is explicitly built to 
 
 ## Brand Commitments
 
-- **Name:** BladeX Components (`ivanfuhr/bladex-components`).
+- **Name:** Stencil (`ivanfuhr/stencil`).
 - **Maintainer:** Ivan Führ ([GitHub](https://github.com/ivanfuhr)).
 - **Tagline (package metadata):** “Powerful components for Laravel Blade.”
 - **Voice:** Technical, Laravel-native, contributor-friendly; SemVer and standard open-source contribution process (see `.github/CONTRIBUTING.md`).

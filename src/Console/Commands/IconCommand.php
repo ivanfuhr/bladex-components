@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Console\Commands;
+namespace Ivanfuhr\Stencil\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
-use Ivanfuhr\BladexComponents\Support\Icon\IconPathResolver;
-use Ivanfuhr\BladexComponents\Support\Icon\LucideIconStubGenerator;
-use Ivanfuhr\BladexComponents\Support\ProjectConfig;
+use Ivanfuhr\Stencil\Support\Icon\IconPathResolver;
+use Ivanfuhr\Stencil\Support\Icon\LucideIconStubGenerator;
+use Ivanfuhr\Stencil\Support\ProjectConfig;
 use Throwable;
 
 use function Laravel\Prompts\text;
 
 class IconCommand extends Command
 {
-    protected $signature = 'bladex-components:icon
+    protected $signature = 'stencil:icon
                             {names?* : Lucide icon names to import (see lucide.dev/icons)}
                             {--force : Overwrite existing icon stubs}
                             {--path= : Destination directory relative to the application base path}';
@@ -37,8 +37,8 @@ class IconCommand extends Command
         }
 
         if (! $projectConfig->exists()) {
-            $this->components->warn('bladex-components.json was not found. Using default icon path from config.');
-            $this->line('Run bladex-components:init to align paths.icons with your project.');
+            $this->components->warn('stencil.json was not found. Using default icon path from config.');
+            $this->line('Run stencil:init to align paths.icons with your project.');
         }
 
         $pathOption = $this->option('path');

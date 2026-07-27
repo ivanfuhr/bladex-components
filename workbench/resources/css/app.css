@@ -1,5 +1,5 @@
 @import "tailwindcss";
 
-/* bladex-components-start */
-@import "./bladex.css";
-/* bladex-components-end */
+/* stencil-start */
+@import "./stencil.css";
+/* stencil-end */

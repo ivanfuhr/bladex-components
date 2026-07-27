@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Support\Icon;
+namespace Ivanfuhr\Stencil\Support\Icon;
 
 final class IconVariant
 {

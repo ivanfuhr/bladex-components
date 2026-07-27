@@ -10,19 +10,19 @@
             "path": "icon/index.blade.php",
             "type": "registry:ui",
             "target": "icon/index.blade.php",
-            "content": "@props([\n    'name',\n    'variant' => 'outline',\n])\n\n@php\n    use App\\Support\\Bladex\\Icon\\IconPathResolver;\n    use App\\Support\\Bladex\\ProjectConfig;\n\n    $resolvedName = IconPathResolver::normalizeName((string) $name);\n    $iconPath = app(ProjectConfig::class)->resolvedIconsPath().'/'.$resolvedName.'.blade.php';\n\n    if (! is_file($iconPath)) {\n        throw new \\RuntimeException(\"Icon [{$resolvedName}] is not installed. Run: php artisan bladex-components:icon {$resolvedName}\");\n    }\n\n    $componentName = 'ui::icons.'.$resolvedName;\n@endphp\n\n<x-dynamic-component :component=\"$componentName\" :variant=\"$variant\" {{ $attributes }} />\n"
+            "content": "@props([\n    'name',\n    'variant' => 'outline',\n])\n\n@php\n    use App\\Support\\Stencil\\Icon\\IconPathResolver;\n    use App\\Support\\Stencil\\ProjectConfig;\n\n    $resolvedName = IconPathResolver::normalizeName((string) $name);\n    $iconPath = app(ProjectConfig::class)->resolvedIconsPath().'/'.$resolvedName.'.blade.php';\n\n    if (! is_file($iconPath)) {\n        throw new \\RuntimeException(\"Icon [{$resolvedName}] is not installed. Run: php artisan stencil:icon {$resolvedName}\");\n    }\n\n    $componentName = 'ui::icons.'.$resolvedName;\n@endphp\n\n<x-dynamic-component :component=\"$componentName\" :variant=\"$variant\" {{ $attributes }} />\n"
         },
         {
             "path": "icon/loading.blade.php",
             "type": "registry:ui",
             "target": "icon/loading.blade.php",
-            "content": "@props([\n    'variant' => 'outline',\n])\n\n@include('bladex-components::internals.loading-icon', [\n    'variant' => $variant,\n    'class' => $attributes->get('class'),\n])\n"
+            "content": "@props([\n    'variant' => 'outline',\n])\n\n@include('stencil::internals.loading-icon', [\n    'variant' => $variant,\n    'class' => $attributes->get('class'),\n])\n"
         },
         {
             "path": "icon/lucide.blade.php",
             "type": "registry:ui",
             "target": "icon/lucide.blade.php",
-            "content": "@props([\n    'variant' => 'outline',\n])\n\n@php\n    use App\\Support\\Bladex\\Icon\\IconVariant;\n\n    $normalizedVariant = IconVariant::normalize($variant);\n    $iconClasses = IconVariant::classString($normalizedVariant);\n    $strokeWidth = IconVariant::strokeWidth($normalizedVariant);\n    $pixelSize = IconVariant::pixelSize($normalizedVariant);\n@endphp\n\n<svg\n    {{ $attributes->class($iconClasses) }}\n    width=\"{{ $pixelSize }}\"\n    height=\"{{ $pixelSize }}\"\n    data-icon\n    xmlns=\"http://www.w3.org/2000/svg\"\n    viewBox=\"0 0 24 24\"\n    fill=\"none\"\n    stroke=\"currentColor\"\n    stroke-width=\"{{ $strokeWidth }}\"\n    stroke-linecap=\"round\"\n    stroke-linejoin=\"round\"\n    aria-hidden=\"true\"\n>\n    {{ $slot }}\n</svg>\n"
+            "content": "@props([\n    'variant' => 'outline',\n])\n\n@php\n    use App\\Support\\Stencil\\Icon\\IconVariant;\n\n    $normalizedVariant = IconVariant::normalize($variant);\n    $iconClasses = IconVariant::classString($normalizedVariant);\n    $strokeWidth = IconVariant::strokeWidth($normalizedVariant);\n    $pixelSize = IconVariant::pixelSize($normalizedVariant);\n@endphp\n\n<svg\n    {{ $attributes->class($iconClasses) }}\n    width=\"{{ $pixelSize }}\"\n    height=\"{{ $pixelSize }}\"\n    data-icon\n    xmlns=\"http://www.w3.org/2000/svg\"\n    viewBox=\"0 0 24 24\"\n    fill=\"none\"\n    stroke=\"currentColor\"\n    stroke-width=\"{{ $strokeWidth }}\"\n    stroke-linecap=\"round\"\n    stroke-linejoin=\"round\"\n    aria-hidden=\"true\"\n>\n    {{ $slot }}\n</svg>\n"
         }
     ]
 }

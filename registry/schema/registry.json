@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/ivanfuhr/bladex-components/main/registry/schema/registry.json",
-    "title": "BladeX Components registry index",
+    "$id": "https://raw.githubusercontent.com/ivanfuhr/stencil/main/registry/schema/registry.json",
+    "title": "Stencil registry index",
     "type": "object",
     "additionalProperties": false,
     "properties": {

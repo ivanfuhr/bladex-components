@@ -6,8 +6,8 @@ $root = dirname(__DIR__);
 
 require $root.'/vendor/autoload.php';
 
-use Ivanfuhr\BladexComponents\Registry\OwnedArtifactCompiler;
-use Ivanfuhr\BladexComponents\Registry\SupportStubGenerator;
+use Ivanfuhr\Stencil\Registry\OwnedArtifactCompiler;
+use Ivanfuhr\Stencil\Registry\SupportStubGenerator;
 
 $generator = new SupportStubGenerator(new OwnedArtifactCompiler);
 $generator->generate($root, $root.'/stubs');

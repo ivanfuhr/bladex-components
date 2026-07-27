@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Ivanfuhr\BladexComponents\Support\Icon\IconVariant;
-use Ivanfuhr\BladexComponents\Support\Icon\LucideIconStubGenerator;
+use Ivanfuhr\Stencil\Support\Icon\IconVariant;
+use Ivanfuhr\Stencil\Support\Icon\LucideIconStubGenerator;
 
 it('normalizes lucide icon variants', function (): void {
     expect(IconVariant::normalize('solid'))->toBe('outline')
@@ -22,7 +22,7 @@ SVG;
 
     expect($stub)
         ->toContain('@props([')
-        ->toContain('<x-bladex-components::icon.lucide')
+        ->toContain('<x-stencil::icon.lucide')
         ->toContain('<circle cx="11" cy="11" r="8"/>')
         ->not->toContain('width="24"');
 });

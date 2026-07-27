@@ -4,7 +4,7 @@
 ])
 
 @php
-    use Ivanfuhr\BladexComponents\Support\Form\FormControlClassMap;
+    use Ivanfuhr\Stencil\Support\Form\FormControlClassMap;
 
     $formControl = app(FormControlClassMap::class);
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Support\Bladex\Typography;
+namespace App\Support\Stencil\Typography;
 
 final class GoogleFontsStylesheetBuilder
 {

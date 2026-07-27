@@ -1,7 +1,7 @@
 ---
 name: composing-blade-components
 description: >-
-  Build BladeX Components using composition: small primitives, slots, and compound
+  Build Stencil using composition: small primitives, slots, and compound
   sub-components instead of monolithic prop APIs. Use when adding or changing package
   Blade views, anonymous or class components, or consumer-facing component examples.
 license: MIT
@@ -9,9 +9,9 @@ metadata:
   author: Ivan Führ
 ---
 
-# Composing BladeX Components
+# Composing Stencil
 
-Use this skill when implementing or extending UI in `ivanfuhr/bladex-components`. Prefer **composition** (nested components and slots) over a single component with many boolean or variant props.
+Use this skill when implementing or extending UI in `ivanfuhr/stencil`. Prefer **composition** (nested components and slots) over a single component with many boolean or variant props.
 
 ## Primary Goal
 
@@ -22,7 +22,7 @@ Ship flexible Blade components that consumers assemble from small pieces, while 
 - Adding a new UI primitive or compound component to the package
 - Refactoring a component that has grown a large `@props` list
 - Writing usage examples for README, workbench, or tests
-- Publishing or overriding views under the `bladex-components` namespace
+- Publishing or overriding views under the `stencil` namespace
 
 ## Composition Principles
 
@@ -30,22 +30,22 @@ Ship flexible Blade components that consumers assemble from small pieces, while 
 2. **Slots over flags** — Use default and named slots (`{{ $header }}`, `<x-slot:actions>`) instead of props like `showHeader`, `footerText`, or `withIcon`.
 3. **Compound sub-components** — For structured UI (cards, dialogs, fields), use a root plus dot-named children (for example `alert`, `alert.title`, `alert.description`) rather than one template with many optional regions.
 4. **Shared context with `@aware`** — Child components read parent-provided values (variant, size, disabled) via `@aware(['variant'])`. Avoid duplicating the same prop on every child.
-5. **Attributes on the outermost element** — Merge `$attributes` on the root DOM node so consumers can set `class`, `id`, `data-*`, and ARIA. Forward only what sub-pieces need as explicit props. Interactive controls (`input`, `button`, and future form primitives) should use `Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateClassMap` and `InteractionStateAttributes` so `disabled`, `readonly`, `data-loading`, and `aria-busy` behave consistently (including `aria-disabled` on link-styled buttons).
+5. **Attributes on the outermost element** — Merge `$attributes` on the root DOM node so consumers can set `class`, `id`, `data-*`, and ARIA. Forward only what sub-pieces need as explicit props. Interactive controls (`input`, `button`, and future form primitives) should use `Ivanfuhr\Stencil\Support\Interaction\InteractionStateClassMap` and `InteractionStateAttributes` so `disabled`, `readonly`, `data-loading`, and `aria-busy` behave consistently (including `aria-disabled` on link-styled buttons).
 6. **Logic in class components, markup in views** — Use a class component when you need validation, computed state, or type-safe constructor props; keep the Blade file focused on structure and composition.
-7. **Config for defaults, not structure** — Use `config/bladex-components.php` for global defaults (prefixes, themes). Do not use config to replace missing sub-components or slots.
+7. **Config for defaults, not structure** — Use `config/stencil.php` for global defaults (prefixes, themes). Do not use config to replace missing sub-components or slots.
 
 ## Package Conventions
 
 | Concern | Location |
 | -------- | -------- |
-| View namespace | `bladex-components::` (from `loadViewsFrom`) |
+| View namespace | `stencil::` (from `loadViewsFrom`) |
 | Anonymous components | `resources/views/components/{name}.blade.php` |
 | Compound components | `resources/views/components/{name}/index.blade.php` and siblings |
 | Class components | `src/View/Components/` (register or auto-discover via namespace) |
-| Published overrides | `resources/views/vendor/bladex-components` (`bladex-components-views` tag) |
+| Published overrides | `resources/views/vendor/stencil` (`stencil-views` tag) |
 | Translations | `lang/` keys referenced from components, not hard-coded copy |
 
-**Tag naming:** `<x-bladex-components::{component}>` and `<x-bladex-components::{component}.{piece}>` for nested anonymous components.
+**Tag naming:** `<x-stencil::{component}>` and `<x-stencil::{component}.{piece}>` for nested anonymous components.
 
 ## Workflow
 
@@ -68,7 +68,7 @@ Ship flexible Blade components that consumers assemble from small pieces, while 
 
 ### 4. Wire and verify
 
-- Ensure views load via `BladexComponentsServiceProvider` (no extra registration for standard anonymous components under `resources/views/components`).
+- Ensure views load via `StencilServiceProvider` (no extra registration for standard anonymous components under `resources/views/components`).
 - Add a Pest feature test that renders the composed markup (assert key classes, slots, or accessible roles).
 - If behavior is user-facing, add a minimal workbench or README example showing **composition**, not a prop laundry list.
 
@@ -77,34 +77,34 @@ Ship flexible Blade components that consumers assemble from small pieces, while 
 ### Preferred: compound + slots
 
 ```blade
-<x-bladex-components::field>
-    <x-bladex-components::field.label for="email">Email</x-bladex-components::field.label>
+<x-stencil::field>
+    <x-stencil::field.label for="email">Email</x-stencil::field.label>
 
-    <x-bladex-components::field.control>
+    <x-stencil::field.control>
         <input id="email" type="email" {{ $attributes }} />
-    </x-bladex-components::field.control>
+    </x-stencil::field.control>
 
-    <x-bladex-components::field.errors name="email" />
-</x-bladex-components::field>
+    <x-stencil::field.errors name="email" />
+</x-stencil::field>
 ```
 
 ### Select listbox (shortcut + full composition)
 
 ```blade
 {{-- Shortcut: only items in the default slot (loads select.js in the app) --}}
-<x-bladex-components::select name="industry" placeholder="Choose industry…">
-    <x-bladex-components::select.item value="photo">Photography</x-bladex-components::select.item>
-</x-bladex-components::select>
+<x-stencil::select name="industry" placeholder="Choose industry…">
+    <x-stencil::select.item value="photo">Photography</x-stencil::select.item>
+</x-stencil::select>
 
 {{-- Full: :shortcut="false" and explicit trigger / content tree --}}
-<x-bladex-components::select name="industry" :shortcut="false">
-    <x-bladex-components::select.trigger>
-        <x-bladex-components::select.value placeholder="Choose industry…" />
-    </x-bladex-components::select.trigger>
-    <x-bladex-components::select.content>
-        <x-bladex-components::select.item value="photo">Photography</x-bladex-components::select.item>
-    </x-bladex-components::select.content>
-</x-bladex-components::select>
+<x-stencil::select name="industry" :shortcut="false">
+    <x-stencil::select.trigger>
+        <x-stencil::select.value placeholder="Choose industry…" />
+    </x-stencil::select.trigger>
+    <x-stencil::select.content>
+        <x-stencil::select.item value="photo">Photography</x-stencil::select.item>
+    </x-stencil::select.content>
+</x-stencil::select>
 ```
 
 ### Root with `@aware` for children (`field/index.blade.php`)
@@ -130,8 +130,8 @@ Ship flexible Blade components that consumers assemble from small pieces, while 
 ### Avoid: monolithic props
 
 ```blade
-{{-- Do not standardize on this pattern in BladeX --}}
-<x-bladex-components::field
+{{-- Do not standardize on this pattern in Stencil --}}
+<x-stencil::field
     label="Email"
     name="email"
     :error="$errors->first('email')"
@@ -155,7 +155,7 @@ Refactor toward sub-components and slots so consumers control order, optional pi
 ## References
 
 - `resources/views/components/` — component templates
-- `src/BladexComponentsServiceProvider.php` — view namespace and publish tags
-- `config/bladex-components.php` — package defaults
-- `resources/boost/skills/bladex-components-development/SKILL.md` — install, publish, and integration
+- `src/StencilServiceProvider.php` — view namespace and publish tags
+- `config/stencil.php` — package defaults
+- `resources/boost/skills/stencil-development/SKILL.md` — install, publish, and integration
 - Laravel docs: Blade components, slots, `@aware`, and anonymous component directories

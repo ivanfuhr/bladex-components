@@ -11,9 +11,9 @@
 
 @php
     use Illuminate\View\ComponentSlot;
-    use Ivanfuhr\BladexComponents\Support\Form\FormControlClassMap;
-    use Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateAttributes;
-    use Ivanfuhr\BladexComponents\Support\Typography\TypographyClassMap;
+    use Ivanfuhr\Stencil\Support\Form\FormControlClassMap;
+    use Ivanfuhr\Stencil\Support\Interaction\InteractionStateAttributes;
+    use Ivanfuhr\Stencil\Support\Typography\TypographyClassMap;
 
     $typography = app(TypographyClassMap::class);
     $formControl = app(FormControlClassMap::class);
@@ -136,7 +136,7 @@
                 ])
                 data-input-group-prefix
             >
-                <x-bladex-components::text inline size="sm" variant="subtle">{{ $prefixText }}</x-bladex-components::text>
+                <x-stencil::text inline size="sm" variant="subtle">{{ $prefixText }}</x-stencil::text>
             </div>
         @endif
 @endif
@@ -147,7 +147,7 @@
             @if ($leadingContent instanceof ComponentSlot)
                 {{ $leadingContent }}
             @else
-                <x-bladex-components::text inline size="sm" variant="subtle" class="input__leading-text">{{ $leadingContent }}</x-bladex-components::text>
+                <x-stencil::text inline size="sm" variant="subtle" class="input__leading-text">{{ $leadingContent }}</x-stencil::text>
             @endif
         </div>
     @endif
@@ -159,7 +159,7 @@
             @if ($trailingContent instanceof ComponentSlot)
                 {{ $trailingContent }}
             @else
-                <x-bladex-components::text inline size="sm" variant="subtle" class="input__trailing-text">{{ $trailingContent }}</x-bladex-components::text>
+                <x-stencil::text inline size="sm" variant="subtle" class="input__trailing-text">{{ $trailingContent }}</x-stencil::text>
             @endif
         </div>
     @endif
@@ -175,7 +175,7 @@
                 ])
                 data-input-group-suffix
             >
-                <x-bladex-components::text inline size="sm" variant="subtle">{{ $suffixText }}</x-bladex-components::text>
+                <x-stencil::text inline size="sm" variant="subtle">{{ $suffixText }}</x-stencil::text>
             </div>
         @endif
     </div>

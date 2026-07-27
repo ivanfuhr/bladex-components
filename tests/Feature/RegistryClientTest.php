@@ -3,14 +3,14 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Http;
-use Ivanfuhr\BladexComponents\Registry\RegistryClient;
+use Ivanfuhr\Stencil\Registry\RegistryClient;
 
 it('reads the registry index from the package when using package protocol', function () {
     $client = app(RegistryClient::class);
 
     $index = $client->fetchIndex('package://registry.json');
 
-    expect($index['name'])->toBe('ivanfuhr/bladex-components');
+    expect($index['name'])->toBe('ivanfuhr/stencil');
     expect(collect($index['items'])->pluck('name')->all())->toContain('input', 'input-group');
 });
 
@@ -23,7 +23,7 @@ it('falls back to the package registry when a remote index returns 404', functio
 
     $index = $client->fetchIndex('https://example.test/registry/registry.json');
 
-    expect($index['name'])->toBe('ivanfuhr/bladex-components');
+    expect($index['name'])->toBe('ivanfuhr/stencil');
 });
 
 it('merges package registry items that are missing from a remote index', function () {

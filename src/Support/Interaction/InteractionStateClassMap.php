@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Support\Interaction;
+namespace Ivanfuhr\Stencil\Support\Interaction;
 
 final class InteractionStateClassMap
 {

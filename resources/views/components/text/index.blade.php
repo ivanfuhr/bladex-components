@@ -6,7 +6,7 @@
 ])
 
 @php
-    use Ivanfuhr\BladexComponents\Support\Typography\TypographyClassMap;
+    use Ivanfuhr\Stencil\Support\Typography\TypographyClassMap;
 
     $classes = app(TypographyClassMap::class)->textClasses($size, $variant, $color);
 @endphp

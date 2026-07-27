@@ -11,7 +11,7 @@ $root = dirname(__DIR__);
 
 require $root.'/vendor/autoload.php';
 
-use Ivanfuhr\BladexComponents\Registry\OwnedArtifactCompiler;
+use Ivanfuhr\Stencil\Registry\OwnedArtifactCompiler;
 
 $componentsPath = $root.'/resources/views/components';
 $registryPath = $root.'/registry';
@@ -165,8 +165,8 @@ foreach ($catalog as $name => $meta) {
 
 $registry = [
     '$schema' => './schema/registry.json',
-    'name' => 'ivanfuhr/bladex-components',
-    'homepage' => 'https://github.com/ivanfuhr/bladex-components',
+    'name' => 'ivanfuhr/stencil',
+    'homepage' => 'https://github.com/ivanfuhr/stencil',
     'items' => $indexItems,
 ];
 

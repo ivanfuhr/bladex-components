@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Console\Commands;
+namespace Ivanfuhr\Stencil\Console\Commands;
 
-use Ivanfuhr\BladexComponents\Registry\ComponentInstaller;
-use Ivanfuhr\BladexComponents\Registry\RegistryClient;
-use Ivanfuhr\BladexComponents\Support\ProjectConfig;
-use Ivanfuhr\BladexComponents\Support\ProjectLock;
+use Ivanfuhr\Stencil\Registry\ComponentInstaller;
+use Ivanfuhr\Stencil\Registry\RegistryClient;
+use Ivanfuhr\Stencil\Support\ProjectConfig;
+use Ivanfuhr\Stencil\Support\ProjectLock;
 use Throwable;
 
 class UpdateCommand extends RegistryCommand
 {
-    protected $signature = 'bladex-components:update
+    protected $signature = 'stencil:update
                             {name? : Optional registry item name to update}
                             {--overwrite : Replace files that were modified locally}';
 
@@ -25,7 +25,7 @@ class UpdateCommand extends RegistryCommand
         ComponentInstaller $installer,
     ): int {
         if (! $projectConfig->exists()) {
-            $this->components->error('Project config not found. Run bladex-components:init first.');
+            $this->components->error('Project config not found. Run stencil:init first.');
 
             return self::FAILURE;
         }

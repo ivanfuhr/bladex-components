@@ -2,7 +2,7 @@
     'variant' => 'outline',
 ])
 
-@include('bladex-components::internals.loading-icon', [
+@include('stencil::internals.loading-icon', [
     'variant' => $variant,
     'class' => $attributes->get('class'),
 ])

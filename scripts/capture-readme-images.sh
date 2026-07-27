@@ -3,8 +3,8 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/docs/images"
-BASE_URL="${BLADEX_SCREENSHOT_URL:-http://127.0.0.1:8001}"
-VIEWPORT_WIDTH="${BLADEX_SCREENSHOT_WIDTH:-1440}"
+BASE_URL="${STENCIL_SCREENSHOT_URL:-http://127.0.0.1:8001}"
+VIEWPORT_WIDTH="${STENCIL_SCREENSHOT_WIDTH:-1440}"
 
 mkdir -p "$OUT"
 

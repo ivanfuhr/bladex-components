@@ -1,7 +1,7 @@
 laravel: '@testbench'
 
 providers:
-  - Ivanfuhr\BladexComponents\BladexComponentsServiceProvider
+  - Ivanfuhr\Stencil\StencilServiceProvider
   - Workbench\App\Providers\WorkbenchServiceProvider
 
 migrations:

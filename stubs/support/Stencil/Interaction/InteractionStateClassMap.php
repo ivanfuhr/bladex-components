@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Support\Bladex\Interaction;
+namespace App\Support\Stencil\Interaction;
 
 final class InteractionStateClassMap
 {

@@ -4,14 +4,14 @@
 ])
 
 @php
-    use Ivanfuhr\BladexComponents\Support\Icon\IconPathResolver;
-    use Ivanfuhr\BladexComponents\Support\ProjectConfig;
+    use Ivanfuhr\Stencil\Support\Icon\IconPathResolver;
+    use Ivanfuhr\Stencil\Support\ProjectConfig;
 
     $resolvedName = IconPathResolver::normalizeName((string) $name);
     $iconPath = app(ProjectConfig::class)->resolvedIconsPath().'/'.$resolvedName.'.blade.php';
 
     if (! is_file($iconPath)) {
-        throw new \RuntimeException("Icon [{$resolvedName}] is not installed. Run: php artisan bladex-components:icon {$resolvedName}");
+        throw new \RuntimeException("Icon [{$resolvedName}] is not installed. Run: php artisan stencil:icon {$resolvedName}");
     }
 
     $componentName = 'ui::icons.'.$resolvedName;

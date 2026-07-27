@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Tests;
+namespace Ivanfuhr\Stencil\Tests;
 
 use Workbench\App\Providers\WorkbenchServiceProvider;
 
@@ -19,7 +19,7 @@ abstract class WorkbenchTestCase extends TestCase
     protected function defineEnvironment($app): void
     {
         $app['config']->set('app.key', 'base64:'.base64_encode(str_repeat('a', 32)));
-        $app['config']->set('bladex-components.validate_tailwind_integration', true);
+        $app['config']->set('stencil.validate_tailwind_integration', true);
     }
 
     protected function defineRoutes($router): void

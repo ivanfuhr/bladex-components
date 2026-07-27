@@ -1,8 +1,8 @@
 /**
- * Package development only — owned apps use resources/css/bladex.css from bladex-components:init.
+ * Package development only — owned apps use resources/css/stencil.css from stencil:init.
  *
  * Tailwind v4 (monorepo / vendor mode while developing the package):
- *   @import "../../../resources/tailwind/bladex.css";
+ *   @import "../../../resources/tailwind/stencil.css";
  */
 
 @custom-variant dark (&:where(.dark, .dark *));

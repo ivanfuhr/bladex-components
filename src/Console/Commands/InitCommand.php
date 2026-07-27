@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Console\Commands;
+namespace Ivanfuhr\Stencil\Console\Commands;
 
-use Ivanfuhr\BladexComponents\Registry\ProjectScaffolder;
-use Ivanfuhr\BladexComponents\Support\ProjectConfig;
-use Ivanfuhr\BladexComponents\Support\ProjectLock;
+use Ivanfuhr\Stencil\Registry\ProjectScaffolder;
+use Ivanfuhr\Stencil\Support\ProjectConfig;
+use Ivanfuhr\Stencil\Support\ProjectLock;
 
 class InitCommand extends RegistryCommand
 {
-    protected $signature = 'bladex-components:init
+    protected $signature = 'stencil:init
                             {--force : Overwrite an existing project config file}';
 
-    protected $description = 'Create bladex-components.json and an empty lock file for owned UI components.';
+    protected $description = 'Create stencil.json and an empty lock file for owned UI components.';
 
     public function handle(
         ProjectConfig $projectConfig,
@@ -21,7 +21,7 @@ class InitCommand extends RegistryCommand
         ProjectScaffolder $scaffolder,
     ): int {
         if ($projectConfig->exists() && ! $this->option('force')) {
-            $this->components->error('bladex-components.json already exists. Use --force to overwrite it.');
+            $this->components->error('stencil.json already exists. Use --force to overwrite it.');
 
             return self::FAILURE;
         }
@@ -34,9 +34,9 @@ class InitCommand extends RegistryCommand
 
         $written = $scaffolder->scaffold($projectConfig, $projectLock, (bool) $this->option('force'));
 
-        $this->components->info('Created bladex-components.json.');
+        $this->components->info('Created stencil.json.');
         $this->line('UI path: '.$projectConfig->uiPath());
-        $this->line('Registry: '.config('bladex-components.default_registry_url'));
+        $this->line('Registry: '.config('stencil.default_registry_url'));
 
         foreach ($written as $path) {
             $this->line('Scaffolded '.$path);

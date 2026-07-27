@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Support\Tailwind;
+namespace Ivanfuhr\Stencil\Support\Tailwind;
 
 use Illuminate\Contracts\Foundation\Application;
-use Ivanfuhr\BladexComponents\Registry\ProjectIntegrator;
+use Ivanfuhr\Stencil\Registry\ProjectIntegrator;
 use RuntimeException;
 
 final class TailwindIntegrationValidator
 {
     /** @var list<string> */
     private const array INTEGRATION_MARKERS = [
-        'resources/css/bladex.css',
-        'bladex-components-start',
-        'app/Support/Bladex',
+        'resources/css/stencil.css',
+        'stencil-start',
+        'app/Support/Stencil',
     ];
 
     public function assertConfigured(Application $app): void
@@ -28,7 +28,7 @@ final class TailwindIntegrationValidator
 
     public function isConfigured(Application $app): bool
     {
-        if (is_file($app->basePath('resources/css/bladex.css'))) {
+        if (is_file($app->basePath('resources/css/stencil.css'))) {
             return true;
         }
 
@@ -97,19 +97,19 @@ final class TailwindIntegrationValidator
         $end = ProjectIntegrator::CSS_END;
 
         return <<<TEXT
-BladeX Components: owned Tailwind integration is missing.
+Stencil: owned Tailwind integration is missing.
 
-Run bladex-components:init (once) and bladex-components:add for the components you use. That scaffolds resources/css/bladex.css and patches your app stylesheet.
+Run stencil:init (once) and stencil:add for the components you use. That scaffolds resources/css/stencil.css and patches your app stylesheet.
 
 If resources/css/app.css exists, add:
 
     {$start}
-    @import "./bladex.css";
+    @import "./stencil.css";
     {$end}
 
 Then rebuild assets (npm run dev / npm run build).
 
-To disable this check in local debug: set bladex-components.validate_tailwind_integration to false in config.
+To disable this check in local debug: set stencil.validate_tailwind_integration to false in config.
 TEXT;
     }
 }

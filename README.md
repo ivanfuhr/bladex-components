@@ -1,19 +1,19 @@
 <div align="center">
 
 <a href="#table-of-contents">
-  <img src="docs/images/hero.svg" alt="BladeX Components" />
+  <img src="docs/images/hero.svg" alt="Stencil" />
 </a>
 
-# BladeX Components
+# Stencil
 
 **Composable Blade primitives for Laravel — vendor quick start or shadcn-style owned UI.**
 
 <p>
-    <a href="https://packagist.org/packages/ivanfuhr/bladex-components"><img src="https://img.shields.io/packagist/v/ivanfuhr/bladex-components.svg?style=flat-square" alt="Packagist"></a>
-    <a href="https://packagist.org/packages/ivanfuhr/bladex-components"><img src="https://img.shields.io/packagist/php-v/ivanfuhr/bladex-components.svg?style=flat-square" alt="PHP from Packagist"></a>
-    <a href="https://packagist.org/packages/ivanfuhr/bladex-components"><img src="https://badge.laravel.cloud/badge/ivanfuhr/bladex-components?style=flat" alt="Laravel versions"></a>
-    <a href="https://github.com/ivanfuhr/bladex-components/actions"><img alt="GitHub Workflow Status (main)" src="https://img.shields.io/github/actions/workflow/status/ivanfuhr/bladex-components/tests.yml?branch=main&label=Tests&style=flat-square"></a>
-    <a href="https://packagist.org/packages/ivanfuhr/bladex-components"><img src="https://img.shields.io/packagist/dt/ivanfuhr/bladex-components.svg?style=flat-square" alt="Total Downloads"></a>
+    <a href="https://packagist.org/packages/ivanfuhr/stencil"><img src="https://img.shields.io/packagist/v/ivanfuhr/stencil.svg?style=flat-square" alt="Packagist"></a>
+    <a href="https://packagist.org/packages/ivanfuhr/stencil"><img src="https://img.shields.io/packagist/php-v/ivanfuhr/stencil.svg?style=flat-square" alt="PHP from Packagist"></a>
+    <a href="https://packagist.org/packages/ivanfuhr/stencil"><img src="https://badge.laravel.cloud/badge/ivanfuhr/stencil?style=flat" alt="Laravel versions"></a>
+    <a href="https://github.com/ivanfuhr/stencil/actions"><img alt="GitHub Workflow Status (main)" src="https://img.shields.io/github/actions/workflow/status/ivanfuhr/stencil/tests.yml?branch=main&label=Tests&style=flat-square"></a>
+    <a href="https://packagist.org/packages/ivanfuhr/stencil"><img src="https://img.shields.io/packagist/dt/ivanfuhr/stencil.svg?style=flat-square" alt="Total Downloads"></a>
 </p>
 
 </div>
@@ -28,7 +28,7 @@
 
 <br>
 
-Copy only what you need with `bladex-components:add`, use `x-ui::*` in your app, and keep Tailwind v4 + class-based dark mode aligned with the design system. Screenshots are frameless — background matches the theme (click to enlarge).
+Copy only what you need with `stencil:add`, use `x-ui::*` in your app, and keep Tailwind v4 + class-based dark mode aligned with the design system. Screenshots are frameless — background matches the theme (click to enlarge).
 
 <br>
 
@@ -53,7 +53,7 @@ Variants: `outline`, `primary`, `secondary`, `danger`, `ghost`, `subtle`, `link`
 ```
 
 ```bash
-php artisan bladex-components:add button
+php artisan stencil:add button
 ```
 
 <br>
@@ -82,7 +82,7 @@ Affixes, `prefix` / `suffix`, and `invalid`, `disabled`, and `readonly` states.
 ```
 
 ```bash
-php artisan bladex-components:add input
+php artisan stencil:add input
 ```
 
 <br>
@@ -111,7 +111,7 @@ Accessible listbox (not a native `<select>`). Subcomponents: `trigger`, `value`,
 ```
 
 ```bash
-php artisan bladex-components:add select
+php artisan stencil:add select
 ```
 
 <br>
@@ -130,7 +130,7 @@ php artisan bladex-components:add select
 
 ```blade
 <head>
-    <x-bladex-components::fonts />
+    <x-stencil::fonts />
 </head>
 
 <x-ui::heading :level="2">Page title</x-ui::heading>
@@ -139,7 +139,7 @@ php artisan bladex-components:add select
 ```
 
 ```bash
-php artisan bladex-components:add text heading
+php artisan stencil:add text heading
 ```
 
 <br>
@@ -157,7 +157,7 @@ On-demand [Lucide](https://lucide.dev/icons/) icons — `outline` (16px), `mini`
 [![Icons — dark](docs/images/icons-dark.png)](docs/images/icons-dark.png)
 
 ```bash
-php artisan bladex-components:icon search grip-vertical
+php artisan stencil:icon search grip-vertical
 ```
 
 ```blade
@@ -172,21 +172,21 @@ php artisan bladex-components:icon search grip-vertical
 ## Installation
 
 ```bash
-composer require --dev ivanfuhr/bladex-components
+composer require --dev ivanfuhr/stencil
 ```
 
-The package is a **development dependency** (registry CLI). After `init` and `add`, your app runs from files under `resources/views/ui` and `app/Support/Bladex` — production can use `composer install --no-dev`.
+The package is a **development dependency** (registry CLI). After `init` and `add`, your app runs from files under `resources/views/ui` and `app/Support/Stencil` — production can use `composer install --no-dev`.
 
 ```bash
-php artisan vendor:publish --tag="bladex-components"
+php artisan vendor:publish --tag="stencil"
 ```
 
 | Tag | Resource |
 | --- | --- |
-| `bladex-components-config` | Configuration |
-| `bladex-components-views` | Package views |
-| `bladex-components-lang` | Translations |
-| `bladex-components-assets` | Public assets |
+| `stencil-config` | Configuration |
+| `stencil-views` | Package views |
+| `stencil-lang` | Translations |
+| `stencil-assets` | Public assets |
 
 <br>
 
@@ -195,14 +195,14 @@ php artisan vendor:publish --tag="bladex-components"
 **Vendor (quick start)**
 
 ```blade
-<x-bladex-components::input name="email" />
+<x-stencil::input name="email" />
 ```
 
 **Owned (shadcn-style)**
 
 ```bash
-php artisan bladex-components:init
-php artisan bladex-components:add input button select
+php artisan stencil:init
+php artisan stencil:add input button select
 ```
 
 ```blade
@@ -215,28 +215,28 @@ php artisan bladex-components:add input button select
 
 | Command | Description |
 | --- | --- |
-| `bladex-components:init` | Create `bladex-components.json`, support/CSS, and lock file |
-| `bladex-components:add {names}` | Install from the registry |
-| `bladex-components:update {name?}` | Refresh installed files |
-| `bladex-components:remove {names}` | Remove installed components |
-| `bladex-components:list` | List registry items (`--installed`) |
-| `bladex-components:icon {names?}` | Import Lucide icons |
+| `stencil:init` | Create `stencil.json`, support/CSS, and lock file |
+| `stencil:add {names}` | Install from the registry |
+| `stencil:update {name?}` | Refresh installed files |
+| `stencil:remove {names}` | Remove installed components |
+| `stencil:list` | List registry items (`--installed`) |
+| `stencil:icon {names?}` | Import Lucide icons |
 
 ### Tailwind CSS
 
 <h3 id="tailwind-css"></h3>
 
-`init` creates `resources/css/bladex.css` and patches the import in `app.css`. Scans `resources/views` and `app/Support/Bladex`, and registers class-based dark mode (`.dark` on `<html>`).
+`init` creates `resources/css/stencil.css` and patches the import in `app.css`. Scans `resources/views` and `app/Support/Stencil`, and registers class-based dark mode (`.dark` on `<html>`).
 
 ```css
 @import "tailwindcss";
 
-/* bladex-components-start */
-@import "./bladex.css";
-/* bladex-components-end */
+/* stencil-start */
+@import "./stencil.css";
+/* stencil-end */
 ```
 
-With `APP_DEBUG=true`, missing integration throws a clear exception (disable via `bladex-components.validate_tailwind_integration`). Default registry: `package://registry.json`. Rebuild: `composer registry:build`.
+With `APP_DEBUG=true`, missing integration throws a clear exception (disable via `stencil.validate_tailwind_integration`). Default registry: `package://registry.json`. Rebuild: `composer registry:build`.
 
 <br>
 

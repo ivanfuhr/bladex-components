@@ -2,51 +2,51 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents;
+namespace Ivanfuhr\Stencil;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use Ivanfuhr\BladexComponents\Console\Commands\AddCommand;
-use Ivanfuhr\BladexComponents\Console\Commands\IconCommand;
-use Ivanfuhr\BladexComponents\Console\Commands\InitCommand;
-use Ivanfuhr\BladexComponents\Console\Commands\ListCommand;
-use Ivanfuhr\BladexComponents\Console\Commands\RemoveCommand;
-use Ivanfuhr\BladexComponents\Console\Commands\UpdateCommand;
-use Ivanfuhr\BladexComponents\Registry\ComponentInstaller;
-use Ivanfuhr\BladexComponents\Registry\OwnedArtifactCompiler;
-use Ivanfuhr\BladexComponents\Registry\ProjectIntegrator;
-use Ivanfuhr\BladexComponents\Registry\ProjectScaffolder;
-use Ivanfuhr\BladexComponents\Registry\RegistryClient;
-use Ivanfuhr\BladexComponents\Registry\RegistryResolver;
-use Ivanfuhr\BladexComponents\Support\Button\ButtonClassMap;
-use Ivanfuhr\BladexComponents\Support\Form\FormControlClassMap;
-use Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateAttributes;
-use Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateClassMap;
-use Ivanfuhr\BladexComponents\Support\ProjectConfig;
-use Ivanfuhr\BladexComponents\Support\ProjectLock;
-use Ivanfuhr\BladexComponents\Support\Tailwind\TailwindIntegrationValidator;
-use Ivanfuhr\BladexComponents\Support\Typography\GoogleFontsStylesheetBuilder;
-use Ivanfuhr\BladexComponents\Support\Typography\TypographyClassMap;
-use Ivanfuhr\BladexComponents\Support\Typography\TypographyConfig;
-use Ivanfuhr\BladexComponents\Support\Typography\TypographyScale;
+use Ivanfuhr\Stencil\Console\Commands\AddCommand;
+use Ivanfuhr\Stencil\Console\Commands\IconCommand;
+use Ivanfuhr\Stencil\Console\Commands\InitCommand;
+use Ivanfuhr\Stencil\Console\Commands\ListCommand;
+use Ivanfuhr\Stencil\Console\Commands\RemoveCommand;
+use Ivanfuhr\Stencil\Console\Commands\UpdateCommand;
+use Ivanfuhr\Stencil\Registry\ComponentInstaller;
+use Ivanfuhr\Stencil\Registry\OwnedArtifactCompiler;
+use Ivanfuhr\Stencil\Registry\ProjectIntegrator;
+use Ivanfuhr\Stencil\Registry\ProjectScaffolder;
+use Ivanfuhr\Stencil\Registry\RegistryClient;
+use Ivanfuhr\Stencil\Registry\RegistryResolver;
+use Ivanfuhr\Stencil\Support\Button\ButtonClassMap;
+use Ivanfuhr\Stencil\Support\Form\FormControlClassMap;
+use Ivanfuhr\Stencil\Support\Interaction\InteractionStateAttributes;
+use Ivanfuhr\Stencil\Support\Interaction\InteractionStateClassMap;
+use Ivanfuhr\Stencil\Support\ProjectConfig;
+use Ivanfuhr\Stencil\Support\ProjectLock;
+use Ivanfuhr\Stencil\Support\Tailwind\TailwindIntegrationValidator;
+use Ivanfuhr\Stencil\Support\Typography\GoogleFontsStylesheetBuilder;
+use Ivanfuhr\Stencil\Support\Typography\TypographyClassMap;
+use Ivanfuhr\Stencil\Support\Typography\TypographyConfig;
+use Ivanfuhr\Stencil\Support\Typography\TypographyScale;
 use Throwable;
 
-class BladexComponentsServiceProvider extends ServiceProvider
+class StencilServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/bladex-components.php', 'bladex-components');
+        $this->mergeConfigFrom(__DIR__.'/../config/stencil.php', 'stencil');
 
-        $this->app->singleton(BladexComponents::class);
+        $this->app->singleton(Stencil::class);
 
         $this->app->bind(ProjectConfig::class, fn (Application $app) => new ProjectConfig($app));
         $this->app->bind(ProjectLock::class, fn (Application $app) => new ProjectLock($app));
         $this->app->singleton(RegistryClient::class, function (Application $app): RegistryClient {
-            $configuredPath = config('bladex-components.package_registry_path');
+            $configuredPath = config('stencil.package_registry_path');
 
             $packageRegistryPath = is_string($configuredPath) && $configuredPath !== ''
                 ? $configuredPath
@@ -76,16 +76,16 @@ class BladexComponentsServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'bladex-components');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'stencil');
 
         Blade::anonymousComponentPath(
             __DIR__.'/../resources/views/components',
-            'bladex-components',
+            'stencil',
         );
 
         $this->registerOwnedUiNamespace();
 
-        $this->loadTranslationsFrom(__DIR__.'/../lang', 'bladex-components');
+        $this->loadTranslationsFrom(__DIR__.'/../lang', 'stencil');
 
         $this->ensureTailwindIntegrationInDebug();
 
@@ -118,7 +118,7 @@ class BladexComponentsServiceProvider extends ServiceProvider
         }
 
         $defaultUiPath = $this->app->basePath(
-            (string) config('bladex-components.default_ui_path', 'resources/views/ui'),
+            (string) config('stencil.default_ui_path', 'resources/views/ui'),
         );
 
         if (is_dir($defaultUiPath)) {
@@ -136,7 +136,7 @@ class BladexComponentsServiceProvider extends ServiceProvider
             return;
         }
 
-        if (! config('bladex-components.validate_tailwind_integration', true)) {
+        if (! config('stencil.validate_tailwind_integration', true)) {
             return;
         }
 
@@ -154,20 +154,20 @@ class BladexComponentsServiceProvider extends ServiceProvider
     private function registerConsoleResources(): void
     {
         $this->publishes([
-            __DIR__.'/../config/bladex-components.php' => config_path('bladex-components.php'),
-        ], ['bladex-components', 'bladex-components-config']);
+            __DIR__.'/../config/stencil.php' => config_path('stencil.php'),
+        ], ['stencil', 'stencil-config']);
 
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/bladex-components'),
-        ], ['bladex-components', 'bladex-components-views']);
+            __DIR__.'/../resources/views' => resource_path('views/vendor/stencil'),
+        ], ['stencil', 'stencil-views']);
 
         $this->publishes([
-            __DIR__.'/../lang' => $this->app->langPath('vendor/bladex-components'),
-        ], ['bladex-components', 'bladex-components-lang']);
+            __DIR__.'/../lang' => $this->app->langPath('vendor/stencil'),
+        ], ['stencil', 'stencil-lang']);
 
         $this->publishes([
-            __DIR__.'/../public' => public_path('vendor/bladex-components'),
-        ], ['bladex-components', 'bladex-components-assets']);
+            __DIR__.'/../public' => public_path('vendor/stencil'),
+        ], ['stencil', 'stencil-assets']);
 
         $this->commands([
             InitCommand::class,

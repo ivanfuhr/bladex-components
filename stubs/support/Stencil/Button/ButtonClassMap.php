@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Support\Bladex\Button;
+namespace App\Support\Stencil\Button;
 
-use App\Support\Bladex\Interaction\InteractionStateClassMap;
-use App\Support\Bladex\Typography\TypographyClassMap;
+use App\Support\Stencil\Interaction\InteractionStateClassMap;
+use App\Support\Stencil\Typography\TypographyClassMap;
 
 final class ButtonClassMap
 {

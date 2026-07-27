@@ -1,8 +1,8 @@
 @php
-    $loadingVariant = \Ivanfuhr\BladexComponents\Support\Icon\IconVariant::normalize($variant ?? 'outline');
-    $loadingIconClasses = \Ivanfuhr\BladexComponents\Support\Icon\IconVariant::classString($loadingVariant);
-    $loadingStrokeWidth = \Ivanfuhr\BladexComponents\Support\Icon\IconVariant::strokeWidth($loadingVariant);
-    $loadingPixelSize = \Ivanfuhr\BladexComponents\Support\Icon\IconVariant::pixelSize($loadingVariant);
+    $loadingVariant = \Ivanfuhr\Stencil\Support\Icon\IconVariant::normalize($variant ?? 'outline');
+    $loadingIconClasses = \Ivanfuhr\Stencil\Support\Icon\IconVariant::classString($loadingVariant);
+    $loadingStrokeWidth = \Ivanfuhr\Stencil\Support\Icon\IconVariant::strokeWidth($loadingVariant);
+    $loadingPixelSize = \Ivanfuhr\Stencil\Support\Icon\IconVariant::pixelSize($loadingVariant);
     $loadingMergedClass = trim($loadingIconClasses.' animate-spin '.($class ?? ''));
 @endphp
 

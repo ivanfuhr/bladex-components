@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Support\Form;
+namespace Ivanfuhr\Stencil\Support\Form;
 
-use Ivanfuhr\BladexComponents\Support\Interaction\InteractionStateClassMap;
-use Ivanfuhr\BladexComponents\Support\Typography\TypographyClassMap;
+use Ivanfuhr\Stencil\Support\Interaction\InteractionStateClassMap;
+use Ivanfuhr\Stencil\Support\Typography\TypographyClassMap;
 
 final class FormControlClassMap
 {

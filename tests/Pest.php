@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Ivanfuhr\BladexComponents\Tests\TestCase;
-use Ivanfuhr\BladexComponents\Tests\WorkbenchTestCase;
+use Ivanfuhr\Stencil\Tests\TestCase;
+use Ivanfuhr\Stencil\Tests\WorkbenchTestCase;
 
 require_once __DIR__.'/Helpers/registry.php';
 

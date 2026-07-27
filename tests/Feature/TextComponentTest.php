@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Blade;
 
 it('renders paragraph text by default', function (): void {
-    $html = Blade::render('<x-bladex-components::text>Hello</x-bladex-components::text>');
+    $html = Blade::render('<x-stencil::text>Hello</x-stencil::text>');
 
     expect($html)
         ->toContain('<p')
@@ -16,13 +16,13 @@ it('renders paragraph text by default', function (): void {
 });
 
 it('renders inline span text when requested', function (): void {
-    $html = Blade::render('<x-bladex-components::text inline>Inline</x-bladex-components::text>');
+    $html = Blade::render('<x-stencil::text inline>Inline</x-stencil::text>');
 
     expect($html)->toContain('<span')->toContain('Inline');
 });
 
 it('applies size variant and color props', function (): void {
-    $html = Blade::render('<x-bladex-components::text size="lg" variant="strong" color="blue">Copy</x-bladex-components::text>');
+    $html = Blade::render('<x-stencil::text size="lg" variant="strong" color="blue">Copy</x-stencil::text>');
 
     expect($html)
         ->toContain('text-lg')
@@ -31,7 +31,7 @@ it('applies size variant and color props', function (): void {
 });
 
 it('merges consumer classes on the root element', function (): void {
-    $html = Blade::render('<x-bladex-components::text class="mt-2">Copy</x-bladex-components::text>');
+    $html = Blade::render('<x-stencil::text class="mt-2">Copy</x-stencil::text>');
 
     expect($html)->toContain('mt-2');
 });

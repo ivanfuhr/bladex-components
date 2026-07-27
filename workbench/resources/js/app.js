@@ -4,6 +4,6 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-// bladex-components-start
+// stencil-start
 import '../../../vendor/orchestra/testbench-core/laravel/resources/views/ui/select/select.js';
-// bladex-components-end
+// stencil-end

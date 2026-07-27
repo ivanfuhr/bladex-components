@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\BladexComponents\Registry;
+namespace Ivanfuhr\Stencil\Registry;
 
 use FilesystemIterator;
 use RecursiveDirectoryIterator;
@@ -33,7 +33,7 @@ final class SupportStubGenerator
     public function generate(string $packageRoot, string $stubsRoot): void
     {
         $supportSource = $packageRoot.'/src/Support';
-        $supportTarget = $stubsRoot.'/support/Bladex';
+        $supportTarget = $stubsRoot.'/support/Stencil';
 
         if (! is_dir($supportSource)) {
             throw new RuntimeException("Package support path not found: {$supportSource}");
@@ -70,8 +70,8 @@ final class SupportStubGenerator
     {
         if ($relative === 'Typography/TypographyConfig.php') {
             $content = str_replace(
-                "\$base = config('bladex-components.typography', []);",
-                '$base = config(\'bladex-ui.typography\', []);',
+                "\$base = config('stencil.typography', []);",
+                '$base = config(\'stencil-ui.typography\', []);',
                 $content,
             );
         }
@@ -80,13 +80,13 @@ final class SupportStubGenerator
             $content = str_replace(
                 <<<'PHP'
         $template = (string) config(
-            'bladex-components.lucide_raw_url',
+            'stencil.lucide_raw_url',
             'https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/{name}.svg',
         );
 PHP,
                 <<<'PHP'
         $template = (string) config(
-            'bladex-ui.lucide_raw_url',
+            'stencil-ui.lucide_raw_url',
             'https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/{name}.svg',
         );
 PHP,
@@ -99,16 +99,16 @@ PHP,
 
     private function writeStaticStubs(string $packageRoot, string $stubsRoot): void
     {
-        $cssTarget = $stubsRoot.'/resources/css/bladex.css';
+        $cssTarget = $stubsRoot.'/resources/css/stencil.css';
         $this->ensureDirectoryExists(dirname($cssTarget));
         file_put_contents($cssTarget, <<<'CSS'
 /**
- * BladeX Components — Tailwind v4 @source paths for owned UI.
+ * Stencil — Tailwind v4 @source paths for owned UI.
  */
 @custom-variant dark (&:where(.dark, .dark *));
 
 @source "../../views/**/*.blade.php";
-@source "../../../app/Support/Bladex/**/*.php";
+@source "../../../app/Support/Stencil/**/*.php";
 
 CSS);
 
@@ -124,15 +124,15 @@ CSS);
         $this->ensureDirectoryExists(dirname($fontsTarget));
         file_put_contents($fontsTarget, $fontsContent);
 
-        $configTarget = $stubsRoot.'/config/bladex-ui.php';
+        $configTarget = $stubsRoot.'/config/stencil-ui.php';
         $this->ensureDirectoryExists(dirname($configTarget));
         /** @var array<string, mixed> $packageConfig */
-        $packageConfig = require $packageRoot.'/config/bladex-components.php';
+        $packageConfig = require $packageRoot.'/config/stencil.php';
         $typography = $packageConfig['typography'] ?? [];
         $typographyJson = json_encode($typography, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
         if ($typographyJson === false) {
-            throw new RuntimeException('Unable to encode typography defaults for bladex-ui stub.');
+            throw new RuntimeException('Unable to encode typography defaults for stencil-ui stub.');
         }
 
         file_put_contents($configTarget, <<<PHP
@@ -150,7 +150,7 @@ JSON, true),
 
 PHP);
 
-        $providerTarget = $stubsRoot.'/app/Providers/BladexUiServiceProvider.php';
+        $providerTarget = $stubsRoot.'/app/Providers/StencilUiServiceProvider.php';
         $this->ensureDirectoryExists(dirname($providerTarget));
         file_put_contents($providerTarget, <<<'PHP'
 <?php
@@ -159,24 +159,24 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Support\Bladex\Button\ButtonClassMap;
-use App\Support\Bladex\Form\FormControlClassMap;
-use App\Support\Bladex\Interaction\InteractionStateAttributes;
-use App\Support\Bladex\Interaction\InteractionStateClassMap;
-use App\Support\Bladex\ProjectConfig;
-use App\Support\Bladex\Typography\GoogleFontsStylesheetBuilder;
-use App\Support\Bladex\Typography\TypographyClassMap;
-use App\Support\Bladex\Typography\TypographyConfig;
-use App\Support\Bladex\Typography\TypographyScale;
+use App\Support\Stencil\Button\ButtonClassMap;
+use App\Support\Stencil\Form\FormControlClassMap;
+use App\Support\Stencil\Interaction\InteractionStateAttributes;
+use App\Support\Stencil\Interaction\InteractionStateClassMap;
+use App\Support\Stencil\ProjectConfig;
+use App\Support\Stencil\Typography\GoogleFontsStylesheetBuilder;
+use App\Support\Stencil\Typography\TypographyClassMap;
+use App\Support\Stencil\Typography\TypographyConfig;
+use App\Support\Stencil\Typography\TypographyScale;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
-class BladexUiServiceProvider extends ServiceProvider
+class StencilUiServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        if (is_file(config_path('bladex-ui.php'))) {
-            $this->mergeConfigFrom(config_path('bladex-ui.php'), 'bladex-ui');
+        if (is_file(config_path('stencil-ui.php'))) {
+            $this->mergeConfigFrom(config_path('stencil-ui.php'), 'stencil-ui');
         }
 
         $this->app->bind(ProjectConfig::class, fn ($app) => new ProjectConfig($app));

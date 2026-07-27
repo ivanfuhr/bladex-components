@@ -10,7 +10,7 @@
             "path": "text/index.blade.php",
             "type": "registry:ui",
             "target": "text/index.blade.php",
-            "content": "@props([\n    'size' => null,\n    'variant' => null,\n    'color' => null,\n    'inline' => false,\n])\n\n@php\n    use App\\Support\\Bladex\\Typography\\TypographyClassMap;\n\n    $classes = app(TypographyClassMap::class)->textClasses($size, $variant, $color);\n@endphp\n\n@if ($inline)\n    <span {{ $attributes->class($classes) }} data-text>{{ $slot }}</span>\n@else\n    <p {{ $attributes->class($classes) }} data-text>{{ $slot }}</p>\n@endif\n"
+            "content": "@props([\n    'size' => null,\n    'variant' => null,\n    'color' => null,\n    'inline' => false,\n])\n\n@php\n    use App\\Support\\Stencil\\Typography\\TypographyClassMap;\n\n    $classes = app(TypographyClassMap::class)->textClasses($size, $variant, $color);\n@endphp\n\n@if ($inline)\n    <span {{ $attributes->class($classes) }} data-text>{{ $slot }}</span>\n@else\n    <p {{ $attributes->class($classes) }} data-text>{{ $slot }}</p>\n@endif\n"
         }
     ]
 }

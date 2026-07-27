@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Support\Bladex\Icon;
+namespace App\Support\Stencil\Icon;
 
+use App\Support\Stencil\ProjectConfig;
 use Illuminate\Contracts\Foundation\Application;
 use InvalidArgumentException;
-use App\Support\Bladex\ProjectConfig;
 
 final class IconPathResolver
 {
@@ -53,7 +53,7 @@ final class IconPathResolver
     public function lucideUrl(string $name): string
     {
         $template = (string) config(
-            'bladex-ui.lucide_raw_url',
+            'stencil-ui.lucide_raw_url',
             'https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/{name}.svg',
         );
 
