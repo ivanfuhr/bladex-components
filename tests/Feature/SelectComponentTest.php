@@ -129,7 +129,21 @@ it('styles select options with hover feedback', function () {
         </x-bladex-components::select>
     BLADE);
 
-    expect($html)->toContain('hover:bg-zinc-100');
+    expect($html)
+        ->toContain('hover:bg-zinc-100')
+        ->toContain('cursor-pointer');
+});
+
+it('uses a pointer cursor on the select trigger', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-bladex-components::select name="x" placeholder="X">
+            <x-bladex-components::select.item value="a">A</x-bladex-components::select.item>
+        </x-bladex-components::select>
+    BLADE);
+
+    expect($html)
+        ->toContain('data-select-trigger')
+        ->toContain('cursor-pointer');
 });
 
 it('marks disabled items with data-disabled', function () {

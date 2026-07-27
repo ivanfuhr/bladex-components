@@ -7,10 +7,16 @@
     "registryDependencies": [],
     "files": [
         {
+            "path": "field/errors.blade.php",
+            "type": "registry:ui",
+            "target": "field/errors.blade.php",
+            "content": "@props([\n    'name',\n])\n\n@error($name)\n    <x-ui::field.message variant=\"error\">{{ $message }}</x-ui::field.message>\n@enderror\n"
+        },
+        {
             "path": "field/message.blade.php",
             "type": "registry:ui",
             "target": "field/message.blade.php",
-            "content": "@props([\n    'variant' => 'hint',\n])\n\n@php\n    use App\\Support\\Bladex\\Typography\\TypographyClassMap;\n\n    $isError = $variant === 'error';\n\n    $classes = app(TypographyClassMap::class)->textClasses(\n        'sm',\n        $isError ? 'error' : 'subtle',\n        null,\n    );\n\n    $messageAttributes = $attributes\n        ->class($classes)\n        ->merge([\n            'data-field-message' => true,\n            'data-field-message-variant' => $isError ? 'error' : 'hint',\n        ]);\n\n    if ($isError) {\n        $messageAttributes = $messageAttributes->merge(['role' => 'alert']);\n    }\n@endphp\n\n<p {{ $messageAttributes }}>{{ $slot }}</p>\n"
+            "content": "@props([\n    'variant' => 'hint',\n    'invalid' => false,\n])\n\n@aware([\n    'fieldInvalid' => false,\n])\n\n@php\n    use App\\Support\\Bladex\\Typography\\TypographyClassMap;\n\n    $isError = $variant === 'error' || $invalid || $fieldInvalid;\n\n    $toneClasses = $isError\n        ? 'text-red-600 dark:text-red-400'\n        : 'text-zinc-500 dark:text-zinc-400';\n\n    $classes = collect([\n        'field__message',\n        $toneClasses,\n        app(TypographyClassMap::class)->textClasses(\n            'sm',\n            $isError ? 'error' : 'subtle',\n            null,\n        ),\n    ])->filter()->implode(' ');\n\n    $messageAttributes = $attributes\n        ->class($classes)\n        ->merge([\n            'data-field-message' => true,\n            'data-field-message-variant' => $isError ? 'error' : 'hint',\n        ]);\n\n    if ($isError) {\n        $messageAttributes = $messageAttributes->merge(['role' => 'alert']);\n    }\n@endphp\n\n<p {{ $messageAttributes }}>{{ $slot }}</p>\n"
         }
     ]
 }

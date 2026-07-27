@@ -99,6 +99,8 @@ it('forwards disabled and reflects loading with aria-busy and a spinner', functi
         ->toContain('data-loading')
         ->toContain('aria-busy="true"')
         ->toContain('data-button-loading')
+        ->toContain('data-button-loading-icon')
+        ->toContain('animate-spin')
         ->toContain('data-loading:cursor-wait');
 });
 

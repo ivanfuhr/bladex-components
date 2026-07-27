@@ -18,13 +18,11 @@
             ->class([
                 'select__trigger',
                 'group flex w-full min-w-0 items-center justify-between gap-2 text-left',
-                $formControl->fieldSurfaceClasses($size, includeReadOnly: false),
+                $formControl->fieldSurfaceClasses($size, includeReadOnly: false, cursor: 'pointer'),
                 $formControl->invalidFieldClasses(),
                 'aria-expanded:border-zinc-300 aria-expanded:ring-2 aria-expanded:ring-zinc-950/10',
                 'dark:aria-expanded:border-zinc-600 dark:aria-expanded:ring-zinc-300/20',
                 $invalid ? 'border-red-500 focus-visible:ring-red-500/20 dark:border-red-500' : null,
-                'disabled:cursor-not-allowed disabled:opacity-50',
-                'aria-disabled:cursor-not-allowed aria-disabled:opacity-50',
             ])
             ->merge([
                 'type' => 'button',

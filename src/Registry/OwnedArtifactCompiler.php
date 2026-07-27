@@ -6,6 +6,8 @@ namespace Ivanfuhr\BladexComponents\Registry;
 
 final class OwnedArtifactCompiler
 {
+    private const string INTERNAL_LOADING_ICON_INCLUDE = "@include('bladex-components::internals.loading-icon')";
+
     public const string PACKAGE_SUPPORT_NAMESPACE = 'Ivanfuhr\\BladexComponents\\Support';
 
     public const string OWNED_SUPPORT_NAMESPACE = 'App\\Support\\Bladex';
@@ -18,6 +20,7 @@ final class OwnedArtifactCompiler
     {
         $ownedSupportNamespace ??= self::OWNED_SUPPORT_NAMESPACE;
 
+        $content = $this->inlineInternalLoadingIconInclude($content, $ownedSupportNamespace);
         $content = str_replace(self::PACKAGE_COMPONENT_PREFIX, self::OWNED_COMPONENT_PREFIX, $content);
         $content = $this->rewriteSupportNamespace($content, $ownedSupportNamespace);
 
@@ -35,5 +38,23 @@ final class OwnedArtifactCompiler
         $content = str_replace(self::PACKAGE_SUPPORT_NAMESPACE, $ownedSupportNamespace, $content);
 
         return $content;
+    }
+
+    private function inlineInternalLoadingIconInclude(string $content, string $ownedSupportNamespace): string
+    {
+        if (! str_contains($content, self::INTERNAL_LOADING_ICON_INCLUDE)) {
+            return $content;
+        }
+
+        $partialPath = dirname(__DIR__, 2).'/resources/views/internals/loading-icon.blade.php';
+        $partial = file_get_contents($partialPath);
+
+        if ($partial === false) {
+            throw new \RuntimeException("Unable to read internal loading icon partial: {$partialPath}");
+        }
+
+        $partial = $this->compileBlade($partial, $ownedSupportNamespace);
+
+        return str_replace(self::INTERNAL_LOADING_ICON_INCLUDE, $partial, $content);
     }
 }

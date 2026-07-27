@@ -20,3 +20,16 @@ BLADE;
     expect($compiled)->toContain('<x-ui::input />');
     expect($compiled)->not->toContain('x-bladex-components::');
 });
+
+it('inlines the internal loading icon partial when compiling owned button artifacts', function (): void {
+    $compiler = new OwnedArtifactCompiler;
+
+    $source = "@include('bladex-components::internals.loading-icon')";
+
+    $compiled = $compiler->compileBlade($source);
+
+    expect($compiled)->toContain('data-button-loading-icon');
+    expect($compiled)->toContain('App\\Support\\Bladex\\Icon\\IconVariant::normalize');
+    expect($compiled)->not->toContain('x-ui::icon.loading');
+    expect($compiled)->not->toContain("@include('bladex-components::internals.loading-icon')");
+});

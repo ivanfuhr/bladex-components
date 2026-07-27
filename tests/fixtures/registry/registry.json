@@ -55,9 +55,7 @@
             "type": "registry:ui",
             "title": "Button",
             "description": "Composable button primitive with variants, sizes, link mode, and grouped layouts.",
-            "registryDependencies": [
-                "icon"
-            ]
+            "registryDependencies": []
         },
         {
             "name": "select",

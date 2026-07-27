@@ -32,7 +32,7 @@ $catalog = [
         'registryDependencies' => [],
         'source' => 'field',
         'targetPrefix' => 'field',
-        'filesOnly' => ['message.blade.php'],
+        'filesOnly' => ['message.blade.php', 'errors.blade.php'],
     ],
     'icon' => [
         'title' => 'Icon',
@@ -81,7 +81,7 @@ $catalog = [
         'title' => 'Button',
         'description' => 'Composable button primitive with variants, sizes, link mode, and grouped layouts.',
         'type' => 'registry:ui',
-        'registryDependencies' => ['icon'],
+        'registryDependencies' => [],
         'source' => 'button',
         'targetPrefix' => 'button',
     ],

@@ -14,10 +14,17 @@ final class FormControlClassMap
         private readonly InteractionStateClassMap $interactionState,
     ) {}
 
-    public function fieldSurfaceClasses(?string $size, bool $includeReadOnly = true): string
+    public function fieldSurfaceClasses(?string $size, bool $includeReadOnly = true, string $cursor = 'text'): string
     {
+        $cursorClasses = match ($cursor) {
+            'pointer' => $this->interactionState->cursorPointerClasses(),
+            'default' => $this->interactionState->cursorDefaultClasses(),
+            default => $this->interactionState->cursorTextClasses(),
+        };
+
         return collect([
             'rounded-md border border-zinc-200 bg-white px-3 py-1 shadow-sm transition-colors',
+            $cursorClasses,
             $this->typography->inputControlClasses($size),
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:ring-offset-0',
             $this->interactionState->classes(includeReadOnly: $includeReadOnly),
@@ -39,7 +46,7 @@ final class FormControlClassMap
     public function selectListboxClasses(?string $size): string
     {
         return collect([
-            'z-[200] max-h-60 min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-md border border-zinc-200 bg-white p-1 shadow-md',
+            'z-[200] flex max-h-60 min-w-[8rem] flex-col gap-1 overflow-y-auto overflow-x-hidden rounded-md border border-zinc-200 bg-white p-1 shadow-md',
             $this->typography->inputControlClasses($size),
             'text-zinc-950 focus:outline-none',
             'dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50',
@@ -49,13 +56,14 @@ final class FormControlClassMap
     public function selectOptionClasses(?string $size): string
     {
         return collect([
-            'relative flex w-full cursor-default select-none items-center gap-2 rounded-sm py-1.5 pl-2 pr-8 outline-none',
+            'relative flex w-full select-none items-center gap-2 rounded-sm py-1.5 pl-2 pr-8 outline-none',
+            $this->interactionState->cursorPointerClasses(),
             $this->typography->textClasses($size === 'sm' ? 'sm' : null, null, null),
             'text-zinc-950 dark:text-zinc-50',
             'hover:bg-zinc-100 hover:text-zinc-900 dark:hover:bg-zinc-800 dark:hover:text-zinc-50',
             'data-[highlighted]:bg-zinc-100 data-[highlighted]:text-zinc-900',
             'dark:data-[highlighted]:bg-zinc-800 dark:data-[highlighted]:text-zinc-50',
-            'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+            'data-[disabled]:pointer-events-none data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50',
             $size === 'sm' ? 'py-1' : null,
         ])->filter()->implode(' ');
     }

@@ -67,6 +67,26 @@ it('add select installs owned javascript asset', function () {
     expect(file_exists($scriptPath))->toBeTrue();
 });
 
+it('renders owned button loading state without the icon loading component', function () {
+    useOwnedRegistryProject();
+    fakeRegistryHttp();
+
+    $this->artisan('bladex-components:add', ['names' => ['button']])
+        ->assertSuccessful();
+
+    registerOwnedUiNamespace();
+
+    expect(file_exists($this->app->resourcePath('views/ui/icon/loading.blade.php')))->toBeFalse();
+
+    $html = Blade::render('<x-ui::button :loading="true">Save</x-ui::button>');
+
+    expect($html)
+        ->toContain('data-button-loading')
+        ->toContain('data-button-loading-icon')
+        ->toContain('animate-spin')
+        ->not->toContain('icon.loading');
+});
+
 it('fails add when project config is missing', function () {
     fakeRegistryHttp();
 

@@ -84,9 +84,7 @@ Ship flexible Blade components that consumers assemble from small pieces, while 
         <input id="email" type="email" {{ $attributes }} />
     </x-bladex-components::field.control>
 
-    <x-bladex-components::field.message>
-        {{ $message }}
-    </x-bladex-components::field.message>
+    <x-bladex-components::field.errors name="email" />
 </x-bladex-components::field>
 ```
 

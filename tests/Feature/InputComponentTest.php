@@ -146,6 +146,7 @@ it('forwards disabled, readonly, and loading attributes to the native control', 
         ->toContain('readonly')
         ->toContain('data-loading')
         ->toContain('aria-busy="true"')
+        ->toContain('cursor-text')
         ->toContain('read-only:cursor-default')
         ->toContain('data-loading:cursor-wait');
 });

@@ -3,3 +3,5 @@
  */
 @source "../../views/**/*.blade.php";
 @source "../../../app/Support/Bladex/**/*.php";
+@source "../../../resources/views/**/*.blade.php";
+@source "../../../src/Support/**/*.php";
