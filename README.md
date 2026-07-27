@@ -128,7 +128,7 @@ The script crops to `#readme-media` (installs `playwright-core` under `scripts/`
 
 ---
 
-Component previews (playbook media pages). Each block is the same page in **light** and **dark** mode (append `?dark=1` for `.dark` on `<html>`). Click an image for the full-size PNG.
+Component previews follow your GitHub theme (light or dark). Click an image for the full-size PNG.
 
 <br>
 
@@ -136,13 +136,8 @@ Component previews (playbook media pages). Each block is the same page in **ligh
 
 Variants: `outline`, `primary`, `secondary`, `danger`, `ghost`, `subtle`, `link` — sizes `xs`–`lg`, icon mode (`square`), and `leading` / `trailing` slots.
 
-**Light**
-
-[![Button variants — light](docs/images/buttons-light.png)](docs/images/buttons-light.png)
-
-**Dark**
-
-[![Button variants — dark](docs/images/buttons-dark.png)](docs/images/buttons-dark.png)
+[![Button variants](docs/images/buttons-light.png#gh-light-mode-only)](docs/images/buttons-light.png)
+[![Button variants](docs/images/buttons-dark.png#gh-dark-mode-only)](docs/images/buttons-dark.png)
 
 ```blade
 <x-ui::button variant="primary" size="lg">Save changes</x-ui::button>
@@ -164,13 +159,8 @@ Icon slots in the example need `stencil:add icon` and `stencil:icon search`.
 
 Affixes, `prefix` / `suffix`, and `invalid`, `disabled`, and `readonly` states.
 
-**Light**
-
-[![Input — light](docs/images/input-light.png)](docs/images/input-light.png)
-
-**Dark**
-
-[![Input — dark](docs/images/input-dark.png)](docs/images/input-dark.png)
+[![Input](docs/images/input-light.png#gh-light-mode-only)](docs/images/input-light.png)
+[![Input](docs/images/input-dark.png#gh-dark-mode-only)](docs/images/input-dark.png)
 
 ```blade
 <x-ui::input name="email" type="email" placeholder="you@example.com">
@@ -193,13 +183,8 @@ php artisan stencil:add input
 
 Accessible listbox (not a native `<select>`). Subcomponents include `trigger`, `value`, `content`, `group`, `label`, `item`, and `separator`. `stencil:add select` copies `select.js` and patches your Vite entry (for example `resources/js/app.js`) to import it.
 
-**Light**
-
-[![Select — light](docs/images/select-light.png)](docs/images/select-light.png)
-
-**Dark**
-
-[![Select — dark](docs/images/select-dark.png)](docs/images/select-dark.png)
+[![Select](docs/images/select-light.png#gh-light-mode-only)](docs/images/select-light.png)
+[![Select](docs/images/select-dark.png#gh-dark-mode-only)](docs/images/select-dark.png)
 
 ```blade
 <x-ui::select name="industry" placeholder="Choose industry…">
@@ -222,13 +207,8 @@ php artisan stencil:add select
 
 `<x-ui::heading />` with semantic levels `1`–`6` and `<x-ui::text />` with the `sm` / `default` / `lg` / `xl` scale, variants, and colors.
 
-**Light**
-
-[![Typography — light](docs/images/typography-light.png)](docs/images/typography-light.png)
-
-**Dark**
-
-[![Typography — dark](docs/images/typography-dark.png)](docs/images/typography-dark.png)
+[![Typography](docs/images/typography-light.png#gh-light-mode-only)](docs/images/typography-light.png)
+[![Typography](docs/images/typography-dark.png#gh-dark-mode-only)](docs/images/typography-dark.png)
 
 ```blade
 <head>
@@ -257,13 +237,8 @@ php artisan stencil:add icon
 php artisan stencil:icon search grip-vertical
 ```
 
-**Light**
-
-[![Icons — light](docs/images/icons-light.png)](docs/images/icons-light.png)
-
-**Dark**
-
-[![Icons — dark](docs/images/icons-dark.png)](docs/images/icons-dark.png)
+[![Icons](docs/images/icons-light.png#gh-light-mode-only)](docs/images/icons-light.png)
+[![Icons](docs/images/icons-dark.png#gh-dark-mode-only)](docs/images/icons-dark.png)
 
 ```blade
 <x-ui::icons.search />

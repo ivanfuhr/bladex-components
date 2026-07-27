@@ -15,7 +15,8 @@
             box-sizing: border-box;
             width: max-content;
             max-width: min(56rem, 100vw);
-            padding: 1.5rem 2rem;
+            padding-block: 1rem;
+            padding-inline: 0;
         }
     </style>
 </head>
