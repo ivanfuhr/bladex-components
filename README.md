@@ -116,18 +116,28 @@ Variants: `outline`, `primary`, `secondary`, `danger`, `ghost`, `subtle`, `link`
 </picture>
 
 ```blade
-<x-ui::button variant="primary" size="lg">Save changes</x-ui::button>
+<x-ui::button variant="outline">Outline</x-ui::button>
+<x-ui::button variant="primary">Primary</x-ui::button>
+<x-ui::button variant="secondary">Secondary</x-ui::button>
+<x-ui::button variant="danger">Danger</x-ui::button>
+<x-ui::button variant="ghost">Ghost</x-ui::button>
+<x-ui::button variant="subtle">Subtle</x-ui::button>
+<x-ui::button variant="link">Link</x-ui::button>
 
+<x-ui::button variant="primary" size="xs">Extra small</x-ui::button>
+<x-ui::button variant="primary" size="sm">Small</x-ui::button>
+<x-ui::button variant="primary">Default</x-ui::button>
+<x-ui::button variant="primary" size="lg">Large</x-ui::button>
 <x-ui::button variant="outline" square>
-    <x-ui::icons.search />
+    <x-ui::icon.loading />
 </x-ui::button>
 ```
 
 ```bash
-php artisan stencil:add button
+php artisan stencil:add button icon
 ```
 
-Icon slots in the example need `stencil:add icon` and `stencil:icon search`.
+The square button uses the built-in loading icon from `stencil:add icon`.
 
 <br>
 
@@ -143,17 +153,38 @@ Affixes, `prefix` / `suffix`, and `invalid`, `disabled`, and `readonly` states.
 
 ```blade
 <x-ui::input name="email" type="email" placeholder="you@example.com">
-    <x-slot:leading><x-ui::icons.search /></x-slot:leading>
+    <x-slot:leading>
+        <x-ui::icon.loading />
+    </x-slot:leading>
     <x-slot:trailing>
         <x-ui::text inline size="sm" variant="subtle">Clear</x-ui::text>
     </x-slot:trailing>
 </x-ui::input>
 
-<x-ui::input name="site" prefix="https://" suffix=".com" placeholder="yoursite" />
+<x-ui::input name="site" placeholder="yoursite" prefix="https://" suffix=".com" />
+
+<x-ui::input name="email" value="not-an-email" invalid />
+
+<x-ui::input name="a" placeholder="Disabled" disabled />
+<x-ui::input name="b" value="Read only" readonly />
+
+<x-ui::button variant="outline">Button</x-ui::button>
+<x-ui::input name="align-default" placeholder="Input" class="w-36" />
+<x-ui::select name="align-select-default" placeholder="Select…" class="w-40">
+    <x-ui::select.item value="a">Option A</x-ui::select.item>
+</x-ui::select>
+<x-ui::switch name="align-switch-default" :checked="true" />
+
+<x-ui::button variant="outline" size="sm">Button</x-ui::button>
+<x-ui::input name="align-sm" size="sm" placeholder="Input" class="w-36" />
+<x-ui::select name="align-select-sm" size="sm" placeholder="Select…" class="w-40">
+    <x-ui::select.item value="a">Option A</x-ui::select.item>
+</x-ui::select>
+<x-ui::switch name="align-switch-sm" size="sm" :checked="true" />
 ```
 
 ```bash
-php artisan stencil:add input
+php artisan stencil:add input icon select switch
 ```
 
 <br>
@@ -169,8 +200,14 @@ Accessible `<label>` with optional `badge` and `required` marker. Pairs with any
 </picture>
 
 ```blade
-<x-ui::label for="email" badge="Required" :required="true">Email</x-ui::label>
-<x-ui::input id="email" name="email" type="email" />
+<x-ui::label for="email">Email</x-ui::label>
+<x-ui::input name="email" id="email" type="email" placeholder="you@example.com" />
+
+<x-ui::label for="phone" badge="Optional">Phone</x-ui::label>
+<x-ui::input name="phone" id="phone" placeholder="(555) 555-5555" />
+
+<x-ui::label for="password" badge="Required" :required="true">Password</x-ui::label>
+<x-ui::input name="password" id="password" type="password" />
 ```
 
 ```bash
@@ -192,9 +229,14 @@ Composable field shell: label, control, description, and Laravel errors — insp
 ```blade
 <x-ui::field name="email">
     <x-ui::field.label>Email</x-ui::field.label>
-    <x-ui::input name="email" type="email" />
-    <x-ui::field.description>We never share your email.</x-ui::field.description>
-    <x-ui::field.errors name="email" />
+    <x-ui::input name="email" type="email" placeholder="you@example.com" />
+    <x-ui::field.description>Used for invoices and receipts.</x-ui::field.description>
+</x-ui::field>
+
+<x-ui::field name="username" :invalid="true">
+    <x-ui::field.label>Username</x-ui::field.label>
+    <x-ui::input name="username" value="taken" />
+    <x-ui::field.message variant="error">That username is already taken.</x-ui::field.message>
 </x-ui::field>
 ```
 
@@ -215,7 +257,10 @@ Multi-line control with the same invalid/disabled behavior as `input` ([shadcn T
 </picture>
 
 ```blade
-<x-ui::textarea name="bio" rows="4" placeholder="About you…" />
+<x-ui::textarea name="bio" placeholder="About you…" rows="3" />
+<x-ui::textarea name="bio-sm" size="sm" placeholder="About you…" rows="3" />
+<x-ui::textarea name="bio-invalid" :invalid="true" value="Too short" />
+<x-ui::textarea name="bio-disabled" disabled placeholder="Disabled" />
 ```
 
 ```bash
@@ -235,9 +280,21 @@ Native checkbox for forms and multi-select ([Flux checkbox](https://fluxui.dev/d
 </picture>
 
 ```blade
-<x-ui::field name="terms" orientation="inline">
-    <x-ui::checkbox name="terms" value="1" />
-    <x-ui::field.label>Accept terms</x-ui::field.label>
+<x-ui::field name="a" orientation="inline">
+    <x-ui::checkbox name="a" :checked="true" />
+    <x-ui::field.label>Default size</x-ui::field.label>
+</x-ui::field>
+<x-ui::field name="b" orientation="inline">
+    <x-ui::checkbox name="b" size="sm" :checked="true" />
+    <x-ui::field.label>Small</x-ui::field.label>
+</x-ui::field>
+<x-ui::field orientation="inline">
+    <x-ui::checkbox name="c" :invalid="true" />
+    <x-ui::field.label>Invalid</x-ui::field.label>
+</x-ui::field>
+<x-ui::field orientation="inline">
+    <x-ui::checkbox name="d" disabled />
+    <x-ui::field.label>Disabled</x-ui::field.label>
 </x-ui::field>
 ```
 
@@ -261,6 +318,7 @@ php artisan stencil:add checkbox
 <x-ui::radio.group name="plan" legend="Plan">
     <x-ui::radio value="free">Free</x-ui::radio>
     <x-ui::radio value="pro" :checked="true">Pro</x-ui::radio>
+    <x-ui::radio value="team">Team</x-ui::radio>
 </x-ui::radio.group>
 ```
 
@@ -281,10 +339,21 @@ php artisan stencil:add radio
 </picture>
 
 ```blade
-<x-ui::field orientation="inline">
-    <x-ui::field.label>Notifications</x-ui::field.label>
-    <x-ui::switch name="notifications" />
+<x-ui::field name="n1" orientation="inline">
+    <div class="flex min-w-0 flex-1 flex-col gap-1">
+        <x-ui::field.label>Notifications</x-ui::field.label>
+    </div>
+    <x-ui::switch name="n1" :checked="true" />
 </x-ui::field>
+
+<x-ui::field name="n2" orientation="inline">
+    <div class="flex min-w-0 flex-1 flex-col gap-1">
+        <x-ui::field.label>Notifications</x-ui::field.label>
+    </div>
+    <x-ui::switch name="n2" size="sm" :checked="true" />
+</x-ui::field>
+
+<x-ui::switch name="n3" />
 ```
 
 ```bash
@@ -308,9 +377,22 @@ Accessible listbox (not a native `<select>`). Subcomponents include `trigger`, `
     <x-ui::select.group>
         <x-ui::select.label>Creative</x-ui::select.label>
         <x-ui::select.item value="photo">Photography</x-ui::select.item>
+        <x-ui::select.item value="design">Design services</x-ui::select.item>
     </x-ui::select.group>
     <x-ui::select.separator />
     <x-ui::select.item value="web">Web development</x-ui::select.item>
+    <x-ui::select.item value="other">Other</x-ui::select.item>
+</x-ui::select>
+
+<x-ui::select name="role" size="sm" placeholder="Select a role…">
+    <x-ui::select.item value="admin">Admin</x-ui::select.item>
+    <x-ui::select.item value="editor">Editor</x-ui::select.item>
+</x-ui::select>
+<x-ui::select name="bad" placeholder="Invalid" invalid>
+    <x-ui::select.item value="x">Option</x-ui::select.item>
+</x-ui::select>
+<x-ui::select name="off" placeholder="Disabled" disabled>
+    <x-ui::select.item value="x">Option</x-ui::select.item>
 </x-ui::select>
 ```
 
@@ -331,13 +413,20 @@ php artisan stencil:add select
 </picture>
 
 ```blade
-<head>
-    <x-ui::fonts />
-</head>
+<x-ui::heading :level="1">Heading level 1</x-ui::heading>
+<x-ui::heading :level="2">Heading level 2</x-ui::heading>
+<x-ui::heading :level="3">Heading level 3</x-ui::heading>
+<x-ui::heading :level="4" variant="subtle">Subtle heading</x-ui::heading>
 
-<x-ui::heading :level="2">Page title</x-ui::heading>
-<x-ui::text variant="subtle" size="sm">Meta line</x-ui::text>
-<x-ui::text color="blue">Semantic color</x-ui::text>
+<x-ui::text size="xl">Extra large body</x-ui::text>
+<x-ui::text size="lg">Large body copy</x-ui::text>
+<x-ui::text>Default body copy with a shared scale.</x-ui::text>
+<x-ui::text size="sm" variant="subtle">Small subtle meta text</x-ui::text>
+<x-ui::text variant="strong">Strong emphasis</x-ui::text>
+<x-ui::text variant="error">Error message</x-ui::text>
+<x-ui::text inline color="blue">Blue</x-ui::text>
+<x-ui::text inline color="emerald"> · Emerald</x-ui::text>
+<x-ui::text inline color="red"> · Red</x-ui::text>
 ```
 
 ```bash
@@ -348,13 +437,11 @@ php artisan stencil:add text heading
 
 ## Icons
 
-On-demand [Lucide](https://lucide.dev/icons/) icons — `outline` (16px), `mini` (20px), and `micro` (12px) variants.
-
-Install the icon primitives once, then import only the icons you use:
+On-demand [Lucide](https://lucide.dev/icons/) icons — `outline` (16px), `mini` (20px), and `micro` (12px) variants. The built-in loading spinner ships with `stencil:add icon`.
 
 ```bash
 php artisan stencil:add icon
-php artisan stencil:icon search grip-vertical
+php artisan stencil:icon search
 ```
 
 <picture>
@@ -364,8 +451,22 @@ php artisan stencil:icon search grip-vertical
 </picture>
 
 ```blade
-<x-ui::icons.search />
-<x-ui::icons.search variant="mini" class="text-amber-500" />
+<x-ui::icon.loading class="size-4" />
+<x-ui::icon.loading class="size-5" />
+<x-ui::icon.loading class="size-3" />
+
+<x-ui::input name="search" placeholder="Search…">
+    <x-slot:leading>
+        <x-ui::icon.loading />
+    </x-slot:leading>
+</x-ui::input>
+
+<x-ui::button variant="primary">
+    <x-slot:leading>
+        <x-ui::icon.loading class="animate-spin" />
+    </x-slot:leading>
+    Saving…
+</x-ui::button>
 ```
 
 <br>
@@ -394,7 +495,7 @@ php vendor/bin/testbench serve --port=8001   # separate terminal
 ./scripts/capture-readme-images.sh
 ```
 
-The script crops to `#readme-media` (installs `playwright-core` under `scripts/` on first run). Targets: `/playbook/media/{buttons|input|label|field|textarea|checkbox|radio|switch|select|typography|icons}` and the same paths with `?dark=1`.
+The script crops to `#readme-media` at 2× device pixel ratio by default (`STENCIL_SCREENSHOT_SCALE`, installs `playwright-core` under `scripts/` on first run). Targets: `/playbook/media/{buttons|input|label|field|textarea|checkbox|radio|switch|select|typography|icons}` and the same paths with `?dark=1`.
 
 <br>
 

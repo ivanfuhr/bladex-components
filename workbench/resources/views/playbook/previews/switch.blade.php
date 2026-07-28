@@ -5,7 +5,7 @@
     $disabled = (bool) ($state['disabled'] ?? false);
 @endphp
 
-<x-stencil::field orientation="inline" class="max-w-md">
+<x-stencil::field name="notifications" orientation="inline" class="max-w-md">
     <div class="flex flex-1 flex-col gap-1">
         <x-stencil::field.label>Notifications</x-stencil::field.label>
         <x-stencil::field.description>Email alerts for account activity.</x-stencil::field.description>

@@ -28,17 +28,22 @@ if (! executablePath) {
     process.exit(1);
 }
 
+const deviceScaleFactor = Number(process.env.STENCIL_SCREENSHOT_SCALE ?? 2);
+
 const browser = await chromium.launch({
     executablePath,
     headless: true,
 });
 
-const page = await browser.newPage({
+const context = await browser.newContext({
+    deviceScaleFactor,
     viewport: {
-        width: Number(process.env.STENCIL_SCREENSHOT_WIDTH ?? 1280),
-        height: Number(process.env.STENCIL_SCREENSHOT_HEIGHT ?? 800),
+        width: Number(process.env.STENCIL_SCREENSHOT_WIDTH ?? 1400),
+        height: Number(process.env.STENCIL_SCREENSHOT_HEIGHT ?? 900),
     },
 });
+
+const page = await context.newPage();
 
 for (const component of components) {
     for (const [suffix, query] of [
@@ -53,7 +58,11 @@ for (const component of components) {
 
         const target = path.join(outDir, `${component}-${suffix}.png`);
 
-        await page.locator('#readme-media').screenshot({ path: target });
+        await page.locator('#readme-media').screenshot({
+            path: target,
+            type: 'png',
+            animations: 'disabled',
+        });
         console.log(`Wrote ${path.relative(root, target)}`);
     }
 }

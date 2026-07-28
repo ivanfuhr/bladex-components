@@ -13,15 +13,19 @@
         <div class="flex max-w-md flex-col gap-8">
             <div class="space-y-2">
                 <x-stencil::text size="sm" variant="subtle">Default</x-stencil::text>
-                <x-stencil::field orientation="inline">
-                    <x-stencil::field.label>Notifications</x-stencil::field.label>
+                <x-stencil::field name="n1" orientation="inline">
+                    <div class="flex min-w-0 flex-1 flex-col gap-1">
+                        <x-stencil::field.label>Notifications</x-stencil::field.label>
+                    </div>
                     <x-stencil::switch name="n1" :checked="true" />
                 </x-stencil::field>
             </div>
             <div class="space-y-2">
                 <x-stencil::text size="sm" variant="subtle">Small</x-stencil::text>
-                <x-stencil::field orientation="inline">
-                    <x-stencil::field.label>Notifications</x-stencil::field.label>
+                <x-stencil::field name="n2" orientation="inline">
+                    <div class="flex min-w-0 flex-1 flex-col gap-1">
+                        <x-stencil::field.label>Notifications</x-stencil::field.label>
+                    </div>
                     <x-stencil::switch name="n2" size="sm" :checked="true" />
                 </x-stencil::field>
             </div>

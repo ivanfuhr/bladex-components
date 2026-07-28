@@ -83,13 +83,21 @@ final class FormControlClassMap
         ])->implode(' ');
     }
 
+    public function switchRootClasses(?string $size = null): string
+    {
+        return collect([
+            'inline-flex shrink-0 items-center justify-center',
+            $size === 'sm' ? 'h-8' : 'h-9',
+        ])->implode(' ');
+    }
+
     public function switchTrackClasses(?string $size = null): string
     {
         $track = $size === 'sm' ? 'h-5 w-9' : 'h-6 w-11';
 
         return collect([
             'switch__track',
-            'relative inline-flex shrink-0 items-center rounded-full border-2 border-transparent p-0.5 transition-colors',
+            'relative inline-flex shrink-0 items-center rounded-full p-0.5 transition-colors',
             $track,
             'bg-zinc-200 dark:bg-zinc-700',
         ])->implode(' ');

@@ -11,7 +11,19 @@ it('renders switch with role switch', function () {
         ->toContain('data-switch')
         ->toContain('role="switch"')
         ->toContain('name="notifications"')
-        ->toContain('checked');
+        ->toContain('id="notifications"')
+        ->toContain('checked')
+        ->toContain('class="switch')
+        ->toContain('h-9')
+        ->toContain('shrink-0');
+});
+
+it('renders small switch with compact touch row height', function () {
+    $html = Blade::render('<x-stencil::switch name="notifications" size="sm" />');
+
+    expect($html)
+        ->toContain('switch--sm')
+        ->toContain('h-8');
 });
 
 it('marks switch invalid when invalid prop is true', function () {

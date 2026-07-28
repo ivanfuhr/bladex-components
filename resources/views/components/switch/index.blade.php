@@ -7,6 +7,7 @@
 ])
 
 @aware([
+    'controlId' => null,
     'fieldInvalid' => false,
 ])
 
@@ -19,8 +20,11 @@
     $formControl = app(FormControlClassMap::class);
     $interactionState = app(InteractionStateAttributes::class);
 
-    $controlId = $attributes->get('id') ?? 'switch-'.str_replace('.', '', uniqid('', true));
+    $controlId = $attributes->get('id')
+        ?? $controlId
+        ?? (filled($name) ? $name : 'switch-'.str_replace('.', '', uniqid('', true)));
 
+    $rootClasses = $formControl->switchRootClasses($size);
     $trackClasses = $formControl->switchTrackClasses($size);
     $thumbClasses = $formControl->switchThumbClasses($size);
 
@@ -59,21 +63,23 @@
     }
 @endphp
 
-<label
+<div
     @class([
-        'switch inline-flex cursor-pointer items-center',
+        'switch',
+        $rootClasses,
         $size === 'sm' ? 'switch--sm' : null,
         $wrapperClass,
     ])
     data-switch
-    @if ($checked) data-checked @endif
 >
-    <input {{ $controlAttributes }} />
-    <span
-        class="{{ $trackClasses }}"
-        aria-hidden="true"
-        data-switch-track
-    >
-        <span class="{{ $thumbClasses }}" data-switch-thumb></span>
-    </span>
-</label>
+    <label class="inline-flex cursor-pointer items-center justify-center">
+        <input {{ $controlAttributes }} />
+        <span
+            class="{{ $trackClasses }}"
+            aria-hidden="true"
+            data-switch-track
+        >
+            <span class="{{ $thumbClasses }}" data-switch-thumb></span>
+        </span>
+    </label>
+</div>
