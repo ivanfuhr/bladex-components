@@ -22,7 +22,7 @@
 
 | 🧩 **Components** | 📖 **Guide** | 🛠 **Project** |
 | :--- | :--- | :--- |
-| [Button](#button) · [Input](#input) · [Label](#label) · [Field](#field) · [Textarea](#textarea) · [Checkbox](#checkbox) · [Radio](#radio) · [Switch](#switch) · [Select](#select) · [Typography](#typography) · [Icons](#icons) | [Installation](#installation) · [Usage](#usage) · [Registry CLI](#registry-cli) · [Tailwind](#tailwind-css) · [Playbook](#development) | [Changelog](CHANGELOG.md) · [Contributing](.github/CONTRIBUTING.md) · [Security](.github/SECURITY.md) · [License](LICENSE.md) |
+| [Button](#button) · [Input](#input) · [Label](#label) · [Field](#field) · [Textarea](#textarea) · [Checkbox](#checkbox) · [Radio](#radio) · [Switch](#switch) · [Select](#select) · [Dialog](#dialog) · [Typography](#typography) · [Icons](#icons) | [Installation](#installation) · [Usage](#usage) · [Registry CLI](#registry-cli) · [Tailwind](#tailwind-css) · [Playbook](#development) | [Changelog](CHANGELOG.md) · [Contributing](.github/CONTRIBUTING.md) · [Security](.github/SECURITY.md) · [License](LICENSE.md) |
 
 <br>
 
@@ -66,7 +66,7 @@ Use the owned Blade namespace in your app:
 <x-ui::input name="email" />
 ```
 
-**Registry UI items:** `button`, `checkbox`, `field`, `heading`, `icon`, `input`, `input-group`, `label`, `radio`, `select`, `switch`, `text`, `textarea`. Lower-level pieces such as `field`, `input-group`, and `label` are usually installed transitively. **Lucide icons:** run `stencil:add icon` once, then `stencil:icon {name}` per icon (see [Icons](#icons)).
+**Registry UI items:** `button`, `checkbox`, `dialog`, `field`, `heading`, `icon`, `input`, `input-group`, `label`, `radio`, `select`, `switch`, `text`, `textarea`. Lower-level pieces such as `field`, `input-group`, and `label` are usually installed transitively. **Lucide icons:** run `stencil:add icon` once, then `stencil:icon {name}` per icon (see [Icons](#icons)).
 
 ### Registry CLI
 
@@ -402,6 +402,72 @@ php artisan stencil:add select
 
 <br>
 
+## Dialog
+
+Accessible modal layer on the native `<dialog>` element ([shadcn alert dialog](https://ui.shadcn.com/docs/components/base/alert-dialog) composition, [Flux modal](https://fluxui.dev/components/modal) ergonomics). Subcomponents include `trigger`, `content`, `header`, `title`, `description`, `footer`, `close`, `cancel`, and `action`. `stencil:add dialog` copies `dialog.js` and patches your Vite entry alongside any other Stencil scripts (for example `select.js`).
+
+Named triggers can live anywhere on the page; use the same `name` on `dialog.trigger` and `dialog.content`. Control dialogs from JavaScript with `window.Stencil.dialog('name').show()` and `window.Stencil.dialogs.closeAll()`.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/dialog-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/dialog-light.png">
+  <img src="docs/images/dialog-light.png" alt="Dialog and alert dialog" />
+</picture>
+
+```blade
+<x-ui::dialog>
+    <x-ui::dialog.trigger>
+        <x-ui::button variant="outline">Edit profile</x-ui::button>
+    </x-ui::dialog.trigger>
+
+    <x-ui::dialog.content>
+        <x-ui::dialog.header>
+            <x-ui::dialog.title>Update profile</x-ui::dialog.title>
+            <x-ui::dialog.description>Make changes to your personal details.</x-ui::dialog.description>
+        </x-ui::dialog.header>
+
+        <x-ui::input name="name" placeholder="Your name" class="mt-4" />
+
+        <x-ui::dialog.footer>
+            <x-ui::dialog.cancel>Cancel</x-ui::dialog.cancel>
+            <x-ui::dialog.action>Save changes</x-ui::dialog.action>
+        </x-ui::dialog.footer>
+    </x-ui::dialog.content>
+</x-ui::dialog>
+
+<x-ui::dialog.trigger name="delete-project">
+    <x-ui::button variant="danger">Delete</x-ui::button>
+</x-ui::dialog.trigger>
+
+<x-ui::dialog.content name="delete-project" size="sm" :alert="true">
+    <x-ui::dialog.header>
+        <x-ui::dialog.title>Delete project?</x-ui::dialog.title>
+        <x-ui::dialog.description>
+            You're about to delete this project. This action cannot be reversed.
+        </x-ui::dialog.description>
+    </x-ui::dialog.header>
+    <x-ui::dialog.footer>
+        <x-ui::dialog.cancel>Cancel</x-ui::dialog.cancel>
+        <x-ui::dialog.action variant="danger">Delete project</x-ui::dialog.action>
+    </x-ui::dialog.footer>
+</x-ui::dialog.content>
+```
+
+| Prop (on `content`) | Description |
+| --- | --- |
+| `size` | `default` or `sm` |
+| `flyout` | Sheet-style panel (`flyoutPosition`: `right`, `left`, `bottom`) |
+| `alert` | Sets `role="alertdialog"` for confirmations |
+| `dismissible` | Click outside / Escape closes when `true` (default) |
+| `closable` | Shows the corner close control (default) |
+| `preview` | Static, in-page preview for docs (no JS) |
+
+```bash
+php artisan stencil:add dialog
+```
+
+<br>
+
 ## Typography
 
 `<x-ui::heading />` with semantic levels `1`–`6` and `<x-ui::text />` with the `sm` / `default` / `lg` / `xl` scale, variants, and colors.
@@ -495,7 +561,7 @@ php vendor/bin/testbench serve --port=8001   # separate terminal
 ./scripts/capture-readme-images.sh
 ```
 
-The script crops to `#readme-media` at 2× device pixel ratio by default (`STENCIL_SCREENSHOT_SCALE`, installs `playwright-core` under `scripts/` on first run). Targets: `/playbook/media/{buttons|input|label|field|textarea|checkbox|radio|switch|select|typography|icons}` and the same paths with `?dark=1`.
+The script crops to `#readme-media` at 2× device pixel ratio by default (`STENCIL_SCREENSHOT_SCALE`, installs `playwright-core` under `scripts/` on first run). Targets: `/playbook/media/{buttons|input|label|field|textarea|checkbox|radio|switch|select|dialog|typography|icons}` and the same paths with `?dark=1`.
 
 <br>
 

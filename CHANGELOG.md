@@ -4,6 +4,7 @@
 
 ### Added
 
+- Registry item: `dialog` — compound modal with `dialog.js`, alert/flyout modes, playbook preview, and README screenshots.
 - Registry items: `label`, expanded `field`, `textarea`, `checkbox`, `radio`, `switch` with playbook previews and README screenshots.
 - Class-based `x-ui::field` / `x-stencil::field` component for validation context propagation to slotted controls.
 

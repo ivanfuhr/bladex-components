@@ -47,6 +47,8 @@ Owned mode runs `init` scaffolding: `app/Support/Stencil` class maps, `resources
 
 **Select:** `stencil:add select` copies `select.js` and patches the Vite entry. Default `shortcut` wraps `select.item` children; set `:shortcut="false"` for full `select.trigger` / `select.content` composition.
 
+**Dialog:** `stencil:add dialog` copies `dialog.js` and adds it to the same `// stencil-start` block in the Vite entry. Compose `dialog.trigger` + `dialog.content` (optional `name` for Flux-style triggers). Use `window.Stencil.dialog('name').show()` from JavaScript when needed.
+
 ### 3. Registry CLI
 
 | Command | Purpose |

@@ -142,6 +142,17 @@ $catalog = [
         'targetPrefix' => 'switch',
         'filesOnly' => ['index.blade.php'],
     ],
+    'dialog' => [
+        'title' => 'Dialog',
+        'description' => 'Accessible modal layer with compound sub-components, flyout mode, and named triggers.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['button'],
+        'source' => 'dialog',
+        'targetPrefix' => 'dialog',
+        'assets' => [
+            'resources/assets/js/dialog.js' => 'dialog.js',
+        ],
+    ],
 ];
 
 $indexItems = [];

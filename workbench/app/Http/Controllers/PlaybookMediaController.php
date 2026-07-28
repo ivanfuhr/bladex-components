@@ -24,6 +24,7 @@ final class PlaybookMediaController
         'checkbox',
         'radio',
         'switch',
+        'dialog',
     ];
 
     public function __construct(

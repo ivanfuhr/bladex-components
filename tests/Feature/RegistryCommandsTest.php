@@ -81,6 +81,18 @@ it('add select installs owned javascript asset', function () {
     expect(file_exists($scriptPath))->toBeTrue();
 });
 
+it('add dialog installs owned javascript asset', function () {
+    useOwnedRegistryProject();
+    fakeRegistryHttp();
+
+    $this->artisan('stencil:add', ['names' => ['dialog']])
+        ->assertSuccessful();
+
+    $scriptPath = $this->app->resourcePath('views/ui/dialog/dialog.js');
+
+    expect(file_exists($scriptPath))->toBeTrue();
+});
+
 it('renders owned button loading state without the icon loading component', function () {
     useOwnedRegistryProject();
     fakeRegistryHttp();

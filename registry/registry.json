@@ -113,6 +113,15 @@
             "registryDependencies": [
                 "field"
             ]
+        },
+        {
+            "name": "dialog",
+            "type": "registry:ui",
+            "title": "Dialog",
+            "description": "Accessible modal layer with compound sub-components, flyout mode, and named triggers.",
+            "registryDependencies": [
+                "button"
+            ]
         }
     ]
 }

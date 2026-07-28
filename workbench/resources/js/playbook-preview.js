@@ -1,4 +1,5 @@
 import { initSelects } from '../views/ui/select/select.js';
+import { initDialogs } from '../views/ui/dialog/dialog.js';
 
 document.addEventListener('alpine:init', () => {
     window.Alpine.data('playbookPreview', (config) => ({
@@ -39,6 +40,7 @@ document.addEventListener('alpine:init', () => {
             });
 
             initSelects(canvas);
+            initDialogs(canvas);
         },
 
         queuePreview() {

@@ -57,6 +57,7 @@ final class PlaybookRegistry
             $this->switch(),
             $this->text(),
             $this->heading(),
+            $this->dialog(),
         ];
 
         $this->playbooks = collect($definitions)->keyBy(static fn (ComponentPlaybook $playbook): string => $playbook->slug);
@@ -389,6 +390,35 @@ final class PlaybookRegistry
                 'disabled' => false,
             ],
             previewView: 'workbench::playbook.previews.switch',
+        );
+    }
+
+    private function dialog(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('size', 'Size', 'select', [
+                'default' => 'Default',
+                'sm' => 'Small',
+            ], 'default'),
+            new PlaybookControl('flyout', 'Flyout', 'checkbox', [], false),
+            new PlaybookControl('alert', 'Alert dialog', 'checkbox', [], false),
+            new PlaybookControl('dismissible', 'Dismissible', 'checkbox', [], true),
+            new PlaybookControl('closable', 'Close button', 'checkbox', [], true),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'dialog',
+            title: 'Dialog',
+            description: 'Modal layer with compound sub-components. Requires dialog.js in the app entry.',
+            controls: $controls,
+            defaultState: [
+                'size' => 'default',
+                'flyout' => false,
+                'alert' => false,
+                'dismissible' => true,
+                'closable' => true,
+            ],
+            previewView: 'workbench::playbook.previews.dialog',
         );
     }
 }

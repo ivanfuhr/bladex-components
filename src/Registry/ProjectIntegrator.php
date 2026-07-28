@@ -18,6 +18,12 @@ final class ProjectIntegrator
 
     public const string JS_END = '// stencil-end';
 
+    /** @var array<string, string> */
+    private const array JAVASCRIPT_COMPONENTS = [
+        'select' => 'select/select.js',
+        'dialog' => 'dialog/dialog.js',
+    ];
+
     public function ensureTailwind(ProjectConfig $config): void
     {
         $stencilCssRelative = 'resources/css/stencil.css';
@@ -47,27 +53,33 @@ final class ProjectIntegrator
     public function syncFromLock(ProjectConfig $config, ProjectLock $lock): void
     {
         $this->ensureTailwind($config);
-
-        if (in_array('select', $lock->installedNames(), true)) {
-            $this->ensureSelectScript($config);
-        } else {
-            $this->removeSelectScript($config);
-        }
+        $this->syncJavascriptImports($config, $lock->installedNames());
     }
 
-    public function ensureSelectScript(ProjectConfig $config): void
+    /**
+     * @param  list<string>  $installedNames
+     */
+    private function syncJavascriptImports(ProjectConfig $config, array $installedNames): void
     {
         foreach ($this->javascriptEntryCandidates($config) as $entry) {
-            $scriptPath = $this->selectScriptPathForEntry($config, $entry);
-            $importPath = $this->relativeImportPath(dirname($entry), $scriptPath);
-            $this->patchJavascriptImport($entry, $importPath);
-        }
-    }
+            $importPaths = [];
 
-    public function removeSelectScript(ProjectConfig $config): void
-    {
-        foreach ($this->javascriptEntryCandidates($config) as $entry) {
-            $this->removeMarkedBlock($entry);
+            foreach (self::JAVASCRIPT_COMPONENTS as $component => $relativeScript) {
+                if (! in_array($component, $installedNames, true)) {
+                    continue;
+                }
+
+                $scriptPath = $this->uiScriptPathForEntry($config, $entry, $relativeScript);
+                $importPaths[] = $this->relativeImportPath(dirname($entry), $scriptPath);
+            }
+
+            if ($importPaths === []) {
+                $this->removeMarkedBlock($entry);
+
+                continue;
+            }
+
+            $this->patchJavascriptImports($entry, $importPaths);
         }
     }
 
@@ -129,7 +141,10 @@ final class ProjectIntegrator
         file_put_contents($path, $updated);
     }
 
-    private function patchJavascriptImport(string $path, string $importPath): void
+    /**
+     * @param  list<string>  $importPaths
+     */
+    private function patchJavascriptImports(string $path, array $importPaths): void
     {
         $contents = file_get_contents($path);
 
@@ -137,9 +152,15 @@ final class ProjectIntegrator
             return;
         }
 
+        $importLines = implode("\n", array_map(
+            static fn (string $importPath): string => "import '{$importPath}';",
+            $importPaths,
+        ));
+
+        $block = self::JS_START."\n".$importLines."\n".self::JS_END;
+
         if (str_contains($contents, self::JS_START)) {
-            $pattern = '/'.preg_quote(self::JS_START, '/')."\nimport '[^']*';\n".preg_quote(self::JS_END, '/').'/';
-            $block = self::JS_START."\nimport '{$importPath}';\n".self::JS_END;
+            $pattern = '/'.preg_quote(self::JS_START, '/').'.*?'.preg_quote(self::JS_END, '/').'/s';
             $updated = preg_replace($pattern, $block, $contents);
 
             if (is_string($updated) && $updated !== $contents) {
@@ -149,15 +170,14 @@ final class ProjectIntegrator
             return;
         }
 
-        $block = self::JS_START."\nimport '{$importPath}';\n".self::JS_END."\n";
-        $updated = rtrim($contents)."\n\n".$block;
+        $updated = rtrim($contents)."\n\n".$block."\n";
 
         file_put_contents($path, $updated);
     }
 
-    private function selectScriptPathForEntry(ProjectConfig $config, string $entryPath): string
+    private function uiScriptPathForEntry(ProjectConfig $config, string $entryPath, string $relativeScript): string
     {
-        $uiRelative = $config->uiPath().'/select/select.js';
+        $uiRelative = $config->uiPath().'/'.$relativeScript;
 
         if (\function_exists('Orchestra\Testbench\workbench_path')) {
             $workbench = str_replace('\\', '/', \Orchestra\Testbench\workbench_path(''));
