@@ -561,7 +561,7 @@ php vendor/bin/testbench serve --port=8001   # separate terminal
 ./scripts/capture-readme-images.sh
 ```
 
-The script crops to `#readme-media` at 2× device pixel ratio by default (`STENCIL_SCREENSHOT_SCALE`, installs `playwright-core` under `scripts/` on first run). Targets: `/playbook/media/{buttons|input|label|field|textarea|checkbox|radio|switch|select|dialog|typography|icons}` and the same paths with `?dark=1`.
+The script crops to `#readme-media` with a transparent background at 3× device pixel ratio by default (`STENCIL_SCREENSHOT_SCALE`, installs `playwright-core` under `scripts/` on first run). Targets: `/playbook/media/{buttons|input|label|field|textarea|checkbox|radio|switch|select|dialog|typography|icons}` and the same paths with `?dark=1`.
 
 <br>
 

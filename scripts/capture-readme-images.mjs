@@ -28,7 +28,7 @@ if (! executablePath) {
     process.exit(1);
 }
 
-const deviceScaleFactor = Number(process.env.STENCIL_SCREENSHOT_SCALE ?? 2);
+const deviceScaleFactor = Number(process.env.STENCIL_SCREENSHOT_SCALE ?? 3);
 
 const browser = await chromium.launch({
     executablePath,
@@ -62,6 +62,7 @@ for (const component of components) {
             path: target,
             type: 'png',
             animations: 'disabled',
+            omitBackground: true,
         });
         console.log(`Wrote ${path.relative(root, target)}`);
     }
