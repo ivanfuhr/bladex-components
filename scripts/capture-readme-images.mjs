@@ -29,6 +29,9 @@ if (! executablePath) {
 }
 
 const deviceScaleFactor = Number(process.env.STENCIL_SCREENSHOT_SCALE ?? 3);
+/** Logical width of #readme-media (`56rem` at 16px root). */
+const readmeMediaWidthPx = Number(process.env.STENCIL_README_MEDIA_WIDTH ?? 896);
+const expectedScreenshotWidth = readmeMediaWidthPx * deviceScaleFactor;
 
 const browser = await chromium.launch({
     executablePath,
@@ -64,6 +67,16 @@ for (const component of components) {
             animations: 'disabled',
             omitBackground: true,
         });
+
+        const { width } = await page.locator('#readme-media').boundingBox();
+
+        if (width !== null && Math.round(width * deviceScaleFactor) !== expectedScreenshotWidth) {
+            console.warn(
+                `Warning: ${path.basename(target)} width ${Math.round(width * deviceScaleFactor)}px `
+                + `!= expected ${expectedScreenshotWidth}px`,
+            );
+        }
+
         console.log(`Wrote ${path.relative(root, target)}`);
     }
 }

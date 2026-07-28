@@ -10,18 +10,24 @@
     <x-stencil::fonts />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
+        /*
+         * Fixed width for README screenshots: every capture shares the same
+         * canvas width; height follows content. Keep in sync with README layout.
+         */
+        :root {
+            --readme-media-width: 56rem;
+        }
+
         html, body {
             margin: 0;
             padding: 0;
-            width: fit-content;
-            max-width: 100%;
+            width: var(--readme-media-width);
             background: transparent;
         }
 
         #readme-media {
             box-sizing: border-box;
-            width: max-content;
-            max-width: min(56rem, 100vw);
+            width: var(--readme-media-width);
             padding-block: 1rem;
             padding-inline: 0;
             background: transparent;
