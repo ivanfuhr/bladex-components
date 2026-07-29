@@ -157,3 +157,83 @@ it('marks disabled items with data-disabled', function () {
         ->toContain('data-disabled')
         ->toContain('aria-disabled="true"');
 });
+
+it('normalizes the field name and exposes multiple data attributes', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-stencil::select name="tags" :multiple="true" placeholder="Choose…">
+            <x-stencil::select.item value="a">A</x-stencil::select.item>
+        </x-stencil::select>
+    BLADE);
+
+    expect($html)
+        ->toContain('data-select-multiple')
+        ->toContain('data-select-display="count"')
+        ->toContain('name="tags[]"')
+        ->toContain('data-select-hidden-inputs')
+        ->toContain('data-select-count-template');
+});
+
+it('renders one hidden input per selected value for multiple selects', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-stencil::select name="tags" :multiple="true" :value="['photo', 'web']" placeholder="Choose…">
+            <x-stencil::select.item value="photo">Photo</x-stencil::select.item>
+            <x-stencil::select.item value="web">Web</x-stencil::select.item>
+        </x-stencil::select>
+    BLADE);
+
+    expect($html)
+        ->toContain('value="photo"')
+        ->toContain('value="web"')
+        ->toContain('data-select-hidden-inputs');
+
+    expect(preg_match_all('/<input[^>]*data-select-hidden-input[^>]*>/', $html))->toBe(2);
+});
+
+it('marks the listbox as multiselectable when multiple is true', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-stencil::select name="tags" :multiple="true" placeholder="Choose…" :shortcut="false">
+            <x-stencil::select.trigger>
+                <x-stencil::select.value placeholder="Choose…" />
+            </x-stencil::select.trigger>
+            <x-stencil::select.content>
+                <x-stencil::select.item value="a">A</x-stencil::select.item>
+            </x-stencil::select.content>
+        </x-stencil::select>
+    BLADE);
+
+    expect($html)->toContain('aria-multiselectable="true"');
+});
+
+it('renders chips primitives and chip template when display is chips', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-stencil::select name="tags" :multiple="true" display="chips" placeholder="Choose…">
+            <x-stencil::select.item value="a">A</x-stencil::select.item>
+        </x-stencil::select>
+    BLADE);
+
+    expect($html)
+        ->toContain('data-select-chips')
+        ->toContain('data-select-chip-template')
+        ->toContain('data-select-display="chips"');
+});
+
+it('supports compound multiple layout with a single trigger', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-stencil::select name="roles" :multiple="true" :shortcut="false">
+            <x-stencil::select.trigger>
+                <x-stencil::select.value placeholder="Roles" />
+            </x-stencil::select.trigger>
+            <x-stencil::select.content>
+                <x-stencil::select.item value="admin">Admin</x-stencil::select.item>
+            </x-stencil::select.content>
+        </x-stencil::select>
+    BLADE);
+
+    expect($html)
+        ->toContain('name="roles[]"')
+        ->toContain('data-select-trigger')
+        ->toContain('role="listbox"')
+        ->toContain('aria-multiselectable="true"');
+
+    expect(substr_count($html, 'data-select-trigger'))->toBe(1);
+});

@@ -143,10 +143,15 @@ final class PlaybookRegistry
         $controls = [
             new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
             new PlaybookControl('disabled', 'Disabled', 'checkbox', [], false),
+            new PlaybookControl('multiple', 'Multiple', 'checkbox', [], false),
             new PlaybookControl('size', 'Size', 'select', [
                 'default' => 'Default',
                 'sm' => 'Small',
             ], 'default'),
+            new PlaybookControl('display', 'Display', 'select', [
+                'count' => 'Count',
+                'chips' => 'Chips',
+            ], 'count'),
             new PlaybookControl('placeholder', 'Placeholder', 'select', [
                 'Choose industry…' => 'Choose industry…',
                 'Select a role…' => 'Select a role…',
@@ -161,7 +166,9 @@ final class PlaybookRegistry
             defaultState: [
                 'invalid' => false,
                 'disabled' => false,
+                'multiple' => false,
                 'size' => 'default',
+                'display' => 'count',
                 'placeholder' => 'Choose industry…',
             ],
             previewView: 'workbench::playbook.previews.select',

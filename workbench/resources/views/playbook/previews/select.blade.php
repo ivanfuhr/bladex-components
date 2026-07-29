@@ -1,16 +1,21 @@
 @php
     $invalid = (bool) ($state['invalid'] ?? false);
     $disabled = (bool) ($state['disabled'] ?? false);
+    $multiple = (bool) ($state['multiple'] ?? false);
     $size = ($state['size'] ?? 'default') === 'sm' ? 'sm' : null;
     $placeholder = (string) ($state['placeholder'] ?? 'Choose industry…');
+    $display = ($state['display'] ?? 'count') === 'chips' ? 'chips' : 'count';
+    $fieldName = $multiple ? 'industries' : 'industry';
 @endphp
 
 <x-stencil::select
-    name="industry"
+    :name="$fieldName"
     :placeholder="$placeholder"
     :invalid="$invalid"
     :disabled="$disabled"
     :size="$size"
+    :multiple="$multiple"
+    :display="$display"
     class="max-w-md w-full"
 >
     <x-stencil::select.group>

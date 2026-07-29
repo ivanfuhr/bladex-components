@@ -4,6 +4,8 @@
     'disabled' => false,
     'selectId' => null,
     'listboxId' => null,
+    'multiple' => false,
+    'display' => 'count',
 ])
 
 @php
@@ -13,11 +15,14 @@
     $formControl = app(FormControlClassMap::class);
     $interactionState = app(InteractionStateAttributes::class);
 
+    $chipsLayout = $multiple && $display === 'chips';
+
     $triggerAttributes = $interactionState->apply(
         $attributes
             ->class([
                 'select__trigger',
                 'group flex w-full min-w-0 items-center justify-between gap-2 text-left',
+                $chipsLayout ? 'h-auto min-h-9 py-1.5' : null,
                 $formControl->fieldSurfaceClasses($size, includeReadOnly: false, cursor: 'pointer'),
                 $formControl->invalidFieldClasses(),
                 'aria-expanded:border-zinc-300 aria-expanded:ring-2 aria-expanded:ring-zinc-950/10',
@@ -52,7 +57,11 @@
 @endphp
 
 <button {{ $triggerAttributes }} data-select-trigger>
-    <span class="select__trigger-inner flex min-w-0 flex-1 items-center gap-2">
+    <span @class([
+        'select__trigger-inner flex min-w-0 flex-1 gap-2',
+        'flex-wrap items-center' => $chipsLayout,
+        'items-center' => ! $chipsLayout,
+    ])>
         {{ $slot }}
     </span>
     <svg

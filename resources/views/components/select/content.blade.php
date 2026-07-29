@@ -1,6 +1,7 @@
 @aware([
     'listboxId' => null,
     'size' => null,
+    'multiple' => false,
 ])
 
 @php
@@ -21,6 +22,10 @@
             'hidden' => true,
         ])
         ->merge(['data-select-content' => '']);
+
+    if ($multiple) {
+        $contentAttributes = $contentAttributes->merge(['aria-multiselectable' => 'true']);
+    }
 
     if (filled($listboxId)) {
         $contentAttributes = $contentAttributes->merge(['id' => $listboxId]);

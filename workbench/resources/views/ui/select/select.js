@@ -27,18 +27,39 @@ export function initSelects(root = document) {
  * @param {HTMLElement} root
  */
 function bindSelect(root) {
+    const isMultiple = root.hasAttribute('data-select-multiple');
+    const displayMode = root.getAttribute('data-select-display') || 'count';
+
     const trigger = root.querySelector('[data-select-trigger]');
     const content = root.querySelector('[data-select-content]');
-    const hiddenInput = root.querySelector('[data-select-hidden-input]');
     const valueEl = root.querySelector('[data-select-value]');
+    const chipsEl = root.querySelector('[data-select-chips]');
+    const chipTemplate = root.querySelector('template[data-select-chip-template]');
 
-    if (
-        !(trigger instanceof HTMLButtonElement) ||
-        !(content instanceof HTMLElement) ||
-        !(hiddenInput instanceof HTMLInputElement) ||
-        !(valueEl instanceof HTMLElement)
-    ) {
+    const hiddenInputsContainer = root.querySelector('[data-select-hidden-inputs]');
+    /** @type {HTMLInputElement | null} */
+    const singleHiddenInput = isMultiple
+        ? null
+        : root.querySelector('[data-select-hidden-input]');
+
+    if (!(trigger instanceof HTMLButtonElement) || !(content instanceof HTMLElement)) {
         return;
+    }
+
+    if (isMultiple) {
+        if (!(hiddenInputsContainer instanceof HTMLElement)) {
+            return;
+        }
+        if (displayMode === 'chips' && !(chipsEl instanceof HTMLElement)) {
+            return;
+        }
+        if (displayMode === 'count' && !(valueEl instanceof HTMLElement)) {
+            return;
+        }
+    } else {
+        if (!(singleHiddenInput instanceof HTMLInputElement) || !(valueEl instanceof HTMLElement)) {
+            return;
+        }
     }
 
     const portalMarker = document.createComment('stencil-select-portal');
@@ -57,9 +78,122 @@ function bindSelect(root) {
     let typeahead = '';
     let typeaheadTimer = /** @type {ReturnType<typeof setTimeout> | null} */ (null);
 
-    const placeholder = valueEl.getAttribute('data-placeholder') === 'true'
-        ? valueEl.textContent?.trim() ?? ''
-        : '';
+    const countTemplate =
+        root.getAttribute('data-select-count-template') ?? '{count} selected';
+    const chipRemoveLabel =
+        root.getAttribute('data-select-chip-remove-label') ?? 'Remove';
+
+    const placeholderFromValueEl =
+        valueEl instanceof HTMLElement &&
+        valueEl.getAttribute('data-placeholder') === 'true'
+            ? (valueEl.textContent?.trim() ?? '')
+            : '';
+
+    const placeholderFromChips =
+        chipsEl instanceof HTMLElement
+            ? (chipsEl.getAttribute('data-placeholder') ?? '').trim()
+            : '';
+
+  /**
+   * @returns {string[]}
+   */
+    function getSelectedValues() {
+        if (!isMultiple) {
+            return singleHiddenInput instanceof HTMLInputElement &&
+                singleHiddenInput.value !== ''
+                ? [singleHiddenInput.value]
+                : [];
+        }
+
+        if (!(hiddenInputsContainer instanceof HTMLElement)) {
+            return [];
+        }
+
+        return Array.from(
+            hiddenInputsContainer.querySelectorAll('[data-select-hidden-input]'),
+        )
+            .filter((node) => node instanceof HTMLInputElement)
+            .map((input) => input.value)
+            .filter((value) => value !== '');
+    }
+
+    /**
+     * @param {string[]} values
+     */
+    function setSelectedValues(values) {
+        const unique = [...new Set(values)];
+
+        if (!isMultiple && singleHiddenInput instanceof HTMLInputElement) {
+            singleHiddenInput.value = unique[0] ?? '';
+            syncOptionSelection(unique[0] ?? '');
+            renderTrigger();
+            dispatchValueEvents(singleHiddenInput);
+
+            return;
+        }
+
+        if (!(hiddenInputsContainer instanceof HTMLElement)) {
+            return;
+        }
+
+        const fieldName = hiddenInputsContainer.getAttribute('data-select-field-name') ?? '';
+
+        hiddenInputsContainer
+            .querySelectorAll('[data-select-hidden-input]')
+            .forEach((node) => node.remove());
+
+        unique.forEach((value) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.value = value;
+            input.setAttribute('data-select-hidden-input', '');
+            if (fieldName !== '') {
+                input.name = fieldName;
+            }
+            hiddenInputsContainer.appendChild(input);
+        });
+
+        syncOptionSelectionMulti(unique);
+        renderTrigger();
+
+        const inputs = hiddenInputsContainer.querySelectorAll('[data-select-hidden-input]');
+        inputs.forEach((input) => {
+            if (input instanceof HTMLInputElement) {
+                dispatchValueEvents(input);
+            }
+        });
+    }
+
+    /**
+     * @param {HTMLInputElement} input
+     */
+    function dispatchValueEvents(input) {
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    /**
+     * @param {string} value
+     */
+    function syncOptionSelection(value) {
+        options().forEach((item) => {
+            item.setAttribute(
+                'aria-selected',
+                item.getAttribute('data-value') === value ? 'true' : 'false',
+            );
+        });
+    }
+
+    /**
+     * @param {string[]} values
+     */
+    function syncOptionSelectionMulti(values) {
+        const set = new Set(values);
+        options().forEach((item) => {
+            const itemValue = item.getAttribute('data-value') ?? '';
+            item.setAttribute('aria-selected', set.has(itemValue) ? 'true' : 'false');
+        });
+    }
 
     function ensurePortal() {
         if (content.parentElement === document.body) {
@@ -123,10 +257,16 @@ function bindSelect(root) {
 
         if (next) {
             positionContent();
-            const current = enabledOptions().findIndex(
-                (el) => el.getAttribute('data-value') === hiddenInput.value,
-            );
-            activeIndex = current >= 0 ? current : 0;
+            const list = enabledOptions();
+            const selected = getSelectedValues();
+            let index = 0;
+            if (selected.length > 0) {
+                const found = list.findIndex((el) =>
+                    selected.includes(el.getAttribute('data-value') ?? ''),
+                );
+                index = found >= 0 ? found : 0;
+            }
+            activeIndex = index;
             highlightActive();
             content.focus();
         } else {
@@ -152,6 +292,9 @@ function bindSelect(root) {
         }
     }
 
+    /**
+     * @param {HTMLElement} el
+     */
     function optionLabel(el) {
         const label = el.querySelector('[data-select-item-label]');
         if (label instanceof HTMLElement) {
@@ -161,6 +304,9 @@ function bindSelect(root) {
         return el.textContent?.trim() ?? '';
     }
 
+    /**
+     * @param {HTMLElement} el
+     */
     function selectOption(el) {
         if (el.hasAttribute('data-disabled')) {
             return;
@@ -169,51 +315,176 @@ function bindSelect(root) {
         const value = el.getAttribute('data-value') ?? '';
         const label = optionLabel(el);
 
-        hiddenInput.value = value;
-        valueEl.textContent = label;
-        valueEl.removeAttribute('data-placeholder');
-
-        options().forEach((item) => {
-            const selected = item === el;
-            item.setAttribute('aria-selected', selected ? 'true' : 'false');
-        });
-
-        hiddenInput.dispatchEvent(new Event('input', { bubbles: true }));
-        hiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
-
-        setOpen(false);
+        if (singleHiddenInput instanceof HTMLInputElement && valueEl instanceof HTMLElement) {
+            singleHiddenInput.value = value;
+            valueEl.textContent = label;
+            valueEl.removeAttribute('data-placeholder');
+            syncOptionSelection(value);
+            dispatchValueEvents(singleHiddenInput);
+            setOpen(false);
+        }
     }
 
-    function syncFromValue() {
-        const value = hiddenInput.value;
-        if (value === '') {
-            if (placeholder !== '') {
-                valueEl.textContent = placeholder;
-                valueEl.setAttribute('data-placeholder', 'true');
+    /**
+     * @param {HTMLElement} el
+     */
+    function toggleOption(el) {
+        if (el.hasAttribute('data-disabled')) {
+            return;
+        }
+
+        const value = el.getAttribute('data-value') ?? '';
+        const current = getSelectedValues();
+        const next = current.includes(value)
+            ? current.filter((item) => item !== value)
+            : [...current, value];
+
+        setSelectedValues(next);
+    }
+
+    /**
+     * @param {string} value
+     */
+    function removeValue(value) {
+        setSelectedValues(getSelectedValues().filter((item) => item !== value));
+    }
+
+    function renderTrigger() {
+        const selected = getSelectedValues();
+
+        if (!isMultiple) {
+            return;
+        }
+
+        if (displayMode === 'count' && valueEl instanceof HTMLElement) {
+            if (selected.length === 0) {
+                const placeholder = placeholderFromValueEl || placeholderFromChips;
+                if (placeholder !== '') {
+                    valueEl.textContent = placeholder;
+                    valueEl.setAttribute('data-placeholder', 'true');
+                } else {
+                    valueEl.textContent = '';
+                    valueEl.removeAttribute('data-placeholder');
+                }
+
+                return;
             }
-            options().forEach((item) => item.setAttribute('aria-selected', 'false'));
+
+            valueEl.textContent = countTemplate.replace('{count}', String(selected.length));
+            valueEl.removeAttribute('data-placeholder');
 
             return;
         }
 
-        const match = options().find((el) => el.getAttribute('data-value') === value);
-        if (match) {
-            valueEl.textContent = optionLabel(match);
-            valueEl.removeAttribute('data-placeholder');
-            options().forEach((item) => {
-                item.setAttribute(
-                    'aria-selected',
-                    item.getAttribute('data-value') === value ? 'true' : 'false',
-                );
+        if (displayMode === 'chips' && chipsEl instanceof HTMLElement) {
+            chipsEl
+                .querySelectorAll('[data-select-chip]')
+                .forEach((chip) => chip.remove());
+
+            if (selected.length === 0 && placeholderFromChips !== '') {
+                const empty = document.createElement('span');
+                empty.className =
+                    'text-sm text-zinc-500 dark:text-zinc-400';
+                empty.setAttribute('data-select-chips-placeholder', 'true');
+                empty.textContent = placeholderFromChips;
+                chipsEl.appendChild(empty);
+
+                return;
+            }
+
+            chipsEl
+                .querySelectorAll('[data-select-chips-placeholder]')
+                .forEach((node) => node.remove());
+
+            selected.forEach((value) => {
+                const match = options().find((el) => el.getAttribute('data-value') === value);
+                const label = match ? optionLabel(match) : value;
+                const chip = createChipElement(value, label);
+                if (chip) {
+                    chipsEl.appendChild(chip);
+                }
             });
         }
     }
 
+    /**
+     * @param {string} value
+     * @param {string} label
+     */
+    function createChipElement(value, label) {
+        if (!(chipTemplate instanceof HTMLTemplateElement)) {
+            return null;
+        }
+
+        const fragment = chipTemplate.content.cloneNode(true);
+        const chip = fragment.querySelector('[data-select-chip]');
+        if (!(chip instanceof HTMLElement)) {
+            return null;
+        }
+
+        chip.setAttribute('data-value', value);
+
+        const labelEl = chip.querySelector('[data-select-chip-label]');
+        if (labelEl instanceof HTMLElement) {
+            labelEl.textContent = label;
+        }
+
+        const remove = chip.querySelector('[data-select-chip-remove]');
+        if (remove instanceof HTMLButtonElement) {
+            remove.setAttribute('aria-label', `${chipRemoveLabel} ${label}`);
+        }
+
+        return chip;
+    }
+
+    function syncFromValue() {
+        if (!isMultiple && singleHiddenInput instanceof HTMLInputElement && valueEl instanceof HTMLElement) {
+            const value = singleHiddenInput.value;
+            if (value === '') {
+                if (placeholderFromValueEl !== '') {
+                    valueEl.textContent = placeholderFromValueEl;
+                    valueEl.setAttribute('data-placeholder', 'true');
+                }
+                options().forEach((item) => item.setAttribute('aria-selected', 'false'));
+
+                return;
+            }
+
+            const match = options().find((el) => el.getAttribute('data-value') === value);
+            if (match) {
+                valueEl.textContent = optionLabel(match);
+                valueEl.removeAttribute('data-placeholder');
+                syncOptionSelection(value);
+            }
+
+            return;
+        }
+
+        if (isMultiple) {
+            syncOptionSelectionMulti(getSelectedValues());
+            renderTrigger();
+        }
+    }
+
+  /**
+   * @param {EventTarget | null} target
+   */
     function containsTarget(target) {
         return (
             target instanceof Node &&
             (root.contains(target) || content.contains(target))
         );
+    }
+
+    /**
+     * @param {HTMLElement} el
+     */
+    function activateOption(el) {
+        if (isMultiple) {
+            toggleOption(el);
+        } else {
+            selectOption(el);
+        }
     }
 
     trigger.addEventListener('click', () => {
@@ -223,12 +494,34 @@ function bindSelect(root) {
         setOpen(!open);
     });
 
+    if (chipsEl instanceof HTMLElement) {
+        chipsEl.addEventListener('click', (event) => {
+            const remove = event.target instanceof Element
+                ? event.target.closest('[data-select-chip-remove]')
+                : null;
+            if (!(remove instanceof HTMLElement)) {
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            const chip = remove.closest('[data-select-chip]');
+            if (chip instanceof HTMLElement) {
+                const value = chip.getAttribute('data-value') ?? '';
+                if (value !== '') {
+                    removeValue(value);
+                }
+            }
+        });
+    }
+
     content.addEventListener('click', (event) => {
         const item = event.target instanceof Element
             ? event.target.closest('[data-select-item]')
             : null;
         if (item instanceof HTMLElement) {
-            selectOption(item);
+            activateOption(item);
         }
     });
 
@@ -275,7 +568,7 @@ function bindSelect(root) {
                 } else if (event.key === 'Enter' || event.key === ' ') {
                     const el = list[activeIndex];
                     if (el) {
-                        selectOption(el);
+                        activateOption(el);
                     }
                 }
                 break;
@@ -323,7 +616,7 @@ function bindSelect(root) {
                 {
                     const el = list[activeIndex];
                     if (el) {
-                        selectOption(el);
+                        activateOption(el);
                     }
                 }
                 break;

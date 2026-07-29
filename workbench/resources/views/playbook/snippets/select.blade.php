@@ -3,16 +3,21 @@
 
     $invalid = (bool) ($state['invalid'] ?? false);
     $disabled = (bool) ($state['disabled'] ?? false);
+    $multiple = (bool) ($state['multiple'] ?? false);
     $size = ($state['size'] ?? 'default') === 'sm' ? 'sm' : null;
     $placeholder = (string) ($state['placeholder'] ?? 'Choose industry…');
+    $display = ($state['display'] ?? 'count') === 'chips' ? 'chips' : 'count';
+    $fieldName = $multiple ? 'industries' : 'industry';
 
     $tag = PlaybookCode::component('select');
 
     $open = PlaybookCode::openingTag($tag, array_filter([
-        PlaybookCode::attribute('name', 'industry'),
+        PlaybookCode::attribute('name', $fieldName),
         PlaybookCode::attribute('placeholder', $placeholder),
         PlaybookCode::boolean('invalid', $invalid),
         PlaybookCode::boolean('disabled', $disabled),
+        PlaybookCode::boolean('multiple', $multiple),
+        PlaybookCode::attribute('display', $multiple ? $display : null),
         PlaybookCode::attribute('size', $size),
         PlaybookCode::attribute('class', 'max-w-md w-full'),
     ]));
