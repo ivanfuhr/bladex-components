@@ -24,6 +24,11 @@ if (! is_dir($componentsPath)) {
 }
 
 /** @var array<string, array{title: string, description: string, type: string, registryDependencies: list<string>, source?: string, targetPrefix?: string, filesOnly?: list<string>, assets?: array<string, string>}> $catalog */
+$chronoAppFiles = [
+    'src/Support/Chrono/ChronoFormatter.php' => 'app/Support/Stencil/Chrono/ChronoFormatter.php',
+    'src/Support/Chrono/DateRange.php' => 'app/Support/Stencil/Chrono/DateRange.php',
+    'src/Support/Chrono/DateRangePreset.php' => 'app/Support/Stencil/Chrono/DateRangePreset.php',
+];
 $catalog = [
     'label' => [
         'title' => 'Label',
@@ -153,6 +158,76 @@ $catalog = [
             'resources/assets/js/dialog.js' => 'dialog.js',
         ],
     ],
+    'popover' => [
+        'title' => 'Popover',
+        'description' => 'Anchored floating panel primitive for overlays.',
+        'type' => 'registry:ui',
+        'registryDependencies' => [],
+        'source' => 'popover',
+        'targetPrefix' => 'popover',
+        'filesOnly' => ['index.blade.php'],
+    ],
+    'calendar' => [
+        'title' => 'Calendar',
+        'description' => 'Accessible calendar grid for date and range selection.',
+        'type' => 'registry:ui',
+        'registryDependencies' => [],
+        'source' => 'calendar',
+        'targetPrefix' => 'calendar',
+        'appFiles' => $chronoAppFiles,
+        'assets' => [
+            'resources/assets/js/calendar.js' => 'calendar.js',
+            'resources/assets/js/chrono/date-value.js' => 'chrono/date-value.js',
+            'resources/assets/js/chrono/parse.js' => 'chrono/parse.js',
+            'resources/assets/js/chrono/timezone.js' => 'chrono/timezone.js',
+        ],
+    ],
+    'date-picker' => [
+        'title' => 'Date Picker',
+        'description' => 'Date and range picker with presets, confirmation, and timezone-aware values.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['button', 'input', 'calendar'],
+        'source' => 'date-picker',
+        'targetPrefix' => 'date-picker',
+        'appFiles' => $chronoAppFiles,
+        'assets' => [
+            'resources/assets/js/date-picker.js' => 'date-picker.js',
+            'resources/assets/js/calendar.js' => 'calendar.js',
+            'resources/assets/js/chrono/date-value.js' => 'chrono/date-value.js',
+            'resources/assets/js/chrono/parse.js' => 'chrono/parse.js',
+            'resources/assets/js/chrono/timezone.js' => 'chrono/timezone.js',
+            'resources/assets/js/chrono/popover.js' => 'chrono/popover.js',
+        ],
+    ],
+    'time-picker' => [
+        'title' => 'Time Picker',
+        'description' => 'Time selection list with configurable steps and unavailable slots.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['input'],
+        'source' => 'time-picker',
+        'targetPrefix' => 'time-picker',
+        'assets' => [
+            'resources/assets/js/time-picker.js' => 'time-picker.js',
+            'resources/assets/js/chrono/popover.js' => 'chrono/popover.js',
+            'resources/assets/js/chrono/timezone.js' => 'chrono/timezone.js',
+        ],
+    ],
+    'datetime-picker' => [
+        'title' => 'DateTime Picker',
+        'description' => 'Combined date and time picker with ISO 8601 form values.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['button', 'calendar', 'date-picker'],
+        'source' => 'datetime-picker',
+        'targetPrefix' => 'datetime-picker',
+        'appFiles' => $chronoAppFiles,
+        'assets' => [
+            'resources/assets/js/datetime-picker.js' => 'datetime-picker.js',
+            'resources/assets/js/calendar.js' => 'calendar.js',
+            'resources/assets/js/chrono/date-value.js' => 'chrono/date-value.js',
+            'resources/assets/js/chrono/parse.js' => 'chrono/parse.js',
+            'resources/assets/js/chrono/timezone.js' => 'chrono/timezone.js',
+        ],
+    ],
 ];
 
 $indexItems = [];
@@ -196,6 +271,10 @@ foreach ($catalog as $name => $meta) {
         if ($appFileContent === false) {
             fwrite(STDERR, "Missing app file for [{$name}]: {$appFilePath}\n");
             exit(1);
+        }
+
+        if (str_ends_with($target, '.php')) {
+            $appFileContent = $compiler->compilePhpSupport($appFileContent);
         }
 
         $files[] = [

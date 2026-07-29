@@ -58,6 +58,7 @@ final class PlaybookRegistry
             $this->text(),
             $this->heading(),
             $this->dialog(),
+            $this->datePicker(),
         ];
 
         $this->playbooks = collect($definitions)->keyBy(static fn (ComponentPlaybook $playbook): string => $playbook->slug);
@@ -426,6 +427,31 @@ final class PlaybookRegistry
                 'closable' => true,
             ],
             previewView: 'workbench::playbook.previews.dialog',
+        );
+    }
+
+    private function datePicker(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('mode', 'Mode', 'select', [
+                'single' => 'Single',
+                'range' => 'Range',
+            ], 'single'),
+            new PlaybookControl('withPresets', 'Presets', 'checkbox', [], false),
+            new PlaybookControl('withToday', 'Today shortcut', 'checkbox', [], true),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'date-picker',
+            title: 'Date Picker',
+            description: 'Date and range selection with calendar overlay. Requires date-picker.js in the app entry.',
+            controls: $controls,
+            defaultState: [
+                'mode' => 'single',
+                'withPresets' => false,
+                'withToday' => true,
+            ],
+            previewView: 'workbench::playbook.previews.date-picker',
         );
     }
 }

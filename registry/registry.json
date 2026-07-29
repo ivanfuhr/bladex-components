@@ -122,6 +122,51 @@
             "registryDependencies": [
                 "button"
             ]
+        },
+        {
+            "name": "popover",
+            "type": "registry:ui",
+            "title": "Popover",
+            "description": "Anchored floating panel primitive for overlays.",
+            "registryDependencies": []
+        },
+        {
+            "name": "calendar",
+            "type": "registry:ui",
+            "title": "Calendar",
+            "description": "Accessible calendar grid for date and range selection.",
+            "registryDependencies": []
+        },
+        {
+            "name": "date-picker",
+            "type": "registry:ui",
+            "title": "Date Picker",
+            "description": "Date and range picker with presets, confirmation, and timezone-aware values.",
+            "registryDependencies": [
+                "button",
+                "input",
+                "calendar"
+            ]
+        },
+        {
+            "name": "time-picker",
+            "type": "registry:ui",
+            "title": "Time Picker",
+            "description": "Time selection list with configurable steps and unavailable slots.",
+            "registryDependencies": [
+                "input"
+            ]
+        },
+        {
+            "name": "datetime-picker",
+            "type": "registry:ui",
+            "title": "DateTime Picker",
+            "description": "Combined date and time picker with ISO 8601 form values.",
+            "registryDependencies": [
+                "button",
+                "calendar",
+                "date-picker"
+            ]
         }
     ]
 }

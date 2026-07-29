@@ -49,6 +49,8 @@ Owned mode runs `init` scaffolding: `app/Support/Stencil` class maps, `resources
 
 **Dialog:** `stencil:add dialog` copies `dialog.js` and adds it to the same `// stencil-start` block in the Vite entry. Compose `dialog.trigger` + `dialog.content` (optional `name` for Flux-style triggers). Use `window.Stencil.dialog('name').show()` from JavaScript when needed.
 
+**Date / time pickers:** `stencil:add date-picker` (depends on `calendar`, `button`, `input`) installs `date-picker.js` plus shared `calendar.js` and `chrono/*` helpers. Values: single date `Y-m-d`, range `Y-m-d/Y-m-d`, time `H:i`, datetime ISO 8601. Set `timezone` (defaults to `config('app.timezone')`). Also available: `time-picker`, `datetime-picker`, and standalone `calendar`.
+
 ### 3. Registry CLI
 
 | Command | Purpose |

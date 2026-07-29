@@ -22,6 +22,10 @@ final class ProjectIntegrator
     private const array JAVASCRIPT_COMPONENTS = [
         'select' => 'select/select.js',
         'dialog' => 'dialog/dialog.js',
+        'calendar' => 'calendar/calendar.js',
+        'date-picker' => 'date-picker/date-picker.js',
+        'time-picker' => 'time-picker/time-picker.js',
+        'datetime-picker' => 'datetime-picker/datetime-picker.js',
     ];
 
     public function ensureTailwind(ProjectConfig $config): void

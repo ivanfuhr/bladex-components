@@ -1,5 +1,8 @@
 import { initSelects } from '../views/ui/select/select.js';
 import { initDialogs } from '../views/ui/dialog/dialog.js';
+import { initDatePickers } from '../views/ui/date-picker/date-picker.js';
+import { initTimePickers } from '../views/ui/time-picker/time-picker.js';
+import { initDatetimePickers } from '../views/ui/datetime-picker/datetime-picker.js';
 
 document.addEventListener('alpine:init', () => {
     window.Alpine.data('playbookPreview', (config) => ({
@@ -41,6 +44,9 @@ document.addEventListener('alpine:init', () => {
 
             initSelects(canvas);
             initDialogs(canvas);
+            initDatePickers(canvas);
+            initTimePickers(canvas);
+            initDatetimePickers(canvas);
         },
 
         queuePreview() {
