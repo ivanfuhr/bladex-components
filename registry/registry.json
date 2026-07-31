@@ -49,6 +49,16 @@
             ]
         },
         {
+            "name": "input-currency",
+            "type": "registry:ui",
+            "title": "Input Currency",
+            "description": "Currency input with locale-aware display and a hidden float value for form submission.",
+            "registryDependencies": [
+                "field",
+                "input"
+            ]
+        },
+        {
             "name": "text",
             "type": "registry:ui",
             "title": "Text",

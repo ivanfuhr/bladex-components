@@ -75,6 +75,18 @@ $catalog = [
         'targetPrefix' => 'input',
         'filesOnly' => ['index.blade.php'],
     ],
+    'input-currency' => [
+        'title' => 'Input Currency',
+        'description' => 'Currency input with locale-aware display and a hidden float value for form submission.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['field', 'input'],
+        'source' => 'input',
+        'targetPrefix' => 'input',
+        'filesOnly' => ['currency.blade.php'],
+        'assets' => [
+            'resources/assets/js/input-currency.js' => 'input-currency.js',
+        ],
+    ],
     'text' => [
         'title' => 'Text',
         'description' => 'Body copy primitive with standardized size scale and automatic body font role.',

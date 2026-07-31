@@ -15,7 +15,7 @@ Route::get('/playbook/media/{component}', [PlaybookMediaController::class, 'show
 
 Route::get('/playbook/{component}', [PlaybookController::class, 'show'])
     ->name('playbook.show')
-    ->where('component', '[a-z]+');
+    ->where('component', '[a-z0-9-]+');
 
 Route::post('/playbook/preview', PlaybookPreviewController::class)
     ->name('playbook.preview');

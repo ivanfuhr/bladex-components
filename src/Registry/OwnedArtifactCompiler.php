@@ -8,8 +8,6 @@ use RuntimeException;
 
 final class OwnedArtifactCompiler
 {
-    private const string INTERNAL_LOADING_ICON_INCLUDE = "@include('stencil::internals.loading-icon')";
-
     public const string PACKAGE_SUPPORT_NAMESPACE = 'Ivanfuhr\\Stencil\\Support';
 
     public const string OWNED_SUPPORT_NAMESPACE = 'App\\Support\\Stencil';
@@ -18,6 +16,10 @@ final class OwnedArtifactCompiler
 
     public const string OWNED_COMPONENT_PREFIX = 'x-ui::';
 
+    public const string PACKAGE_TRANSLATION_NAMESPACE = 'stencil::messages';
+
+    public const string OWNED_TRANSLATION_NAMESPACE = 'stencil-ui::messages';
+
     public function compileBlade(string $content, ?string $ownedSupportNamespace = null): string
     {
         $ownedSupportNamespace ??= self::OWNED_SUPPORT_NAMESPACE;
@@ -25,13 +27,25 @@ final class OwnedArtifactCompiler
         $content = $this->inlineInternalLoadingIconInclude($content, $ownedSupportNamespace);
         $content = str_replace(self::PACKAGE_COMPONENT_PREFIX, self::OWNED_COMPONENT_PREFIX, $content);
         $content = $this->rewriteSupportNamespace($content, $ownedSupportNamespace);
+        $content = $this->rewriteTranslationNamespace($content);
 
         return $content;
     }
 
     public function compilePhpSupport(string $content, ?string $ownedSupportNamespace = null): string
     {
-        return $this->rewriteSupportNamespace($content, $ownedSupportNamespace ?? self::OWNED_SUPPORT_NAMESPACE);
+        $content = $this->rewriteSupportNamespace($content, $ownedSupportNamespace ?? self::OWNED_SUPPORT_NAMESPACE);
+
+        return $this->rewriteTranslationNamespace($content);
+    }
+
+    private function rewriteTranslationNamespace(string $content): string
+    {
+        return str_replace(
+            self::PACKAGE_TRANSLATION_NAMESPACE,
+            self::OWNED_TRANSLATION_NAMESPACE,
+            $content,
+        );
     }
 
     private function rewriteSupportNamespace(string $content, string $ownedSupportNamespace): string
@@ -44,7 +58,7 @@ final class OwnedArtifactCompiler
 
     private function inlineInternalLoadingIconInclude(string $content, string $ownedSupportNamespace): string
     {
-        if (! str_contains($content, self::INTERNAL_LOADING_ICON_INCLUDE)) {
+        if (! str_contains($content, 'stencil::internals.loading-icon')) {
             return $content;
         }
 
@@ -57,6 +71,8 @@ final class OwnedArtifactCompiler
 
         $partial = $this->compileBlade($partial, $ownedSupportNamespace);
 
-        return str_replace(self::INTERNAL_LOADING_ICON_INCLUDE, $partial, $content);
+        $pattern = "/@include\\(\\s*'stencil::internals\\.loading-icon'(?:\\s*,\\s*\\[[^\\]]*\\])?\\s*\\)/s";
+
+        return (string) preg_replace($pattern, $partial, $content);
     }
 }

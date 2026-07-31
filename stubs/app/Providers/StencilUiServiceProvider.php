@@ -38,6 +38,8 @@ class StencilUiServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $this->loadTranslationsFrom(lang_path('stencil-ui'), 'stencil-ui');
+
         $uiPath = app(ProjectConfig::class)->resolvedUiPath();
 
         if (is_dir($uiPath)) {

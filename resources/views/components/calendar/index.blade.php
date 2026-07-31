@@ -43,10 +43,11 @@
 @endphp
 
 <div
-    {{ $attributes->class(['calendar isolate relative']) }}
+    {{ $attributes->class(['calendar w-full']) }}
     data-calendar
+    tabindex="-1"
     data-calendar-mode="{{ $mode }}"
-    data-calendar-months="{{ $monthCount }}"
+    data-calendar-month-count="{{ $monthCount }}"
     @if (filled($resolvedValue)) data-calendar-value="{{ $resolvedValue }}" @endif
     @if (filled($name)) data-calendar-name="{{ $name }}" @endif
     @if (filled($min)) data-calendar-min="{{ $min }}" @endif
@@ -65,43 +66,37 @@
     @if (filled($maxRange)) data-calendar-max-range="{{ $maxRange }}" @endif
     data-calendar-size-class="{{ $sizeClasses }}"
 >
-    <div class="relative" data-calendar-chrome>
-        <div class="absolute inset-x-0 top-0 z-10 p-2" data-calendar-header>
-            <header class="flex items-center justify-between">
-                <div class="flex items-center gap-2" data-calendar-header-labels>
-                    <span class="text-sm font-medium text-zinc-800 dark:text-zinc-50" data-calendar-month-label></span>
-                </div>
-                <div class="flex items-center gap-1">
-                    @if ($withToday)
-                        <button
-                            type="button"
-                            class="inline-flex size-8 items-center justify-center rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
-                            data-calendar-today
-                            aria-label="{{ __('stencil::messages.preset_today') }}"
-                        >
-                            <span class="text-xs font-semibold" data-calendar-today-label></span>
-                        </button>
-                    @endif
-                    <button
-                        type="button"
-                        class="inline-flex size-8 items-center justify-center rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
-                        data-calendar-prev
-                        aria-label="Previous month"
-                    >
-                        <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd"/></svg>
-                    </button>
-                    <button
-                        type="button"
-                        class="inline-flex size-8 items-center justify-center rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
-                        data-calendar-next
-                        aria-label="Next month"
-                    >
-                        <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/></svg>
-                    </button>
-                </div>
-            </header>
+    <div class="mb-2 flex items-center justify-between gap-2" style="display:flex; align-items:center; justify-content:space-between; gap:0.5rem; margin-bottom:0.5rem;" data-calendar-header>
+        <span class="text-sm font-medium text-zinc-800 dark:text-zinc-50" data-calendar-month-label></span>
+        <div class="flex items-center gap-1">
+            @if ($withToday)
+                <button
+                    type="button"
+                    class="inline-flex size-8 items-center justify-center rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                    data-calendar-today
+                    aria-label="{{ __('stencil::messages.preset_today') }}"
+                >
+                    <span class="text-xs font-semibold" data-calendar-today-label></span>
+                </button>
+            @endif
+            <button
+                type="button"
+                class="inline-flex size-8 items-center justify-center rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                data-calendar-prev
+                aria-label="{{ __('stencil::messages.calendar_previous_month') }}"
+            >
+                <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd"/></svg>
+            </button>
+            <button
+                type="button"
+                class="inline-flex size-8 items-center justify-center rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                data-calendar-next
+                aria-label="{{ __('stencil::messages.calendar_next_month') }}"
+            >
+                <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/></svg>
+            </button>
         </div>
     </div>
 
-    <div class="flex justify-center gap-4 p-2 pt-12" data-calendar-months></div>
+    <div class="flex gap-4" style="display:flex; gap:1rem;" data-calendar-months-container></div>
 </div>

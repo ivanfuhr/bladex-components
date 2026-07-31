@@ -26,6 +26,7 @@ final class ProjectIntegrator
         'date-picker' => 'date-picker/date-picker.js',
         'time-picker' => 'time-picker/time-picker.js',
         'datetime-picker' => 'datetime-picker/datetime-picker.js',
+        'input-currency' => 'input/input-currency.js',
     ];
 
     public function ensureTailwind(ProjectConfig $config): void

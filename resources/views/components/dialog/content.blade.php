@@ -8,6 +8,8 @@
     'alert' => false,
     'open' => false,
     'preview' => false,
+    'titleId' => null,
+    'descriptionId' => null,
 ])
 
 @aware([
@@ -49,6 +51,10 @@
 
     $isPreview = (bool) $preview;
     $isOpen = (bool) $open;
+
+    $dialogBaseId = 'dialog-'.str_replace('.', '', uniqid('', true));
+    $titleId ??= $dialogBaseId.'-title';
+    $descriptionId ??= $dialogBaseId.'-description';
 @endphp
 
 @if ($isPreview)
@@ -71,6 +77,8 @@
             ])
             role="{{ $alert ? 'alertdialog' : 'dialog' }}"
             aria-modal="true"
+            aria-labelledby="{{ $titleId }}"
+            aria-describedby="{{ $descriptionId }}"
             data-dialog-content
             data-dialog-preview
         >
@@ -113,6 +121,8 @@
         'data-dialog-name' => filled($name) ? $name : null,
         'data-dialog-flyout' => $isFlyout ? 'true' : 'false',
         'aria-modal' => 'true',
+        'aria-labelledby' => $titleId,
+        'aria-describedby' => $descriptionId,
         'role' => $alert ? 'alertdialog' : 'dialog',
         'open' => $isOpen ? true : null,
     ]) }}

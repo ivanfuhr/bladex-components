@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Blade;
 
-it('renders date picker with hidden input and dialog', function (): void {
+it('renders date picker with hidden input and panel', function (): void {
     $html = Blade::render('<x-stencil::date-picker name="published_at" value="2026-07-29" />');
 
     expect($html)
         ->toContain('data-date-picker')
         ->toContain('name="published_at"')
         ->toContain('value="2026-07-29"')
-        ->toContain('data-date-picker-dialog')
+        ->toContain('data-date-picker-panel')
         ->toContain('data-calendar');
 });
 
@@ -40,5 +40,5 @@ it('renders datetime picker hidden iso value', function (): void {
     expect($html)
         ->toContain('data-datetime-picker')
         ->toContain('name="scheduled_at"')
-        ->toContain('data-datetime-picker-dialog');
+        ->toContain('data-datetime-picker-panel');
 });

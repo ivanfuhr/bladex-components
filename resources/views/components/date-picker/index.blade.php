@@ -21,7 +21,7 @@
     'fixedWeeks' => false,
     'openTo' => null,
     'forceOpenTo' => false,
-    'withConfirmation' => true,
+    'withConfirmation' => false,
     'withInputs' => false,
     'withPresets' => false,
     'presets' => null,
@@ -91,9 +91,13 @@
         {{ $slot }}
     @endif
 
-    <dialog
-        class="date-picker__dialog fixed z-50 max-w-[calc(100vw-2rem)] rounded-xl border border-zinc-200 bg-white p-0 shadow-xl backdrop:bg-zinc-950/40 dark:border-zinc-800 dark:bg-zinc-950"
-        data-date-picker-dialog
+    <div
+        class="date-picker__panel z-50 w-max max-w-[calc(100vw-2rem)] rounded-xl border border-zinc-200 bg-white p-2 shadow-xl dark:border-zinc-800 dark:bg-zinc-950"
+        data-date-picker-panel
+        hidden
+        aria-hidden="true"
+        tabindex="-1"
+        aria-label="{{ $range ? __('stencil::messages.date_picker_range_placeholder') : __('stencil::messages.date_picker_placeholder') }}"
     >
         <div class="grid sm:grid-cols-[auto_1fr]">
             @if ($presetMeta !== [])
@@ -112,7 +116,7 @@
                 </div>
             @endif
 
-            <div class="min-w-0 p-2">
+            <div class="min-w-0">
                 @if ($withInputs)
                     <div class="mb-2 border-b border-zinc-200 pb-2 dark:border-zinc-800" data-date-picker-manual-inputs>
                         <x-stencil::input type="text" placeholder="YYYY-MM-DD" data-date-picker-manual-input />
@@ -142,13 +146,15 @@
             </div>
         </div>
 
-        <div class="flex justify-end gap-2 border-t border-zinc-200 p-3 dark:border-zinc-800">
-            <x-stencil::button type="button" variant="ghost" data-date-picker-cancel>
-                {{ __('stencil::messages.date_picker_cancel') }}
-            </x-stencil::button>
-            <x-stencil::button type="button" variant="primary" data-date-picker-confirm>
-                {{ $range ? __('stencil::messages.date_picker_select_range') : __('stencil::messages.date_picker_select_date') }}
-            </x-stencil::button>
-        </div>
-    </dialog>
+        @if ($withConfirmation)
+            <div class="mt-2 flex justify-end gap-2 border-t border-zinc-200 pt-2 dark:border-zinc-800">
+                <x-stencil::button type="button" variant="ghost" data-date-picker-cancel>
+                    {{ __('stencil::messages.date_picker_cancel') }}
+                </x-stencil::button>
+                <x-stencil::button type="button" variant="primary" data-date-picker-confirm>
+                    {{ $range ? __('stencil::messages.date_picker_select_range') : __('stencil::messages.date_picker_select_date') }}
+                </x-stencil::button>
+            </div>
+        @endif
+    </div>
 </div>

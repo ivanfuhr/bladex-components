@@ -56,9 +56,11 @@
         data-datetime-picker-trigger
     />
 
-    <dialog
-        class="datetime-picker__dialog fixed z-50 max-w-[calc(100vw-2rem)] rounded-xl border border-zinc-200 bg-white p-0 shadow-xl backdrop:bg-zinc-950/40 dark:border-zinc-800 dark:bg-zinc-950"
-        data-datetime-picker-dialog
+    <div
+        class="datetime-picker__panel z-50 max-w-[calc(100vw-2rem)] rounded-xl border border-zinc-200 bg-white p-0 shadow-xl dark:border-zinc-800 dark:bg-zinc-950"
+        data-datetime-picker-panel
+        hidden
+        aria-hidden="true"
     >
         <div class="grid gap-0 md:grid-cols-[1fr_11rem]">
             <x-stencil::calendar
@@ -80,5 +82,5 @@
                 {{ __('stencil::messages.date_picker_select_date') }}
             </x-stencil::button>
         </div>
-    </dialog>
+    </div>
 </div>

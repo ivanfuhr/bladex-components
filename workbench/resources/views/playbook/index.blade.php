@@ -25,7 +25,7 @@
                         <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">
                             &lt;x-ui::<span class="text-zinc-800 dark:text-zinc-200">{{ $playbook->slug }}</span> /&gt;
                         </p>
-                        <x-stencil::heading :level="3" class="mt-4">
+                        <x-stencil::heading :level="2" class="mt-4">
                             {{ $playbook->title }}
                         </x-stencil::heading>
                         <x-stencil::text size="sm" variant="subtle" class="mt-2 flex-1">

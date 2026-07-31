@@ -111,6 +111,7 @@ function cleanupOwnedProjectArtifacts(): void
         app()->basePath('config/stencil-ui.php'),
         app()->basePath('resources/css/stencil.css'),
         app()->basePath('app/Providers/StencilUiServiceProvider.php'),
+        app()->langPath('stencil-ui/en/messages.php'),
     ];
 
     foreach ($paths as $path) {
@@ -121,6 +122,7 @@ function cleanupOwnedProjectArtifacts(): void
 
     File::deleteDirectory(app()->resourcePath('views/ui'));
     File::deleteDirectory(app()->basePath('app/Support/Stencil'));
+    File::deleteDirectory(app()->langPath('stencil-ui'));
 
     $providersPath = app()->basePath('bootstrap/providers.php');
 

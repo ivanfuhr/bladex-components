@@ -32,6 +32,7 @@ it('creates project config and lock via init', function () {
     expect($config['paths']['assets'])->toBe('resources/js/ui');
     expect($config['paths']['support'])->toBe('app/Support/Stencil');
     expect($config['registry'])->toBe(config('stencil.default_registry_url'));
+    expect(file_exists($this->app->langPath('stencil-ui/en/messages.php')))->toBeTrue();
 });
 
 it('add installs registry items into resources/views/ui', function () {
@@ -91,6 +92,27 @@ it('add dialog installs owned javascript asset', function () {
     $scriptPath = $this->app->resourcePath('views/ui/dialog/dialog.js');
 
     expect(file_exists($scriptPath))->toBeTrue();
+});
+
+it('renders owned select with translated strings from stencil-ui namespace', function () {
+    useOwnedRegistryProject();
+    fakeRegistryHttp();
+
+    $this->artisan('stencil:add', ['names' => ['select']])
+        ->assertSuccessful();
+
+    registerOwnedUiNamespace();
+
+    $selectPath = $this->app->resourcePath('views/ui/select/index.blade.php');
+
+    expect(file_get_contents($selectPath))->toContain('stencil-ui::messages');
+
+    $html = Blade::render('<x-ui::select name="status" :multiple="true" display="chips" />');
+
+    expect($html)
+        ->toContain('data-select-chip-remove-label="Remove"')
+        ->not->toContain('stencil-ui::messages')
+        ->not->toContain('stencil::messages');
 });
 
 it('renders owned button loading state without the icon loading component', function () {

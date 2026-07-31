@@ -35,7 +35,10 @@
 
         @unless ($alert)
             <div class="mt-4 space-y-3">
-                <x-stencil::input name="playbook_name" placeholder="Your name" />
+                <x-stencil::field name="playbook_name">
+                    <x-stencil::field.label>Your name</x-stencil::field.label>
+                    <x-stencil::input name="playbook_name" placeholder="Your name" />
+                </x-stencil::field>
             </div>
         @endunless
 

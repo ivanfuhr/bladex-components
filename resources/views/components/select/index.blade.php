@@ -14,6 +14,7 @@
 
 @aware([
     'fieldInvalid' => false,
+    'controlId' => null,
 ])
 
 @php
@@ -30,8 +31,9 @@
 
     $selectId = filled($selectId)
         ? $selectId
-        : 'select-'.str_replace('.', '', uniqid('', true));
+        : (filled($name) ? $name : 'select-'.str_replace('.', '', uniqid('', true)));
     $listboxId = filled($listboxId) ? $listboxId : $selectId.'-listbox';
+    $controlId = filled($controlId) ? $controlId : $selectId;
 
     $fieldName = $name;
     if ($multiple && filled($name) && ! Str::endsWith($name, '[]')) {

@@ -150,6 +150,17 @@ JSON, true),
 
 PHP);
 
+        $messagesSource = $packageRoot.'/lang/en/messages.php';
+        $messagesContent = file_get_contents($messagesSource);
+
+        if ($messagesContent === false) {
+            throw new RuntimeException('Unable to read package messages translation file.');
+        }
+
+        $messagesTarget = $stubsRoot.'/lang/stencil-ui/en/messages.php';
+        $this->ensureDirectoryExists(dirname($messagesTarget));
+        file_put_contents($messagesTarget, $messagesContent);
+
         $providerTarget = $stubsRoot.'/app/Providers/StencilUiServiceProvider.php';
         $this->ensureDirectoryExists(dirname($providerTarget));
         file_put_contents($providerTarget, <<<'PHP'
@@ -193,6 +204,8 @@ class StencilUiServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $this->loadTranslationsFrom(lang_path('stencil-ui'), 'stencil-ui');
+
         $uiPath = app(ProjectConfig::class)->resolvedUiPath();
 
         if (is_dir($uiPath)) {

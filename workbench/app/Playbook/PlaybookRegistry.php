@@ -48,6 +48,7 @@ final class PlaybookRegistry
         $definitions = [
             $this->button(),
             $this->input(),
+            $this->inputCurrency(),
             $this->select(),
             $this->label(),
             $this->field(),
@@ -136,6 +137,41 @@ final class PlaybookRegistry
                 'show_prefix_suffix' => false,
             ],
             previewView: 'workbench::playbook.previews.input',
+        );
+    }
+
+    private function inputCurrency(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
+            new PlaybookControl('disabled', 'Disabled', 'checkbox', [], false),
+            new PlaybookControl('readonly', 'Readonly', 'checkbox', [], false),
+            new PlaybookControl('currency', 'Currency', 'select', [
+                'BRL' => 'BRL',
+                'USD' => 'USD',
+                'EUR' => 'EUR',
+            ], 'BRL'),
+            new PlaybookControl('locale', 'Locale', 'select', [
+                'pt_BR' => 'pt_BR',
+                'en' => 'en',
+                'en_US' => 'en_US',
+            ], 'pt_BR'),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'input-currency',
+            title: 'Input Currency',
+            description: 'Currency field with formatted display and a hidden float for form posts. Requires input-currency.js.',
+            controls: $controls,
+            defaultState: [
+                'invalid' => false,
+                'disabled' => false,
+                'readonly' => false,
+                'value' => 1234.56,
+                'currency' => 'BRL',
+                'locale' => 'pt_BR',
+            ],
+            previewView: 'workbench::playbook.previews.input-currency',
         );
     }
 

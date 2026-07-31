@@ -6,6 +6,7 @@
     'listboxId' => null,
     'multiple' => false,
     'display' => 'count',
+    'controlId' => null,
 ])
 
 @php
@@ -45,8 +46,10 @@
         $triggerAttributes = $triggerAttributes->merge(['disabled' => true]);
     }
 
-    if (filled($selectId)) {
-        $triggerAttributes = $triggerAttributes->merge(['id' => $selectId.'-trigger']);
+    $triggerId = filled($controlId) ? $controlId : (filled($selectId) ? $selectId : null);
+
+    if (filled($triggerId)) {
+        $triggerAttributes = $triggerAttributes->merge(['id' => $triggerId]);
     }
 
     if (filled($listboxId)) {

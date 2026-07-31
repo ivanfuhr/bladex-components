@@ -54,6 +54,8 @@ final class ProjectScaffolder
                 $appRelative = $relative;
             } elseif (str_starts_with($relative, 'config/')) {
                 $appRelative = $relative;
+            } elseif (str_starts_with($relative, 'lang/')) {
+                $appRelative = $relative;
             } elseif (str_starts_with($relative, 'app/')) {
                 $appRelative = $relative;
             } else {

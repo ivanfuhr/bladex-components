@@ -3,6 +3,7 @@ import { initDialogs } from '../views/ui/dialog/dialog.js';
 import { initDatePickers } from '../views/ui/date-picker/date-picker.js';
 import { initTimePickers } from '../views/ui/time-picker/time-picker.js';
 import { initDatetimePickers } from '../views/ui/datetime-picker/datetime-picker.js';
+import { initInputCurrencies } from '../views/ui/input/input-currency.js';
 
 document.addEventListener('alpine:init', () => {
     window.Alpine.data('playbookPreview', (config) => ({
@@ -47,6 +48,7 @@ document.addEventListener('alpine:init', () => {
             initDatePickers(canvas);
             initTimePickers(canvas);
             initDatetimePickers(canvas);
+            initInputCurrencies(canvas);
         },
 
         queuePreview() {
