@@ -325,6 +325,20 @@ function bindFileUpload(root) {
     renderList();
 }
 
+document.addEventListener('stencil:mount', (event) => {
+    if (!(event instanceof CustomEvent)) {
+        return;
+    }
+
+    const mountRoot = event.detail?.root;
+
+    if (!(mountRoot instanceof HTMLElement)) {
+        return;
+    }
+
+    initFileUploads(mountRoot);
+});
+
 if (typeof document !== 'undefined') {
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => initFileUploads());

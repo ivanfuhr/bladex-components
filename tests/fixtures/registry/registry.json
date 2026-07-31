@@ -126,6 +126,22 @@
             ]
         },
         {
+            "name": "repeater",
+            "type": "registry:ui",
+            "title": "Repeater",
+            "description": "Composition-first repeater for dynamic Laravel array fields with add/remove rows and native form submission.",
+            "registryDependencies": [
+                "icon",
+                "text",
+                "field",
+                "input"
+            ],
+            "iconDependencies": [
+                "plus",
+                "x"
+            ]
+        },
+        {
             "name": "input-otp",
             "type": "registry:ui",
             "title": "Input OTP",

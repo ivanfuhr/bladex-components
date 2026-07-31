@@ -12,6 +12,8 @@ return [
     'combobox_toggle' => 'Toggle options',
     'file_upload_heading' => 'Drop files here or click to browse',
     'file_upload_remove' => 'Remove',
+    'repeater_add' => 'Add item',
+    'repeater_remove' => 'Remove item',
     'input_otp_digit' => 'Digit :position of :length',
     'slider_value' => 'Value',
     'slider_min' => 'Minimum',

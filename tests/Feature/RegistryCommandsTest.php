@@ -109,6 +109,18 @@ it('add file-upload installs owned javascript asset', function () {
     expect(file_exists($scriptPath))->toBeTrue();
 });
 
+it('add repeater installs owned javascript asset', function () {
+    useOwnedRegistryProject();
+    fakeRegistryHttp();
+
+    $this->artisan('stencil:add', ['names' => ['repeater']])
+        ->assertSuccessful();
+
+    $scriptPath = $this->app->resourcePath('views/ui/repeater/repeater.js');
+
+    expect(file_exists($scriptPath))->toBeTrue();
+});
+
 it('add input-otp installs owned javascript asset', function () {
     useOwnedRegistryProject();
     fakeRegistryHttp();

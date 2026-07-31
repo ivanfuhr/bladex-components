@@ -150,6 +150,18 @@ $catalog = [
             'resources/assets/js/file-upload.js' => 'file-upload.js',
         ],
     ],
+    'repeater' => [
+        'title' => 'Repeater',
+        'description' => 'Composition-first repeater for dynamic Laravel array fields with add/remove rows and native form submission.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['icon', 'text', 'field', 'input'],
+        'iconDependencies' => ['plus', 'x'],
+        'source' => 'repeater',
+        'targetPrefix' => 'repeater',
+        'assets' => [
+            'resources/assets/js/repeater.js' => 'repeater.js',
+        ],
+    ],
     'input-otp' => [
         'title' => 'Input OTP',
         'description' => 'Accessible one-time password / PIN input with paste support, keyboard navigation, and a combined form value.',

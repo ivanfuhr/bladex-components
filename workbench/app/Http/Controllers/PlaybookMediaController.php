@@ -27,6 +27,7 @@ final class PlaybookMediaController
         'dialog',
         'combobox',
         'file-upload',
+        'repeater',
         'input-otp',
         'slider',
     ];

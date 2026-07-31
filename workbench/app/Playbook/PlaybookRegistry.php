@@ -52,6 +52,7 @@ final class PlaybookRegistry
             $this->select(),
             $this->combobox(),
             $this->fileUpload(),
+            $this->repeater(),
             $this->inputOtp(),
             $this->slider(),
             $this->label(),
@@ -275,6 +276,39 @@ final class PlaybookRegistry
                 'accept' => '',
             ],
             previewView: 'workbench::playbook.previews.file-upload',
+        );
+    }
+
+    private function repeater(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
+            new PlaybookControl('disabled', 'Disabled', 'checkbox', [], false),
+            new PlaybookControl('min', 'Min rows', 'select', [
+                '0' => '0',
+                '1' => '1',
+                '2' => '2',
+            ], '1'),
+            new PlaybookControl('max', 'Max rows', 'select', [
+                '' => 'None',
+                '3' => '3',
+                '5' => '5',
+                '10' => '10',
+            ], ''),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'repeater',
+            title: 'Repeater',
+            description: 'Composition-first repeater for dynamic Laravel array fields. Requires the package repeater.js script.',
+            controls: $controls,
+            defaultState: [
+                'invalid' => false,
+                'disabled' => false,
+                'min' => '1',
+                'max' => '',
+            ],
+            previewView: 'workbench::playbook.previews.repeater',
         );
     }
 

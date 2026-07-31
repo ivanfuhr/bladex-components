@@ -399,6 +399,20 @@ function stepPrecision(step) {
     return text.split('.')[1]?.length ?? 0;
 }
 
+document.addEventListener('stencil:mount', (event) => {
+    if (!(event instanceof CustomEvent)) {
+        return;
+    }
+
+    const mountRoot = event.detail?.root;
+
+    if (!(mountRoot instanceof HTMLElement)) {
+        return;
+    }
+
+    initSliders(mountRoot);
+});
+
 if (typeof document !== 'undefined') {
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => initSliders());

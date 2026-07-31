@@ -565,6 +565,20 @@ function isSelectable(day, config, today) {
     return true;
 }
 
+document.addEventListener('stencil:mount', (event) => {
+    if (!(event instanceof CustomEvent)) {
+        return;
+    }
+
+    const mountRoot = event.detail?.root;
+
+    if (!(mountRoot instanceof HTMLElement)) {
+        return;
+    }
+
+    initCalendars(mountRoot);
+});
+
 if (typeof document !== 'undefined') {
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => initCalendars());

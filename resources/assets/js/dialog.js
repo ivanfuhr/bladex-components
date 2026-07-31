@@ -269,6 +269,20 @@ if (typeof window !== 'undefined') {
     };
 }
 
+document.addEventListener('stencil:mount', (event) => {
+    if (!(event instanceof CustomEvent)) {
+        return;
+    }
+
+    const mountRoot = event.detail?.root;
+
+    if (!(mountRoot instanceof HTMLElement)) {
+        return;
+    }
+
+    initDialogs(mountRoot);
+});
+
 if (typeof document !== 'undefined') {
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => initDialogs());

@@ -1,6 +1,7 @@
 import { initSelects } from '../views/ui/select/select.js';
 import { initComboboxes } from '../views/ui/combobox/combobox.js';
 import { initFileUploads } from '../views/ui/file-upload/file-upload.js';
+import { initRepeaters } from '../views/ui/repeater/repeater.js';
 import { initInputOtps } from '../views/ui/input-otp/input-otp.js';
 import { initSliders } from '../views/ui/slider/slider.js';
 import { initDialogs } from '../views/ui/dialog/dialog.js';
@@ -54,6 +55,7 @@ document.addEventListener('alpine:init', () => {
             initSelects(canvas);
             initComboboxes(canvas);
             initFileUploads(canvas);
+            initRepeaters(canvas);
             initInputOtps(canvas);
             initSliders(canvas);
             initDialogs(canvas);
