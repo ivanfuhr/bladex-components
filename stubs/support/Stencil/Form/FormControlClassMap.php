@@ -67,6 +67,8 @@ final class FormControlClassMap
         $dimension = $size === 'sm' ? 'size-3.5' : 'size-4';
         $rounded = $type === 'radio' ? 'rounded-full' : 'rounded-[4px]';
 
+        // Checked fill styles live on each control (checkbox vs radio differ).
+        // Shared checked:bg-* here fights Tailwind cascade and paints radios solid.
         return collect([
             'choice-control',
             $dimension,
@@ -76,8 +78,6 @@ final class FormControlClassMap
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:ring-offset-2 focus-visible:ring-offset-white',
             'disabled:cursor-not-allowed disabled:opacity-50',
             'dark:border-zinc-600 dark:bg-zinc-950 dark:focus-visible:ring-zinc-300/20 dark:focus-visible:ring-offset-zinc-950',
-            'checked:border-zinc-900 checked:bg-zinc-900 checked:text-white',
-            'dark:checked:border-zinc-50 dark:checked:bg-zinc-50 dark:checked:text-zinc-900',
             'aria-invalid:border-red-500 aria-invalid:ring-red-500/20',
             'dark:aria-invalid:border-red-500',
         ])->implode(' ');
@@ -95,11 +95,12 @@ final class FormControlClassMap
     {
         $track = $size === 'sm' ? 'h-5 w-9' : 'h-6 w-11';
 
+        // Background colors live in stencil.css so :has(:checked) can win in the
+        // same @layer (utility bg-* would otherwise override component rules).
         return collect([
             'switch__track',
             'relative inline-flex shrink-0 items-center rounded-full p-0.5 transition-colors',
             $track,
-            'bg-zinc-200 dark:bg-zinc-700',
         ])->implode(' ');
     }
 

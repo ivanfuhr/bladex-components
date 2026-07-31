@@ -19,15 +19,13 @@
     $formControl = app(FormControlClassMap::class);
     $interactionState = app(InteractionStateAttributes::class);
 
+    // Checkmark SVG is applied in stencil.css — Tailwind does not emit
+    // checked:bg-[url(data:...)] when the class lives only inside a PHP string.
     $controlClasses = collect([
         $formControl->choiceControlClasses('checkbox', $size),
-        'appearance-none grid place-content-center text-transparent',
-        'checked:border-zinc-900 checked:bg-zinc-900 checked:text-white',
-        'dark:checked:border-zinc-50 dark:checked:bg-zinc-50 dark:checked:text-zinc-900',
-        'checked:bg-[length:75%_75%]',
-        'checked:bg-center checked:bg-no-repeat',
-        "checked:bg-[url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3E%3Cpath d='M12.207 4.793a1 1 0 0 1 0 1.414l-5 5a1 1 0 0 1-1.414 0l-2.5-2.5a1 1 0 0 1 1.414-1.414L6.5 9.086l4.293-4.293a1 1 0 0 1 1.414 0z'/%3E%3C/svg%3E\")]",
-        "dark:checked:bg-[url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2318181b'%3E%3Cpath d='M12.207 4.793a1 1 0 0 1 0 1.414l-5 5a1 1 0 0 1-1.414 0l-2.5-2.5a1 1 0 0 1 1.414-1.414L6.5 9.086l4.293-4.293a1 1 0 0 1 1.414 0z'/%3E%3C/svg%3E\")]",
+        'appearance-none',
+        'checked:border-zinc-900 checked:bg-zinc-900',
+        'dark:checked:border-zinc-50 dark:checked:bg-zinc-50',
     ])->implode(' ');
 
     $controlAttributes = $interactionState->apply(

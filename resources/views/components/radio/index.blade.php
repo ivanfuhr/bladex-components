@@ -25,9 +25,8 @@
     $controlClasses = collect([
         $formControl->choiceControlClasses('radio', $size),
         'appearance-none',
-        $size === 'sm' ? 'checked:border-[4px]' : 'checked:border-[5px]',
-        'checked:border-zinc-900 checked:bg-white',
-        'dark:checked:border-zinc-50 dark:checked:bg-zinc-950',
+        'checked:border-zinc-900',
+        'dark:checked:border-zinc-50',
     ])->implode(' ');
 
     $controlAttributes = $interactionState->apply(
