@@ -105,15 +105,17 @@
             @if ($presetMeta !== [])
                 <div class="hidden border-e border-zinc-200 p-2 sm:block dark:border-zinc-800" data-date-picker-presets>
                     @foreach ($presetMeta as $preset)
-                        <button
+                        <x-stencil::button
                             type="button"
-                            class="block w-full rounded-lg px-2 py-1.5 text-left text-sm text-zinc-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800"
+                            variant="ghost"
+                            size="sm"
+                            class="block w-full justify-start rounded-lg px-2 py-1.5 text-left text-zinc-600 dark:text-zinc-300"
                             data-date-picker-preset="{{ $preset['key'] }}"
                             data-date-picker-preset-start="{{ $preset['start'] }}"
                             data-date-picker-preset-end="{{ $preset['end'] }}"
                         >
                             {{ $preset['label'] }}
-                        </button>
+                        </x-stencil::button>
                     @endforeach
                 </div>
             @endif

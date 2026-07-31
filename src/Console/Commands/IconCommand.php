@@ -6,9 +6,8 @@ namespace Ivanfuhr\Stencil\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Http;
 use Ivanfuhr\Stencil\Support\Icon\IconPathResolver;
-use Ivanfuhr\Stencil\Support\Icon\LucideIconStubGenerator;
+use Ivanfuhr\Stencil\Support\Icon\LucideIconInstaller;
 use Ivanfuhr\Stencil\Support\ProjectConfig;
 use Throwable;
 
@@ -26,7 +25,7 @@ class IconCommand extends Command
     public function handle(
         ProjectConfig $projectConfig,
         IconPathResolver $pathResolver,
-        LucideIconStubGenerator $generator,
+        LucideIconInstaller $installer,
     ): int {
         $names = $this->resolveNames();
 
@@ -62,32 +61,9 @@ class IconCommand extends Command
                     continue;
                 }
 
-                $url = $pathResolver->lucideUrl($normalized);
-                $response = Http::timeout(15)->get($url);
+                $written = $installer->install([$normalized], $force, false, $directory);
 
-                if ($response->status() === 404) {
-                    $this->components->error("{$normalized}: icon not found at Lucide ({$url}).");
-
-                    $failures++;
-
-                    continue;
-                }
-
-                if (! $response->successful()) {
-                    $this->components->error("{$normalized}: failed to download (HTTP {$response->status()}).");
-
-                    $failures++;
-
-                    continue;
-                }
-
-                $stub = $generator->generate($normalized, $response->body());
-
-                if (file_put_contents($target, $stub) === false) {
-                    $this->components->error("{$normalized}: unable to write {$target}.");
-
-                    $failures++;
-
+                if ($written === []) {
                     continue;
                 }
 

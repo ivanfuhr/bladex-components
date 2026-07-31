@@ -23,7 +23,7 @@ if (! is_dir($componentsPath)) {
     exit(1);
 }
 
-/** @var array<string, array{title: string, description: string, type: string, registryDependencies: list<string>, source?: string, targetPrefix?: string, filesOnly?: list<string>, assets?: array<string, string>}> $catalog */
+/** @var array<string, array{title: string, description: string, type: string, registryDependencies: list<string>, iconDependencies?: list<string>, source?: string, targetPrefix?: string, filesOnly?: list<string>, assets?: array<string, string>}> $catalog */
 $chronoAppFiles = [
     'src/Support/Chrono/ChronoFormatter.php' => 'app/Support/Stencil/Chrono/ChronoFormatter.php',
     'src/Support/Chrono/DateRange.php' => 'app/Support/Stencil/Chrono/DateRange.php',
@@ -109,7 +109,8 @@ $catalog = [
         'title' => 'Button',
         'description' => 'Composable button primitive with variants, sizes, link mode, and grouped layouts.',
         'type' => 'registry:ui',
-        'registryDependencies' => [],
+        'registryDependencies' => ['icon'],
+        'iconDependencies' => [],
         'source' => 'button',
         'targetPrefix' => 'button',
     ],
@@ -117,7 +118,8 @@ $catalog = [
         'title' => 'Select',
         'description' => 'Accessible custom listbox select with compound sub-components and optional Flux-style shortcut.',
         'type' => 'registry:ui',
-        'registryDependencies' => [],
+        'registryDependencies' => ['icon'],
+        'iconDependencies' => ['chevron-down', 'check', 'x'],
         'source' => 'select',
         'targetPrefix' => 'select',
         'assets' => [
@@ -128,7 +130,7 @@ $catalog = [
         'title' => 'Textarea',
         'description' => 'Accessible multi-line text control with validation and disabled states.',
         'type' => 'registry:ui',
-        'registryDependencies' => ['field', 'text'],
+        'registryDependencies' => ['field'],
         'source' => 'textarea',
         'targetPrefix' => 'textarea',
         'filesOnly' => ['index.blade.php'],
@@ -163,7 +165,8 @@ $catalog = [
         'title' => 'Dialog',
         'description' => 'Accessible modal layer with compound sub-components, flyout mode, and named triggers.',
         'type' => 'registry:ui',
-        'registryDependencies' => ['button'],
+        'registryDependencies' => ['button', 'heading', 'text', 'icon'],
+        'iconDependencies' => ['x'],
         'source' => 'dialog',
         'targetPrefix' => 'dialog',
         'assets' => [
@@ -183,7 +186,8 @@ $catalog = [
         'title' => 'Calendar',
         'description' => 'Accessible calendar grid for date and range selection.',
         'type' => 'registry:ui',
-        'registryDependencies' => [],
+        'registryDependencies' => ['icon'],
+        'iconDependencies' => ['chevron-left', 'chevron-right'],
         'source' => 'calendar',
         'targetPrefix' => 'calendar',
         'appFiles' => $chronoAppFiles,
@@ -198,7 +202,8 @@ $catalog = [
         'title' => 'Date Picker',
         'description' => 'Date and range picker with presets, confirmation, and timezone-aware values.',
         'type' => 'registry:ui',
-        'registryDependencies' => ['button', 'input', 'calendar'],
+        'registryDependencies' => ['button', 'input', 'calendar', 'icon'],
+        'iconDependencies' => ['calendar', 'x', 'chevron-down'],
         'source' => 'date-picker',
         'targetPrefix' => 'date-picker',
         'appFiles' => $chronoAppFiles,
@@ -215,7 +220,8 @@ $catalog = [
         'title' => 'Time Picker',
         'description' => 'Time selection list with configurable steps and unavailable slots.',
         'type' => 'registry:ui',
-        'registryDependencies' => ['input'],
+        'registryDependencies' => ['input', 'icon'],
+        'iconDependencies' => ['chevron-down'],
         'source' => 'time-picker',
         'targetPrefix' => 'time-picker',
         'assets' => [
@@ -312,6 +318,12 @@ foreach ($catalog as $name => $meta) {
         'files' => $files,
     ];
 
+    $iconDependencies = $meta['iconDependencies'] ?? [];
+
+    if ($iconDependencies !== []) {
+        $item['iconDependencies'] = $iconDependencies;
+    }
+
     if (! is_dir($itemsPath)) {
         mkdir($itemsPath, 0755, true);
     }
@@ -319,13 +331,19 @@ foreach ($catalog as $name => $meta) {
     $itemPath = $itemsPath.'/'.$name.'.json';
     writeJson($itemPath, $item);
 
-    $indexItems[] = [
+    $indexEntry = [
         'name' => $name,
         'type' => $meta['type'],
         'title' => $meta['title'],
         'description' => $meta['description'],
         'registryDependencies' => $meta['registryDependencies'],
     ];
+
+    if ($iconDependencies !== []) {
+        $indexEntry['iconDependencies'] = $iconDependencies;
+    }
+
+    $indexItems[] = $indexEntry;
 }
 
 $registry = [

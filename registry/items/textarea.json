@@ -5,8 +5,7 @@
     "title": "Textarea",
     "description": "Accessible multi-line text control with validation and disabled states.",
     "registryDependencies": [
-        "field",
-        "text"
+        "field"
     ],
     "files": [
         {

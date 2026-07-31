@@ -99,7 +99,7 @@
 
     @if ($isLoading)
         <span @class(['button__loading', 'inline-flex shrink-0 items-center']) data-button-loading aria-hidden="true">
-            @include('stencil::internals.loading-icon')
+            <x-stencil::icon.loading />
         </span>
     @elseif ($hasTrailing)
         <span @class(['button__trailing', 'inline-flex shrink-0 items-center']) data-button-trailing>

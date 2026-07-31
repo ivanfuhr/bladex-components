@@ -32,5 +32,5 @@
 
 <button {{ $triggerAttributes }} data-time-picker-trigger>
     <x-stencil::time-picker.selected :$placeholder />
-    <svg class="size-4 shrink-0 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+    <x-stencil::icon name="chevron-down" class="size-4 shrink-0 opacity-50" />
 </button>

@@ -35,7 +35,7 @@ final class ChronoFormatter
                 return null;
             }
 
-            return collect($value)->filter()->map(fn ($v) => self::toDateString($v))->implode(',');
+            return collect($value)->filter()->map(fn (mixed $v) => self::toDateString($v))->implode(',');
         }
 
         if ($value instanceof DateRange) {

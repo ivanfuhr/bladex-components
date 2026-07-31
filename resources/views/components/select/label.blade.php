@@ -5,7 +5,7 @@
 @php
     $labelClasses = collect([
         'select__label',
-        'px-2 pb-0.5 pt-1 text-xs font-medium text-zinc-500 dark:text-zinc-400',
+        'px-2 pb-0.5 pt-1',
     ])->implode(' ');
 @endphp
 
@@ -15,5 +15,5 @@
         'data-select-label' => true,
     ])
 }}>
-    {{ $slot }}
+    <x-stencil::text size="sm" variant="subtle" inline class="text-xs">{{ $slot }}</x-stencil::text>
 </div>

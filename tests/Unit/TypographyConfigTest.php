@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Ivanfuhr\Stencil\Support\ProjectConfig;
 use Ivanfuhr\Stencil\Support\Typography\TypographyConfig;
 
 it('falls back heading role to sans when display font is missing', function (): void {
@@ -12,7 +13,7 @@ it('falls back heading role to sans when display font is missing', function (): 
 });
 
 it('merges typography roles from project config', function (): void {
-    $configPath = app()->basePath('stencil.json');
+    $configPath = app(ProjectConfig::class)->path();
 
     file_put_contents($configPath, json_encode([
         'registry' => 'package://registry.json',

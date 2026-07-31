@@ -45,6 +45,12 @@
                     "items": {
                         "type": "string"
                     }
+                },
+                "iconDependencies": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             },
             "required": ["name", "type"]

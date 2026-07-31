@@ -26,6 +26,12 @@
                 "type": "string"
             }
         },
+        "iconDependencies": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
         "dependencies": {
             "type": "array",
             "items": {

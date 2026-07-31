@@ -10,7 +10,7 @@
             "path": "popover/index.blade.php",
             "type": "registry:ui",
             "target": "popover/index.blade.php",
-            "content": "@props([\n    'open' => false,\n])\n\n<div\n    {{ $attributes->class([\n        'popover',\n        'fixed z-50 rounded-lg border border-zinc-200 bg-white p-4 shadow-lg',\n        'dark:border-zinc-800 dark:bg-zinc-950',\n        'hidden data-[state=open]:block',\n    ]) }}\n    data-popover\n    data-state=\"{{ $open ? 'open' : 'closed' }}\"\n    tabindex=\"-1\"\n>\n    {{ $slot }}\n</div>\n"
+            "content": "@props([\n    'open' => false,\n])\n\n<div\n    {{\n        $attributes->class([\n            'popover',\n            'fixed z-50 rounded-lg border border-zinc-200 bg-white p-4 shadow-lg',\n            'dark:border-zinc-800 dark:bg-zinc-950',\n            'hidden data-[state=open]:block',\n        ])\n    }}\n    data-popover\n    data-state=\"{{ $open ? 'open' : 'closed' }}\"\n    tabindex=\"-1\"\n>\n    {{ $slot }}\n</div>\n"
         }
     ]
 }

@@ -10,8 +10,23 @@ use Illuminate\Support\Facades\Http;
 use Ivanfuhr\Stencil\Support\Icon\LucideIconStubGenerator;
 use Ivanfuhr\Stencil\Support\ProjectConfig;
 
+uses()->group('config-isolated');
+
+beforeEach(function (): void {
+    config(['stencil.project_config_file' => 'stencil.json']);
+    app()->forgetInstance(ProjectConfig::class);
+});
+
 afterEach(function (): void {
     Http::swap(new Factory);
+
+    $configPath = app()->basePath('stencil.json');
+
+    if (is_file($configPath)) {
+        @unlink($configPath);
+    }
+
+    app()->forgetInstance(ProjectConfig::class);
 });
 
 it('registers the icon artisan command', function (): void {

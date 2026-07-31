@@ -6,6 +6,7 @@ use Ivanfuhr\Stencil\Tests\TestCase;
 use Ivanfuhr\Stencil\Tests\WorkbenchTestCase;
 
 require_once __DIR__.'/Helpers/registry.php';
+require_once __DIR__.'/Helpers/icons.php';
 
 uses(TestCase::class)->in('Feature');
 uses(TestCase::class)->in('Unit');

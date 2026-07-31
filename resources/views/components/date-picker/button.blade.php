@@ -37,12 +37,7 @@
 
 <button {{ $triggerAttributes }} data-date-picker-trigger>
     <span class="flex min-w-0 flex-1 items-center gap-2">
-        <svg class="size-4 shrink-0 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M8 2v4" />
-            <path d="M16 2v4" />
-            <rect width="18" height="18" x="3" y="4" rx="2" />
-            <path d="M3 10h18" />
-        </svg>
+        <x-stencil::icon name="calendar" class="size-4 shrink-0 opacity-50" />
         <x-stencil::date-picker.selected :$placeholder />
     </span>
     @if ($clearable)
@@ -53,11 +48,8 @@
             tabindex="-1"
             aria-label="{{ __('stencil::messages.date_picker_clear') }}"
         >
-            <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M18 6 6 18" />
-                <path d="m6 6 12 12" />
-            </svg>
+            <x-stencil::icon name="x" class="size-3.5" />
         </span>
     @endif
-    <svg class="size-4 shrink-0 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+    <x-stencil::icon name="chevron-down" class="size-4 shrink-0 opacity-50" />
 </button>

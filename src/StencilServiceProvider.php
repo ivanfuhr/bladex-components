@@ -21,6 +21,8 @@ use Ivanfuhr\Stencil\Registry\RegistryClient;
 use Ivanfuhr\Stencil\Registry\RegistryResolver;
 use Ivanfuhr\Stencil\Support\Button\ButtonClassMap;
 use Ivanfuhr\Stencil\Support\Form\FormControlClassMap;
+use Ivanfuhr\Stencil\Support\Icon\LucideIconInstaller;
+use Ivanfuhr\Stencil\Support\Icon\LucideIconStubGenerator;
 use Ivanfuhr\Stencil\Support\Interaction\InteractionStateAttributes;
 use Ivanfuhr\Stencil\Support\Interaction\InteractionStateClassMap;
 use Ivanfuhr\Stencil\Support\ProjectConfig;
@@ -70,6 +72,8 @@ class StencilServiceProvider extends ServiceProvider
         $this->app->singleton(InteractionStateAttributes::class);
         $this->app->singleton(TailwindIntegrationValidator::class);
         $this->app->singleton(GoogleFontsStylesheetBuilder::class);
+        $this->app->singleton(LucideIconStubGenerator::class);
+        $this->app->singleton(LucideIconInstaller::class);
     }
 
     /**

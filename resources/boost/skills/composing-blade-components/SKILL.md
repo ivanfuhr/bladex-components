@@ -166,6 +166,7 @@ Refactor toward sub-components and slots so consumers control order, optional pi
 - Encoding layout or optional regions as many boolean props on one component.
 - Passing HTML strings in props instead of slots or dedicated sub-components.
 - Duplicating `variant` / `size` on every child when `@aware` from the root is enough.
+- Inlining Lucide `<svg>` markup or calling `TypographyClassMap` directly in compound components when `icon`, `heading`, or `text` primitives exist.
 - Leaking package internals (service provider paths, unpublished partials) in consumer docs.
 - Adding PHP helpers or facades for markup that belongs in composable Blade components.
 - Breaking published view overrides by renaming slot names or sub-component paths without a changelog note.

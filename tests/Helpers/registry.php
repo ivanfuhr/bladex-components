@@ -35,6 +35,8 @@ function registryFixtureJson(string $relative): array
 
 function fakeRegistryHttp(): void
 {
+    fakeLucideIconHttp();
+
     Http::fake(function (Request $request) {
         $url = $request->url();
 

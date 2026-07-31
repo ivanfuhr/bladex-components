@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\File;
 uses()->group('registry-isolated');
 
 beforeEach(function () {
+    config(['stencil.project_config_file' => 'stencil.json']);
+    app()->forgetInstance(ProjectConfig::class);
+
     cleanupOwnedProjectArtifacts();
 });
 
@@ -115,7 +118,7 @@ it('renders owned select with translated strings from stencil-ui namespace', fun
         ->not->toContain('stencil::messages');
 });
 
-it('renders owned button loading state without the icon loading component', function () {
+it('renders owned button loading state with the icon loading component', function () {
     useOwnedRegistryProject();
     fakeRegistryHttp();
 
@@ -124,15 +127,28 @@ it('renders owned button loading state without the icon loading component', func
 
     registerOwnedUiNamespace();
 
-    expect(file_exists($this->app->resourcePath('views/ui/icon/loading.blade.php')))->toBeFalse();
+    expect(file_exists($this->app->resourcePath('views/ui/icon/loading.blade.php')))->toBeTrue();
 
     $html = Blade::render('<x-ui::button :loading="true">Save</x-ui::button>');
 
     expect($html)
         ->toContain('data-button-loading')
         ->toContain('data-button-loading-icon')
-        ->toContain('animate-spin')
-        ->not->toContain('icon.loading');
+        ->toContain('animate-spin');
+});
+
+it('add select installs required lucide icon stubs', function () {
+    useOwnedRegistryProject();
+    fakeRegistryHttp();
+
+    $this->artisan('stencil:add', ['names' => ['select']])
+        ->assertSuccessful();
+
+    $iconsPath = $this->app->resourcePath('views/ui/icons');
+
+    expect(file_exists($iconsPath.'/chevron-down.blade.php'))->toBeTrue();
+    expect(file_exists($iconsPath.'/check.blade.php'))->toBeTrue();
+    expect(file_exists($iconsPath.'/x.blade.php'))->toBeTrue();
 });
 
 it('fails add when project config is missing', function () {

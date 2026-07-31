@@ -81,11 +81,12 @@
             "vendor/bin/phpstan analyse --memory-limit=512M"
         ],
         "test:types": [
-            "vendor/bin/pest --type-coverage --min=100"
+            "@php -d memory_limit=512M vendor/bin/pest --type-coverage --min=100"
         ],
         "test:unit": [
-            "vendor/bin/pest --parallel --exclude-group=registry-isolated",
-            "vendor/bin/pest --group=registry-isolated"
+            "vendor/bin/pest --parallel --exclude-group=registry-isolated --exclude-group=config-isolated",
+            "vendor/bin/pest --group=registry-isolated",
+            "vendor/bin/pest --group=config-isolated"
         ],
         "test": [
             "@analyse",

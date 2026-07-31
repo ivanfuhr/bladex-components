@@ -67,18 +67,9 @@
     ])>
         {{ $slot }}
     </span>
-    <svg
+    <x-stencil::icon
+        name="chevron-down"
         class="{{ $chevronClasses }} text-zinc-500 transition-transform duration-200 group-aria-expanded:rotate-180 dark:text-zinc-400"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
         data-select-chevron
-    >
-        <path d="m6 9 6 6 6-6" />
-    </svg>
+    />
 </button>

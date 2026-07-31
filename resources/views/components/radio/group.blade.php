@@ -28,7 +28,12 @@
 
 <fieldset {{ $groupAttributes }}>
     @if (filled($legend))
-        <legend class="mb-1 text-sm font-medium text-zinc-950 dark:text-zinc-50">{{ $legend }}</legend>
+        <legend class="mb-1">
+            <x-stencil::text
+                size="sm"
+                class="font-medium text-zinc-950 dark:text-zinc-50"
+            >{{ $legend }}</x-stencil::text>
+        </legend>
     @endif
 
     {{ $slot }}

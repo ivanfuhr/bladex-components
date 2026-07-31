@@ -5,14 +5,15 @@
     "title": "Time Picker",
     "description": "Time selection list with configurable steps and unavailable slots.",
     "registryDependencies": [
-        "input"
+        "input",
+        "icon"
     ],
     "files": [
         {
             "path": "time-picker/button.blade.php",
             "type": "registry:ui",
             "target": "time-picker/button.blade.php",
-            "content": "@aware([\n    'placeholder' => null,\n    'invalid' => false,\n    'disabled' => false,\n    'clearable' => false,\n    'size' => null,\n])\n\n@php\n    use App\\Support\\Stencil\\Form\\FormControlClassMap;\n    use App\\Support\\Stencil\\Interaction\\InteractionStateAttributes;\n\n    $formControl = app(FormControlClassMap::class);\n    $interactionState = app(InteractionStateAttributes::class);\n\n    $triggerAttributes = $interactionState->apply(\n        $attributes\n            ->class([\n                'time-picker__trigger',\n                'group flex w-full min-w-0 items-center justify-between gap-2 text-left',\n                $formControl->fieldSurfaceClasses($size, includeReadOnly: false, cursor: 'pointer'),\n                $invalid ? 'border-red-500' : null,\n            ])\n            ->merge([\n                'type' => 'button',\n                'aria-haspopup' => 'listbox',\n                'aria-expanded' => 'false',\n            ]),\n        ['nativeDisabled' => true],\n    );\n@endphp\n\n<button {{ $triggerAttributes }} data-time-picker-trigger>\n    <x-ui::time-picker.selected :$placeholder />\n    <svg class=\"size-4 shrink-0 opacity-50\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"/></svg>\n</button>\n"
+            "content": "@aware([\n    'placeholder' => null,\n    'invalid' => false,\n    'disabled' => false,\n    'clearable' => false,\n    'size' => null,\n])\n\n@php\n    use App\\Support\\Stencil\\Form\\FormControlClassMap;\n    use App\\Support\\Stencil\\Interaction\\InteractionStateAttributes;\n\n    $formControl = app(FormControlClassMap::class);\n    $interactionState = app(InteractionStateAttributes::class);\n\n    $triggerAttributes = $interactionState->apply(\n        $attributes\n            ->class([\n                'time-picker__trigger',\n                'group flex w-full min-w-0 items-center justify-between gap-2 text-left',\n                $formControl->fieldSurfaceClasses($size, includeReadOnly: false, cursor: 'pointer'),\n                $invalid ? 'border-red-500' : null,\n            ])\n            ->merge([\n                'type' => 'button',\n                'aria-haspopup' => 'listbox',\n                'aria-expanded' => 'false',\n            ]),\n        ['nativeDisabled' => true],\n    );\n@endphp\n\n<button {{ $triggerAttributes }} data-time-picker-trigger>\n    <x-ui::time-picker.selected :$placeholder />\n    <x-ui::icon name=\"chevron-down\" class=\"size-4 shrink-0 opacity-50\" />\n</button>\n"
         },
         {
             "path": "time-picker/index.blade.php",
@@ -24,13 +25,13 @@
             "path": "time-picker/input/index.blade.php",
             "type": "registry:ui",
             "target": "time-picker/input/index.blade.php",
-            "content": "@aware([\n    'placeholder' => null,\n    'invalid' => false,\n    'disabled' => false,\n    'clearable' => false,\n    'size' => null,\n])\n\n<x-ui::input\n    {{ $attributes->merge([\n        'type' => 'text',\n        'placeholder' => $placeholder,\n        'invalid' => $invalid,\n        'disabled' => $disabled,\n        'size' => $size,\n        'readonly' => true,\n        'data-time-picker-trigger' => true,\n        'data-time-picker-input' => true,\n    ]) }}\n/>\n"
+            "content": "@aware([\n    'placeholder' => null,\n    'invalid' => false,\n    'disabled' => false,\n    'clearable' => false,\n    'size' => null,\n])\n\n<x-ui::input {{\n    $attributes->merge([\n        'type' => 'text',\n        'placeholder' => $placeholder,\n        'invalid' => $invalid,\n        'disabled' => $disabled,\n        'size' => $size,\n        'readonly' => true,\n        'data-time-picker-trigger' => true,\n        'data-time-picker-input' => true,\n    ])\n}} />\n"
         },
         {
             "path": "time-picker/selected.blade.php",
             "type": "registry:ui",
             "target": "time-picker/selected.blade.php",
-            "content": "@props([\n    'placeholder' => null,\n])\n\n<span\n    {{ $attributes->class([\n        'time-picker__value block min-w-0 flex-1 truncate text-left',\n        'data-placeholder:text-zinc-500 dark:data-placeholder:text-zinc-400',\n    ])->merge([\n        'data-placeholder' => filled($placeholder) ? 'true' : null,\n    ]) }}\n    data-time-picker-value\n>{{ $placeholder }}</span>\n"
+            "content": "@props([\n    'placeholder' => null,\n])\n\n<span\n    {{\n        $attributes->class([\n            'time-picker__value block min-w-0 flex-1 truncate text-left',\n            'data-placeholder:text-zinc-500 dark:data-placeholder:text-zinc-400',\n        ])->merge([\n            'data-placeholder' => filled($placeholder) ? 'true' : null,\n        ])\n    }}\n    data-time-picker-value\n>{{ $placeholder }}</span>\n"
         },
         {
             "path": "time-picker/time-picker.js",
@@ -50,5 +51,8 @@
             "target": "time-picker/chrono/timezone.js",
             "content": "import { DateValue } from './date-value.js';\n\n/**\n * @param {string} timeZone IANA timezone\n */\nexport function todayInTimeZone(timeZone) {\n    const formatter = new Intl.DateTimeFormat('en-US', {\n        timeZone,\n        year: 'numeric',\n        month: '2-digit',\n        day: '2-digit',\n    });\n\n    const parts = formatter.formatToParts(new Date());\n    const year = Number(parts.find((p) => p.type === 'year')?.value);\n    const month = Number(parts.find((p) => p.type === 'month')?.value);\n    const day = Number(parts.find((p) => p.type === 'day')?.value);\n\n    return new DateValue(year, month, day);\n}\n\n/**\n * @param {DateValue} dateValue\n * @param {string} locale\n * @param {Intl.DateTimeFormatOptions} options\n */\nexport function formatDateValue(dateValue, locale, options = {}) {\n    return new Intl.DateTimeFormat(locale, {\n        ...options,\n        timeZone: 'UTC',\n    }).format(dateValue.getDate());\n}\n\n/**\n * @param {string} time HH:mm or HH:mm:ss\n * @param {string} locale\n * @param {string} timeZone\n * @param {boolean} withSeconds\n */\nexport function formatTimeLabel(time, locale, timeZone, withSeconds = false) {\n    const [h, m, s] = time.split(':').map((v) => parseInt(v, 10) || 0);\n    const date = new Date();\n    date.setHours(h, m, s || 0, 0);\n\n    return new Intl.DateTimeFormat(locale, {\n        hour: 'numeric',\n        minute: '2-digit',\n        second: withSeconds ? '2-digit' : undefined,\n        timeZone,\n    }).format(date);\n}\n"
         }
+    ],
+    "iconDependencies": [
+        "chevron-down"
     ]
 }

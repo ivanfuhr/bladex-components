@@ -50,7 +50,7 @@ php artisan vendor:publish --tag=stencil-config
 
 ## Usage
 
-Initialize the project, browse the registry, then install only what you need. `stencil:add` resolves **`registryDependencies`** automatically (for example, `input` also installs `input-group`, `field`, and `text`).
+Initialize the project, browse the registry, then install only what you need. `stencil:add` resolves **`registryDependencies`** automatically (for example, `input` also installs `input-group`, `field`, and `text`) and installs declared **`iconDependencies`** as Lucide stubs (for example, `select` pulls in `chevron-down`, `check`, and `x`).
 
 ```bash
 php artisan stencil:init
@@ -66,7 +66,7 @@ Use the owned Blade namespace in your app:
 <x-ui::input name="email" />
 ```
 
-**Registry UI items:** `button`, `checkbox`, `dialog`, `field`, `heading`, `icon`, `input`, `input-group`, `label`, `radio`, `select`, `switch`, `text`, `textarea`. Lower-level pieces such as `field`, `input-group`, and `label` are usually installed transitively. **Lucide icons:** run `stencil:add icon` once, then `stencil:icon {name}` per icon (see [Icons](#icons)).
+**Registry UI items:** `button`, `checkbox`, `dialog`, `field`, `heading`, `icon`, `input`, `input-group`, `label`, `radio`, `select`, `switch`, `text`, `textarea`. Lower-level pieces such as `field`, `input-group`, `label`, and `icon` are usually installed transitively. Components that use Lucide glyphs also install the required icon stubs during `stencil:add`; use `stencil:icon {name}` for any extra icons (see [Icons](#icons)).
 
 ### Registry CLI
 

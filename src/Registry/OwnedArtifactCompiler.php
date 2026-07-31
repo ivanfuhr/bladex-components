@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Ivanfuhr\Stencil\Registry;
 
-use RuntimeException;
-
 final class OwnedArtifactCompiler
 {
     public const string PACKAGE_SUPPORT_NAMESPACE = 'Ivanfuhr\\Stencil\\Support';
@@ -24,7 +22,6 @@ final class OwnedArtifactCompiler
     {
         $ownedSupportNamespace ??= self::OWNED_SUPPORT_NAMESPACE;
 
-        $content = $this->inlineInternalLoadingIconInclude($content, $ownedSupportNamespace);
         $content = str_replace(self::PACKAGE_COMPONENT_PREFIX, self::OWNED_COMPONENT_PREFIX, $content);
         $content = $this->rewriteSupportNamespace($content, $ownedSupportNamespace);
         $content = $this->rewriteTranslationNamespace($content);
@@ -54,25 +51,5 @@ final class OwnedArtifactCompiler
         $content = str_replace(self::PACKAGE_SUPPORT_NAMESPACE, $ownedSupportNamespace, $content);
 
         return $content;
-    }
-
-    private function inlineInternalLoadingIconInclude(string $content, string $ownedSupportNamespace): string
-    {
-        if (! str_contains($content, 'stencil::internals.loading-icon')) {
-            return $content;
-        }
-
-        $partialPath = dirname(__DIR__, 2).'/resources/views/internals/loading-icon.blade.php';
-        $partial = file_get_contents($partialPath);
-
-        if ($partial === false) {
-            throw new RuntimeException("Unable to read internal loading icon partial: {$partialPath}");
-        }
-
-        $partial = $this->compileBlade($partial, $ownedSupportNamespace);
-
-        $pattern = "/@include\\(\\s*'stencil::internals\\.loading-icon'(?:\\s*,\\s*\\[[^\\]]*\\])?\\s*\\)/s";
-
-        return (string) preg_replace($pattern, $partial, $content);
     }
 }

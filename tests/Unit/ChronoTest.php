@@ -33,6 +33,13 @@ it('normalizes array range values for pickers', function () {
     ], 'range'))->toBe('2026-01-01/2026-01-31');
 });
 
+it('normalizes multiple array date values for pickers', function () {
+    expect(ChronoFormatter::normalizeDateValue([
+        '2026-01-01',
+        '2026-01-15',
+    ]))->toBe('2026-01-01,2026-01-15');
+});
+
 it('exports preset metadata for javascript', function () {
     Carbon::setTestNow(Carbon::parse('2026-07-15'));
 

@@ -77,14 +77,23 @@
             "type": "registry:ui",
             "title": "Button",
             "description": "Composable button primitive with variants, sizes, link mode, and grouped layouts.",
-            "registryDependencies": []
+            "registryDependencies": [
+                "icon"
+            ]
         },
         {
             "name": "select",
             "type": "registry:ui",
             "title": "Select",
             "description": "Accessible custom listbox select with compound sub-components and optional Flux-style shortcut.",
-            "registryDependencies": []
+            "registryDependencies": [
+                "icon"
+            ],
+            "iconDependencies": [
+                "chevron-down",
+                "check",
+                "x"
+            ]
         },
         {
             "name": "textarea",
@@ -92,8 +101,7 @@
             "title": "Textarea",
             "description": "Accessible multi-line text control with validation and disabled states.",
             "registryDependencies": [
-                "field",
-                "text"
+                "field"
             ]
         },
         {
@@ -130,7 +138,13 @@
             "title": "Dialog",
             "description": "Accessible modal layer with compound sub-components, flyout mode, and named triggers.",
             "registryDependencies": [
-                "button"
+                "button",
+                "heading",
+                "text",
+                "icon"
+            ],
+            "iconDependencies": [
+                "x"
             ]
         },
         {
@@ -145,7 +159,13 @@
             "type": "registry:ui",
             "title": "Calendar",
             "description": "Accessible calendar grid for date and range selection.",
-            "registryDependencies": []
+            "registryDependencies": [
+                "icon"
+            ],
+            "iconDependencies": [
+                "chevron-left",
+                "chevron-right"
+            ]
         },
         {
             "name": "date-picker",
@@ -155,7 +175,13 @@
             "registryDependencies": [
                 "button",
                 "input",
-                "calendar"
+                "calendar",
+                "icon"
+            ],
+            "iconDependencies": [
+                "calendar",
+                "x",
+                "chevron-down"
             ]
         },
         {
@@ -164,7 +190,11 @@
             "title": "Time Picker",
             "description": "Time selection list with configurable steps and unavailable slots.",
             "registryDependencies": [
-                "input"
+                "input",
+                "icon"
+            ],
+            "iconDependencies": [
+                "chevron-down"
             ]
         },
         {
