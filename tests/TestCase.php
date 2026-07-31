@@ -12,13 +12,14 @@ abstract class TestCase extends Orchestra
     protected function defineEnvironment($app): void
     {
         $token = getenv('TEST_TOKEN');
+        $suffix = ($token !== false && $token !== '') ? $token : (string) getmypid();
 
-        if ($token !== false && $token !== '') {
-            $app['config']->set(
-                'stencil.project_config_file',
-                'storage/framework/testing/stencil-'.$token.'.json',
-            );
-        }
+        // Always isolate project config so Pest never overwrites the workbench
+        // playbook's stencil.json with stub icon paths.
+        $app['config']->set(
+            'stencil.project_config_file',
+            'storage/framework/testing/stencil-'.$suffix.'.json',
+        );
     }
 
     protected function setUp(): void

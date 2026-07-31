@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Blade;
 use Ivanfuhr\Stencil\Support\Icon\IconVariant;
 use Ivanfuhr\Stencil\Support\Icon\LucideIconStubGenerator;
 
@@ -25,4 +26,19 @@ SVG;
         ->toContain('<x-stencil::icon.lucide')
         ->toContain('<circle cx="11" cy="11" r="8"/>')
         ->not->toContain('width="24"');
+});
+
+it('lets explicit size classes override the lucide variant box', function (): void {
+    seedStencilTestIcons(['upload']);
+
+    $html = Blade::render('<x-stencil::icon name="upload" class="size-6 text-zinc-600" />');
+
+    expect($html)
+        ->toContain('block shrink-0')
+        ->toContain('size-6')
+        ->toContain('text-zinc-600')
+        ->toContain('data-icon')
+        ->not->toContain('size-4')
+        ->not->toContain('width="16"')
+        ->not->toContain('height="16"');
 });
