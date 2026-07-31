@@ -117,3 +117,23 @@ it('uses translated labels for add and remove actions', function () {
         ->toContain('Add item')
         ->toContain('aria-label="Remove item"');
 });
+
+it('renders duplicate and sortable markers', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-stencil::repeater name="members" sortable>
+            <x-stencil::repeater.item>
+                <x-stencil::repeater.handle />
+                <x-stencil::input data-repeater-field="name" />
+                <x-stencil::repeater.duplicate />
+                <x-stencil::repeater.remove />
+            </x-stencil::repeater.item>
+        </x-stencil::repeater>
+    BLADE);
+
+    expect($html)
+        ->toContain('data-repeater-sortable')
+        ->toContain('data-repeater-duplicate')
+        ->toContain('aria-label="Duplicate item"')
+        ->toContain('data-repeater-handle')
+        ->toContain('aria-label="Reorder item"');
+});

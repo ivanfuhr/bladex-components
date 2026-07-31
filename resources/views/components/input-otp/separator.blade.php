@@ -5,15 +5,13 @@
     ])->implode(' ');
 @endphp
 
-<div
-    {{
-        $attributes->class($separatorClasses)->merge([
-            'role' => 'separator',
-            'aria-hidden' => 'true',
-            'data-input-otp-separator' => true,
-        ])
-    }}
->
+<div {{
+    $attributes->class($separatorClasses)->merge([
+        'role' => 'separator',
+        'aria-hidden' => 'true',
+        'data-input-otp-separator' => true,
+    ])
+}}>
     @if ($slot->isEmpty())
         <span class="text-sm font-medium">-</span>
     @else

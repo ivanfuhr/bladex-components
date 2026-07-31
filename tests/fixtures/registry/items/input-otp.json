@@ -12,7 +12,7 @@
             "path": "input-otp/group.blade.php",
             "type": "registry:ui",
             "target": "input-otp/group.blade.php",
-            "content": "@php\n    $groupClasses = collect([\n        'input-otp__group',\n        'flex items-center gap-2',\n    ])->implode(' ');\n@endphp\n\n<div {{ $attributes->class($groupClasses)->merge(['data-input-otp-group' => true]) }}>\n    {{ $slot }}\n</div>\n"
+            "content": "@php\n    $groupClasses = collect([\n        'input-otp__group',\n        'flex items-center gap-2',\n    ])->implode(' ');\n@endphp\n\n<div {{ $attributes->class($groupClasses)->merge(['data-input-otp-group' => true]) }}>{{ $slot }}</div>\n"
         },
         {
             "path": "input-otp/index.blade.php",
@@ -24,7 +24,7 @@
             "path": "input-otp/separator.blade.php",
             "type": "registry:ui",
             "target": "input-otp/separator.blade.php",
-            "content": "@php\n    $separatorClasses = collect([\n        'input-otp__separator',\n        'flex shrink-0 items-center justify-center text-zinc-400 dark:text-zinc-500',\n    ])->implode(' ');\n@endphp\n\n<div\n    {{\n        $attributes->class($separatorClasses)->merge([\n            'role' => 'separator',\n            'aria-hidden' => 'true',\n            'data-input-otp-separator' => true,\n        ])\n    }}\n>\n    @if ($slot->isEmpty())\n        <span class=\"text-sm font-medium\">-</span>\n    @else\n        {{ $slot }}\n    @endif\n</div>\n"
+            "content": "@php\n    $separatorClasses = collect([\n        'input-otp__separator',\n        'flex shrink-0 items-center justify-center text-zinc-400 dark:text-zinc-500',\n    ])->implode(' ');\n@endphp\n\n<div {{\n    $attributes->class($separatorClasses)->merge([\n        'role' => 'separator',\n        'aria-hidden' => 'true',\n        'data-input-otp-separator' => true,\n    ])\n}}>\n    @if ($slot->isEmpty())\n        <span class=\"text-sm font-medium\">-</span>\n    @else\n        {{ $slot }}\n    @endif\n</div>\n"
         },
         {
             "path": "input-otp/slot.blade.php",

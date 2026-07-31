@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Support\Stencil\Icon;
 
+use App\Support\Stencil\ProjectConfig;
 use Illuminate\Contracts\Foundation\Application;
 use InvalidArgumentException;
-use App\Support\Stencil\ProjectConfig;
 
 final class IconPathResolver
 {

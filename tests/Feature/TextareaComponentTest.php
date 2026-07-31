@@ -25,3 +25,13 @@ it('respects disabled on textarea', function () {
 
     expect($html)->toContain('disabled');
 });
+
+it('renders autosize and counter markers', function () {
+    $html = Blade::render('<x-stencil::textarea name="bio" autosize counter maxlength="200" />');
+
+    expect($html)
+        ->toContain('data-textarea-autosize')
+        ->toContain('data-textarea-counter')
+        ->toContain('data-textarea-counter-display')
+        ->toContain('maxlength="200"');
+});

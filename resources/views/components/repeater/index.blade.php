@@ -3,6 +3,7 @@
     'value' => [],
     'min' => 0,
     'max' => null,
+    'sortable' => false,
     'invalid' => false,
     'disabled' => false,
     'size' => null,
@@ -35,7 +36,7 @@
     ])->filter()->implode(' ');
 
     $rootAttributes = $attributes
-        ->except(['name', 'value', 'min', 'max', 'invalid', 'disabled', 'size'])
+        ->except(['name', 'value', 'min', 'max', 'sortable', 'invalid', 'disabled', 'size'])
         ->class($rootClasses)
         ->merge([
             'data-repeater' => true,
@@ -43,6 +44,10 @@
             'data-repeater-value' => json_encode($normalizedValue, JSON_THROW_ON_ERROR),
             'data-repeater-min' => max(0, (int) $min),
         ]);
+
+    if ($sortable) {
+        $rootAttributes = $rootAttributes->merge(['data-repeater-sortable' => true]);
+    }
 
     if ($max !== null) {
         $rootAttributes = $rootAttributes->merge([
@@ -65,9 +70,7 @@
 <div {{ $rootAttributes }}>
     <div data-repeater-list class="repeater__list flex flex-col gap-3"></div>
 
-    <div data-repeater-actions class="repeater__actions flex flex-col gap-3">
-        {{ $slot }}
-    </div>
+    <div data-repeater-actions class="repeater__actions flex flex-col gap-3">{{ $slot }}</div>
 
     <template data-repeater-item-template>
         @stack($stackName)

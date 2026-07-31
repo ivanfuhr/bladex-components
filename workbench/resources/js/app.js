@@ -5,5 +5,5 @@ window.Alpine = Alpine;
 Alpine.start();
 
 // stencil-start
-import '../views/ui/repeater/repeater.js';
+import '../views/ui/input/input-enhancements.js';
 // stencil-end

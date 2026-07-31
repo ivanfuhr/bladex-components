@@ -31,7 +31,12 @@ final class ProjectIntegrator
         'time-picker' => 'time-picker/time-picker.js',
         'datetime-picker' => 'datetime-picker/datetime-picker.js',
         'input-currency' => 'input/input-currency.js',
+        'input' => 'input/input-enhancements.js',
         'repeater' => 'repeater/repeater.js',
+        'pillbox' => 'pillbox/pillbox.js',
+        'rating' => 'rating/rating.js',
+        'color-picker' => 'color-picker/color-picker.js',
+        'textarea' => 'textarea/textarea.js',
     ];
 
     public function ensureTailwind(ProjectConfig $config): void

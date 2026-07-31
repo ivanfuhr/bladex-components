@@ -42,10 +42,15 @@
             "name": "input",
             "type": "registry:ui",
             "title": "Input",
-            "description": "Accessible text input primitive with optional affixes and group layout.",
+            "description": "Accessible text input primitive with optional affixes, mask, password reveal, copy button, and character counter.",
             "registryDependencies": [
                 "input-group",
-                "field"
+                "field",
+                "icon"
+            ],
+            "iconDependencies": [
+                "eye",
+                "clipboard"
             ]
         },
         {
@@ -99,14 +104,15 @@
             "name": "combobox",
             "type": "registry:ui",
             "title": "Combobox",
-            "description": "Accessible filterable combobox / autocomplete with compound sub-components and optional shortcut.",
+            "description": "Accessible filterable combobox / autocomplete with single or multiple selection, chips, and compound sub-components.",
             "registryDependencies": [
                 "icon",
                 "text"
             ],
             "iconDependencies": [
                 "chevron-down",
-                "check"
+                "check",
+                "x"
             ]
         },
         {
@@ -129,7 +135,7 @@
             "name": "repeater",
             "type": "registry:ui",
             "title": "Repeater",
-            "description": "Composition-first repeater for dynamic Laravel array fields with add/remove rows and native form submission.",
+            "description": "Composition-first repeater for dynamic Laravel array fields with add/remove/duplicate rows, optional drag reorder, and native form submission.",
             "registryDependencies": [
                 "icon",
                 "text",
@@ -138,7 +144,45 @@
             ],
             "iconDependencies": [
                 "plus",
+                "x",
+                "copy",
+                "grip-vertical"
+            ]
+        },
+        {
+            "name": "pillbox",
+            "type": "registry:ui",
+            "title": "Pillbox",
+            "description": "Free-text tags input that submits multiple strings as name[] with dedupe and optional max.",
+            "registryDependencies": [
+                "icon",
+                "field"
+            ],
+            "iconDependencies": [
                 "x"
+            ]
+        },
+        {
+            "name": "rating",
+            "type": "registry:ui",
+            "title": "Rating",
+            "description": "Accessible star rating input that submits a numeric value.",
+            "registryDependencies": [
+                "icon",
+                "field"
+            ],
+            "iconDependencies": [
+                "star"
+            ]
+        },
+        {
+            "name": "color-picker",
+            "type": "registry:ui",
+            "title": "Color Picker",
+            "description": "Native color input with optional synchronized hex text field.",
+            "registryDependencies": [
+                "field",
+                "input"
             ]
         },
         {
@@ -163,7 +207,7 @@
             "name": "textarea",
             "type": "registry:ui",
             "title": "Textarea",
-            "description": "Accessible multi-line text control with validation and disabled states.",
+            "description": "Accessible multi-line text control with autosize, character counter, validation, and disabled states.",
             "registryDependencies": [
                 "field"
             ]

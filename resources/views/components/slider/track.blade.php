@@ -9,12 +9,8 @@
     $railClasses = $formControl->sliderTrackClasses($size);
 @endphp
 
-<div
-    {{
-        $attributes->class($railClasses)->merge([
-            'data-slider-track' => true,
-        ])
-    }}
->
-    {{ $slot }}
-</div>
+<div {{
+    $attributes->class($railClasses)->merge([
+        'data-slider-track' => true,
+    ])
+}}>{{ $slot }}</div>

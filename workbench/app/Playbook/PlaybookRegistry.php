@@ -53,6 +53,9 @@ final class PlaybookRegistry
             $this->combobox(),
             $this->fileUpload(),
             $this->repeater(),
+            $this->pillbox(),
+            $this->rating(),
+            $this->colorPicker(),
             $this->inputOtp(),
             $this->slider(),
             $this->label(),
@@ -309,6 +312,74 @@ final class PlaybookRegistry
                 'max' => '',
             ],
             previewView: 'workbench::playbook.previews.repeater',
+        );
+    }
+
+    private function pillbox(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
+            new PlaybookControl('disabled', 'Disabled', 'checkbox', [], false),
+            new PlaybookControl('max', 'Max tags', 'select', [
+                '' => 'None',
+                '3' => '3',
+                '5' => '5',
+            ], ''),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'pillbox',
+            title: 'Pillbox',
+            description: 'Free-text tags input. Requires pillbox.js.',
+            controls: $controls,
+            defaultState: [
+                'invalid' => false,
+                'disabled' => false,
+                'max' => '',
+            ],
+            previewView: 'workbench::playbook.previews.pillbox',
+        );
+    }
+
+    private function rating(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'rating',
+            title: 'Rating',
+            description: 'Star rating input. Requires rating.js.',
+            controls: [
+                new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
+                new PlaybookControl('disabled', 'Disabled', 'checkbox', [], false),
+                new PlaybookControl('max', 'Max stars', 'select', [
+                    '3' => '3',
+                    '5' => '5',
+                    '10' => '10',
+                ], '5'),
+            ],
+            defaultState: [
+                'invalid' => false,
+                'disabled' => false,
+                'max' => '5',
+            ],
+            previewView: 'workbench::playbook.previews.rating',
+        );
+    }
+
+    private function colorPicker(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'color-picker',
+            title: 'Color Picker',
+            description: 'Popover color picker with SV canvas, hue slider, and swatches. Requires color-picker.js.',
+            controls: [
+                new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
+                new PlaybookControl('disabled', 'Disabled', 'checkbox', [], false),
+            ],
+            defaultState: [
+                'invalid' => false,
+                'disabled' => false,
+            ],
+            previewView: 'workbench::playbook.previews.color-picker',
         );
     }
 

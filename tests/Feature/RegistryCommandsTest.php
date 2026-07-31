@@ -8,13 +8,6 @@ use Illuminate\Support\Facades\File;
 
 uses()->group('registry-isolated');
 
-beforeEach(function () {
-    config(['stencil.project_config_file' => 'stencil.json']);
-    app()->forgetInstance(ProjectConfig::class);
-
-    cleanupOwnedProjectArtifacts();
-});
-
 it('creates project config and lock via init', function () {
     $configPath = $this->app->basePath('stencil.json');
     $lockPath = $this->app->basePath('stencil.lock');

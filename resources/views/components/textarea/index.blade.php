@@ -1,6 +1,8 @@
 @props([
     'invalid' => false,
     'size' => null,
+    'autosize' => false,
+    'counter' => false,
 ])
 
 @aware([
@@ -26,6 +28,7 @@
         'placeholder:text-zinc-500 dark:placeholder:text-zinc-400',
         $formControl->invalidFieldClasses(),
         $isInvalid ? 'border-red-500 focus-visible:ring-red-500/20 dark:border-red-500' : null,
+        $autosize ? 'resize-none overflow-hidden' : null,
     ])->filter()->implode(' ');
 
     $wrapperClasses = collect([
@@ -34,11 +37,26 @@
         $userClass,
     ])->filter()->implode(' ');
 
+    $wrapperAttributes = $attributes
+        ->except(['class', 'class:textarea', 'textarea:class', 'autosize', 'counter'])
+        ->class($wrapperClasses)
+        ->merge([
+            'data-textarea' => true,
+        ]);
+
+    if ($autosize) {
+        $wrapperAttributes = $wrapperAttributes->merge(['data-textarea-autosize' => true]);
+    }
+
+    if ($counter) {
+        $wrapperAttributes = $wrapperAttributes->merge(['data-textarea-counter' => true]);
+    }
+
     $controlExtraClass = $attributes->get('class:textarea') ?? $attributes->get('textarea:class');
 
     $controlAttributes = $interactionState->apply(
         $attributes
-            ->except(['class', 'class:textarea', 'textarea:class'])
+            ->except(['class', 'class:textarea', 'textarea:class', 'autosize', 'counter'])
             ->class([$controlClasses, $controlExtraClass])
             ->merge([
                 'data-textarea-control' => true,
@@ -50,6 +68,13 @@
     }
 @endphp
 
-<div @class([$wrapperClasses]) data-textarea>
+<div {{ $wrapperAttributes }}>
     <textarea {{ $controlAttributes }}>{{ $slot }}</textarea>
 </div>
+
+@if ($counter)
+    <div
+        class="textarea__counter mt-1 text-right text-xs text-zinc-500 dark:text-zinc-400"
+        data-textarea-counter-display
+    ></div>
+@endif

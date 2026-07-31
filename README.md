@@ -561,7 +561,7 @@ Declare one `repeater.item` row template with `data-repeater-field` on each cont
 </x-ui::field>
 ```
 
-v1 limits: no nested repeaters, drag-reorder, or `file-upload` rows inside a repeater item.
+v1 limits: no nested repeaters or `file-upload` rows inside a repeater item. Use `repeater.duplicate` to clone a row, `repeater.handle` with `sortable` for drag reorder, and `field.errors` with wildcard names like `members.*.name` for per-index validation messages.
 
 Validate the collection and each row field on the server:
 
@@ -577,6 +577,89 @@ Put `data-repeater-field` on the control that should submit (usually the `input`
 
 ```bash
 php artisan stencil:add repeater
+```
+
+<br>
+
+## Pillbox
+
+Free-text tags input. Submits multiple strings as `name[]`. Enter or comma adds a tag; Backspace on empty input or chip remove button deletes. `stencil:add pillbox` copies `pillbox.js`.
+
+```blade
+<x-ui::pillbox name="tags" :value="old('tags', [])" placeholder="Add tags…" :max="10" />
+
+<x-ui::field name="tags">
+    <x-ui::field.label>Tags</x-ui::field.label>
+    <x-ui::pillbox name="tags" />
+    <x-ui::field.errors name="tags" />
+</x-ui::field>
+```
+
+```bash
+php artisan stencil:add pillbox
+```
+
+<br>
+
+## Input enhancements
+
+The `input` primitive supports optional QoL props (requires `input-enhancements.js` from `stencil:add input`):
+
+- `mask="phone"` or `mask="document"` — formatted display (vanilla mask)
+- `viewable` on `type="password"` — toggle visibility
+- `copyable` — copy value to clipboard
+- `counter` with `maxlength` — live character count
+
+```blade
+<x-ui::input name="phone" mask="phone" />
+<x-ui::input name="password" type="password" viewable />
+<x-ui::input name="token" copyable />
+<x-ui::input name="title" counter maxlength="80" />
+```
+
+<br>
+
+## Textarea enhancements
+
+`autosize` grows height with content; `counter` with `maxlength` shows a live count (`textarea.js`).
+
+```blade
+<x-ui::textarea name="bio" autosize counter maxlength="500" />
+```
+
+<br>
+
+## Combobox multiple
+
+Pass `multiple` with `display="count"` or `display="chips"`. Hidden inputs use `name[]`.
+
+```blade
+<x-ui::combobox name="frameworks" multiple display="chips" :value="['laravel']">
+    <x-ui::combobox.item value="laravel">Laravel</x-ui::combobox.item>
+    <x-ui::combobox.item value="vue">Vue</x-ui::combobox.item>
+</x-ui::combobox>
+```
+
+<br>
+
+## Rating
+
+Star rating with numeric hidden value. `stencil:add rating` copies `rating.js`.
+
+```blade
+<x-ui::rating name="score" :value="3" :max="5" />
+```
+
+<br>
+
+## Color Picker
+
+SV canvas, hue slider, Tailwind swatches, and hex field in a popover. `stencil:add color-picker` copies `color-picker.js`.
+
+```blade
+<x-ui::color-picker name="brand_color" value="#3366cc" />
+<x-ui::color-picker name="accent" :dropper="true" />
+<x-ui::color-picker name="theme" :swatches="['#ef4444', '#22c55e', '#3b82f6']" />
 ```
 
 <br>

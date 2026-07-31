@@ -98,6 +98,6 @@ class WorkbenchServiceProvider extends ServiceProvider
     private function isStubIcon(string $contents): bool
     {
         return str_contains($contents, '<path d="M12 2v20"/>')
-            || str_contains($contents, "<path d=\"M12 2v20\"/>");
+            || str_contains($contents, '<path d="M12 2v20"/>');
     }
 }

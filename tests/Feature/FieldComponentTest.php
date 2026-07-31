@@ -44,3 +44,19 @@ it('renders field description using the message primitive', function () {
         ->toContain('data-field-message')
         ->toContain('Helper copy.');
 });
+
+it('renders wildcard field errors for indexed validation keys', function () {
+    $bag = new MessageBag([
+        'members.0.name' => ['Name is required.'],
+        'members.1.name' => ['Name is required.'],
+    ]);
+    $errors = new ViewErrorBag;
+    $errors->put('default', $bag);
+    view()->share('errors', $errors);
+
+    $html = Blade::render('<x-stencil::field.errors name="members.*.name" />');
+
+    expect($html)
+        ->toContain('Name is required.')
+        ->toContain('data-field-message');
+});

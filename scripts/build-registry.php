@@ -68,12 +68,16 @@ $catalog = [
     ],
     'input' => [
         'title' => 'Input',
-        'description' => 'Accessible text input primitive with optional affixes and group layout.',
+        'description' => 'Accessible text input primitive with optional affixes, mask, password reveal, copy button, and character counter.',
         'type' => 'registry:ui',
-        'registryDependencies' => ['input-group', 'field'],
+        'registryDependencies' => ['input-group', 'field', 'icon'],
+        'iconDependencies' => ['eye', 'clipboard'],
         'source' => 'input',
         'targetPrefix' => 'input',
         'filesOnly' => ['index.blade.php'],
+        'assets' => [
+            'resources/assets/js/input-enhancements.js' => 'input-enhancements.js',
+        ],
     ],
     'input-currency' => [
         'title' => 'Input Currency',
@@ -128,10 +132,10 @@ $catalog = [
     ],
     'combobox' => [
         'title' => 'Combobox',
-        'description' => 'Accessible filterable combobox / autocomplete with compound sub-components and optional shortcut.',
+        'description' => 'Accessible filterable combobox / autocomplete with single or multiple selection, chips, and compound sub-components.',
         'type' => 'registry:ui',
         'registryDependencies' => ['icon', 'text'],
-        'iconDependencies' => ['chevron-down', 'check'],
+        'iconDependencies' => ['chevron-down', 'check', 'x'],
         'source' => 'combobox',
         'targetPrefix' => 'combobox',
         'assets' => [
@@ -152,14 +156,49 @@ $catalog = [
     ],
     'repeater' => [
         'title' => 'Repeater',
-        'description' => 'Composition-first repeater for dynamic Laravel array fields with add/remove rows and native form submission.',
+        'description' => 'Composition-first repeater for dynamic Laravel array fields with add/remove/duplicate rows, optional drag reorder, and native form submission.',
         'type' => 'registry:ui',
         'registryDependencies' => ['icon', 'text', 'field', 'input'],
-        'iconDependencies' => ['plus', 'x'],
+        'iconDependencies' => ['plus', 'x', 'copy', 'grip-vertical'],
         'source' => 'repeater',
         'targetPrefix' => 'repeater',
         'assets' => [
             'resources/assets/js/repeater.js' => 'repeater.js',
+        ],
+    ],
+    'pillbox' => [
+        'title' => 'Pillbox',
+        'description' => 'Free-text tags input that submits multiple strings as name[] with dedupe and optional max.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['icon', 'field'],
+        'iconDependencies' => ['x'],
+        'source' => 'pillbox',
+        'targetPrefix' => 'pillbox',
+        'assets' => [
+            'resources/assets/js/pillbox.js' => 'pillbox.js',
+        ],
+    ],
+    'rating' => [
+        'title' => 'Rating',
+        'description' => 'Accessible star rating input that submits a numeric value.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['icon', 'field'],
+        'iconDependencies' => ['star'],
+        'source' => 'rating',
+        'targetPrefix' => 'rating',
+        'assets' => [
+            'resources/assets/js/rating.js' => 'rating.js',
+        ],
+    ],
+    'color-picker' => [
+        'title' => 'Color Picker',
+        'description' => 'Native color input with optional synchronized hex text field.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['field', 'input'],
+        'source' => 'color-picker',
+        'targetPrefix' => 'color-picker',
+        'assets' => [
+            'resources/assets/js/color-picker.js' => 'color-picker.js',
         ],
     ],
     'input-otp' => [
@@ -186,12 +225,15 @@ $catalog = [
     ],
     'textarea' => [
         'title' => 'Textarea',
-        'description' => 'Accessible multi-line text control with validation and disabled states.',
+        'description' => 'Accessible multi-line text control with autosize, character counter, validation, and disabled states.',
         'type' => 'registry:ui',
         'registryDependencies' => ['field'],
         'source' => 'textarea',
         'targetPrefix' => 'textarea',
         'filesOnly' => ['index.blade.php'],
+        'assets' => [
+            'resources/assets/js/textarea.js' => 'textarea.js',
+        ],
     ],
     'checkbox' => [
         'title' => 'Checkbox',

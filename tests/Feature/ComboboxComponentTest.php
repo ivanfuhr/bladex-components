@@ -194,3 +194,22 @@ it('pre-fills the hidden input when a value is provided', function () {
     expect($html)->toContain('value="laravel"');
     expect($html)->toContain('data-combobox-hidden-input');
 });
+
+it('renders multiple combobox with hidden inputs and chips display', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-stencil::combobox name="frameworks" multiple display="chips" :value="['laravel', 'vue']">
+            <x-stencil::combobox.item value="laravel">Laravel</x-stencil::combobox.item>
+            <x-stencil::combobox.item value="vue">Vue</x-stencil::combobox.item>
+        </x-stencil::combobox>
+    BLADE);
+
+    expect($html)
+        ->toContain('data-combobox-multiple')
+        ->toContain('data-combobox-display="chips"')
+        ->toContain('data-combobox-hidden-inputs')
+        ->toContain('name="frameworks[]"')
+        ->toContain('value="laravel"')
+        ->toContain('value="vue"')
+        ->toContain('data-combobox-chips')
+        ->toContain('data-combobox-filter-input');
+});

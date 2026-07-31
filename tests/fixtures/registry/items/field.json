@@ -19,7 +19,7 @@
             "path": "field/errors.blade.php",
             "type": "registry:ui",
             "target": "field/errors.blade.php",
-            "content": "@props([\n    'name',\n])\n\n@error($name)\n    <x-ui::field.message variant=\"error\">{{ $message }}</x-ui::field.message>\n@enderror\n"
+            "content": "@props([\n    'name',\n])\n\n@if (str_contains($name, '*'))\n    @foreach ($errors->getBag('default')->getMessages() as $key => $bagMessages)\n        @if (\\Illuminate\\Support\\Str::is($name, $key))\n            @foreach ($bagMessages as $message)\n                <x-ui::field.message variant=\"error\">{{ $message }}</x-ui::field.message>\n            @endforeach\n        @endif\n    @endforeach\n@else\n    @error($name)\n        <x-ui::field.message variant=\"error\">{{ $message }}</x-ui::field.message>\n    @enderror\n@endif\n"
         },
         {
             "path": "field/label.blade.php",

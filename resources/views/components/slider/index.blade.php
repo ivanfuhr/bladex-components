@@ -123,12 +123,7 @@
                 data-index="{{ $index }}"
             />
         @else
-            <input
-                type="hidden"
-                value="{{ $formattedValue }}"
-                data-slider-hidden-input
-                data-index="{{ $index }}"
-            />
+            <input type="hidden" value="{{ $formattedValue }}" data-slider-hidden-input data-index="{{ $index }}" />
         @endif
     @endforeach
 

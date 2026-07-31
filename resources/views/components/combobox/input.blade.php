@@ -18,6 +18,7 @@
     'comboboxId' => null,
     'listboxId' => null,
     'controlId' => null,
+    'multiple' => false,
 ])
 
 @php
@@ -87,7 +88,25 @@
 @endphp
 
 <div class="combobox__input-wrap relative flex w-full min-w-0 items-stretch" data-combobox-input-wrap>
-    <input {{ $inputAttributes }} data-combobox-input />
+    @if ($multiple)
+        @if ($slot->isEmpty())
+            <span
+                class="combobox__value shrink-0 text-sm text-zinc-500 dark:text-zinc-400"
+                data-combobox-value
+                data-placeholder="{{ $resolvedPlaceholder }}"
+            ></span>
+        @else
+            {{ $slot }}
+        @endif
+        <input
+            {{ $inputAttributes->except(['id', 'role', 'aria-autocomplete', 'aria-expanded', 'aria-haspopup', 'aria-controls', 'autocomplete', 'spellcheck']) }}
+            class="combobox__input combobox__input--multiple min-w-[6rem] flex-1 border-0 bg-transparent p-0 text-sm shadow-none focus-visible:ring-0"
+            data-combobox-filter-input
+            @if ($resolvedPlaceholder) placeholder="{{ $resolvedPlaceholder }}" @endif
+        />
+    @else
+        <input {{ $inputAttributes }} data-combobox-input />
+    @endif
     <button
         type="button"
         class="combobox__toggle absolute inset-y-0 right-0 z-10 flex w-9 items-center justify-center text-zinc-500 disabled:cursor-not-allowed disabled:opacity-50 dark:text-zinc-400"

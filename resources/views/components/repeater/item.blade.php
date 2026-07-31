@@ -25,7 +25,5 @@
 @endphp
 
 @push($stackName)
-    <div @class([$itemClasses]) data-repeater-item>
-        {{ $slot }}
-    </div>
+    <div @class([$itemClasses]) data-repeater-item>{{ $slot }}</div>
 @endpush

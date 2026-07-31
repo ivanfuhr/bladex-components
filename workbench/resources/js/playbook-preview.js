@@ -9,6 +9,11 @@ import { initDatePickers } from '../views/ui/date-picker/date-picker.js';
 import { initTimePickers } from '../views/ui/time-picker/time-picker.js';
 import { initDatetimePickers } from '../views/ui/datetime-picker/datetime-picker.js';
 import { initInputCurrencies } from '../views/ui/input/input-currency.js';
+import { initPillboxes } from '../views/ui/pillbox/pillbox.js';
+import { initRatings } from '../views/ui/rating/rating.js';
+import { initColorPickers } from '../views/ui/color-picker/color-picker.js';
+import { initInputEnhancements } from '../views/ui/input/input-enhancements.js';
+import { initTextareas } from '../views/ui/textarea/textarea.js';
 
 document.addEventListener('alpine:init', () => {
     window.Alpine.data('playbookPreview', (config) => ({
@@ -52,6 +57,10 @@ document.addEventListener('alpine:init', () => {
                 element.remove();
             });
 
+            document.querySelectorAll('[data-color-picker-portaled]').forEach((element) => {
+                element.remove();
+            });
+
             initSelects(canvas);
             initComboboxes(canvas);
             initFileUploads(canvas);
@@ -63,6 +72,11 @@ document.addEventListener('alpine:init', () => {
             initTimePickers(canvas);
             initDatetimePickers(canvas);
             initInputCurrencies(canvas);
+            initPillboxes(canvas);
+            initRatings(canvas);
+            initColorPickers(canvas);
+            initInputEnhancements(canvas);
+            initTextareas(canvas);
         },
 
         queuePreview() {

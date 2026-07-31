@@ -20,8 +20,13 @@ function defaultStencilTestIconNames(): array
         'chevron-down',
         'chevron-left',
         'chevron-right',
+        'clipboard',
+        'copy',
+        'eye',
         'file',
+        'grip-vertical',
         'plus',
+        'star',
         'upload',
         'x',
     ];

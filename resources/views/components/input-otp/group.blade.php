@@ -5,6 +5,4 @@
     ])->implode(' ');
 @endphp
 
-<div {{ $attributes->class($groupClasses)->merge(['data-input-otp-group' => true]) }}>
-    {{ $slot }}
-</div>
+<div {{ $attributes->class($groupClasses)->merge(['data-input-otp-group' => true]) }}>{{ $slot }}</div>

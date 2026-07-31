@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ivanfuhr\Stencil\Tests;
 
 use Ivanfuhr\Stencil\StencilServiceProvider;
+use Ivanfuhr\Stencil\Support\ProjectConfig;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
@@ -24,11 +25,25 @@ abstract class TestCase extends Orchestra
 
     protected function setUp(): void
     {
+        if ($this->usesRegistryIsolatedEnvironment()) {
+            cleanupOwnedProjectArtifacts(testbenchBasePath());
+        }
+
         parent::setUp();
+
+        if ($this->usesRegistryIsolatedEnvironment()) {
+            config(['stencil.project_config_file' => 'stencil.json']);
+            $this->app->forgetInstance(ProjectConfig::class);
+        }
 
         if ($this->shouldSeedStencilTestIcons()) {
             seedStencilTestIcons();
         }
+    }
+
+    protected function usesRegistryIsolatedEnvironment(): bool
+    {
+        return in_array('registry-isolated', $this->groups(), true);
     }
 
     protected function shouldSeedStencilTestIcons(): bool
