@@ -21,6 +21,18 @@ it('renders the button playbook page with an initial preview', function () {
     $response->assertSee('data-button', false);
 });
 
+it('renders the input-currency playbook page with an initial preview', function () {
+    if (! extension_loaded('intl')) {
+        $this->markTestSkipped('The intl extension is required for Number::currency.');
+    }
+
+    $response = $this->get('/playbook/input-currency');
+
+    $response->assertOk();
+    $response->assertSee('data-input-currency', false);
+    $response->assertSee('R$', false);
+});
+
 it('returns preview html for a primary button variant', function () {
     $response = $this->postJson('/playbook/preview', [
         'component' => 'button',

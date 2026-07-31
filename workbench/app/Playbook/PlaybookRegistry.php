@@ -167,7 +167,6 @@ final class PlaybookRegistry
                 'invalid' => false,
                 'disabled' => false,
                 'readonly' => false,
-                'value' => 1234.56,
                 'currency' => 'BRL',
                 'locale' => 'pt_BR',
             ],
