@@ -126,6 +126,52 @@ $catalog = [
             'resources/assets/js/select.js' => 'select.js',
         ],
     ],
+    'combobox' => [
+        'title' => 'Combobox',
+        'description' => 'Accessible filterable combobox / autocomplete with compound sub-components and optional shortcut.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['icon', 'text'],
+        'iconDependencies' => ['chevron-down', 'check'],
+        'source' => 'combobox',
+        'targetPrefix' => 'combobox',
+        'assets' => [
+            'resources/assets/js/combobox.js' => 'combobox.js',
+        ],
+    ],
+    'file-upload' => [
+        'title' => 'File Upload',
+        'description' => 'Accessible file upload with drag-and-drop dropzone, file list, and native multipart form support.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['icon', 'text', 'field'],
+        'iconDependencies' => ['upload', 'file', 'x'],
+        'source' => 'file-upload',
+        'targetPrefix' => 'file-upload',
+        'assets' => [
+            'resources/assets/js/file-upload.js' => 'file-upload.js',
+        ],
+    ],
+    'input-otp' => [
+        'title' => 'Input OTP',
+        'description' => 'Accessible one-time password / PIN input with paste support, keyboard navigation, and a combined form value.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['field'],
+        'source' => 'input-otp',
+        'targetPrefix' => 'input-otp',
+        'assets' => [
+            'resources/assets/js/input-otp.js' => 'input-otp.js',
+        ],
+    ],
+    'slider' => [
+        'title' => 'Slider',
+        'description' => 'Accessible slider and dual-thumb range control with keyboard support and a hidden form value.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['field'],
+        'source' => 'slider',
+        'targetPrefix' => 'slider',
+        'assets' => [
+            'resources/assets/js/slider.js' => 'slider.js',
+        ],
+    ],
     'textarea' => [
         'title' => 'Textarea',
         'description' => 'Accessible multi-line text control with validation and disabled states.',

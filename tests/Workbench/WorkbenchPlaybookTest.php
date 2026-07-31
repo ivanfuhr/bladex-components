@@ -33,6 +33,38 @@ it('renders the input-currency playbook page with an initial preview', function 
     $response->assertSee('R$', false);
 });
 
+it('renders the combobox playbook page with an initial preview', function () {
+    $response = $this->get('/playbook/combobox');
+
+    $response->assertOk();
+    $response->assertSee('data-combobox', false);
+    $response->assertSee('Search frameworks', false);
+});
+
+it('renders the file-upload playbook page with an initial preview', function () {
+    $response = $this->get('/playbook/file-upload');
+
+    $response->assertOk();
+    $response->assertSee('data-file-upload', false);
+    $response->assertSee('data-file-upload-dropzone', false);
+});
+
+it('renders the input-otp playbook page with an initial preview', function () {
+    $response = $this->get('/playbook/input-otp');
+
+    $response->assertOk();
+    $response->assertSee('data-input-otp', false);
+    $response->assertSee('data-input-otp-slot', false);
+});
+
+it('renders the slider playbook page with an initial preview', function () {
+    $response = $this->get('/playbook/slider');
+
+    $response->assertOk();
+    $response->assertSee('data-slider', false);
+    $response->assertSee('data-slider-thumb', false);
+});
+
 it('returns preview html for a primary button variant', function () {
     $response = $this->postJson('/playbook/preview', [
         'component' => 'button',

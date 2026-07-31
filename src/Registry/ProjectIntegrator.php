@@ -21,6 +21,10 @@ final class ProjectIntegrator
     /** @var array<string, string> */
     private const array JAVASCRIPT_COMPONENTS = [
         'select' => 'select/select.js',
+        'combobox' => 'combobox/combobox.js',
+        'file-upload' => 'file-upload/file-upload.js',
+        'input-otp' => 'input-otp/input-otp.js',
+        'slider' => 'slider/slider.js',
         'dialog' => 'dialog/dialog.js',
         'calendar' => 'calendar/calendar.js',
         'date-picker' => 'date-picker/date-picker.js',

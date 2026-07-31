@@ -20,6 +20,8 @@ function defaultStencilTestIconNames(): array
         'chevron-down',
         'chevron-left',
         'chevron-right',
+        'file',
+        'upload',
         'x',
     ];
 }

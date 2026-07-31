@@ -47,6 +47,14 @@ Owned mode runs `init` scaffolding: `app/Support/Stencil` class maps, `resources
 
 **Select:** `stencil:add select` copies `select.js` and patches the Vite entry. Default `shortcut` wraps `select.item` children; set `:shortcut="false"` for full `select.trigger` / `select.content` composition.
 
+**Combobox:** `stencil:add combobox` copies `combobox.js` and patches the Vite entry. Filterable single-select with `role="combobox"`. Default `shortcut` wraps items with `combobox.input` / `combobox.content` / `combobox.empty`; set `:shortcut="false"` for full composition.
+
+**File Upload:** `stencil:add file-upload` copies `file-upload.js` and patches the Vite entry. Native `<input type="file">` with drag-and-drop dropzone, selected-file list, and client-side remove. Supports `multiple`, `accept`, `disabled`, `invalid`, and Field `$errors`. Default `shortcut` renders dropzone + list; set `:shortcut="false"` for full composition.
+
+**Input OTP:** `stencil:add input-otp` copies `input-otp.js` and patches the Vite entry. Labeled digit/character slots with paste and arrow/backspace navigation. Hidden input submits the combined value. Supports `length` (default 6), `mode` (`numeric` | `alphanumeric`), `separated`, `disabled`, `invalid`, and Field `$errors`. Default `shortcut` renders slots; set `:shortcut="false"` for `group` / `slot` / `separator` composition.
+
+**Slider:** `stencil:add slider` copies `slider.js` and patches the Vite entry. Single or dual-thumb range with `role="slider"`, keyboard arrows / Home / End / PageUp / PageDown, and a hidden form value. Supports `min`, `max`, `step`, `value` (number or `[low, high]`), `:range`, `disabled`, `invalid`, and Field `$errors`. Default `shortcut` renders track / range / thumb; set `:shortcut="false"` for full composition.
+
 **Dialog:** `stencil:add dialog` copies `dialog.js` and adds it to the same `// stencil-start` block in the Vite entry. Compose `dialog.trigger` + `dialog.content` (optional `name` for Flux-style triggers). Use `window.Stencil.dialog('name').show()` from JavaScript when needed.
 
 **Date / time pickers:** `stencil:add date-picker` (depends on `calendar`, `button`, `input`) installs `date-picker.js` plus shared `calendar.js` and `chrono/*` helpers. Values: single date `Y-m-d`, range `Y-m-d/Y-m-d`, time `H:i`, datetime ISO 8601. Set `timezone` (defaults to `config('app.timezone')`). Also available: `time-picker`, `datetime-picker`, and standalone `calendar`.

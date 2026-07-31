@@ -25,6 +25,10 @@ final class PlaybookMediaController
         'radio',
         'switch',
         'dialog',
+        'combobox',
+        'file-upload',
+        'input-otp',
+        'slider',
     ];
 
     public function __construct(

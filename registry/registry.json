@@ -96,6 +96,54 @@
             ]
         },
         {
+            "name": "combobox",
+            "type": "registry:ui",
+            "title": "Combobox",
+            "description": "Accessible filterable combobox / autocomplete with compound sub-components and optional shortcut.",
+            "registryDependencies": [
+                "icon",
+                "text"
+            ],
+            "iconDependencies": [
+                "chevron-down",
+                "check"
+            ]
+        },
+        {
+            "name": "file-upload",
+            "type": "registry:ui",
+            "title": "File Upload",
+            "description": "Accessible file upload with drag-and-drop dropzone, file list, and native multipart form support.",
+            "registryDependencies": [
+                "icon",
+                "text",
+                "field"
+            ],
+            "iconDependencies": [
+                "upload",
+                "file",
+                "x"
+            ]
+        },
+        {
+            "name": "input-otp",
+            "type": "registry:ui",
+            "title": "Input OTP",
+            "description": "Accessible one-time password / PIN input with paste support, keyboard navigation, and a combined form value.",
+            "registryDependencies": [
+                "field"
+            ]
+        },
+        {
+            "name": "slider",
+            "type": "registry:ui",
+            "title": "Slider",
+            "description": "Accessible slider and dual-thumb range control with keyboard support and a hidden form value.",
+            "registryDependencies": [
+                "field"
+            ]
+        },
+        {
             "name": "textarea",
             "type": "registry:ui",
             "title": "Textarea",

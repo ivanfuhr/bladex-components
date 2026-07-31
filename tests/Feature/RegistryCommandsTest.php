@@ -85,6 +85,54 @@ it('add select installs owned javascript asset', function () {
     expect(file_exists($scriptPath))->toBeTrue();
 });
 
+it('add combobox installs owned javascript asset', function () {
+    useOwnedRegistryProject();
+    fakeRegistryHttp();
+
+    $this->artisan('stencil:add', ['names' => ['combobox']])
+        ->assertSuccessful();
+
+    $scriptPath = $this->app->resourcePath('views/ui/combobox/combobox.js');
+
+    expect(file_exists($scriptPath))->toBeTrue();
+});
+
+it('add file-upload installs owned javascript asset', function () {
+    useOwnedRegistryProject();
+    fakeRegistryHttp();
+
+    $this->artisan('stencil:add', ['names' => ['file-upload']])
+        ->assertSuccessful();
+
+    $scriptPath = $this->app->resourcePath('views/ui/file-upload/file-upload.js');
+
+    expect(file_exists($scriptPath))->toBeTrue();
+});
+
+it('add input-otp installs owned javascript asset', function () {
+    useOwnedRegistryProject();
+    fakeRegistryHttp();
+
+    $this->artisan('stencil:add', ['names' => ['input-otp']])
+        ->assertSuccessful();
+
+    $scriptPath = $this->app->resourcePath('views/ui/input-otp/input-otp.js');
+
+    expect(file_exists($scriptPath))->toBeTrue();
+});
+
+it('add slider installs owned javascript asset', function () {
+    useOwnedRegistryProject();
+    fakeRegistryHttp();
+
+    $this->artisan('stencil:add', ['names' => ['slider']])
+        ->assertSuccessful();
+
+    $scriptPath = $this->app->resourcePath('views/ui/slider/slider.js');
+
+    expect(file_exists($scriptPath))->toBeTrue();
+});
+
 it('add dialog installs owned javascript asset', function () {
     useOwnedRegistryProject();
     fakeRegistryHttp();

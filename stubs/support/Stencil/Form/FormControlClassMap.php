@@ -115,6 +115,53 @@ final class FormControlClassMap
         ])->implode(' ');
     }
 
+    public function sliderRootClasses(?string $size = null): string
+    {
+        return collect([
+            'slider relative flex w-full touch-none select-none items-center',
+            $size === 'sm' ? 'h-8' : 'h-9',
+        ])->implode(' ');
+    }
+
+    public function sliderTrackClasses(?string $size = null): string
+    {
+        $height = $size === 'sm' ? 'h-1' : 'h-1.5';
+
+        return collect([
+            'slider__track',
+            'relative w-full grow overflow-hidden rounded-full',
+            $height,
+            'bg-zinc-200 dark:bg-zinc-800',
+        ])->implode(' ');
+    }
+
+    public function sliderRangeClasses(): string
+    {
+        return collect([
+            'slider__range',
+            'absolute h-full rounded-full bg-zinc-900 dark:bg-zinc-50',
+        ])->implode(' ');
+    }
+
+    public function sliderThumbClasses(?string $size = null): string
+    {
+        $thumb = $size === 'sm' ? 'size-3.5' : 'size-4';
+
+        return collect([
+            'slider__thumb',
+            'absolute top-1/2 block -translate-x-1/2 -translate-y-1/2 rounded-full border border-zinc-200 bg-white shadow-sm transition-colors',
+            $thumb,
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:ring-offset-2 focus-visible:ring-offset-white',
+            'disabled:pointer-events-none disabled:opacity-50',
+            'aria-disabled:pointer-events-none aria-disabled:opacity-50',
+            'dark:border-zinc-800 dark:bg-zinc-50',
+            'dark:focus-visible:ring-zinc-300/20 dark:focus-visible:ring-offset-zinc-950',
+            'aria-invalid:border-red-500 aria-invalid:ring-red-500/20',
+            'dark:aria-invalid:border-red-500',
+            $this->interactionState->cursorPointerClasses(),
+        ])->implode(' ');
+    }
+
     public function invalidFieldClasses(): string
     {
         return implode(' ', [

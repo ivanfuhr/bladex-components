@@ -1,4 +1,8 @@
 import { initSelects } from '../views/ui/select/select.js';
+import { initComboboxes } from '../views/ui/combobox/combobox.js';
+import { initFileUploads } from '../views/ui/file-upload/file-upload.js';
+import { initInputOtps } from '../views/ui/input-otp/input-otp.js';
+import { initSliders } from '../views/ui/slider/slider.js';
 import { initDialogs } from '../views/ui/dialog/dialog.js';
 import { initDatePickers } from '../views/ui/date-picker/date-picker.js';
 import { initTimePickers } from '../views/ui/time-picker/time-picker.js';
@@ -25,7 +29,7 @@ document.addEventListener('alpine:init', () => {
         },
 
         schedulePreviewWidgets() {
-            // x-html applies after Alpine's first tick; wait for DOM before binding select.js.
+            // x-html applies after Alpine's first tick; wait for DOM before binding widgets.
             this.$nextTick(() => {
                 this.$nextTick(() => {
                     requestAnimationFrame(() => this.bindPreviewWidgets());
@@ -43,7 +47,15 @@ document.addEventListener('alpine:init', () => {
                 element.remove();
             });
 
+            document.querySelectorAll('[data-combobox-portaled]').forEach((element) => {
+                element.remove();
+            });
+
             initSelects(canvas);
+            initComboboxes(canvas);
+            initFileUploads(canvas);
+            initInputOtps(canvas);
+            initSliders(canvas);
             initDialogs(canvas);
             initDatePickers(canvas);
             initTimePickers(canvas);

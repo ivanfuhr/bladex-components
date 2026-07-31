@@ -50,6 +50,10 @@ final class PlaybookRegistry
             $this->input(),
             $this->inputCurrency(),
             $this->select(),
+            $this->combobox(),
+            $this->fileUpload(),
+            $this->inputOtp(),
+            $this->slider(),
             $this->label(),
             $this->field(),
             $this->textarea(),
@@ -208,6 +212,140 @@ final class PlaybookRegistry
                 'placeholder' => 'Choose industry…',
             ],
             previewView: 'workbench::playbook.previews.select',
+        );
+    }
+
+    private function combobox(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
+            new PlaybookControl('disabled', 'Disabled', 'checkbox', [], false),
+            new PlaybookControl('size', 'Size', 'select', [
+                'default' => 'Default',
+                'sm' => 'Small',
+            ], 'default'),
+            new PlaybookControl('placeholder', 'Placeholder', 'select', [
+                'Search frameworks…' => 'Search frameworks…',
+                'Find a language…' => 'Find a language…',
+            ], 'Search frameworks…'),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'combobox',
+            title: 'Combobox',
+            description: 'Filterable combobox / autocomplete with typeahead list. Requires the package combobox.js script.',
+            controls: $controls,
+            defaultState: [
+                'invalid' => false,
+                'disabled' => false,
+                'size' => 'default',
+                'placeholder' => 'Search frameworks…',
+            ],
+            previewView: 'workbench::playbook.previews.combobox',
+        );
+    }
+
+    private function fileUpload(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
+            new PlaybookControl('disabled', 'Disabled', 'checkbox', [], false),
+            new PlaybookControl('multiple', 'Multiple', 'checkbox', [], false),
+            new PlaybookControl('size', 'Size', 'select', [
+                'default' => 'Default',
+                'sm' => 'Small',
+            ], 'default'),
+            new PlaybookControl('accept', 'Accept', 'select', [
+                '' => 'Any',
+                'image/*' => 'Images',
+                '.pdf' => 'PDF',
+            ], ''),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'file-upload',
+            title: 'File Upload',
+            description: 'Native file input with drag-and-drop dropzone and removable file list. Requires the package file-upload.js script.',
+            controls: $controls,
+            defaultState: [
+                'invalid' => false,
+                'disabled' => false,
+                'multiple' => false,
+                'size' => 'default',
+                'accept' => '',
+            ],
+            previewView: 'workbench::playbook.previews.file-upload',
+        );
+    }
+
+    private function inputOtp(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
+            new PlaybookControl('disabled', 'Disabled', 'checkbox', [], false),
+            new PlaybookControl('size', 'Size', 'select', [
+                'default' => 'Default',
+                'sm' => 'Small',
+            ], 'default'),
+            new PlaybookControl('length', 'Length', 'select', [
+                '4' => '4',
+                '6' => '6',
+                '8' => '8',
+            ], '6'),
+            new PlaybookControl('mode', 'Mode', 'select', [
+                'numeric' => 'Numeric',
+                'alphanumeric' => 'Alphanumeric',
+            ], 'numeric'),
+            new PlaybookControl('separated', 'Separated', 'checkbox', [], true),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'input-otp',
+            title: 'Input OTP',
+            description: 'One-time password / PIN slots with paste and keyboard navigation. Requires the package input-otp.js script.',
+            controls: $controls,
+            defaultState: [
+                'invalid' => false,
+                'disabled' => false,
+                'size' => 'default',
+                'length' => '6',
+                'mode' => 'numeric',
+                'separated' => true,
+            ],
+            previewView: 'workbench::playbook.previews.input-otp',
+        );
+    }
+
+    private function slider(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
+            new PlaybookControl('disabled', 'Disabled', 'checkbox', [], false),
+            new PlaybookControl('range', 'Range', 'checkbox', [], false),
+            new PlaybookControl('size', 'Size', 'select', [
+                'default' => 'Default',
+                'sm' => 'Small',
+            ], 'default'),
+            new PlaybookControl('step', 'Step', 'select', [
+                '1' => '1',
+                '5' => '5',
+                '10' => '10',
+            ], '1'),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'slider',
+            title: 'Slider',
+            description: 'Accessible single or dual-thumb range slider. Requires the package slider.js script.',
+            controls: $controls,
+            defaultState: [
+                'invalid' => false,
+                'disabled' => false,
+                'range' => false,
+                'size' => 'default',
+                'step' => '1',
+            ],
+            previewView: 'workbench::playbook.previews.slider',
         );
     }
 

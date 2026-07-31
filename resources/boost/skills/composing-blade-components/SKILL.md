@@ -125,6 +125,87 @@ Ship flexible Blade components that consumers assemble from small pieces, while 
 </x-stencil::select>
 ```
 
+### Combobox autocomplete (shortcut + full composition)
+
+```blade
+{{-- Shortcut: only items in the default slot (loads combobox.js in the app) --}}
+<x-stencil::combobox name="framework" placeholder="Search frameworks…">
+    <x-stencil::combobox.item value="laravel">Laravel</x-stencil::combobox.item>
+</x-stencil::combobox>
+
+{{-- Full: :shortcut="false" and explicit input / content / empty tree --}}
+<x-stencil::combobox name="framework" :shortcut="false">
+    <x-stencil::combobox.input placeholder="Search frameworks…" />
+    <x-stencil::combobox.content>
+        <x-stencil::combobox.empty>No frameworks found.</x-stencil::combobox.empty>
+        <x-stencil::combobox.item value="laravel">Laravel</x-stencil::combobox.item>
+    </x-stencil::combobox.content>
+</x-stencil::combobox>
+```
+
+### File upload (shortcut + full composition)
+
+```blade
+{{-- Shortcut: default dropzone + list (loads file-upload.js in the app) --}}
+<x-stencil::file-upload name="avatar" accept="image/*" text="PNG or JPG up to 5MB" />
+
+{{-- Custom dropzone in the slot --}}
+<x-stencil::file-upload name="attachments" :multiple="true">
+    <x-stencil::file-upload.dropzone heading="Upload documents" text="PDF up to 10MB" />
+</x-stencil::file-upload>
+
+{{-- Full: :shortcut="false" and explicit dropzone / list --}}
+<x-stencil::file-upload name="docs" :multiple="true" :shortcut="false">
+    <x-stencil::file-upload.dropzone heading="Drop files here" text="Any type" />
+    <x-stencil::file-upload.list />
+</x-stencil::file-upload>
+```
+
+### Input OTP / PIN (shortcut + full composition)
+
+```blade
+{{-- Shortcut: six numeric slots with a middle separator (loads input-otp.js) --}}
+<x-stencil::input-otp name="code" />
+
+{{-- PIN length, alphanumeric mode --}}
+<x-stencil::input-otp name="pin" :length="4" />
+<x-stencil::input-otp name="token" mode="alphanumeric" :separated="false" />
+
+{{-- Full: :shortcut="false" and explicit group / slot / separator tree --}}
+<x-stencil::input-otp name="code" :length="6" :shortcut="false">
+    <x-stencil::input-otp.group>
+        <x-stencil::input-otp.slot :index="0" />
+        <x-stencil::input-otp.slot :index="1" />
+        <x-stencil::input-otp.slot :index="2" />
+    </x-stencil::input-otp.group>
+    <x-stencil::input-otp.separator />
+    <x-stencil::input-otp.group>
+        <x-stencil::input-otp.slot :index="3" />
+        <x-stencil::input-otp.slot :index="4" />
+        <x-stencil::input-otp.slot :index="5" />
+    </x-stencil::input-otp.group>
+</x-stencil::input-otp>
+```
+
+### Slider / range (shortcut + full composition)
+
+```blade
+{{-- Shortcut: single thumb (loads slider.js in the app) --}}
+<x-stencil::slider name="volume" :value="40" />
+
+{{-- Dual-thumb range (emits name[0] / name[1]) --}}
+<x-stencil::slider name="price" :value="[20, 80]" />
+<x-stencil::slider name="span" :range="true" :min="0" :max="100" />
+
+{{-- Full: :shortcut="false" and explicit track / range / thumb tree --}}
+<x-stencil::slider name="volume" :value="40" :shortcut="false">
+    <x-stencil::slider.track>
+        <x-stencil::slider.range />
+    </x-stencil::slider.track>
+    <x-stencil::slider.thumb :index="0" :value="40" />
+</x-stencil::slider>
+```
+
 ### Root with `@aware` for children (`field/index.blade.php`)
 
 ```blade

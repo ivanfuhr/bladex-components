@@ -66,7 +66,7 @@ Use the owned Blade namespace in your app:
 <x-ui::input name="email" />
 ```
 
-**Registry UI items:** `button`, `checkbox`, `dialog`, `field`, `heading`, `icon`, `input`, `input-group`, `label`, `radio`, `select`, `switch`, `text`, `textarea`. Lower-level pieces such as `field`, `input-group`, `label`, and `icon` are usually installed transitively. Components that use Lucide glyphs also install the required icon stubs during `stencil:add`; use `stencil:icon {name}` for any extra icons (see [Icons](#icons)).
+**Registry UI items:** `button`, `checkbox`, `combobox`, `dialog`, `field`, `file-upload`, `heading`, `icon`, `input`, `input-group`, `input-otp`, `label`, `radio`, `select`, `slider`, `switch`, `text`, `textarea`. Lower-level pieces such as `field`, `input-group`, `label`, and `icon` are usually installed transitively. Components that use Lucide glyphs also install the required icon stubs during `stencil:add`; use `stencil:icon {name}` for any extra icons (see [Icons](#icons)).
 
 ### Registry CLI
 
@@ -435,6 +435,181 @@ Use `multiple` for multi-select. The field name is normalized to `name[]` when n
 
 ```bash
 php artisan stencil:add select
+```
+
+<br>
+
+## Combobox
+
+Accessible filterable combobox / autocomplete (WAI-ARIA combobox + listbox). Subcomponents include `input`, `content`, `empty`, `group`, `label`, `item`, and `separator`. `stencil:add combobox` copies `combobox.js` and patches your Vite entry. Single-select for now; typeahead filters options client-side and shows the empty state when nothing matches.
+
+Default `shortcut` wraps items with `combobox.input`, `combobox.content`, and `combobox.empty`. Set `:shortcut="false"` for full composition. Works inside `field` (inherits `invalid` / Laravel `$errors`).
+
+```blade
+<x-ui::combobox name="framework" placeholder="Search frameworks…">
+    <x-ui::combobox.group>
+        <x-ui::combobox.label>PHP</x-ui::combobox.label>
+        <x-ui::combobox.item value="laravel">Laravel</x-ui::combobox.item>
+        <x-ui::combobox.item value="symfony">Symfony</x-ui::combobox.item>
+    </x-ui::combobox.group>
+    <x-ui::combobox.separator />
+    <x-ui::combobox.item value="react">React</x-ui::combobox.item>
+    <x-ui::combobox.item value="vue">Vue</x-ui::combobox.item>
+</x-ui::combobox>
+
+<x-ui::combobox name="lang" size="sm" placeholder="Find a language…">
+    <x-ui::combobox.item value="php">PHP</x-ui::combobox.item>
+    <x-ui::combobox.item value="js">JavaScript</x-ui::combobox.item>
+</x-ui::combobox>
+
+<x-ui::combobox name="bad" placeholder="Invalid" invalid>
+    <x-ui::combobox.item value="x">Option</x-ui::combobox.item>
+</x-ui::combobox>
+
+<x-ui::combobox name="off" placeholder="Disabled" disabled>
+    <x-ui::combobox.item value="x">Option</x-ui::combobox.item>
+</x-ui::combobox>
+
+{{-- Full composition --}}
+<x-ui::combobox name="framework" :shortcut="false">
+    <x-ui::combobox.input placeholder="Search frameworks…" />
+    <x-ui::combobox.content>
+        <x-ui::combobox.empty>No frameworks found.</x-ui::combobox.empty>
+        <x-ui::combobox.item value="laravel">Laravel</x-ui::combobox.item>
+    </x-ui::combobox.content>
+</x-ui::combobox>
+
+<x-ui::field name="framework">
+    <x-ui::field.label>Framework</x-ui::field.label>
+    <x-ui::combobox name="framework" placeholder="Search…">
+        <x-ui::combobox.item value="laravel">Laravel</x-ui::combobox.item>
+    </x-ui::combobox>
+    <x-ui::field.errors name="framework" />
+</x-ui::field>
+```
+
+```bash
+php artisan stencil:add combobox
+```
+
+<br>
+
+## File Upload
+
+Accessible file upload with a drag-and-drop dropzone, selected-file list, and client-side remove. Uses a native `<input type="file">` so multipart form submit works without Livewire. Subcomponents include `dropzone`, `list`, `item`, and `item.remove`. `stencil:add file-upload` copies `file-upload.js` and patches your Vite entry.
+
+Default `shortcut` renders a dropzone (customize via the slot or `heading` / `text` props), a file list, and an item template for the script. Set `:shortcut="false"` for full composition. Use `multiple` for multi-file fields (name is normalized to `name[]` when needed). Works inside `field` (inherits `invalid` / Laravel `$errors`).
+
+```blade
+<x-ui::file-upload name="avatar" accept="image/*" text="PNG or JPG up to 5MB" />
+
+<x-ui::file-upload name="attachments" :multiple="true" accept=".pdf,.doc,.docx">
+    <x-ui::file-upload.dropzone heading="Upload documents" text="PDF or Word up to 10MB" />
+</x-ui::file-upload>
+
+<x-ui::file-upload name="bad" invalid text="Invalid upload" />
+<x-ui::file-upload name="off" disabled text="Disabled upload" />
+
+{{-- Full composition --}}
+<x-ui::file-upload name="docs" :multiple="true" :shortcut="false">
+    <x-ui::file-upload.dropzone heading="Drop files here" text="Any type" />
+    <x-ui::file-upload.list />
+</x-ui::file-upload>
+
+<x-ui::field name="avatar">
+    <x-ui::field.label>Avatar</x-ui::field.label>
+    <x-ui::file-upload name="avatar" accept="image/*" />
+    <x-ui::field.errors name="avatar" />
+</x-ui::field>
+```
+
+Wrap the control in a form with `enctype="multipart/form-data"` (Laravel forms that include files do this automatically when using `@csrf` with `files` / `enctype`).
+
+```bash
+php artisan stencil:add file-upload
+```
+
+<br>
+
+## Input OTP
+
+Accessible one-time password / PIN input with labeled slots, paste support, and arrow/backspace navigation. Subcomponents include `group`, `slot`, and `separator`. `stencil:add input-otp` copies `input-otp.js` and patches your Vite entry. A hidden input carries the combined value for form submit (`name`).
+
+Default `shortcut` renders slots for `length` (default `6`). Even lengths ≥ 4 include a middle separator unless you set `:separated="false"`. Use `mode="numeric"` (default) or `mode="alphanumeric"`. Set `:shortcut="false"` for full composition. Works inside `field` (inherits `invalid` / Laravel `$errors`).
+
+```blade
+<x-ui::input-otp name="code" />
+
+<x-ui::input-otp name="pin" :length="4" />
+
+<x-ui::input-otp name="token" mode="alphanumeric" :separated="false" />
+
+<x-ui::input-otp name="bad" invalid />
+<x-ui::input-otp name="off" disabled />
+
+{{-- Full composition --}}
+<x-ui::input-otp name="code" :length="6" :shortcut="false">
+    <x-ui::input-otp.group>
+        <x-ui::input-otp.slot :index="0" />
+        <x-ui::input-otp.slot :index="1" />
+        <x-ui::input-otp.slot :index="2" />
+    </x-ui::input-otp.group>
+    <x-ui::input-otp.separator />
+    <x-ui::input-otp.group>
+        <x-ui::input-otp.slot :index="3" />
+        <x-ui::input-otp.slot :index="4" />
+        <x-ui::input-otp.slot :index="5" />
+    </x-ui::input-otp.group>
+</x-ui::input-otp>
+
+<x-ui::field name="code">
+    <x-ui::field.label>Verification code</x-ui::field.label>
+    <x-ui::input-otp name="code" />
+    <x-ui::field.errors name="code" />
+</x-ui::field>
+```
+
+```bash
+php artisan stencil:add input-otp
+```
+
+<br>
+
+## Slider
+
+Accessible slider and dual-thumb range control (WAI-ARIA `role="slider"`). Subcomponents include `track`, `range`, and `thumb`. `stencil:add slider` copies `slider.js` and patches your Vite entry. A hidden input carries the value for form submit (`name`); range mode emits `name[0]` / `name[1]`.
+
+Supports `min` (default `0`), `max` (default `100`), `step` (default `1`), `value` (number or `[low, high]`), and `:range="true"` for two thumbs. Keyboard: arrows, Home/End, PageUp/Down. Set `:shortcut="false"` for full composition. Works inside `field` (inherits `invalid` / Laravel `$errors`).
+
+```blade
+<x-ui::slider name="volume" :value="40" />
+
+<x-ui::slider name="level" :min="0" :max="50" :step="5" :value="25" />
+
+<x-ui::slider name="price" :value="[20, 80]" />
+
+<x-ui::slider name="span" :range="true" />
+
+<x-ui::slider name="bad" invalid />
+<x-ui::slider name="off" disabled />
+
+{{-- Full composition --}}
+<x-ui::slider name="volume" :value="40" :shortcut="false">
+    <x-ui::slider.track>
+        <x-ui::slider.range />
+    </x-ui::slider.track>
+    <x-ui::slider.thumb :index="0" :value="40" />
+</x-ui::slider>
+
+<x-ui::field name="volume">
+    <x-ui::field.label>Volume</x-ui::field.label>
+    <x-ui::slider name="volume" :value="40" />
+    <x-ui::field.errors name="volume" />
+</x-ui::field>
+```
+
+```bash
+php artisan stencil:add slider
 ```
 
 <br>
