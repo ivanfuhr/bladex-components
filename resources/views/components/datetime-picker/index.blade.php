@@ -71,7 +71,10 @@
                 data-datetime-picker-calendar
             />
 
-            <div class="max-h-80 overflow-y-auto border-t border-zinc-200 p-1 md:border-s md:border-t-0 dark:border-zinc-800" data-datetime-picker-time-list></div>
+            <div
+                class="max-h-80 overflow-y-auto border-t border-zinc-200 p-1 md:border-s md:border-t-0 dark:border-zinc-800"
+                data-datetime-picker-time-list
+            ></div>
         </div>
 
         <div class="flex justify-end gap-2 border-t border-zinc-200 p-3 dark:border-zinc-800">

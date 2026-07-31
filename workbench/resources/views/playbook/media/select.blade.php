@@ -7,7 +7,8 @@
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::select /&gt;</p>
             <x-stencil::heading :level="2">Select</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle">Accessible listbox with groups, separator, and compound sub-components.</x-stencil::text>
+            <x-stencil::text size="sm" variant="subtle"
+                >Accessible listbox with groups, separator, and compound sub-components.</x-stencil::text>
         </div>
 
         <div class="grid gap-8 lg:grid-cols-2">

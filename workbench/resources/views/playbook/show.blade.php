@@ -33,16 +33,14 @@
                 <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">
                     &lt;x-ui::<span class="text-zinc-800 dark:text-zinc-200">{{ $playbook->slug }}</span> /&gt;
                 </p>
-                <x-stencil::heading :level="1">
-                    {{ $playbook->title }}
-                </x-stencil::heading>
+                <x-stencil::heading :level="1"> {{ $playbook->title }} </x-stencil::heading>
                 <x-stencil::text size="sm" variant="subtle" class="max-w-prose">
                     {{ $playbook->description }}
                 </x-stencil::text>
             </div>
 
             <div class="mt-8 rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80">
-                <h2 class="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                <h2 class="text-xs font-semibold tracking-wide text-zinc-500 uppercase dark:text-zinc-400">
                     Properties
                 </h2>
                 <form class="mt-4 space-y-4" @submit.prevent>
@@ -55,16 +53,19 @@
                                         class="mt-0.5 size-4 shrink-0 rounded border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:border-zinc-600 dark:bg-zinc-950 dark:focus-visible:ring-zinc-300/20"
                                         x-model.boolean="state.{{ $control->key }}"
                                         @change="queuePreview()"
-                                    >
+                                    />
                                     <span>{{ $control->label }}</span>
                                 </label>
                             @elseif ($control->type === 'select')
-                                <label class="block text-sm font-medium text-zinc-800 dark:text-zinc-200" for="control-{{ $control->key }}">
+                                <label
+                                    class="block text-sm font-medium text-zinc-800 dark:text-zinc-200"
+                                    for="control-{{ $control->key }}"
+                                >
                                     {{ $control->label }}
                                 </label>
                                 <select
                                     id="control-{{ $control->key }}"
-                                    class="mt-1.5 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm text-zinc-900 shadow-sm transition focus-visible:border-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus-visible:border-zinc-600 dark:focus-visible:ring-zinc-300/20"
+                                    class="mt-1.5 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm text-zinc-900 shadow-sm transition focus-visible:border-zinc-300 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus-visible:border-zinc-600 dark:focus-visible:ring-zinc-300/20"
                                     x-model="state.{{ $control->key }}"
                                     @change="queuePreview()"
                                 >
@@ -98,7 +99,7 @@
 
             <div
                 id="playbook-canvas"
-                class="playbook-stage mt-4 flex min-h-[min(24rem,50vh)] items-start justify-center overflow-visible rounded-2xl border border-zinc-200/80 bg-white p-8 shadow-sm ring-1 ring-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-900/50 dark:ring-white/5 sm:p-12"
+                class="playbook-stage mt-4 flex min-h-[min(24rem,50vh)] items-start justify-center overflow-visible rounded-2xl border border-zinc-200/80 bg-white p-8 shadow-sm ring-1 ring-zinc-950/5 sm:p-12 dark:border-zinc-800 dark:bg-zinc-900/50 dark:ring-white/5"
                 aria-live="polite"
                 aria-atomic="true"
             >
@@ -107,12 +108,10 @@
 
             <div class="mt-8 min-w-0" x-show="snippet.length > 0">
                 <div class="flex flex-wrap items-center justify-between gap-3">
-                    <h2 class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-                        Code
-                    </h2>
+                    <h2 class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Code</h2>
                     <button
                         type="button"
-                        class="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-700 shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20"
+                        class="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-700 shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20"
                         @click="copySnippet()"
                     >
                         <span x-text="copied ? 'Copied' : 'Copy'"></span>

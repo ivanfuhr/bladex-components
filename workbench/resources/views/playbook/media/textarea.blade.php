@@ -7,10 +7,11 @@
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::textarea /&gt;</p>
             <x-stencil::heading :level="2">Textarea</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle">Multi-line input with invalid and disabled states.</x-stencil::text>
+            <x-stencil::text size="sm" variant="subtle"
+                >Multi-line input with invalid and disabled states.</x-stencil::text>
         </div>
 
-        <div class="grid gap-8 lg:grid-cols-2 max-w-2xl">
+        <div class="grid max-w-2xl gap-8 lg:grid-cols-2">
             <div class="space-y-3">
                 <x-stencil::text size="sm" variant="subtle">Default height (h-9)</x-stencil::text>
                 <x-stencil::textarea name="bio" placeholder="About you…" rows="3" />

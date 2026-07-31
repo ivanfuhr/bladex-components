@@ -10,5 +10,11 @@
         <x-stencil::field.label>Notifications</x-stencil::field.label>
         <x-stencil::field.description>Email alerts for account activity.</x-stencil::field.description>
     </div>
-    <x-stencil::switch name="notifications" :size="$size" :checked="$checked" :invalid="$invalid" :disabled="$disabled" />
+    <x-stencil::switch
+        name="notifications"
+        :size="$size"
+        :checked="$checked"
+        :invalid="$invalid"
+        :disabled="$disabled"
+    />
 </x-stencil::field>

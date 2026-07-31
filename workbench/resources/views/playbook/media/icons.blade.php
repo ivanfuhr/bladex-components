@@ -7,7 +7,8 @@
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::icons.* /&gt;</p>
             <x-stencil::heading :level="2">Icons (Lucide)</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle">Import on demand — outline, mini, and micro sizes.</x-stencil::text>
+            <x-stencil::text size="sm" variant="subtle"
+                >Import on demand — outline, mini, and micro sizes.</x-stencil::text>
         </div>
 
         <div class="flex flex-wrap items-end gap-10">

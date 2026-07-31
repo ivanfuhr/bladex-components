@@ -7,7 +7,8 @@
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::label /&gt;</p>
             <x-stencil::heading :level="2">Label</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle">Associates text with controls; optional badge and required marker.</x-stencil::text>
+            <x-stencil::text size="sm" variant="subtle"
+                >Associates text with controls; optional badge and required marker.</x-stencil::text>
         </div>
 
         <div class="grid gap-8 lg:grid-cols-2">

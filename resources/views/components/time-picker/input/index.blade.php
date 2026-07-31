@@ -6,8 +6,8 @@
     'size' => null,
 ])
 
-<x-stencil::input
-    {{ $attributes->merge([
+<x-stencil::input {{
+    $attributes->merge([
         'type' => 'text',
         'placeholder' => $placeholder,
         'invalid' => $invalid,
@@ -16,5 +16,5 @@
         'readonly' => true,
         'data-time-picker-trigger' => true,
         'data-time-picker-input' => true,
-    ]) }}
-/>
+    ])
+}} />

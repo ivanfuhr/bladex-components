@@ -62,10 +62,12 @@
 @endphp
 
 <div
-    {{ $attributes->except(['shortcut'])->class([
-        'date-picker relative min-w-0',
-        'w-full' => ! filled($attributes->get('class')),
-    ]) }}
+    {{
+        $attributes->except(['shortcut'])->class([
+            'date-picker relative min-w-0',
+            'w-full' => ! filled($attributes->get('class')),
+        ])
+    }}
     data-date-picker
     @if ($withConfirmation) data-date-picker-with-confirmation @endif
     data-date-picker-mode="{{ $mode }}"

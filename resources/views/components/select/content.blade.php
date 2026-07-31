@@ -32,6 +32,4 @@
     }
 @endphp
 
-<div {{ $contentAttributes }}>
-    {{ $slot }}
-</div>
+<div {{ $contentAttributes }}>{{ $slot }}</div>

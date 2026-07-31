@@ -36,6 +36,7 @@
     $controlId = filled($controlId) ? $controlId : $selectId;
 
     $fieldName = $name;
+
     if ($multiple && filled($name) && ! Str::endsWith($name, '[]')) {
         $fieldName = $name.'[]';
     }
@@ -70,11 +71,7 @@
     }
 @endphp
 
-<div
-    {{ $rootAttributes }}
-    data-select
-    data-select-id="{{ $selectId }}"
->
+<div {{ $rootAttributes }} data-select data-select-id="{{ $selectId }}">
     @if ($multiple)
         <div data-select-hidden-inputs @if (filled($fieldName)) data-select-field-name="{{ $fieldName }}" @endif>
             @foreach ($selectedValues as $selectedValue)
@@ -86,28 +83,15 @@
                         data-select-hidden-input
                     />
                 @else
-                    <input
-                        type="hidden"
-                        value="{{ $selectedValue }}"
-                        data-select-hidden-input
-                    />
+                    <input type="hidden" value="{{ $selectedValue }}" data-select-hidden-input />
                 @endif
             @endforeach
         </div>
     @else
         @if (filled($name))
-            <input
-                type="hidden"
-                name="{{ $name }}"
-                value="{{ $scalarValue }}"
-                data-select-hidden-input
-            />
+            <input type="hidden" name="{{ $name }}" value="{{ $scalarValue }}" data-select-hidden-input />
         @else
-            <input
-                type="hidden"
-                value="{{ $scalarValue }}"
-                data-select-hidden-input
-            />
+            <input type="hidden" value="{{ $scalarValue }}" data-select-hidden-input />
         @endif
     @endif
 
@@ -120,9 +104,7 @@
             @endif
         </x-stencil::select.trigger>
 
-        <x-stencil::select.content>
-            {{ $slot }}
-        </x-stencil::select.content>
+        <x-stencil::select.content> {{ $slot }} </x-stencil::select.content>
     @else
         {{ $slot }}
     @endif

@@ -49,6 +49,7 @@
     [$hasTrailing, $trailingContent] = $resolveAffix($trailing ?? null);
 
     $trailingSlotIsIcon = false;
+
     if ($hasTrailing && $trailingContent instanceof ComponentSlot && ! $trailingContent->isEmpty()) {
         $trailingSlotIsIcon = str_contains($trailingContent->toHtml(), 'data-icon');
     }
@@ -153,7 +154,12 @@
             @if ($leadingContent instanceof ComponentSlot)
                 {{ $leadingContent }}
             @else
-                <x-stencil::text inline size="sm" variant="subtle" class="input__leading-text">{{ $leadingContent }}</x-stencil::text>
+                <x-stencil::text
+                    inline
+                    size="sm"
+                    variant="subtle"
+                    class="input__leading-text"
+                >{{ $leadingContent }}</x-stencil::text>
             @endif
         </div>
     @endif
@@ -165,24 +171,29 @@
             @if ($trailingContent instanceof ComponentSlot)
                 {{ $trailingContent }}
             @else
-                <x-stencil::text inline size="sm" variant="subtle" class="input__trailing-text">{{ $trailingContent }}</x-stencil::text>
+                <x-stencil::text
+                    inline
+                    size="sm"
+                    variant="subtle"
+                    class="input__trailing-text"
+                >{{ $trailingContent }}</x-stencil::text>
             @endif
         </div>
     @endif
 </div>
 
 @if ($hasGroupAffix)
-        @if ($suffixText !== null)
-            <div
-                @class([
-                    'input-group__suffix',
-                    'inline-flex shrink-0 items-center rounded-r-md border border-l-0 border-zinc-200 bg-zinc-50 px-3',
-                    'dark:border-zinc-800 dark:bg-zinc-900',
-                ])
-                data-input-group-suffix
-            >
-                <x-stencil::text inline size="sm" variant="subtle">{{ $suffixText }}</x-stencil::text>
-            </div>
-        @endif
+    @if ($suffixText !== null)
+        <div
+            @class([
+                'input-group__suffix',
+                'inline-flex shrink-0 items-center rounded-r-md border border-l-0 border-zinc-200 bg-zinc-50 px-3',
+                'dark:border-zinc-800 dark:bg-zinc-900',
+            ])
+            data-input-group-suffix
+        >
+            <x-stencil::text inline size="sm" variant="subtle">{{ $suffixText }}</x-stencil::text>
+        </div>
+    @endif
     </div>
 @endif

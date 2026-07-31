@@ -18,9 +18,11 @@
 @endphp
 
 <span
-    {{ $attributes->class($valueClasses)->merge([
-        'data-placeholder' => $resolvedPlaceholder !== null ? 'true' : null,
-    ]) }}
+    {{
+        $attributes->class($valueClasses)->merge([
+            'data-placeholder' => $resolvedPlaceholder !== null ? 'true' : null,
+        ])
+    }}
     data-select-value
 >
     @if ($slot->isEmpty())

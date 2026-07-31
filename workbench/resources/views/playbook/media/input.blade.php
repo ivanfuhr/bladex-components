@@ -7,7 +7,8 @@
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::input /&gt;</p>
             <x-stencil::heading :level="2">Input</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle">Affixes, prefix/suffix text, validation, and disabled states.</x-stencil::text>
+            <x-stencil::text size="sm" variant="subtle"
+                >Affixes, prefix/suffix text, validation, and disabled states.</x-stencil::text>
         </div>
 
         <div class="grid gap-8 lg:grid-cols-2">
@@ -40,20 +41,38 @@
         </div>
 
         <div class="border-t border-zinc-200 pt-8 dark:border-zinc-800" data-playbook-control-alignment>
-            <x-stencil::text size="sm" variant="subtle" class="mb-4">Toolbar alignment (same size in one row)</x-stencil::text>
+            <x-stencil::text size="sm" variant="subtle" class="mb-4"
+                >Toolbar alignment (same size in one row)</x-stencil::text>
             <div class="space-y-6">
                 <div class="flex flex-wrap items-center gap-3" data-align-size="default">
                     <x-stencil::button variant="outline" data-align-part="button">Button</x-stencil::button>
                     <x-stencil::input name="align-default" placeholder="Input" class="w-36" data-align-part="input" />
-                    <x-stencil::select name="align-select-default" placeholder="Select…" class="w-40" data-align-part="select">
+                    <x-stencil::select
+                        name="align-select-default"
+                        placeholder="Select…"
+                        class="w-40"
+                        data-align-part="select"
+                    >
                         <x-stencil::select.item value="a">Option A</x-stencil::select.item>
                     </x-stencil::select>
                     <x-stencil::switch name="align-switch-default" :checked="true" data-align-part="switch" />
                 </div>
                 <div class="flex flex-wrap items-center gap-3" data-align-size="sm">
                     <x-stencil::button variant="outline" size="sm" data-align-part="button">Button</x-stencil::button>
-                    <x-stencil::input name="align-sm" size="sm" placeholder="Input" class="w-36" data-align-part="input" />
-                    <x-stencil::select name="align-select-sm" size="sm" placeholder="Select…" class="w-40" data-align-part="select">
+                    <x-stencil::input
+                        name="align-sm"
+                        size="sm"
+                        placeholder="Input"
+                        class="w-36"
+                        data-align-part="input"
+                    />
+                    <x-stencil::select
+                        name="align-select-sm"
+                        size="sm"
+                        placeholder="Select…"
+                        class="w-40"
+                        data-align-part="select"
+                    >
                         <x-stencil::select.item value="a">Option A</x-stencil::select.item>
                     </x-stencil::select>
                     <x-stencil::switch name="align-switch-sm" size="sm" :checked="true" data-align-part="switch" />

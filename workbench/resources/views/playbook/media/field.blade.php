@@ -7,7 +7,8 @@
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::field /&gt;</p>
             <x-stencil::heading :level="2">Field</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle">Label, control, description, and Laravel validation errors.</x-stencil::text>
+            <x-stencil::text size="sm" variant="subtle"
+                >Label, control, description, and Laravel validation errors.</x-stencil::text>
         </div>
 
         <div class="grid gap-8 lg:grid-cols-2">

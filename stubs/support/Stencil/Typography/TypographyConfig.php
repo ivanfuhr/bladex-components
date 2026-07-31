@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Support\Stencil\Typography;
 
-use Illuminate\Support\Arr;
 use App\Support\Stencil\ProjectConfig;
+use Illuminate\Support\Arr;
 
 final class TypographyConfig
 {

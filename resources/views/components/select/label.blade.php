@@ -9,11 +9,11 @@
     ])->implode(' ');
 @endphp
 
-<div
-    {{ $attributes->class($labelClasses)->merge([
+<div {{
+    $attributes->class($labelClasses)->merge([
         'role' => 'presentation',
         'data-select-label' => true,
-    ]) }}
->
+    ])
+}}>
     {{ $slot }}
 </div>

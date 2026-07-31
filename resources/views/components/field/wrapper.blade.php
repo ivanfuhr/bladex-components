@@ -1,5 +1,5 @@
 @php
-        $isInline = $orientation === 'inline';
+    $isInline = $orientation === 'inline';
 
     $rootClasses = collect([
         'field',
@@ -8,12 +8,12 @@
     ])->implode(' ');
 @endphp
 
-<div
-    {{ $attributes->class($rootClasses)->merge([
+<div {{
+    $attributes->class($rootClasses)->merge([
         'data-field' => true,
         'data-field-orientation' => $isInline ? 'inline' : 'block',
         'data-invalid' => $fieldInvalid ? 'true' : 'false',
-    ]) }}
->
+    ])
+}}>
     {{ $slot }}
 </div>

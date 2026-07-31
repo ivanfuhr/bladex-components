@@ -13,8 +13,8 @@
 @endphp
 
 <div class="date-picker__input-trigger flex w-full items-center gap-2" data-date-picker-trigger>
-    <x-stencil::input
-        {{ $attributes->merge([
+    <x-stencil::input {{
+        $attributes->merge([
             'type' => 'text',
             'placeholder' => $placeholder,
             'invalid' => $invalid,
@@ -22,8 +22,8 @@
             'size' => $size,
             'readonly' => true,
             'data-date-picker-input' => true,
-        ]) }}
-    />
+        ])
+    }} />
     @if ($clearable)
         <button
             type="button"
@@ -31,7 +31,10 @@
             data-date-picker-clear
             aria-label="{{ __('stencil::messages.date_picker_clear') }}"
         >
-            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M18 6 6 18" />
+                <path d="m6 6 12 12" />
+            </svg>
         </button>
     @endif
 </div>

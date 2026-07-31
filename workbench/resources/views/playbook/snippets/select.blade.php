@@ -28,17 +28,17 @@
     $s = PlaybookCode::component('select.separator');
 
     $body = <<<BLADE
-    <{$g}>
-        <{$l}>Creative</{$l}>
-        <{$i} value="photo">Photography</{$i}>
-        <{$i} value="design">Design services</{$i}>
-    </{$g}>
-    <{$s} />
-    <{$i} value="web">Web development</{$i}>
-    <{$i} value="accounting">Accounting</{$i}>
-    <{$i} value="other">Other</{$i}>
+        <{$g}>
+            <{$l}>Creative</{$l}>
+            <{$i} value="photo">Photography</{$i}>
+            <{$i} value="design">Design services</{$i}>
+        </{$g}>
+        <{$s} />
+        <{$i} value="web">Web development</{$i}>
+        <{$i} value="accounting">Accounting</{$i}>
+        <{$i} value="other">Other</{$i}>
 
-BLADE;
+    BLADE;
 
     $code = $open."\n".$body.PlaybookCode::closingTag($tag);
 

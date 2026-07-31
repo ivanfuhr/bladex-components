@@ -5,9 +5,12 @@
 @section('content')
     <div class="space-y-10">
         <div class="space-y-1">
-            <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::heading /&gt; · &lt;x-ui::text /&gt;</p>
+            <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">
+                &lt;x-ui::heading /&gt; · &lt;x-ui::text /&gt;
+            </p>
             <x-stencil::heading :level="2">Typography</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle">Shared size scale, semantic heading levels, and text variants.</x-stencil::text>
+            <x-stencil::text size="sm" variant="subtle"
+                >Shared size scale, semantic heading levels, and text variants.</x-stencil::text>
         </div>
 
         <div class="grid gap-10 lg:grid-cols-2">

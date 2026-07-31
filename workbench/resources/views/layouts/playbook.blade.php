@@ -9,15 +9,18 @@
     x-bind:class="dark ? 'dark scheme-dark' : 'scheme-light'"
 >
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title', 'Stencil Playbook')</title>
     <x-stencil::fonts />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-full bg-zinc-100/90 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
-    <a href="#playbook-main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:shadow-sm focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:focus:bg-zinc-900 dark:focus-visible:ring-zinc-300/20">
+    <a
+        href="#playbook-main"
+        class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:shadow-sm focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:focus:bg-zinc-900 dark:focus-visible:ring-zinc-300/20"
+    >
         Skip to content
     </a>
 
@@ -26,17 +29,20 @@
             <div class="flex min-w-0 items-center gap-4">
                 <a
                     href="{{ route('playbook.index') }}"
-                    class="flex size-9 shrink-0 items-center justify-center rounded-lg border border-zinc-200 bg-white text-sm font-semibold tracking-tight text-zinc-900 shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20"
+                    class="flex size-9 shrink-0 items-center justify-center rounded-lg border border-zinc-200 bg-white text-sm font-semibold tracking-tight text-zinc-900 shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20"
                     aria-label="Stencil Playbook home"
                 >
                     BX
                 </a>
                 <div class="min-w-0">
                     <div class="flex flex-wrap items-center gap-2">
-                        <a href="{{ route('playbook.index') }}" class="truncate text-sm font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
+                        <a
+                            href="{{ route('playbook.index') }}"
+                            class="truncate text-sm font-semibold tracking-tight text-zinc-950 dark:text-zinc-50"
+                        >
                             Stencil Playbook
                         </a>
-                        <span class="rounded-md border border-zinc-200 bg-white px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-zinc-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400">
+                        <span class="rounded-md border border-zinc-200 bg-white px-1.5 py-0.5 text-[10px] font-medium tracking-wide text-zinc-500 uppercase dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400">
                             Workbench
                         </span>
                     </div>
@@ -53,7 +59,7 @@
                     type="checkbox"
                     class="size-4 rounded border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:border-zinc-600 dark:bg-zinc-950 dark:focus-visible:ring-zinc-300/20"
                     x-model="dark"
-                >
+                />
             </label>
         </div>
     </header>

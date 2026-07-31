@@ -16,7 +16,7 @@
     :size="$size"
     :multiple="$multiple"
     :display="$display"
-    class="max-w-md w-full"
+    class="w-full max-w-md"
 >
     <x-stencil::select.group>
         <x-stencil::select.label>Creative</x-stencil::select.label>

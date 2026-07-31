@@ -5,11 +5,6 @@
     $inline = (bool) ($state['inline'] ?? false);
 @endphp
 
-<x-stencil::text
-    :size="$size"
-    :variant="$variant"
-    :color="$color"
-    :inline="$inline"
->
+<x-stencil::text :size="$size" :variant="$variant" :color="$color" :inline="$inline">
     Body copy with the configured size, variant, and color.
 </x-stencil::text>

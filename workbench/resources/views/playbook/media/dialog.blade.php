@@ -17,7 +17,8 @@
             <x-stencil::dialog.content preview class="w-full min-w-[min(100%,42rem)]">
                 <x-stencil::dialog.header>
                     <x-stencil::dialog.title>Update profile</x-stencil::dialog.title>
-                    <x-stencil::dialog.description>Make changes to your personal details.</x-stencil::dialog.description>
+                    <x-stencil::dialog.description>
+                        Make changes to your personal details.</x-stencil::dialog.description>
                 </x-stencil::dialog.header>
                 <div class="mt-4">
                     <x-stencil::input name="media_name" placeholder="Your name" class="w-full" />

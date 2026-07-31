@@ -58,12 +58,12 @@
 @endphp
 
 @if ($isPreview)
-    <div
-        {{ $attributes->class([
+    <div {{
+        $attributes->class([
             'dialog__preview',
             'relative flex min-h-[18rem] w-full items-center justify-center overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100/60 p-6 dark:border-zinc-800 dark:bg-zinc-900/60',
-        ]) }}
-    >
+        ])
+    }}>
         <div
             class="pointer-events-none absolute inset-0 bg-zinc-950/50 backdrop-blur-[2px] dark:bg-zinc-950/60"
             aria-hidden="true"
@@ -114,45 +114,45 @@
         </div>
     </div>
 @else
-<dialog
-    {{ $attributes->class($dialogClasses->all())->merge([
-        'data-dialog-content' => true,
-        'data-dialog-dismissible' => $dismissible ? 'true' : 'false',
-        'data-dialog-name' => filled($name) ? $name : null,
-        'data-dialog-flyout' => $isFlyout ? 'true' : 'false',
-        'aria-modal' => 'true',
-        'aria-labelledby' => $titleId,
-        'aria-describedby' => $descriptionId,
-        'role' => $alert ? 'alertdialog' : 'dialog',
-        'open' => $isOpen ? true : null,
-    ]) }}
->
-    <div @class($panelClasses->all()) data-dialog-panel>
-        @if ($closable)
-            <button
-                type="button"
-                class="{{ $closeButtonClasses }}"
-                data-dialog-close
-                aria-label="{{ __('stencil::messages.dialog_close') }}"
-            >
-                <svg
-                    class="size-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
+    <dialog {{
+        $attributes->class($dialogClasses->all())->merge([
+            'data-dialog-content' => true,
+            'data-dialog-dismissible' => $dismissible ? 'true' : 'false',
+            'data-dialog-name' => filled($name) ? $name : null,
+            'data-dialog-flyout' => $isFlyout ? 'true' : 'false',
+            'aria-modal' => 'true',
+            'aria-labelledby' => $titleId,
+            'aria-describedby' => $descriptionId,
+            'role' => $alert ? 'alertdialog' : 'dialog',
+            'open' => $isOpen ? true : null,
+        ])
+    }}>
+        <div @class($panelClasses->all()) data-dialog-panel>
+            @if ($closable)
+                <button
+                    type="button"
+                    class="{{ $closeButtonClasses }}"
+                    data-dialog-close
+                    aria-label="{{ __('stencil::messages.dialog_close') }}"
                 >
-                    <path d="M18 6 6 18" />
-                    <path d="m6 6 12 12" />
-                </svg>
-            </button>
-        @endif
+                    <svg
+                        class="size-4"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                    </svg>
+                </button>
+            @endif
 
-        {{ $slot }}
-    </div>
-</dialog>
+            {{ $slot }}
+        </div>
+    </dialog>
 @endif

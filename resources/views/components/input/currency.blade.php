@@ -93,7 +93,6 @@
     if ($invalid) {
         $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);
     }
-
 @endphp
 
 <div

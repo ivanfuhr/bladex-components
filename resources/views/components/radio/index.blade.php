@@ -65,12 +65,8 @@
     <input {{ $controlAttributes }} />
 
     @if ($hasSlotLabel)
-        <x-stencil::label :for="$controlId" class="!font-normal">
-            {{ $slot }}
-        </x-stencil::label>
+        <x-stencil::label :for="$controlId" class="!font-normal"> {{ $slot }} </x-stencil::label>
     @elseif (filled($label))
-        <x-stencil::label :for="$controlId" class="!font-normal">
-            {{ $label }}
-        </x-stencil::label>
+        <x-stencil::label :for="$controlId" class="!font-normal"> {{ $label }} </x-stencil::label>
     @endif
 </div>

@@ -21,6 +21,7 @@
     ]));
 
     $body = '';
+
     if ($showAffixes) {
         $body .= "    <x-slot:leading>\n";
         $body .= '        <'.PlaybookCode::component('icons.loading').' class="animate-spin" />'."\n";

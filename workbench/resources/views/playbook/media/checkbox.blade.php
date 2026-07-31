@@ -10,7 +10,7 @@
             <x-stencil::text size="sm" variant="subtle">Native checkbox for forms and multi-select.</x-stencil::text>
         </div>
 
-        <div class="flex flex-col gap-8 max-w-md">
+        <div class="flex max-w-md flex-col gap-8">
             <div class="space-y-3">
                 <x-stencil::text size="sm" variant="subtle">Default &amp; small, checked</x-stencil::text>
                 <x-stencil::field name="a" orientation="inline">

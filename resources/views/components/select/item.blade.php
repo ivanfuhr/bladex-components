@@ -44,7 +44,7 @@
 <div {{ $itemAttributes }}>
     <span class="min-w-0 flex-1 truncate" data-select-item-label>{{ $slot }}</span>
     <svg
-        class="pointer-events-none absolute right-2 top-1/2 size-4 -translate-y-1/2 text-zinc-900 opacity-0 dark:text-zinc-50"
+        class="pointer-events-none absolute top-1/2 right-2 size-4 -translate-y-1/2 text-zinc-900 opacity-0 dark:text-zinc-50"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="none"

@@ -8,9 +8,7 @@
 
 <x-stencil::dialog>
     <x-stencil::dialog.trigger>
-        <x-stencil::button variant="outline">
-            {{ $alert ? 'Delete project' : 'Open dialog' }}
-        </x-stencil::button>
+        <x-stencil::button variant="outline"> {{ $alert ? 'Delete project' : 'Open dialog' }} </x-stencil::button>
     </x-stencil::dialog.trigger>
 
     <x-stencil::dialog.content
@@ -21,9 +19,7 @@
         :closable="$closable"
     >
         <x-stencil::dialog.header>
-            <x-stencil::dialog.title>
-                {{ $alert ? 'Delete project?' : 'Update profile' }}
-            </x-stencil::dialog.title>
+            <x-stencil::dialog.title> {{ $alert ? 'Delete project?' : 'Update profile' }} </x-stencil::dialog.title>
             <x-stencil::dialog.description>
                 @if ($alert)
                     You're about to delete this project. This action cannot be reversed.

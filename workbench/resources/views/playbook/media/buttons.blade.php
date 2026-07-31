@@ -7,14 +7,13 @@
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::button /&gt;</p>
             <x-stencil::heading :level="2">Button variants</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle">Outline, primary, secondary, danger, ghost, subtle, and link.</x-stencil::text>
+            <x-stencil::text size="sm" variant="subtle"
+                >Outline, primary, secondary, danger, ghost, subtle, and link.</x-stencil::text>
         </div>
 
         <div class="flex flex-wrap items-center gap-3">
             @foreach (['outline', 'primary', 'secondary', 'danger', 'ghost', 'subtle', 'link'] as $variant)
-                <x-stencil::button :variant="$variant">
-                    {{ ucfirst($variant) }}
-                </x-stencil::button>
+                <x-stencil::button :variant="$variant"> {{ ucfirst($variant) }} </x-stencil::button>
             @endforeach
         </div>
 

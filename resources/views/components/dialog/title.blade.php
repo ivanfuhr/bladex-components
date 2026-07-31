@@ -8,9 +8,11 @@
     $classes = app(TypographyClassMap::class)->headingClasses(2);
 @endphp
 
-<h2 {{ $attributes->class($classes)->merge([
-    'id' => $titleId,
-    'data-dialog-title' => true,
-]) }}>
+<h2 {{
+    $attributes->class($classes)->merge([
+        'id' => $titleId,
+        'data-dialog-title' => true,
+    ])
+}}>
     {{ $slot }}
 </h2>
