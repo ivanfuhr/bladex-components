@@ -38,9 +38,7 @@ function bindSelect(root) {
 
     const hiddenInputsContainer = root.querySelector('[data-select-hidden-inputs]');
     /** @type {HTMLInputElement | null} */
-    const singleHiddenInput = isMultiple
-        ? null
-        : root.querySelector('[data-select-hidden-input]');
+    const singleHiddenInput = isMultiple ? null : root.querySelector('[data-select-hidden-input]');
 
     if (!(trigger instanceof HTMLButtonElement) || !(content instanceof HTMLElement)) {
         return;
@@ -70,22 +68,18 @@ function bindSelect(root) {
             (node) => node instanceof HTMLElement,
         );
 
-    const enabledOptions = () =>
-        options().filter((el) => !el.hasAttribute('data-disabled'));
+    const enabledOptions = () => options().filter((el) => !el.hasAttribute('data-disabled'));
 
     let open = false;
     let activeIndex = -1;
     let typeahead = '';
     let typeaheadTimer = /** @type {ReturnType<typeof setTimeout> | null} */ (null);
 
-    const countTemplate =
-        root.getAttribute('data-select-count-template') ?? '{count} selected';
-    const chipRemoveLabel =
-        root.getAttribute('data-select-chip-remove-label') ?? 'Remove';
+    const countTemplate = root.getAttribute('data-select-count-template') ?? '{count} selected';
+    const chipRemoveLabel = root.getAttribute('data-select-chip-remove-label') ?? 'Remove';
 
     const placeholderFromValueEl =
-        valueEl instanceof HTMLElement &&
-        valueEl.getAttribute('data-placeholder') === 'true'
+        valueEl instanceof HTMLElement && valueEl.getAttribute('data-placeholder') === 'true'
             ? (valueEl.textContent?.trim() ?? '')
             : '';
 
@@ -94,13 +88,12 @@ function bindSelect(root) {
             ? (chipsEl.getAttribute('data-placeholder') ?? '').trim()
             : '';
 
-  /**
-   * @returns {string[]}
-   */
+    /**
+     * @returns {string[]}
+     */
     function getSelectedValues() {
         if (!isMultiple) {
-            return singleHiddenInput instanceof HTMLInputElement &&
-                singleHiddenInput.value !== ''
+            return singleHiddenInput instanceof HTMLInputElement && singleHiddenInput.value !== ''
                 ? [singleHiddenInput.value]
                 : [];
         }
@@ -109,9 +102,7 @@ function bindSelect(root) {
             return [];
         }
 
-        return Array.from(
-            hiddenInputsContainer.querySelectorAll('[data-select-hidden-input]'),
-        )
+        return Array.from(hiddenInputsContainer.querySelectorAll('[data-select-hidden-input]'))
             .filter((node) => node instanceof HTMLInputElement)
             .map((input) => input.value)
             .filter((value) => value !== '');
@@ -377,14 +368,11 @@ function bindSelect(root) {
         }
 
         if (displayMode === 'chips' && chipsEl instanceof HTMLElement) {
-            chipsEl
-                .querySelectorAll('[data-select-chip]')
-                .forEach((chip) => chip.remove());
+            chipsEl.querySelectorAll('[data-select-chip]').forEach((chip) => chip.remove());
 
             if (selected.length === 0 && placeholderFromChips !== '') {
                 const empty = document.createElement('span');
-                empty.className =
-                    'text-sm text-zinc-500 dark:text-zinc-400';
+                empty.className = 'text-sm text-zinc-500 dark:text-zinc-400';
                 empty.setAttribute('data-select-chips-placeholder', 'true');
                 empty.textContent = placeholderFromChips;
                 chipsEl.appendChild(empty);
@@ -438,7 +426,11 @@ function bindSelect(root) {
     }
 
     function syncFromValue() {
-        if (!isMultiple && singleHiddenInput instanceof HTMLInputElement && valueEl instanceof HTMLElement) {
+        if (
+            !isMultiple &&
+            singleHiddenInput instanceof HTMLInputElement &&
+            valueEl instanceof HTMLElement
+        ) {
             const value = singleHiddenInput.value;
             if (value === '') {
                 if (placeholderFromValueEl !== '') {
@@ -466,14 +458,11 @@ function bindSelect(root) {
         }
     }
 
-  /**
-   * @param {EventTarget | null} target
-   */
+    /**
+     * @param {EventTarget | null} target
+     */
     function containsTarget(target) {
-        return (
-            target instanceof Node &&
-            (root.contains(target) || content.contains(target))
-        );
+        return target instanceof Node && (root.contains(target) || content.contains(target));
     }
 
     /**
@@ -496,9 +485,10 @@ function bindSelect(root) {
 
     if (chipsEl instanceof HTMLElement) {
         chipsEl.addEventListener('click', (event) => {
-            const remove = event.target instanceof Element
-                ? event.target.closest('[data-select-chip-remove]')
-                : null;
+            const remove =
+                event.target instanceof Element
+                    ? event.target.closest('[data-select-chip-remove]')
+                    : null;
             if (!(remove instanceof HTMLElement)) {
                 return;
             }
@@ -517,9 +507,8 @@ function bindSelect(root) {
     }
 
     content.addEventListener('click', (event) => {
-        const item = event.target instanceof Element
-            ? event.target.closest('[data-select-item]')
-            : null;
+        const item =
+            event.target instanceof Element ? event.target.closest('[data-select-item]') : null;
         if (item instanceof HTMLElement) {
             activateOption(item);
         }

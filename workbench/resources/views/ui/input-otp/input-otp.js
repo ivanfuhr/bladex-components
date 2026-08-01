@@ -34,9 +34,8 @@ function bindInputOtp(root) {
         return;
     }
 
-    const mode = root.getAttribute('data-input-otp-mode') === 'alphanumeric'
-        ? 'alphanumeric'
-        : 'numeric';
+    const mode =
+        root.getAttribute('data-input-otp-mode') === 'alphanumeric' ? 'alphanumeric' : 'numeric';
 
     const lengthAttr = Number.parseInt(root.getAttribute('data-input-otp-length') ?? '', 10);
 
@@ -55,9 +54,7 @@ function bindInputOtp(root) {
     }
 
     const slotElements = slots();
-    const length = Number.isFinite(lengthAttr) && lengthAttr > 0
-        ? lengthAttr
-        : slotElements.length;
+    const length = Number.isFinite(lengthAttr) && lengthAttr > 0 ? lengthAttr : slotElements.length;
 
     if (slotElements.length === 0) {
         return;
@@ -126,7 +123,8 @@ function bindInputOtp(root) {
         syncFromSlots({ dispatch: options.dispatch });
 
         if (typeof options.focusIndex === 'number') {
-            const target = slotElements[Math.min(Math.max(options.focusIndex, 0), slotElements.length - 1)];
+            const target =
+                slotElements[Math.min(Math.max(options.focusIndex, 0), slotElements.length - 1)];
             target?.focus();
             target?.select();
         }
@@ -137,7 +135,7 @@ function bindInputOtp(root) {
      */
     function focusSlot(index) {
         const target = slotElements[Math.min(Math.max(index, 0), slotElements.length - 1)];
-        if (! target || target.disabled) {
+        if (!target || target.disabled) {
             return;
         }
 

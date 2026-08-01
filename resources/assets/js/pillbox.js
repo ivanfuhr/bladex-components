@@ -28,7 +28,7 @@ export function initPillboxes(root = document) {
  */
 function bindPillbox(root) {
     const list = root.querySelector('[data-pillbox-list]');
-  /** @type {HTMLInputElement | null} */
+    /** @type {HTMLInputElement | null} */
     const textInput = root.querySelector('[data-pillbox-input]');
     const hiddenContainer = root.querySelector('[data-pillbox-hidden-inputs]');
     /** @type {HTMLTemplateElement | null} */
@@ -52,11 +52,11 @@ function bindPillbox(root) {
     }
 
     if (
-        !(list instanceof HTMLElement)
-        || !(textInput instanceof HTMLInputElement)
-        || !(hiddenContainer instanceof HTMLElement)
-        || !(chipTemplate instanceof HTMLTemplateElement)
-        || fieldName === ''
+        !(list instanceof HTMLElement) ||
+        !(textInput instanceof HTMLInputElement) ||
+        !(hiddenContainer instanceof HTMLElement) ||
+        !(chipTemplate instanceof HTMLTemplateElement) ||
+        fieldName === ''
     ) {
         return;
     }
@@ -69,9 +69,9 @@ function bindPillbox(root) {
         target.dispatchEvent(new Event('change', { bubbles: true }));
     }
 
-  /**
-   * @returns {string[]}
-   */
+    /**
+     * @returns {string[]}
+     */
     function getTags() {
         return [...tags];
     }
@@ -106,9 +106,10 @@ function bindPillbox(root) {
 
         tags.forEach((tag, index) => {
             const fragment = chipTemplate.content.cloneNode(true);
-            const chip = fragment instanceof DocumentFragment
-                ? fragment.querySelector('[data-pillbox-chip]')
-                : null;
+            const chip =
+                fragment instanceof DocumentFragment
+                    ? fragment.querySelector('[data-pillbox-chip]')
+                    : null;
 
             if (!(chip instanceof HTMLElement)) {
                 return;
@@ -161,16 +162,20 @@ function bindPillbox(root) {
 
         const atMax = max !== null && tags.length >= max;
         textInput.disabled = disabled || atMax;
-        textInput.placeholder = atMax && max !== null
-            ? ''
-            : textInput.getAttribute('data-original-placeholder') ?? textInput.placeholder;
+        textInput.placeholder =
+            atMax && max !== null
+                ? ''
+                : (textInput.getAttribute('data-original-placeholder') ?? textInput.placeholder);
     }
 
     /**
      * @param {string} raw
      */
     function addFromInput(raw) {
-        const parts = raw.split(',').map((part) => part.trim()).filter((part) => part !== '');
+        const parts = raw
+            .split(',')
+            .map((part) => part.trim())
+            .filter((part) => part !== '');
 
         if (parts.length === 0) {
             return;

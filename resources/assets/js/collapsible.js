@@ -36,10 +36,12 @@ function bindCollapsible(root) {
         return;
     }
 
-    const triggerId = root.dataset.collapsibleTriggerId
-        ?? `collapsible-trigger-${Math.random().toString(36).slice(2, 10)}`;
-    const contentId = root.dataset.collapsibleContentId
-        ?? `collapsible-content-${Math.random().toString(36).slice(2, 10)}`;
+    const triggerId =
+        root.dataset.collapsibleTriggerId ??
+        `collapsible-trigger-${Math.random().toString(36).slice(2, 10)}`;
+    const contentId =
+        root.dataset.collapsibleContentId ??
+        `collapsible-content-${Math.random().toString(36).slice(2, 10)}`;
 
     const control = resolveControl(trigger);
 
@@ -58,9 +60,10 @@ function bindCollapsible(root) {
 
     applyState(root, root.dataset.state === 'open');
 
-    const clickTarget = trigger.matches(TRIGGER_SELECTOR) && trigger.tagName === 'DIV'
-        ? trigger
-        : control ?? trigger;
+    const clickTarget =
+        trigger.matches(TRIGGER_SELECTOR) && trigger.tagName === 'DIV'
+            ? trigger
+            : (control ?? trigger);
 
     clickTarget.addEventListener('click', (event) => {
         if (root.dataset.collapsibleDisabled === 'true') {

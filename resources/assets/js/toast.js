@@ -29,9 +29,7 @@ export function initToasts(root = document) {
  * @param {{ title?: string, description?: string, variant?: string, duration?: number }} options
  */
 export function toast(options = {}) {
-    const provider =
-        document.querySelector(PROVIDER_SELECTOR) ??
-        createProvider();
+    const provider = document.querySelector(PROVIDER_SELECTOR) ?? createProvider();
 
     const el = document.createElement('div');
     el.className =
@@ -102,9 +100,7 @@ function bindToast(toastEl) {
         toastEl.dataset.state = 'closed';
         toastEl.hidden = true;
         toastEl.classList.add('hidden');
-        toastEl.dispatchEvent(
-            new CustomEvent('stencil:toast:dismiss', { bubbles: true }),
-        );
+        toastEl.dispatchEvent(new CustomEvent('stencil:toast:dismiss', { bubbles: true }));
         window.setTimeout(() => toastEl.remove(), 150);
     };
 

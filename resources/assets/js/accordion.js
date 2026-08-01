@@ -33,9 +33,8 @@ function bindAccordion(accordion) {
     syncItemWiring(accordion);
 
     accordion.addEventListener('click', (event) => {
-        const trigger = event.target instanceof Element
-            ? event.target.closest(TRIGGER_SELECTOR)
-            : null;
+        const trigger =
+            event.target instanceof Element ? event.target.closest(TRIGGER_SELECTOR) : null;
 
         if (!(trigger instanceof HTMLButtonElement) || !accordion.contains(trigger)) {
             return;
@@ -125,8 +124,8 @@ function applyItemState(item, open) {
     const trigger = item.querySelector(TRIGGER_SELECTOR);
     const content = item.querySelector(CONTENT_SELECTOR);
     const accordion = item.closest(ACCORDION_SELECTOR);
-    const transition = accordion instanceof HTMLElement
-        && accordion.dataset.accordionTransition === 'true';
+    const transition =
+        accordion instanceof HTMLElement && accordion.dataset.accordionTransition === 'true';
 
     item.dataset.state = open ? 'open' : 'closed';
 

@@ -61,8 +61,10 @@ function resolveChromiumExecutable() {
 
 const executablePath = resolveChromiumExecutable();
 
-if (! executablePath) {
-    console.error('No Chromium/Chrome binary found. Set STENCIL_CHROMIUM_PATH or install chromium-browser.');
+if (!executablePath) {
+    console.error(
+        'No Chromium/Chrome binary found. Set STENCIL_CHROMIUM_PATH or install chromium-browser.',
+    );
     process.exit(1);
 }
 
@@ -110,8 +112,8 @@ for (const component of components) {
 
         if (width !== null && Math.round(width * deviceScaleFactor) !== expectedScreenshotWidth) {
             console.warn(
-                `Warning: ${path.basename(target)} width ${Math.round(width * deviceScaleFactor)}px `
-                + `!= expected ${expectedScreenshotWidth}px`,
+                `Warning: ${path.basename(target)} width ${Math.round(width * deviceScaleFactor)}px ` +
+                    `!= expected ${expectedScreenshotWidth}px`,
             );
         }
 

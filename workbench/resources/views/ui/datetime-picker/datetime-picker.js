@@ -3,7 +3,11 @@
  */
 
 import { bindCalendar } from './calendar.js';
-import { ensurePanelPortaled, positionAnchoredPanel, restorePanelFromPortal } from './chrono/popover.js';
+import {
+    ensurePanelPortaled,
+    positionAnchoredPanel,
+    restorePanelFromPortal,
+} from './chrono/popover.js';
 import { toIsoDateTimeString } from './chrono/parse.js';
 import { formatDateTimeLabel, formatTimeLabel } from './chrono/timezone.js';
 
@@ -14,13 +18,15 @@ const initialized = new WeakSet();
  * @param {ParentNode} root
  */
 export function initDatetimePickers(root = document) {
-    document.querySelectorAll('[data-datetime-picker-panel][data-stencil-portaled]').forEach((panel) => {
-        if (!(panel instanceof HTMLElement) || panel.closest('[data-datetime-picker]')) {
-            return;
-        }
+    document
+        .querySelectorAll('[data-datetime-picker-panel][data-stencil-portaled]')
+        .forEach((panel) => {
+            if (!(panel instanceof HTMLElement) || panel.closest('[data-datetime-picker]')) {
+                return;
+            }
 
-        panel.remove();
-    });
+            panel.remove();
+        });
 
     root.querySelectorAll(SELECTOR).forEach((element) => {
         if (!(element instanceof HTMLElement) || initialized.has(element)) {
@@ -38,7 +44,9 @@ export function initDatetimePickers(root = document) {
 function bindDatetimePicker(root) {
     const hidden = root.querySelector('[data-datetime-picker-hidden-input]');
     const panel = root.querySelector('[data-datetime-picker-panel]');
-    const trigger = root.querySelector('[data-datetime-picker-trigger], [data-date-picker-trigger]');
+    const trigger = root.querySelector(
+        '[data-datetime-picker-trigger], [data-date-picker-trigger]',
+    );
     const valueEl = root.querySelector('[data-date-picker-value]');
     const calendarEl = root.querySelector('[data-datetime-picker-calendar]');
     const timeList = root.querySelector('[data-datetime-picker-time-list]');
@@ -146,12 +154,12 @@ function bindDatetimePicker(root) {
     }
 
     function syncTimeListSelection() {
-        if (! (timeList instanceof HTMLElement)) {
+        if (!(timeList instanceof HTMLElement)) {
             return;
         }
 
         timeList.querySelectorAll('[data-datetime-picker-time]').forEach((el) => {
-            if (! (el instanceof HTMLElement)) {
+            if (!(el instanceof HTMLElement)) {
                 return;
             }
 
@@ -161,8 +169,8 @@ function bindDatetimePicker(root) {
             el.classList.toggle('text-white', selected);
             el.classList.toggle('dark:bg-zinc-100', selected);
             el.classList.toggle('dark:text-zinc-900', selected);
-            el.classList.toggle('hover:bg-zinc-100', ! selected);
-            el.classList.toggle('dark:hover:bg-zinc-800', ! selected);
+            el.classList.toggle('hover:bg-zinc-100', !selected);
+            el.classList.toggle('dark:hover:bg-zinc-800', !selected);
 
             if (selected) {
                 el.scrollIntoView({ block: 'nearest' });
@@ -171,11 +179,11 @@ function bindDatetimePicker(root) {
     }
 
     function displayValue(value) {
-        if (! (valueEl instanceof HTMLElement)) {
+        if (!(valueEl instanceof HTMLElement)) {
             return;
         }
 
-        if (! value) {
+        if (!value) {
             valueEl.textContent = valueEl.getAttribute('data-placeholder-text') ?? '';
             valueEl.setAttribute('data-placeholder', 'true');
 

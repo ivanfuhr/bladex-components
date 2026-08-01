@@ -1,0 +1,16 @@
+/vendor
+/public
+/node_modules
+/scripts/node_modules
+/workbench/node_modules
+/workbench/public/build
+/build
+/coverage
+/.phpunit.cache
+/.agents
+/.github/skills
+/registry
+/tests/fixtures
+*.lock
+composer.lock
+package-lock.json

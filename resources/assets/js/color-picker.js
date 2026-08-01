@@ -157,7 +157,7 @@ function parseHexInput(raw) {
         return null;
     }
 
-    if (! value.startsWith('#')) {
+    if (!value.startsWith('#')) {
         value = `#${value}`;
     }
 
@@ -197,14 +197,14 @@ function bindColorPicker(root) {
     const disabled = root.hasAttribute('data-disabled');
 
     if (
-        !(hiddenInput instanceof HTMLInputElement)
-        || !(hexInput instanceof HTMLInputElement)
-        || !(popover instanceof HTMLElement)
-        || !(area instanceof HTMLElement)
-        || !(areaBase instanceof HTMLElement)
-        || !(areaThumb instanceof HTMLElement)
-        || !(hueInput instanceof HTMLInputElement)
-        || !(swatchTrigger instanceof HTMLButtonElement)
+        !(hiddenInput instanceof HTMLInputElement) ||
+        !(hexInput instanceof HTMLInputElement) ||
+        !(popover instanceof HTMLElement) ||
+        !(area instanceof HTMLElement) ||
+        !(areaBase instanceof HTMLElement) ||
+        !(areaThumb instanceof HTMLElement) ||
+        !(hueInput instanceof HTMLInputElement) ||
+        !(swatchTrigger instanceof HTMLButtonElement)
     ) {
         return;
     }
@@ -256,7 +256,7 @@ function bindColorPicker(root) {
     function setValue(hex, options = {}) {
         const { syncPicker = true, dispatch = true } = options;
 
-        if (! HEX_PATTERN.test(hex)) {
+        if (!HEX_PATTERN.test(hex)) {
             return;
         }
 
@@ -298,7 +298,7 @@ function bindColorPicker(root) {
 
         const parent = popover.parentElement;
 
-        if (parent && ! portalInserted) {
+        if (parent && !portalInserted) {
             parent.insertBefore(portalMarker, popover);
             portalInserted = true;
         }
@@ -352,7 +352,7 @@ function bindColorPicker(root) {
 
         swatchTrigger.setAttribute('aria-expanded', open ? 'true' : 'false');
         hexInput.setAttribute('aria-expanded', open ? 'true' : 'false');
-        popover.hidden = ! open;
+        popover.hidden = !open;
 
         if (open) {
             syncHsvFromHex(hiddenInput.value || '#000000');
@@ -382,7 +382,7 @@ function bindColorPicker(root) {
             return;
         }
 
-        setOpen(! open);
+        setOpen(!open);
     });
 
     hexInput.addEventListener('input', () => {
@@ -432,7 +432,7 @@ function bindColorPicker(root) {
     });
 
     area.addEventListener('pointermove', (event) => {
-        if (! draggingArea || disabled) {
+        if (!draggingArea || disabled) {
             return;
         }
 
@@ -489,7 +489,7 @@ function bindColorPicker(root) {
     }
 
     document.addEventListener('pointerdown', (event) => {
-        if (! open || disabled) {
+        if (!open || disabled) {
             return;
         }
 
@@ -507,7 +507,7 @@ function bindColorPicker(root) {
     });
 
     document.addEventListener('keydown', (event) => {
-        if (! open || disabled || event.key !== 'Escape') {
+        if (!open || disabled || event.key !== 'Escape') {
             return;
         }
 
@@ -521,11 +521,15 @@ function bindColorPicker(root) {
         }
     });
 
-    window.addEventListener('scroll', () => {
-        if (open) {
-            positionPopover();
-        }
-    }, true);
+    window.addEventListener(
+        'scroll',
+        () => {
+            if (open) {
+                positionPopover();
+            }
+        },
+        true,
+    );
 
     const initial = hiddenInput.value || '#000000';
 

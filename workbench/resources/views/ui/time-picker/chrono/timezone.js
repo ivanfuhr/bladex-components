@@ -38,13 +38,13 @@ export function formatDateValue(dateValue, locale, options = {}) {
  * @param {string} locale
  */
 export function formatDateLabel(isoDate, locale) {
-    if (! isoDate) {
+    if (!isoDate) {
         return '';
     }
 
     const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(isoDate);
 
-    if (! match) {
+    if (!match) {
         return isoDate;
     }
 
@@ -67,7 +67,7 @@ export function formatDateLabel(isoDate, locale) {
  * @param {boolean} withSeconds
  */
 export function formatDateTimeLabel(isoDatetime, locale, timeZone, withSeconds = false) {
-    if (! isoDatetime) {
+    if (!isoDatetime) {
         return '';
     }
 
@@ -99,7 +99,7 @@ export function formatDateTimeLabel(isoDatetime, locale, timeZone, withSeconds =
  * @param {boolean} withSeconds
  */
 export function formatTimeLabel(time, locale, _timeZone, withSeconds = false) {
-    if (! time) {
+    if (!time) {
         return '';
     }
 

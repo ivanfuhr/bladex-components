@@ -146,7 +146,8 @@ export function bindCalendar(root) {
     });
 
     root.addEventListener('click', (event) => {
-        const target = event.target instanceof Element ? event.target.closest('[data-calendar-day]') : null;
+        const target =
+            event.target instanceof Element ? event.target.closest('[data-calendar-day]') : null;
 
         if (!(target instanceof HTMLButtonElement) || target.disabled) {
             return;
@@ -178,7 +179,14 @@ export function bindCalendar(root) {
         }
 
         event.preventDefault();
-        const delta = event.key === 'ArrowLeft' ? -1 : event.key === 'ArrowRight' ? 1 : event.key === 'ArrowUp' ? -7 : 7;
+        const delta =
+            event.key === 'ArrowLeft'
+                ? -1
+                : event.key === 'ArrowRight'
+                  ? 1
+                  : event.key === 'ArrowUp'
+                    ? -7
+                    : 7;
         const base =
             state.selection.focus ?? state.selection.start ?? state.selection.end ?? state.today;
         const next = base.incrementDays(delta);
@@ -416,7 +424,9 @@ function buildMonthTable(viewMonth, config, state) {
         header.className = `flex ${config.sizeClass} items-center justify-center font-medium text-zinc-500`;
         const idx = (i + config.startDay) % 7;
         const date = new Date(2024, 0, 7 + idx);
-        header.textContent = new Intl.DateTimeFormat(config.locale, { weekday: 'narrow' }).format(date);
+        header.textContent = new Intl.DateTimeFormat(config.locale, { weekday: 'narrow' }).format(
+            date,
+        );
         grid.appendChild(header);
     }
 
@@ -468,7 +478,12 @@ function buildMonthTable(viewMonth, config, state) {
             }
 
             if (isSelected(cellDay, state)) {
-                btn.classList.add('bg-zinc-900', 'text-white', 'dark:bg-zinc-50', 'dark:text-zinc-900');
+                btn.classList.add(
+                    'bg-zinc-900',
+                    'text-white',
+                    'dark:bg-zinc-50',
+                    'dark:text-zinc-900',
+                );
             }
 
             if (disabled) {

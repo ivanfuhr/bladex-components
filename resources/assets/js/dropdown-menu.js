@@ -151,9 +151,10 @@ function bindDropdownMenu(root) {
     });
 
     content.addEventListener('click', (event) => {
-        const item = event.target instanceof Element
-            ? event.target.closest('[data-dropdown-menu-item]')
-            : null;
+        const item =
+            event.target instanceof Element
+                ? event.target.closest('[data-dropdown-menu-item]')
+                : null;
 
         if (!(item instanceof HTMLElement) || !content.contains(item)) {
             return;
@@ -165,8 +166,7 @@ function bindDropdownMenu(root) {
             return;
         }
 
-        const keepOpen =
-            content.dataset.keepOpen === 'true' || item.dataset.keepOpen === 'true';
+        const keepOpen = content.dataset.keepOpen === 'true' || item.dataset.keepOpen === 'true';
 
         if (!keepOpen) {
             setOpen(false);
@@ -175,9 +175,7 @@ function bindDropdownMenu(root) {
     });
 
     content.addEventListener('mousemove', (event) => {
-        const item = event.target instanceof Element
-            ? event.target.closest(ITEM_SELECTOR)
-            : null;
+        const item = event.target instanceof Element ? event.target.closest(ITEM_SELECTOR) : null;
 
         if (!(item instanceof HTMLElement)) {
             return;

@@ -36,15 +36,13 @@ function bindCombobox(root) {
     const singleInput = root.querySelector('[data-combobox-input]');
     /** @type {HTMLInputElement | null} */
     const filterInput = root.querySelector('[data-combobox-filter-input]');
-    const input = isMultiple && filterInput instanceof HTMLInputElement
-        ? filterInput
-        : singleInput;
+    const input = isMultiple && filterInput instanceof HTMLInputElement ? filterInput : singleInput;
 
     const toggle = root.querySelector('[data-combobox-toggle]');
     const content = root.querySelector('[data-combobox-content]');
     const emptyEl = root.querySelector('[data-combobox-empty]');
     /** @type {HTMLInputElement | null} */
-    const singleHiddenInput = ! isMultiple
+    const singleHiddenInput = !isMultiple
         ? root.querySelector('[data-combobox-hidden-input]')
         : null;
     const hiddenInputsContainer = root.querySelector('[data-combobox-hidden-inputs]');
@@ -58,7 +56,7 @@ function bindCombobox(root) {
         return;
     }
 
-    if (! isMultiple && !(singleHiddenInput instanceof HTMLInputElement)) {
+    if (!isMultiple && !(singleHiddenInput instanceof HTMLInputElement)) {
         return;
     }
 
@@ -66,12 +64,10 @@ function bindCombobox(root) {
         return;
     }
 
-    const placeholderFromValueEl = valueEl instanceof HTMLElement
-        ? valueEl.getAttribute('data-placeholder') ?? ''
-        : '';
-    const placeholderFromChips = chipsEl instanceof HTMLElement
-        ? chipsEl.getAttribute('data-placeholder') ?? ''
-        : '';
+    const placeholderFromValueEl =
+        valueEl instanceof HTMLElement ? (valueEl.getAttribute('data-placeholder') ?? '') : '';
+    const placeholderFromChips =
+        chipsEl instanceof HTMLElement ? (chipsEl.getAttribute('data-placeholder') ?? '') : '';
 
     const portalMarker = document.createComment('stencil-combobox-portal');
     let portalInserted = false;
@@ -82,9 +78,7 @@ function bindCombobox(root) {
         );
 
     const visibleEnabledOptions = () =>
-        options().filter(
-            (el) => !el.hidden && !el.hasAttribute('data-disabled'),
-        );
+        options().filter((el) => !el.hidden && !el.hasAttribute('data-disabled'));
 
     let open = false;
     let activeIndex = -1;
@@ -113,15 +107,13 @@ function bindCombobox(root) {
      * @returns {string[]}
      */
     function getSelectedValues() {
-        if (! isMultiple) {
+        if (!isMultiple) {
             return singleHiddenInput instanceof HTMLInputElement && singleHiddenInput.value !== ''
                 ? [singleHiddenInput.value]
                 : [];
         }
 
-        return Array.from(
-            hiddenInputsContainer.querySelectorAll('[data-combobox-hidden-input]'),
-        )
+        return Array.from(hiddenInputsContainer.querySelectorAll('[data-combobox-hidden-input]'))
             .filter((node) => node instanceof HTMLInputElement)
             .map((node) => node.value)
             .filter((value) => value !== '');
@@ -133,7 +125,7 @@ function bindCombobox(root) {
     function setSelectedValues(values) {
         const unique = [...new Set(values)];
 
-        if (! isMultiple && singleHiddenInput instanceof HTMLInputElement) {
+        if (!isMultiple && singleHiddenInput instanceof HTMLInputElement) {
             singleHiddenInput.value = unique[0] ?? '';
             syncOptionSelection(unique[0] ?? '');
             renderTrigger();
@@ -164,13 +156,11 @@ function bindCombobox(root) {
         syncOptionSelectionMulti(unique);
         renderTrigger();
 
-        hiddenInputsContainer
-            .querySelectorAll('[data-combobox-hidden-input]')
-            .forEach((node) => {
-                if (node instanceof HTMLInputElement) {
-                    dispatchValueEvents(node);
-                }
-            });
+        hiddenInputsContainer.querySelectorAll('[data-combobox-hidden-input]').forEach((node) => {
+            if (node instanceof HTMLInputElement) {
+                dispatchValueEvents(node);
+            }
+        });
     }
 
     /**
@@ -231,7 +221,7 @@ function bindCombobox(root) {
     }
 
     function renderTrigger() {
-        if (! isMultiple) {
+        if (!isMultiple) {
             return;
         }
 
@@ -259,9 +249,7 @@ function bindCombobox(root) {
         }
 
         if (displayMode === 'chips' && chipsEl instanceof HTMLElement) {
-            chipsEl
-                .querySelectorAll('[data-combobox-chip]')
-                .forEach((chip) => chip.remove());
+            chipsEl.querySelectorAll('[data-combobox-chip]').forEach((chip) => chip.remove());
 
             if (selected.length === 0 && placeholderFromChips !== '') {
                 const empty = document.createElement('span');
@@ -303,7 +291,7 @@ function bindCombobox(root) {
 
         const parent = content.parentElement;
 
-        if (parent && ! portalInserted) {
+        if (parent && !portalInserted) {
             parent.insertBefore(portalMarker, content);
             portalInserted = true;
         }
@@ -364,7 +352,7 @@ function bindCombobox(root) {
 
         options().forEach((el) => {
             const match = q === '' || optionLabel(el).toLowerCase().includes(q);
-            el.hidden = ! match;
+            el.hidden = !match;
 
             if (match) {
                 visibleCount += 1;
@@ -376,11 +364,11 @@ function bindCombobox(root) {
                 return;
             }
 
-            const hasVisibleItem = Array.from(
-                group.querySelectorAll('[data-combobox-item]'),
-            ).some((item) => item instanceof HTMLElement && ! item.hidden);
+            const hasVisibleItem = Array.from(group.querySelectorAll('[data-combobox-item]')).some(
+                (item) => item instanceof HTMLElement && !item.hidden,
+            );
 
-            group.hidden = ! hasVisibleItem;
+            group.hidden = !hasVisibleItem;
         });
 
         content.querySelectorAll('[data-combobox-separator]').forEach((sep) => {
@@ -436,10 +424,10 @@ function bindCombobox(root) {
             chevron.classList.toggle('rotate-180', next);
         }
 
-        content.hidden = ! next;
+        content.hidden = !next;
 
         if (next) {
-            if (! opts.keepFilter) {
+            if (!opts.keepFilter) {
                 applyFilter(input.value);
             }
 
@@ -448,10 +436,8 @@ function bindCombobox(root) {
             const selected = getSelectedValues();
             let index = 0;
 
-            if (! isMultiple && selected.length > 0) {
-                const found = list.findIndex(
-                    (el) => el.getAttribute('data-value') === selected[0],
-                );
+            if (!isMultiple && selected.length > 0) {
+                const found = list.findIndex((el) => el.getAttribute('data-value') === selected[0]);
                 index = found >= 0 ? found : 0;
             } else if (isMultiple && selected.length > 0) {
                 const found = list.findIndex((el) =>
@@ -474,13 +460,13 @@ function bindCombobox(root) {
             options().forEach((el) => {
                 el.hidden = false;
             });
-            content.querySelectorAll('[data-combobox-group], [data-combobox-separator]').forEach(
-                (node) => {
+            content
+                .querySelectorAll('[data-combobox-group], [data-combobox-separator]')
+                .forEach((node) => {
                     if (node instanceof HTMLElement) {
                         node.hidden = false;
                     }
-                },
-            );
+                });
 
             if (emptyEl instanceof HTMLElement) {
                 emptyEl.hidden = true;
@@ -549,9 +535,7 @@ function bindCombobox(root) {
             return;
         }
 
-        const match = options().find(
-            (el) => el.getAttribute('data-value') === value,
-        );
+        const match = options().find((el) => el.getAttribute('data-value') === value);
 
         if (match) {
             const label = optionLabel(match);
@@ -565,17 +549,15 @@ function bindCombobox(root) {
      * @param {EventTarget | null} target
      */
     function containsTarget(target) {
-        return (
-            target instanceof Node
-            && (root.contains(target) || content.contains(target))
-        );
+        return target instanceof Node && (root.contains(target) || content.contains(target));
     }
 
     if (chipsEl instanceof HTMLElement) {
         chipsEl.addEventListener('click', (event) => {
-            const remove = event.target instanceof Element
-                ? event.target.closest('[data-combobox-chip-remove]')
-                : null;
+            const remove =
+                event.target instanceof Element
+                    ? event.target.closest('[data-combobox-chip-remove]')
+                    : null;
 
             if (remove instanceof HTMLElement) {
                 event.preventDefault();
@@ -594,7 +576,7 @@ function bindCombobox(root) {
             return;
         }
 
-        if (! open) {
+        if (!open) {
             setOpen(true);
         }
     });
@@ -604,7 +586,7 @@ function bindCombobox(root) {
             return;
         }
 
-        if (! isMultiple && singleHiddenInput instanceof HTMLInputElement) {
+        if (!isMultiple && singleHiddenInput instanceof HTMLInputElement) {
             if (committedLabel !== '' && input.value !== committedLabel) {
                 singleHiddenInput.value = '';
                 committedLabel = '';
@@ -613,7 +595,7 @@ function bindCombobox(root) {
             }
         }
 
-        if (! open) {
+        if (!open) {
             setOpen(true, { keepFilter: true });
         }
 
@@ -649,9 +631,8 @@ function bindCombobox(root) {
     });
 
     content.addEventListener('click', (event) => {
-        const item = event.target instanceof Element
-            ? event.target.closest('[data-combobox-item]')
-            : null;
+        const item =
+            event.target instanceof Element ? event.target.closest('[data-combobox-item]') : null;
 
         if (item instanceof HTMLElement) {
             selectOption(item);
@@ -659,14 +640,14 @@ function bindCombobox(root) {
     });
 
     document.addEventListener('pointerdown', (event) => {
-        if (! open) {
+        if (!open) {
             return;
         }
 
-        if (! containsTarget(event.target)) {
+        if (!containsTarget(event.target)) {
             setOpen(false);
 
-            if (! isMultiple && singleHiddenInput instanceof HTMLInputElement) {
+            if (!isMultiple && singleHiddenInput instanceof HTMLInputElement) {
                 if (singleHiddenInput.value !== '' && committedLabel !== '') {
                     input.value = committedLabel;
                 }
@@ -701,7 +682,7 @@ function bindCombobox(root) {
             case 'ArrowDown':
                 event.preventDefault();
 
-                if (! open) {
+                if (!open) {
                     setOpen(true);
                 } else if (list.length > 0) {
                     activeIndex = Math.min(activeIndex + 1, list.length - 1);
@@ -717,7 +698,7 @@ function bindCombobox(root) {
             case 'ArrowUp':
                 event.preventDefault();
 
-                if (! open) {
+                if (!open) {
                     setOpen(true);
                 } else if (list.length > 0) {
                     activeIndex = Math.max(activeIndex - 1, 0);
@@ -757,7 +738,7 @@ function bindCombobox(root) {
                     event.preventDefault();
                     setOpen(false);
 
-                    if (! isMultiple && singleHiddenInput instanceof HTMLInputElement) {
+                    if (!isMultiple && singleHiddenInput instanceof HTMLInputElement) {
                         if (singleHiddenInput.value !== '' && committedLabel !== '') {
                             input.value = committedLabel;
                         }
@@ -769,7 +750,7 @@ function bindCombobox(root) {
                 if (open) {
                     setOpen(false);
 
-                    if (! isMultiple && singleHiddenInput instanceof HTMLInputElement) {
+                    if (!isMultiple && singleHiddenInput instanceof HTMLInputElement) {
                         if (singleHiddenInput.value !== '' && committedLabel !== '') {
                             input.value = committedLabel;
                         }

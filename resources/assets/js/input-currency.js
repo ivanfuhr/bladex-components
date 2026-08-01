@@ -93,7 +93,7 @@ function bindInputCurrency(root) {
 
         const parsed = Number.parseFloat(raw);
 
-        if (! Number.isFinite(parsed)) {
+        if (!Number.isFinite(parsed)) {
             return 0;
         }
 
@@ -113,7 +113,13 @@ function bindInputCurrency(root) {
 
         const key = event.key;
 
-        if (key === 'Tab' || key === 'Escape' || key.startsWith('Arrow') || key === 'Home' || key === 'End') {
+        if (
+            key === 'Tab' ||
+            key === 'Escape' ||
+            key.startsWith('Arrow') ||
+            key === 'Home' ||
+            key === 'End'
+        ) {
             return;
         }
 
@@ -146,7 +152,7 @@ function bindInputCurrency(root) {
 
         minorUnits = Number.parseInt(digits, 10);
 
-        if (! Number.isFinite(minorUnits)) {
+        if (!Number.isFinite(minorUnits)) {
             minorUnits = 0;
         }
 

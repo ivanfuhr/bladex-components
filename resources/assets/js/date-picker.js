@@ -3,7 +3,11 @@
  */
 
 import { bindCalendar } from './calendar.js';
-import { ensurePanelPortaled, positionAnchoredPanel, restorePanelFromPortal } from './chrono/popover.js';
+import {
+    ensurePanelPortaled,
+    positionAnchoredPanel,
+    restorePanelFromPortal,
+} from './chrono/popover.js';
 import { formatRangeValue } from './chrono/parse.js';
 import { formatDateLabel } from './chrono/timezone.js';
 
@@ -14,13 +18,15 @@ const initialized = new WeakSet();
  * @param {ParentNode} root
  */
 export function initDatePickers(root = document) {
-    document.querySelectorAll('[data-date-picker-panel][data-stencil-portaled]').forEach((panel) => {
-        if (!(panel instanceof HTMLElement) || panel.closest('[data-date-picker]')) {
-            return;
-        }
+    document
+        .querySelectorAll('[data-date-picker-panel][data-stencil-portaled]')
+        .forEach((panel) => {
+            if (!(panel instanceof HTMLElement) || panel.closest('[data-date-picker]')) {
+                return;
+            }
 
-        panel.remove();
-    });
+            panel.remove();
+        });
 
     root.querySelectorAll(SELECTOR).forEach((element) => {
         if (!(element instanceof HTMLElement)) {
@@ -209,27 +215,35 @@ function bindDatePicker(root) {
         }
     });
 
-    document.addEventListener('pointerdown', (event) => {
-        if (!isOpen) {
-            return;
-        }
+    document.addEventListener(
+        'pointerdown',
+        (event) => {
+            if (!isOpen) {
+                return;
+            }
 
-        const target = event.target;
+            const target = event.target;
 
-        if (target instanceof Node && !root.contains(target) && !panel.contains(target)) {
+            if (target instanceof Node && !root.contains(target) && !panel.contains(target)) {
+                revertSelection();
+                close();
+            }
+        },
+        { signal },
+    );
+
+    document.addEventListener(
+        'keydown',
+        (event) => {
+            if (!isOpen || event.key !== 'Escape') {
+                return;
+            }
+
             revertSelection();
             close();
-        }
-    }, { signal });
-
-    document.addEventListener('keydown', (event) => {
-        if (!isOpen || event.key !== 'Escape') {
-            return;
-        }
-
-        revertSelection();
-        close();
-    }, { signal });
+        },
+        { signal },
+    );
 
     window.addEventListener(
         'scroll',
@@ -252,7 +266,7 @@ function bindDatePicker(root) {
  * @param {string} locale
  */
 function formatDisplay(value, range, locale) {
-    if (! value) {
+    if (!value) {
         return '';
     }
 

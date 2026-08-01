@@ -2,6 +2,10 @@
     "$schema": "https://www.schemastore.org/package.json",
     "private": true,
     "type": "module",
+    "scripts": {
+        "format": "prettier --write \"**/*.{js,mjs,cjs}\"",
+        "format:check": "prettier --check \"**/*.{js,mjs,cjs}\""
+    },
     "devDependencies": {
         "prettier": "^3.9.6",
         "prettier-plugin-blade": "^3.2.2",

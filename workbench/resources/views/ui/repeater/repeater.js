@@ -50,7 +50,11 @@ function bindRepeater(root) {
         seedValue = [];
     }
 
-    if (!(list instanceof HTMLElement) || !(template instanceof HTMLTemplateElement) || fieldName === '') {
+    if (
+        !(list instanceof HTMLElement) ||
+        !(template instanceof HTMLTemplateElement) ||
+        fieldName === ''
+    ) {
         return;
     }
 
@@ -80,32 +84,35 @@ function bindRepeater(root) {
      */
     function resolveControls(fieldRoot) {
         if (
-            fieldRoot instanceof HTMLInputElement
-            || fieldRoot instanceof HTMLTextAreaElement
-            || fieldRoot instanceof HTMLSelectElement
+            fieldRoot instanceof HTMLInputElement ||
+            fieldRoot instanceof HTMLTextAreaElement ||
+            fieldRoot instanceof HTMLSelectElement
         ) {
             return [fieldRoot];
         }
 
-        const controls = Array.from(
-            fieldRoot.querySelectorAll('input, textarea, select'),
-        ).filter((control) => {
-            if (!(control instanceof HTMLElement)) {
-                return false;
-            }
+        const controls = Array.from(fieldRoot.querySelectorAll('input, textarea, select')).filter(
+            (control) => {
+                if (!(control instanceof HTMLElement)) {
+                    return false;
+                }
 
-            if (control.closest('[data-repeater-item]') !== fieldRoot.closest('[data-repeater-item]')) {
-                return false;
-            }
+                if (
+                    control.closest('[data-repeater-item]') !==
+                    fieldRoot.closest('[data-repeater-item]')
+                ) {
+                    return false;
+                }
 
-            return true;
-        });
+                return true;
+            },
+        );
 
         return controls.filter(
             (control) =>
-                control instanceof HTMLInputElement
-                || control instanceof HTMLTextAreaElement
-                || control instanceof HTMLSelectElement,
+                control instanceof HTMLInputElement ||
+                control instanceof HTMLTextAreaElement ||
+                control instanceof HTMLSelectElement,
         );
     }
 
@@ -155,7 +162,8 @@ function bindRepeater(root) {
                 return;
             }
 
-            control.value = fieldValue === null || fieldValue === undefined ? '' : String(fieldValue);
+            control.value =
+                fieldValue === null || fieldValue === undefined ? '' : String(fieldValue);
 
             return;
         }
@@ -178,7 +186,7 @@ function bindRepeater(root) {
 
             const fieldKey = fieldRoot.getAttribute('data-repeater-field');
 
-            if (! fieldKey) {
+            if (!fieldKey) {
                 return;
             }
 
@@ -199,7 +207,10 @@ function bindRepeater(root) {
             }
 
             const radio = controls.find(
-                (control) => control instanceof HTMLInputElement && control.type === 'radio' && control.checked,
+                (control) =>
+                    control instanceof HTMLInputElement &&
+                    control.type === 'radio' &&
+                    control.checked,
             );
 
             if (radio) {
@@ -209,7 +220,12 @@ function bindRepeater(root) {
             }
 
             const checkboxValues = controls
-                .filter((control) => control instanceof HTMLInputElement && control.type === 'checkbox' && control.checked)
+                .filter(
+                    (control) =>
+                        control instanceof HTMLInputElement &&
+                        control.type === 'checkbox' &&
+                        control.checked,
+                )
                 .map((control) => control.value);
 
             if (checkboxValues.length > 0) {
@@ -235,7 +251,7 @@ function bindRepeater(root) {
 
             const fieldKey = fieldRoot.getAttribute('data-repeater-field');
 
-            if (! fieldKey) {
+            if (!fieldKey) {
                 return;
             }
 
@@ -277,9 +293,10 @@ function bindRepeater(root) {
      */
     function createRow(rowData = {}) {
         const fragment = template.content.cloneNode(true);
-        const item = fragment instanceof DocumentFragment
-            ? fragment.querySelector('[data-repeater-item]')
-            : null;
+        const item =
+            fragment instanceof DocumentFragment
+                ? fragment.querySelector('[data-repeater-item]')
+                : null;
 
         if (!(item instanceof HTMLElement)) {
             return null;
@@ -364,9 +381,12 @@ function bindRepeater(root) {
     function hydrate() {
         list.replaceChildren();
 
-        const rows = seedValue.length > 0
-            ? seedValue
-            : (min > 0 ? Array.from({ length: min }, () => ({})) : []);
+        const rows =
+            seedValue.length > 0
+                ? seedValue
+                : min > 0
+                  ? Array.from({ length: min }, () => ({}))
+                  : [];
 
         rows.forEach((row) => {
             createRow(row && typeof row === 'object' ? row : {});
@@ -383,7 +403,7 @@ function bindRepeater(root) {
 
         const target = event.target instanceof Element ? event.target : null;
 
-        if (! target) {
+        if (!target) {
             return;
         }
 
@@ -437,9 +457,10 @@ function bindRepeater(root) {
                 return;
             }
 
-            const target = event.target instanceof Element
-                ? event.target.closest('[data-repeater-item]')
-                : null;
+            const target =
+                event.target instanceof Element
+                    ? event.target.closest('[data-repeater-item]')
+                    : null;
 
             if (!(target instanceof HTMLElement) || target === draggedItem) {
                 return;

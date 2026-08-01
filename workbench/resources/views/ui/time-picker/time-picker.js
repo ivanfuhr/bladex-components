@@ -80,7 +80,7 @@ function bindTimePicker(root) {
     function apply(time) {
         hidden.value = time;
 
-        if (! time) {
+        if (!time) {
             if (valueEl instanceof HTMLElement) {
                 valueEl.textContent = valueEl.getAttribute('data-placeholder-text') ?? '';
                 valueEl.setAttribute('data-placeholder', 'true');
@@ -110,8 +110,8 @@ function bindTimePicker(root) {
                 el.classList.toggle('text-white', selected);
                 el.classList.toggle('dark:bg-zinc-100', selected);
                 el.classList.toggle('dark:text-zinc-900', selected);
-                el.classList.toggle('hover:bg-zinc-100', ! selected);
-                el.classList.toggle('dark:hover:bg-zinc-800', ! selected);
+                el.classList.toggle('hover:bg-zinc-100', !selected);
+                el.classList.toggle('dark:hover:bg-zinc-800', !selected);
             }
         });
 
@@ -122,7 +122,7 @@ function bindTimePicker(root) {
 
     trigger?.addEventListener('click', (event) => {
         event.preventDefault();
-        setOpen(! open);
+        setOpen(!open);
     });
 
     root.querySelectorAll('[data-time-picker-clear]').forEach((clear) => {
@@ -135,7 +135,9 @@ function bindTimePicker(root) {
 
     panel.addEventListener('click', (event) => {
         const option =
-            event.target instanceof Element ? event.target.closest('[data-time-picker-option]') : null;
+            event.target instanceof Element
+                ? event.target.closest('[data-time-picker-option]')
+                : null;
 
         if (option instanceof HTMLElement && option.dataset.timePickerOption) {
             apply(option.dataset.timePickerOption);

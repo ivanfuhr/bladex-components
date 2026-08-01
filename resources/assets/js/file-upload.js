@@ -52,7 +52,7 @@ function bindFileUpload(root) {
      * @param {number} bytes
      */
     function formatBytes(bytes) {
-        if (! Number.isFinite(bytes) || bytes < 0) {
+        if (!Number.isFinite(bytes) || bytes < 0) {
             return '';
         }
 
@@ -75,7 +75,7 @@ function bindFileUpload(root) {
      * @param {string | null} accept
      */
     function matchesAccept(file, accept) {
-        if (! accept || accept.trim() === '') {
+        if (!accept || accept.trim() === '') {
             return true;
         }
 
@@ -122,7 +122,7 @@ function bindFileUpload(root) {
 
             incoming.forEach((file) => {
                 const key = `${file.name}:${file.size}:${file.lastModified}`;
-                if (! existingKeys.has(key)) {
+                if (!existingKeys.has(key)) {
                     files.push(file);
                     existingKeys.add(key);
                 }
@@ -200,8 +200,7 @@ function bindFileUpload(root) {
 
             const remove = item.querySelector('[data-file-upload-item-remove]');
             if (remove instanceof HTMLButtonElement) {
-                const baseLabel =
-                    remove.getAttribute('aria-label')?.trim() || 'Remove';
+                const baseLabel = remove.getAttribute('aria-label')?.trim() || 'Remove';
                 remove.setAttribute('aria-label', `${baseLabel}: ${file.name}`);
                 remove.disabled = input.disabled;
             }

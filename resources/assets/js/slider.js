@@ -106,7 +106,7 @@ function bindSlider(root) {
         const clamped = Math.min(max, Math.max(min, value));
         const steps = Math.round((clamped - min) / step);
 
-        return clamp(min + (steps * step));
+        return clamp(min + steps * step);
     }
 
     /**
@@ -142,7 +142,7 @@ function bindSlider(root) {
 
         const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
 
-        return snap(min + (ratio * (max - min)));
+        return snap(min + ratio * (max - min));
     }
 
     /**
@@ -151,10 +151,7 @@ function bindSlider(root) {
      */
     function applyValues(values, options = {}) {
         const next = isRange
-            ? [
-                snap(values[0] ?? min),
-                snap(values[1] ?? max),
-            ]
+            ? [snap(values[0] ?? min), snap(values[1] ?? max)]
             : [snap(values[0] ?? min)];
 
         if (isRange && next[0] > next[1]) {
@@ -230,7 +227,7 @@ function bindSlider(root) {
         const nextValue = valueFromPointer(clientX);
         const current = readValues();
 
-        if (! isRange) {
+        if (!isRange) {
             applyValues([nextValue]);
 
             return;
@@ -257,7 +254,7 @@ function bindSlider(root) {
     function nudge(index, deltaSteps) {
         const current = readValues();
         const next = [...current];
-        next[index] = snap((current[index] ?? min) + (deltaSteps * step));
+        next[index] = snap((current[index] ?? min) + deltaSteps * step);
         activeIndex = index;
         applyValues(next);
     }
@@ -272,9 +269,8 @@ function bindSlider(root) {
 
         const target = event.target instanceof Element ? event.target : null;
         const thumb = target?.closest('[data-slider-thumb]');
-        const preferredIndex = thumb instanceof HTMLElement
-            ? Number.parseInt(thumb.dataset.index ?? '0', 10)
-            : null;
+        const preferredIndex =
+            thumb instanceof HTMLElement ? Number.parseInt(thumb.dataset.index ?? '0', 10) : null;
 
         root.setPointerCapture?.(event.pointerId);
         pointerId = event.pointerId;
@@ -392,7 +388,7 @@ function parseNumber(value, fallback) {
 function stepPrecision(step) {
     const text = String(step);
 
-    if (! text.includes('.')) {
+    if (!text.includes('.')) {
         return 0;
     }
 

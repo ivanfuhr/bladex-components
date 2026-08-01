@@ -74,11 +74,14 @@ function bindTabs(root) {
     }
 
     root.addEventListener('click', (event) => {
-        const trigger = event.target instanceof Element
-            ? event.target.closest(TRIGGER_SELECTOR)
-            : null;
+        const trigger =
+            event.target instanceof Element ? event.target.closest(TRIGGER_SELECTOR) : null;
 
-        if (!(trigger instanceof HTMLButtonElement) || !root.contains(trigger) || trigger.disabled) {
+        if (
+            !(trigger instanceof HTMLButtonElement) ||
+            !root.contains(trigger) ||
+            trigger.disabled
+        ) {
             return;
         }
 
@@ -90,9 +93,8 @@ function bindTabs(root) {
     });
 
     root.addEventListener('keydown', (event) => {
-        const trigger = event.target instanceof Element
-            ? event.target.closest(TRIGGER_SELECTOR)
-            : null;
+        const trigger =
+            event.target instanceof Element ? event.target.closest(TRIGGER_SELECTOR) : null;
 
         if (!(trigger instanceof HTMLButtonElement) || !root.contains(trigger)) {
             return;

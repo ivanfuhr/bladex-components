@@ -72,10 +72,12 @@
             "@php vendor/bin/testbench serve --ansi"
         ],
         "lint": [
-            "vendor/bin/pint --parallel --blade"
+            "vendor/bin/pint --parallel --blade",
+            "npm run format"
         ],
         "lint:check": [
-            "vendor/bin/pint --parallel --test --blade"
+            "vendor/bin/pint --parallel --test --blade",
+            "npm run format:check"
         ],
         "analyse": [
             "vendor/bin/phpstan analyse --memory-limit=512M"

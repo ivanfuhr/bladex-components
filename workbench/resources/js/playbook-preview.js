@@ -53,7 +53,7 @@ document.addEventListener('alpine:init', () => {
 
         bindPreviewWidgets() {
             const canvas = document.getElementById('playbook-canvas');
-            if (! canvas) {
+            if (!canvas) {
                 return;
             }
 
@@ -104,7 +104,9 @@ document.addEventListener('alpine:init', () => {
             this.loading = true;
 
             try {
-                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? '';
+                const token =
+                    document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ??
+                    '';
 
                 const response = await fetch(this.previewUrl, {
                     method: 'POST',
@@ -119,7 +121,7 @@ document.addEventListener('alpine:init', () => {
                     }),
                 });
 
-                if (! response.ok) {
+                if (!response.ok) {
                     throw new Error('Preview request failed');
                 }
 
@@ -132,7 +134,7 @@ document.addEventListener('alpine:init', () => {
         },
 
         async copySnippet() {
-            if (! this.snippet) {
+            if (!this.snippet) {
                 return;
             }
 

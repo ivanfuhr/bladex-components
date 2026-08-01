@@ -205,9 +205,7 @@ function bindCounter(control, root) {
 
     function update() {
         const length = control.value.length;
-        counterEl.textContent = maxLength !== null
-            ? `${length}/${maxLength}`
-            : String(length);
+        counterEl.textContent = maxLength !== null ? `${length}/${maxLength}` : String(length);
     }
 
     control.addEventListener('input', update);
