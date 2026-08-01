@@ -73,6 +73,20 @@ final class PlaybookCode
         return '<'.$component."\n    ".implode("\n    ", $lines)."\n>";
     }
 
+    /**
+     * @param  list<string|null>  $attributes
+     */
+    public static function selfClosingTag(string $component, array $attributes = []): string
+    {
+        $lines = array_values(array_filter($attributes));
+
+        if ($lines === []) {
+            return '<'.$component.' />';
+        }
+
+        return '<'.$component."\n    ".implode("\n    ", $lines)."\n/>";
+    }
+
     public static function closingTag(string $component): string
     {
         return '</'.$component.'>';

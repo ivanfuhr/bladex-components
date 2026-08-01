@@ -68,11 +68,10 @@
 >
     <div
         class="mb-2 flex items-center justify-between gap-2"
-        style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.5rem"
         data-calendar-header
     >
-        <span class="text-sm font-medium text-zinc-800 dark:text-zinc-50" data-calendar-month-label></span>
-        <div class="flex items-center gap-1">
+        <span class="min-w-0 truncate text-sm font-medium text-zinc-800 dark:text-zinc-50" data-calendar-month-label></span>
+        <div class="flex shrink-0 items-center gap-0.5">
             @if ($withToday)
                 <button
                     type="button"
@@ -89,7 +88,7 @@
                 data-calendar-prev
                 aria-label="{{ __('stencil::messages.calendar_previous_month') }}"
             >
-                <x-stencil::icon name="chevron-left" class="size-5" />
+                <x-stencil::icon name="chevron-left" class="size-4" />
             </button>
             <button
                 type="button"
@@ -97,10 +96,10 @@
                 data-calendar-next
                 aria-label="{{ __('stencil::messages.calendar_next_month') }}"
             >
-                <x-stencil::icon name="chevron-right" class="size-5" />
+                <x-stencil::icon name="chevron-right" class="size-4" />
             </button>
         </div>
     </div>
 
-    <div class="flex gap-4" style="display: flex; gap: 1rem" data-calendar-months-container></div>
+    <div class="flex gap-4" data-calendar-months-container></div>
 </div>

@@ -67,7 +67,27 @@ final class PlaybookRegistry
             $this->text(),
             $this->heading(),
             $this->dialog(),
+            $this->accordion(),
+            $this->collapsible(),
+            $this->avatar(),
+            $this->badge(),
+            $this->breadcrumb(),
+            $this->card(),
+            $this->dropdownMenu(),
+            $this->separator(),
+            $this->skeleton(),
+            $this->tabs(),
+            $this->tooltip(),
+            $this->toast(),
+            $this->progress(),
+            $this->alert(),
+            $this->table(),
+            $this->icons(),
+            $this->pagination(),
+            $this->calendar(),
             $this->datePicker(),
+            $this->timePicker(),
+            $this->datetimePicker(),
         ];
 
         $this->playbooks = collect($definitions)->keyBy(static fn (ComponentPlaybook $playbook): string => $playbook->slug);
@@ -708,6 +728,407 @@ final class PlaybookRegistry
         );
     }
 
+    private function accordion(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'accordion',
+            title: 'Accordion',
+            description: 'Vertically stacked disclosures with exclusive or multiple open items. Requires accordion.js in the app entry.',
+            controls: [
+                new PlaybookControl('exclusive', 'Exclusive (one open)', 'checkbox', [], true),
+                new PlaybookControl('bordered', 'Bordered', 'checkbox', [], true),
+                new PlaybookControl('transition', 'Animate height', 'checkbox', [], true),
+            ],
+            defaultState: [
+                'exclusive' => true,
+                'bordered' => true,
+                'transition' => true,
+            ],
+            previewView: 'workbench::playbook.previews.accordion',
+        );
+    }
+
+    private function collapsible(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'collapsible',
+            title: 'Collapsible',
+            description: 'Single-panel expand and collapse. Requires collapsible.js in the app entry.',
+            controls: [
+                new PlaybookControl('open', 'Initially open', 'checkbox', [], true),
+                new PlaybookControl('transition', 'Animate height', 'checkbox', [], true),
+            ],
+            defaultState: [
+                'open' => true,
+                'transition' => true,
+            ],
+            previewView: 'workbench::playbook.previews.collapsible',
+        );
+    }
+
+    private function avatar(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'avatar',
+            title: 'Avatar',
+            description: 'User image or initials, including stacked groups. Requires avatar.js for image-error fallback.',
+            controls: [
+                new PlaybookControl('size', 'Size', 'select', [
+                    'xs' => 'Extra small',
+                    'sm' => 'Small',
+                    'default' => 'Default',
+                    'lg' => 'Large',
+                    'xl' => 'Extra large',
+                ], 'default'),
+                new PlaybookControl('color', 'Color', 'select', [
+                    'violet' => 'Violet',
+                    'blue' => 'Blue',
+                    'green' => 'Green',
+                    'amber' => 'Amber',
+                    'rose' => 'Rose',
+                ], 'violet'),
+                new PlaybookControl('circle', 'Circle', 'checkbox', [], true),
+                new PlaybookControl('show_group', 'Show group', 'checkbox', [], false),
+            ],
+            defaultState: [
+                'size' => 'default',
+                'color' => 'violet',
+                'circle' => true,
+                'show_group' => false,
+            ],
+            previewView: 'workbench::playbook.previews.avatar',
+        );
+    }
+
+    private function badge(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'badge',
+            title: 'Badge',
+            description: 'Compact status labels with variants, colors, and optional dismiss.',
+            controls: [
+                new PlaybookControl('variant', 'Variant', 'select', [
+                    'secondary' => 'Secondary',
+                    'default' => 'Default',
+                    'outline' => 'Outline',
+                    'destructive' => 'Destructive',
+                    'ghost' => 'Ghost',
+                ], 'secondary'),
+                new PlaybookControl('color', 'Color', 'select', [
+                    '' => 'None',
+                    'lime' => 'Lime',
+                    'violet' => 'Violet',
+                    'blue' => 'Blue',
+                    'green' => 'Green',
+                    'amber' => 'Amber',
+                ], ''),
+                new PlaybookControl('rounded', 'Rounded', 'checkbox', [], false),
+                new PlaybookControl('dismissible', 'Dismissible', 'checkbox', [], false),
+            ],
+            defaultState: [
+                'variant' => 'secondary',
+                'color' => '',
+                'rounded' => false,
+                'dismissible' => false,
+            ],
+            previewView: 'workbench::playbook.previews.badge',
+        );
+    }
+
+    private function breadcrumb(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'breadcrumb',
+            title: 'Breadcrumb',
+            description: 'Navigation trail for nested pages with chevron or slash separators.',
+            controls: [
+                new PlaybookControl('separator', 'Separator', 'select', [
+                    'chevron' => 'Chevron',
+                    'slash' => 'Slash',
+                ], 'chevron'),
+            ],
+            defaultState: [
+                'separator' => 'chevron',
+            ],
+            previewView: 'workbench::playbook.previews.breadcrumb',
+        );
+    }
+
+    private function card(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'card',
+            title: 'Card',
+            description: 'Content container with header, body, and footer slots.',
+            controls: [
+                new PlaybookControl('show_footer', 'Footer actions', 'checkbox', [], true),
+            ],
+            defaultState: [
+                'show_footer' => true,
+            ],
+            previewView: 'workbench::playbook.previews.card',
+        );
+    }
+
+    private function dropdownMenu(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'dropdown-menu',
+            title: 'Dropdown Menu',
+            description: 'Accessible action menu with labels, shortcuts, and danger items. Requires dropdown-menu.js.',
+            controls: [
+                new PlaybookControl('align', 'Align', 'select', [
+                    'start' => 'Start',
+                    'center' => 'Center',
+                    'end' => 'End',
+                ], 'start'),
+            ],
+            defaultState: [
+                'align' => 'start',
+            ],
+            previewView: 'workbench::playbook.previews.dropdown-menu',
+        );
+    }
+
+    private function separator(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'separator',
+            title: 'Separator',
+            description: 'Horizontal or vertical divider between content.',
+            controls: [
+                new PlaybookControl('orientation', 'Orientation', 'select', [
+                    'horizontal' => 'Horizontal',
+                    'vertical' => 'Vertical',
+                ], 'horizontal'),
+            ],
+            defaultState: [
+                'orientation' => 'horizontal',
+            ],
+            previewView: 'workbench::playbook.previews.separator',
+        );
+    }
+
+    private function skeleton(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'skeleton',
+            title: 'Skeleton',
+            description: 'Loading placeholders for content that is still arriving.',
+            controls: [
+                new PlaybookControl('rounded', 'Rounded', 'select', [
+                    'default' => 'Default',
+                    'full' => 'Full (circle)',
+                ], 'default'),
+            ],
+            defaultState: [
+                'rounded' => 'default',
+            ],
+            previewView: 'workbench::playbook.previews.skeleton',
+        );
+    }
+
+    private function tabs(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'tabs',
+            title: 'Tabs',
+            description: 'Tabbed panels with default, segmented, pills, and line variants. Requires tabs.js.',
+            controls: [
+                new PlaybookControl('variant', 'Variant', 'select', [
+                    'default' => 'Default',
+                    'line' => 'Line',
+                    'pills' => 'Pills',
+                    'segmented' => 'Segmented',
+                ], 'default'),
+            ],
+            defaultState: [
+                'variant' => 'default',
+            ],
+            previewView: 'workbench::playbook.previews.tabs',
+        );
+    }
+
+    private function tooltip(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'tooltip',
+            title: 'Tooltip',
+            description: 'Hover and focus hints for controls. Requires tooltip.js in the app entry.',
+            controls: [
+                new PlaybookControl('side', 'Side', 'select', [
+                    'top' => 'Top',
+                    'bottom' => 'Bottom',
+                    'left' => 'Left',
+                    'right' => 'Right',
+                ], 'top'),
+            ],
+            defaultState: [
+                'side' => 'top',
+            ],
+            previewView: 'workbench::playbook.previews.tooltip',
+        );
+    }
+
+    private function toast(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'toast',
+            title: 'Toast',
+            description: 'Transient notifications. Mount toast.provider once, then render toasts. Requires toast.js.',
+            controls: [
+                new PlaybookControl('variant', 'Variant', 'select', [
+                    'default' => 'Default',
+                    'success' => 'Success',
+                    'warning' => 'Warning',
+                    'danger' => 'Danger',
+                ], 'success'),
+                new PlaybookControl('position', 'Position', 'select', [
+                    'bottom-right' => 'Bottom right',
+                    'bottom-left' => 'Bottom left',
+                    'top-right' => 'Top right',
+                    'top-center' => 'Top center',
+                ], 'bottom-right'),
+            ],
+            defaultState: [
+                'variant' => 'success',
+                'position' => 'bottom-right',
+            ],
+            previewView: 'workbench::playbook.previews.toast',
+        );
+    }
+
+    private function progress(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'progress',
+            title: 'Progress',
+            description: 'Determinate and indeterminate progress bars.',
+            controls: [
+                new PlaybookControl('value', 'Value', 'select', [
+                    '25' => '25%',
+                    '40' => '40%',
+                    '75' => '75%',
+                ], '40'),
+                new PlaybookControl('size', 'Size', 'select', [
+                    'default' => 'Default',
+                    'sm' => 'Small',
+                    'lg' => 'Large',
+                ], 'default'),
+                new PlaybookControl('indeterminate', 'Indeterminate', 'checkbox', [], false),
+            ],
+            defaultState: [
+                'value' => '40',
+                'size' => 'default',
+                'indeterminate' => false,
+            ],
+            previewView: 'workbench::playbook.previews.progress',
+        );
+    }
+
+    private function alert(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'alert',
+            title: 'Alert',
+            description: 'Inline callouts for info, success, warning, and danger.',
+            controls: [
+                new PlaybookControl('variant', 'Variant', 'select', [
+                    'default' => 'Default',
+                    'info' => 'Info',
+                    'success' => 'Success',
+                    'warning' => 'Warning',
+                    'danger' => 'Danger',
+                ], 'info'),
+                new PlaybookControl('show_icon', 'Icon', 'checkbox', [], true),
+            ],
+            defaultState: [
+                'variant' => 'info',
+                'show_icon' => true,
+            ],
+            previewView: 'workbench::playbook.previews.alert',
+        );
+    }
+
+    private function table(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'table',
+            title: 'Table',
+            description: 'Semantic data table with caption, header, body, and footer.',
+            controls: [
+                new PlaybookControl('show_caption', 'Caption', 'checkbox', [], true),
+                new PlaybookControl('show_badges', 'Status badges', 'checkbox', [], true),
+            ],
+            defaultState: [
+                'show_caption' => true,
+                'show_badges' => true,
+            ],
+            previewView: 'workbench::playbook.previews.table',
+        );
+    }
+
+    private function icons(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'icons',
+            title: 'Icons',
+            description: 'On-demand Lucide icons — outline, mini, and micro sizes via stencil:icon.',
+            controls: [
+                new PlaybookControl('size', 'Size', 'select', [
+                    'micro' => 'Micro (12px)',
+                    'outline' => 'Outline (16px)',
+                    'mini' => 'Mini (20px)',
+                ], 'outline'),
+            ],
+            defaultState: [
+                'size' => 'outline',
+            ],
+            previewView: 'workbench::playbook.previews.icons',
+        );
+    }
+
+    private function pagination(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'pagination',
+            title: 'Pagination',
+            description: 'Page controls for lists and tables. Compose manually or pass a Laravel paginator.',
+            controls: [
+                new PlaybookControl('show_ellipsis', 'Ellipsis', 'checkbox', [], true),
+            ],
+            defaultState: [
+                'show_ellipsis' => true,
+            ],
+            previewView: 'workbench::playbook.previews.pagination',
+        );
+    }
+
+    private function calendar(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('mode', 'Mode', 'select', [
+                'single' => 'Single',
+                'range' => 'Range',
+            ], 'single'),
+            new PlaybookControl('withToday', 'Today shortcut', 'checkbox', [], true),
+            new PlaybookControl('weekNumbers', 'Week numbers', 'checkbox', [], false),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'calendar',
+            title: 'Calendar',
+            description: 'Standalone month grid for single or range dates. Requires calendar.js in the app entry.',
+            controls: $controls,
+            defaultState: [
+                'mode' => 'single',
+                'withToday' => true,
+                'weekNumbers' => false,
+            ],
+            previewView: 'workbench::playbook.previews.calendar',
+        );
+    }
+
     private function datePicker(): ComponentPlaybook
     {
         $controls = [
@@ -730,6 +1151,54 @@ final class PlaybookRegistry
                 'withToday' => true,
             ],
             previewView: 'workbench::playbook.previews.date-picker',
+        );
+    }
+
+    private function timePicker(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('withSeconds', 'With seconds', 'checkbox', [], false),
+            new PlaybookControl('clearable', 'Clearable', 'checkbox', [], true),
+            new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
+            new PlaybookControl('disabled', 'Disabled', 'checkbox', [], false),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'time-picker',
+            title: 'Time Picker',
+            description: 'Time selection list with optional seconds. Requires time-picker.js in the app entry.',
+            controls: $controls,
+            defaultState: [
+                'withSeconds' => false,
+                'clearable' => true,
+                'invalid' => false,
+                'disabled' => false,
+            ],
+            previewView: 'workbench::playbook.previews.time-picker',
+        );
+    }
+
+    private function datetimePicker(): ComponentPlaybook
+    {
+        $controls = [
+            new PlaybookControl('withToday', 'Today shortcut', 'checkbox', [], true),
+            new PlaybookControl('clearable', 'Clearable', 'checkbox', [], false),
+            new PlaybookControl('invalid', 'Invalid', 'checkbox', [], false),
+            new PlaybookControl('disabled', 'Disabled', 'checkbox', [], false),
+        ];
+
+        return new ComponentPlaybook(
+            slug: 'datetime-picker',
+            title: 'Datetime Picker',
+            description: 'Combined date and time panel. Requires datetime-picker.js in the app entry.',
+            controls: $controls,
+            defaultState: [
+                'withToday' => true,
+                'clearable' => false,
+                'invalid' => false,
+                'disabled' => false,
+            ],
+            previewView: 'workbench::playbook.previews.datetime-picker',
         );
     }
 }

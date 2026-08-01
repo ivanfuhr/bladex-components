@@ -5,6 +5,7 @@
 import { bindCalendar } from './calendar.js';
 import { ensurePanelPortaled, positionAnchoredPanel, restorePanelFromPortal } from './chrono/popover.js';
 import { formatRangeValue } from './chrono/parse.js';
+import { formatDateLabel } from './chrono/timezone.js';
 
 const SELECTOR = '[data-date-picker]';
 const initialized = new WeakSet();
@@ -79,9 +80,12 @@ function bindDatePicker(root) {
         const text = formatDisplay(value, root.dataset.datePickerMode === 'range', locale);
 
         if (valueEl instanceof HTMLElement) {
-            valueEl.textContent = text || valueEl.getAttribute('data-placeholder') || '';
             if (text) {
+                valueEl.textContent = text;
                 valueEl.removeAttribute('data-placeholder');
+            } else {
+                valueEl.textContent = valueEl.getAttribute('data-placeholder-text') ?? '';
+                valueEl.setAttribute('data-placeholder', 'true');
             }
         }
 
@@ -248,17 +252,24 @@ function bindDatePicker(root) {
  * @param {string} locale
  */
 function formatDisplay(value, range, locale) {
-    if (!value) {
+    if (! value) {
         return '';
     }
 
     if (range && value.includes('/')) {
         const [start, end] = value.split('/');
 
-        return `${start} – ${end}`;
+        return `${formatDateLabel(start, locale)} – ${formatDateLabel(end, locale)}`;
     }
 
-    return value;
+    if (value.includes(',')) {
+        return value
+            .split(',')
+            .map((part) => formatDateLabel(part.trim(), locale))
+            .join(', ');
+    }
+
+    return formatDateLabel(value, locale);
 }
 
 document.addEventListener('stencil:mount', (event) => {

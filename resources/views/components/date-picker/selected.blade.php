@@ -17,6 +17,7 @@
             'data-placeholder:text-zinc-500 dark:data-placeholder:text-zinc-400',
         ])->merge([
             'data-placeholder' => $resolvedPlaceholder !== null ? 'true' : null,
+            'data-placeholder-text' => $resolvedPlaceholder,
         ])
     }}
     data-date-picker-value

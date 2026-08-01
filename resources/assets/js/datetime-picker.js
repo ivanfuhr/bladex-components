@@ -5,7 +5,7 @@
 import { bindCalendar } from './calendar.js';
 import { ensurePanelPortaled, positionAnchoredPanel, restorePanelFromPortal } from './chrono/popover.js';
 import { toIsoDateTimeString } from './chrono/parse.js';
-import { formatTimeLabel } from './chrono/timezone.js';
+import { formatDateTimeLabel, formatTimeLabel } from './chrono/timezone.js';
 
 const SELECTOR = '[data-datetime-picker]';
 const initialized = new WeakSet();
@@ -107,10 +107,11 @@ function bindDatetimePicker(root) {
         if (trigger instanceof HTMLElement) {
             trigger.setAttribute('aria-expanded', 'true');
             ensurePanelPortaled(panel, root, portalMarker);
-            positionAnchoredPanel(panel, trigger);
+            positionAnchoredPanel(panel, trigger, { fitContent: true });
         }
 
         loadFromHidden();
+        syncTimeListSelection();
     }
 
     function close() {
@@ -144,13 +145,50 @@ function bindDatetimePicker(root) {
         return toIsoDateTimeString(date);
     }
 
-    function apply(value) {
-        hidden.value = value;
-
-        if (valueEl instanceof HTMLElement) {
-            valueEl.textContent = value || valueEl.textContent;
+    function syncTimeListSelection() {
+        if (! (timeList instanceof HTMLElement)) {
+            return;
         }
 
+        timeList.querySelectorAll('[data-datetime-picker-time]').forEach((el) => {
+            if (! (el instanceof HTMLElement)) {
+                return;
+            }
+
+            const selected = el.dataset.datetimePickerTime === selectedTime;
+            el.setAttribute('aria-selected', selected ? 'true' : 'false');
+            el.classList.toggle('bg-zinc-900', selected);
+            el.classList.toggle('text-white', selected);
+            el.classList.toggle('dark:bg-zinc-100', selected);
+            el.classList.toggle('dark:text-zinc-900', selected);
+            el.classList.toggle('hover:bg-zinc-100', ! selected);
+            el.classList.toggle('dark:hover:bg-zinc-800', ! selected);
+
+            if (selected) {
+                el.scrollIntoView({ block: 'nearest' });
+            }
+        });
+    }
+
+    function displayValue(value) {
+        if (! (valueEl instanceof HTMLElement)) {
+            return;
+        }
+
+        if (! value) {
+            valueEl.textContent = valueEl.getAttribute('data-placeholder-text') ?? '';
+            valueEl.setAttribute('data-placeholder', 'true');
+
+            return;
+        }
+
+        valueEl.textContent = formatDateTimeLabel(value, locale, timeZone, withSeconds);
+        valueEl.removeAttribute('data-placeholder');
+    }
+
+    function apply(value) {
+        hidden.value = value;
+        displayValue(value);
         hidden.dispatchEvent(new Event('input', { bubbles: true }));
         hidden.dispatchEvent(new Event('change', { bubbles: true }));
     }
@@ -174,6 +212,7 @@ function bindDatetimePicker(root) {
 
         if (option instanceof HTMLElement && option.dataset.datetimePickerTime) {
             selectedTime = option.dataset.datetimePickerTime;
+            syncTimeListSelection();
         }
     });
 
@@ -216,7 +255,7 @@ function bindDatetimePicker(root) {
                 return;
             }
 
-            positionAnchoredPanel(panel, trigger);
+            positionAnchoredPanel(panel, trigger, { fitContent: true });
         },
         true,
     );

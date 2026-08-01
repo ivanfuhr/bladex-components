@@ -13,6 +13,23 @@
             </x-stencil::text>
         </header>
 
+        <a
+            href="{{ route('playbook.showcase') }}"
+            class="group flex flex-col gap-3 rounded-2xl border border-zinc-900 bg-zinc-900 p-6 text-zinc-50 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-zinc-950/20 focus-visible:outline-none sm:flex-row sm:items-center sm:justify-between dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-white dark:focus-visible:ring-zinc-300/30"
+        >
+            <div class="min-w-0 space-y-1">
+                <p class="text-xs font-medium tracking-wide text-zinc-400 uppercase dark:text-zinc-500">Scenario</p>
+                <x-stencil::heading :level="2" class="text-zinc-50! dark:text-zinc-950!">Event Studio showcase</x-stencil::heading>
+                <x-stencil::text size="sm" class="text-zinc-300 dark:text-zinc-600">
+                    One screen composing every component in a realistic event-editor flow.
+                </x-stencil::text>
+            </div>
+            <span class="inline-flex shrink-0 items-center text-sm font-medium">
+                Open showcase
+                <span class="ml-1 transition group-hover:translate-x-0.5" aria-hidden="true">→</span>
+            </span>
+        </a>
+
         <ul class="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
             @foreach ($playbooks as $playbook)
                 <li>

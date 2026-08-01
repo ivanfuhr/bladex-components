@@ -1,7 +1,7 @@
 <div
     {{
         $attributes->class([
-            'datetime-picker__panel z-50 max-w-[calc(100vw-2rem)] rounded-xl border border-zinc-200 bg-white p-0 shadow-xl dark:border-zinc-800 dark:bg-zinc-950',
+            'datetime-picker__panel z-50 max-w-[calc(100vw-2rem)] overflow-hidden rounded-xl border border-zinc-200 bg-white p-0 shadow-xl dark:border-zinc-800 dark:bg-zinc-950',
         ])
     }}
     data-datetime-picker-panel

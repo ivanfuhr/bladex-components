@@ -54,14 +54,20 @@
         />
 
         <x-stencil::datetime-picker.panel>
-            <div class="grid gap-0 md:grid-cols-[1fr_11rem]">
-                <x-stencil::calendar
-                    :value="$datePart"
-                    :timezone="$resolvedTimezone"
-                    :locale="$resolvedLocale"
-                    :with-today="$withToday"
-                    data-datetime-picker-calendar
-                />
+            {{-- Absolute time column on md+ so list height tracks the calendar (no dead space). --}}
+            <div class="relative flex flex-col md:flex-row">
+                <div class="shrink-0 p-4">
+                    <x-stencil::calendar
+                        :value="$datePart"
+                        :timezone="$resolvedTimezone"
+                        :locale="$resolvedLocale"
+                        :with-today="$withToday"
+                        class="w-fit"
+                        data-datetime-picker-calendar
+                    />
+                </div>
+
+                <div class="hidden w-40 shrink-0 md:block" aria-hidden="true"></div>
 
                 <x-stencil::datetime-picker.time-list />
             </div>

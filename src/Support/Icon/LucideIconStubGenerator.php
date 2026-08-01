@@ -34,21 +34,15 @@ BLADE;
             throw new InvalidArgumentException('Lucide SVG is missing a root <svg> element.');
         }
 
+        // Root <svg> (with its width/height) is discarded; keep inner geometry intact —
+        // Lucide <rect> elements need width/height to render.
         $inner = trim($matches[1]);
-        $inner = $this->stripSizingAttributes($inner);
 
         if ($inner === '') {
             throw new RuntimeException('Lucide SVG has no drawable content.');
         }
 
         return $this->indent($inner, 4);
-    }
-
-    private function stripSizingAttributes(string $markup): string
-    {
-        $markup = preg_replace('/\s(width|height)=["\'][^"\']*["\']/i', '', $markup) ?? $markup;
-
-        return trim($markup);
     }
 
     private function indent(string $content, int $spaces): string

@@ -31,6 +31,20 @@
 @endphp
 
 <button {{ $triggerAttributes }} data-time-picker-trigger>
-    <x-stencil::time-picker.selected :$placeholder />
+    <span class="flex min-w-0 flex-1 items-center gap-2">
+        <x-stencil::icon name="clock" class="size-4 shrink-0 opacity-50" />
+        <x-stencil::time-picker.selected :$placeholder />
+    </span>
+    @if ($clearable)
+        <span
+            class="inline-flex size-6 cursor-pointer items-center justify-center rounded-md text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+            data-time-picker-clear
+            role="button"
+            tabindex="-1"
+            aria-label="{{ __('stencil::messages.time_picker_clear') }}"
+        >
+            <x-stencil::icon name="x" class="size-3.5" />
+        </span>
+    @endif
     <x-stencil::icon name="chevron-down" class="size-4 shrink-0 opacity-50" />
 </button>

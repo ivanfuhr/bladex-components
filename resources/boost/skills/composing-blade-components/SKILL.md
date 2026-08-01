@@ -248,8 +248,13 @@ Ship flexible Blade components that consumers assemble from small pieces, while 
 <x-stencil::datetime-picker name="scheduled_at" :shortcut="false">
     <x-stencil::date-picker.button data-datetime-picker-trigger />
     <x-stencil::datetime-picker.panel>
-        <x-stencil::calendar data-datetime-picker-calendar />
-        <x-stencil::datetime-picker.time-list />
+        <div class="relative flex flex-col md:flex-row">
+            <div class="shrink-0 p-4">
+                <x-stencil::calendar class="w-fit" data-datetime-picker-calendar />
+            </div>
+            <div class="hidden w-40 shrink-0 md:block" aria-hidden="true"></div>
+            <x-stencil::datetime-picker.time-list />
+        </div>
         <x-stencil::datetime-picker.footer />
     </x-stencil::datetime-picker.panel>
 </x-stencil::datetime-picker>

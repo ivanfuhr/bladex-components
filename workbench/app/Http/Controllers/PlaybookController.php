@@ -23,6 +23,11 @@ final class PlaybookController
         ]);
     }
 
+    public function showcase(): View
+    {
+        return view('workbench::playbook.showcase');
+    }
+
     public function show(string $component): View
     {
         if (! $this->registry->has($component)) {

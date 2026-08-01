@@ -9,6 +9,7 @@
             'data-placeholder:text-zinc-500 dark:data-placeholder:text-zinc-400',
         ])->merge([
             'data-placeholder' => filled($placeholder) ? 'true' : null,
+            'data-placeholder-text' => filled($placeholder) ? $placeholder : null,
         ])
     }}
     data-time-picker-value

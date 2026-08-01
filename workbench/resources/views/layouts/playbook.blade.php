@@ -52,15 +52,23 @@
                 </div>
             </div>
 
-            <label class="flex shrink-0 cursor-pointer items-center gap-2.5 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs font-medium text-zinc-700 shadow-sm transition hover:border-zinc-300 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-600">
-                <span class="sr-only">Dark preview</span>
-                <span class="hidden sm:inline" aria-hidden="true">Dark preview</span>
-                <input
-                    type="checkbox"
-                    class="size-4 rounded border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:border-zinc-600 dark:bg-zinc-950 dark:focus-visible:ring-zinc-300/20"
-                    x-model="dark"
-                />
-            </label>
+            <div class="flex shrink-0 items-center gap-2">
+                <a
+                    href="{{ route('playbook.showcase') }}"
+                    class="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs font-medium text-zinc-700 shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20"
+                >
+                    Showcase
+                </a>
+                <label class="flex cursor-pointer items-center gap-2.5 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs font-medium text-zinc-700 shadow-sm transition hover:border-zinc-300 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-600">
+                    <span class="sr-only">Dark preview</span>
+                    <span class="hidden sm:inline" aria-hidden="true">Dark preview</span>
+                    <input
+                        type="checkbox"
+                        class="size-4 rounded border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:border-zinc-600 dark:bg-zinc-950 dark:focus-visible:ring-zinc-300/20"
+                        x-model="dark"
+                    />
+                </label>
+            </div>
         </div>
     </header>
 

@@ -80,20 +80,38 @@ function bindTimePicker(root) {
     function apply(time) {
         hidden.value = time;
 
-        const label = formatTimeLabel(time, locale, timeZone, withSeconds);
+        if (! time) {
+            if (valueEl instanceof HTMLElement) {
+                valueEl.textContent = valueEl.getAttribute('data-placeholder-text') ?? '';
+                valueEl.setAttribute('data-placeholder', 'true');
+            }
 
-        if (valueEl instanceof HTMLElement) {
-            valueEl.textContent = label;
-            valueEl.removeAttribute('data-placeholder');
-        }
+            if (inputEl instanceof HTMLInputElement) {
+                inputEl.value = '';
+            }
+        } else {
+            const label = formatTimeLabel(time, locale, timeZone, withSeconds);
 
-        if (inputEl instanceof HTMLInputElement) {
-            inputEl.value = label;
+            if (valueEl instanceof HTMLElement) {
+                valueEl.textContent = label;
+                valueEl.removeAttribute('data-placeholder');
+            }
+
+            if (inputEl instanceof HTMLInputElement) {
+                inputEl.value = label;
+            }
         }
 
         panel.querySelectorAll('[data-time-picker-option]').forEach((el) => {
             if (el instanceof HTMLElement) {
-                el.setAttribute('aria-selected', el.dataset.timePickerOption === time ? 'true' : 'false');
+                const selected = el.dataset.timePickerOption === time;
+                el.setAttribute('aria-selected', selected ? 'true' : 'false');
+                el.classList.toggle('bg-zinc-900', selected);
+                el.classList.toggle('text-white', selected);
+                el.classList.toggle('dark:bg-zinc-100', selected);
+                el.classList.toggle('dark:text-zinc-900', selected);
+                el.classList.toggle('hover:bg-zinc-100', ! selected);
+                el.classList.toggle('dark:hover:bg-zinc-800', ! selected);
             }
         });
 
@@ -104,7 +122,15 @@ function bindTimePicker(root) {
 
     trigger?.addEventListener('click', (event) => {
         event.preventDefault();
-        setOpen(!open);
+        setOpen(! open);
+    });
+
+    root.querySelectorAll('[data-time-picker-clear]').forEach((clear) => {
+        clear.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            apply('');
+        });
     });
 
     panel.addEventListener('click', (event) => {
@@ -155,6 +181,20 @@ function buildOptions(step, withSeconds, unavailable) {
 
     return options;
 }
+
+document.addEventListener('stencil:mount', (event) => {
+    if (!(event instanceof CustomEvent)) {
+        return;
+    }
+
+    const mountRoot = event.detail?.root;
+
+    if (!(mountRoot instanceof HTMLElement)) {
+        return;
+    }
+
+    initTimePickers(mountRoot);
+});
 
 if (typeof document !== 'undefined') {
     if (document.readyState === 'loading') {

@@ -50,12 +50,24 @@ function bindTooltip(root) {
 
     const setOpen = (next) => {
         open = next;
-        content.dataset.state = open ? 'open' : 'closed';
-        content.hidden = !open;
-        content.classList.toggle('hidden', !open);
 
         if (open) {
+            // Mark open + take out of flow before measuring so an in-flow
+            // tooltip does not shift the trigger (e.g. header actions on the right).
+            content.dataset.state = 'open';
             positionTooltip(content, trigger, root.dataset.side || content.dataset.side || 'top');
+            content.hidden = false;
+            content.classList.remove('hidden');
+            content.style.visibility = '';
+        } else {
+            content.dataset.state = 'closed';
+            content.hidden = true;
+            content.classList.add('hidden');
+            content.style.position = '';
+            content.style.top = '';
+            content.style.left = '';
+            content.style.visibility = '';
+            content.style.zIndex = '';
         }
     };
 
@@ -87,18 +99,17 @@ function bindTooltip(root) {
  */
 function positionTooltip(content, trigger, side) {
     const gap = 6;
+    const padding = 8;
     const rect = trigger.getBoundingClientRect();
 
     content.style.position = 'fixed';
     content.style.zIndex = '300';
-
-    const wasHidden = content.hidden;
-    content.hidden = false;
     content.style.visibility = 'hidden';
+    content.hidden = false;
+    content.classList.remove('hidden');
+
     const width = content.offsetWidth;
     const height = content.offsetHeight;
-    content.style.visibility = '';
-    content.hidden = wasHidden;
 
     let top = rect.top;
     let left = rect.left + rect.width / 2 - width / 2;
@@ -115,8 +126,11 @@ function positionTooltip(content, trigger, side) {
         top = rect.top - gap - height;
     }
 
-    content.style.top = `${Math.max(4, top)}px`;
-    content.style.left = `${Math.max(4, left)}px`;
+    left = Math.min(Math.max(padding, left), window.innerWidth - width - padding);
+    top = Math.min(Math.max(padding, top), window.innerHeight - height - padding);
+
+    content.style.top = `${top}px`;
+    content.style.left = `${left}px`;
 }
 
 document.addEventListener('stencil:mount', (event) => {

@@ -21,6 +21,7 @@ function defaultStencilTestIconNames(): array
         'chevron-left',
         'chevron-right',
         'clipboard',
+        'clock',
         'copy',
         'eye',
         'file',
