@@ -15,6 +15,7 @@ final class PlaybookMediaController
     private const array COMPONENTS = [
         'buttons',
         'input',
+        'input-currency',
         'select',
         'typography',
         'icons',

@@ -58,6 +58,15 @@
 @endphp
 
 @if ($isPreview)
+    @php
+        $previewPanelClasses = collect([
+            'dialog__content',
+            'relative z-10 w-full rounded-xl border border-zinc-200 bg-white p-0 text-zinc-950 shadow-xl',
+            'dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50',
+            $size === 'sm' ? 'max-w-sm' : 'max-w-lg',
+        ])->implode(' ');
+    @endphp
+
     <div {{
         $attributes->class([
             'dialog__preview',
@@ -70,11 +79,7 @@
         ></div>
 
         <div
-            @class([
-                ...$dialogClasses->reject(fn (string $class): bool => str_contains($class, 'fixed') || str_contains($class, 'opacity-0') || str_contains($class, 'open:') || str_contains($class, 'motion-safe:') || str_contains($class, 'backdrop:'))->all(),
-                'relative z-10 w-full rounded-xl border border-zinc-200 bg-white shadow-xl dark:border-zinc-800 dark:bg-zinc-950',
-                $size === 'sm' ? 'max-w-sm' : 'max-w-lg',
-            ])
+            class="{{ $previewPanelClasses }}"
             role="{{ $alert ? 'alertdialog' : 'dialog' }}"
             aria-modal="true"
             aria-labelledby="{{ $titleId }}"

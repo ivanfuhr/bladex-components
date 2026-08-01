@@ -200,6 +200,12 @@ php artisan stencil:add input icon select switch
 
 Formatted currency display aligned with Laravel [`Number::currency`](https://laravel.com/docs/helpers#method-number-currency). The visible field shows locale-aware formatting; a hidden input submits a decimal string your backend can cast to `float` (for example `(float) $request->input('amount')`). Default `mode` is `cents` (digit mask). Requires the `intl` PHP extension. `stencil:add input-currency` copies `input-currency.js` and patches your Vite entry.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/input-currency-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/input-currency-light.png">
+  <img src="docs/images/input-currency-light.png" alt="Input Currency" />
+</picture>
+
 ```blade
 <x-ui::field name="amount">
     <x-ui::field.label>Amount</x-ui::field.label>
@@ -452,6 +458,12 @@ Accessible filterable combobox / autocomplete (WAI-ARIA combobox + listbox). Sub
 
 Default `shortcut` wraps items with `combobox.input`, `combobox.content`, and `combobox.empty`. Set `:shortcut="false"` for full composition. Works inside `field` (inherits `invalid` / Laravel `$errors`).
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/combobox-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/combobox-light.png">
+  <img src="docs/images/combobox-light.png" alt="Combobox" />
+</picture>
+
 ```blade
 <x-ui::combobox name="framework" placeholder="Search frameworks…">
     <x-ui::combobox.group>
@@ -507,6 +519,12 @@ Accessible file upload with a drag-and-drop dropzone, selected-file list, and cl
 
 Default `shortcut` renders a dropzone (customize via the slot or `heading` / `text` props), a file list, and an item template for the script. Set `:shortcut="false"` for full composition. Use `multiple` for multi-file fields (name is normalized to `name[]` when needed). Works inside `field` (inherits `invalid` / Laravel `$errors`).
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/file-upload-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/file-upload-light.png">
+  <img src="docs/images/file-upload-light.png" alt="File Upload" />
+</picture>
+
 ```blade
 <x-ui::file-upload name="avatar" accept="image/*" text="PNG or JPG up to 5MB" />
 
@@ -543,6 +561,12 @@ php artisan stencil:add file-upload
 Composition-first repeater for dynamic Laravel array fields. Subcomponents include `item`, `add`, and `remove`. `stencil:add repeater` copies `repeater.js` and patches your Vite entry.
 
 Declare one `repeater.item` row template with `data-repeater-field` on each control. The script clones rows, reindexes `name="members[0][field]"` attributes, and hydrates from `:value` / `old()`. Use `min` / `max` to control row limits. Works inside `field` (inherits `invalid` / Laravel `$errors`).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/repeater-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/repeater-light.png">
+  <img src="docs/images/repeater-light.png" alt="Repeater" />
+</picture>
 
 ```blade
 <x-ui::repeater name="members" :value="old('members', [])" :min="1" :max="10">
@@ -591,6 +615,12 @@ php artisan stencil:add repeater
 ## Pillbox
 
 Free-text tags input. Submits multiple strings as `name[]`. Enter or comma adds a tag; Backspace on empty input or chip remove button deletes. `stencil:add pillbox` copies `pillbox.js`.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/pillbox-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/pillbox-light.png">
+  <img src="docs/images/pillbox-light.png" alt="Pillbox" />
+</picture>
 
 ```blade
 <x-ui::pillbox name="tags" :value="old('tags', [])" placeholder="Add tags…" :max="10" />
@@ -655,6 +685,12 @@ Pass `multiple` with `display="count"` or `display="chips"`. Hidden inputs use `
 
 Star rating with numeric hidden value. `stencil:add rating` copies `rating.js`.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/rating-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/rating-light.png">
+  <img src="docs/images/rating-light.png" alt="Rating" />
+</picture>
+
 ```blade
 <x-ui::rating name="score" :value="3" :max="5" />
 ```
@@ -666,6 +702,12 @@ Star rating with numeric hidden value. `stencil:add rating` copies `rating.js`.
 SV canvas, hue slider, Tailwind swatches, and hex field in a popover. Subcomponents include `trigger`, `hex`, `content`, `area`, `hue`, `dropper`, `swatches`, and `swatch`. `stencil:add color-picker` copies `color-picker.js`.
 
 Default `shortcut` composes the trigger and popover tree. Use `:dropper="true"` or `:swatches="false"` on the root, or nest parts explicitly with `:shortcut="false"`.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/color-picker-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/color-picker-light.png">
+  <img src="docs/images/color-picker-light.png" alt="Color Picker" />
+</picture>
 
 ```blade
 <x-ui::color-picker name="brand_color" value="#3366cc" />
@@ -735,6 +777,12 @@ Accessible one-time password / PIN input with labeled slots, paste support, and 
 
 Default `shortcut` renders slots for `length` (default `6`). Even lengths ≥ 4 include a middle separator unless you set `:separated="false"`. Use `mode="numeric"` (default) or `mode="alphanumeric"`. Set `:shortcut="false"` for full composition. Works inside `field` (inherits `invalid` / Laravel `$errors`).
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/input-otp-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/input-otp-light.png">
+  <img src="docs/images/input-otp-light.png" alt="Input OTP" />
+</picture>
+
 ```blade
 <x-ui::input-otp name="code" />
 
@@ -778,6 +826,12 @@ php artisan stencil:add input-otp
 Accessible slider and dual-thumb range control (WAI-ARIA `role="slider"`). Subcomponents include `track`, `range`, and `thumb`. `stencil:add slider` copies `slider.js` and patches your Vite entry. A hidden input carries the value for form submit (`name`); range mode emits `name[0]` / `name[1]`.
 
 Supports `min` (default `0`), `max` (default `100`), `step` (default `1`), `value` (number or `[low, high]`), and `:range="true"` for two thumbs. Keyboard: arrows, Home/End, PageUp/Down. Set `:shortcut="false"` for full composition. Works inside `field` (inherits `invalid` / Laravel `$errors`).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/slider-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/slider-light.png">
+  <img src="docs/images/slider-light.png" alt="Slider" />
+</picture>
 
 ```blade
 <x-ui::slider name="volume" :value="40" />

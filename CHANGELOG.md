@@ -8,6 +8,9 @@
 
 ### Changed
 
+- README screenshots — added media captures for `input-currency`, `combobox`, `file-upload`, `repeater`, `pillbox`, `rating`, `color-picker`, `input-otp`, and `slider`.
+- `dialog` preview — strip fixed positioning so media panels stay centered.
+- `tooltip` content — `w-max whitespace-nowrap` so hints don’t collapse in narrow containers.
 - `input` `mask` — custom pattern (`#` = digit, `A` = letter); removed `phone` / `document` presets.
 - `color-picker` — compound sub-components (`trigger`, `hex`, `content`, `area`, `hue`, `dropper`, `swatches`, `swatch`) with default `shortcut`; flat `dropper` / `swatches` props compose the same parts.
 - `date-picker` — panel sub-components (`panel`, `presets`, `manual-inputs`, `footer`); `withPresets`, `withInputs`, and `withConfirmation` compose those parts in shortcut mode.

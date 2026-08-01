@@ -14,7 +14,7 @@
 
         <div class="space-y-3">
             <x-stencil::text size="sm" variant="subtle">Form dialog</x-stencil::text>
-            <x-stencil::dialog.content preview class="w-full min-w-[min(100%,42rem)]">
+            <x-stencil::dialog.content preview>
                 <x-stencil::dialog.header>
                     <x-stencil::dialog.title>Update profile</x-stencil::dialog.title>
                     <x-stencil::dialog.description>
@@ -32,7 +32,7 @@
 
         <div class="space-y-3">
             <x-stencil::text size="sm" variant="subtle">Alert dialog · small</x-stencil::text>
-            <x-stencil::dialog.content preview size="sm" :alert="true" class="w-full min-w-[min(100%,42rem)]">
+            <x-stencil::dialog.content preview size="sm" :alert="true">
                 <x-stencil::dialog.header>
                     <x-stencil::dialog.title>Delete project?</x-stencil::dialog.title>
                     <x-stencil::dialog.description>

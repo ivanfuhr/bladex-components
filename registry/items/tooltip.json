@@ -10,7 +10,7 @@
             "path": "tooltip/content.blade.php",
             "type": "registry:ui",
             "target": "tooltip/content.blade.php",
-            "content": "@aware([\n    'side' => 'top',\n])\n\n@props([\n    'side' => null,\n])\n\n@php\n    $resolvedSide = $side ?? 'top';\n@endphp\n\n<span {{\n    $attributes->class([\n        'tooltip__content',\n        'pointer-events-none z-50 max-w-xs rounded-md bg-zinc-900 px-2 py-1 text-xs font-medium text-zinc-50 shadow-md',\n        'dark:bg-zinc-100 dark:text-zinc-900',\n        'hidden data-[state=open]:block',\n    ])->merge([\n        'role' => 'tooltip',\n        'data-tooltip-content' => true,\n        'data-side' => $resolvedSide,\n        'data-state' => 'closed',\n        'hidden' => true,\n    ])\n}}>\n    {{ $slot }}\n</span>\n"
+            "content": "@aware([\n    'side' => 'top',\n])\n\n@props([\n    'side' => null,\n])\n\n@php\n    $resolvedSide = $side ?? 'top';\n@endphp\n\n<span {{\n    $attributes->class([\n        'tooltip__content',\n        'pointer-events-none z-50 w-max max-w-xs whitespace-nowrap rounded-md bg-zinc-900 px-2 py-1 text-xs font-medium text-zinc-50 shadow-md',\n        'dark:bg-zinc-100 dark:text-zinc-900',\n        'hidden data-[state=open]:block',\n    ])->merge([\n        'role' => 'tooltip',\n        'data-tooltip-content' => true,\n        'data-side' => $resolvedSide,\n        'data-state' => 'closed',\n        'hidden' => true,\n    ])\n}}>\n    {{ $slot }}\n</span>\n"
         },
         {
             "path": "tooltip/index.blade.php",

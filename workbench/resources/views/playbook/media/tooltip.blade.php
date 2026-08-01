@@ -10,8 +10,8 @@
             <x-stencil::text size="sm" variant="subtle">Hover and focus hints for controls.</x-stencil::text>
         </div>
 
-        <div class="flex flex-wrap items-end gap-10 pt-8">
-            <div class="relative inline-flex min-h-[4.5rem] items-end justify-center px-2">
+        <div class="flex flex-wrap items-end justify-center overflow-visible px-16 pt-12" style="gap: 6rem;">
+            <div class="relative inline-flex min-h-[5rem] items-end justify-center">
                 <x-stencil::tooltip side="top">
                     <x-stencil::tooltip.trigger>
                         <x-stencil::button variant="outline">Hover me</x-stencil::button>
@@ -27,7 +27,7 @@
                 </x-stencil::tooltip>
             </div>
 
-            <div class="relative inline-flex min-h-[4.5rem] items-end justify-center px-2">
+            <div class="relative inline-flex min-h-[5rem] items-end justify-center">
                 <x-stencil::tooltip side="top">
                     <x-stencil::tooltip.trigger>
                         <x-stencil::button variant="primary" square>

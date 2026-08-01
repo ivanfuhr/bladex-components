@@ -70,6 +70,25 @@ it('renders flyout dialog positioning classes', function () {
         ->toContain('left-0');
 });
 
+it('centers preview panels without fixed positioning offsets', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-stencil::dialog.content preview>
+            <x-stencil::dialog.title>Preview</x-stencil::dialog.title>
+        </x-stencil::dialog.content>
+    BLADE);
+
+    expect($html)
+        ->toContain('dialog__preview')
+        ->toContain('data-dialog-preview')
+        ->toContain('items-center')
+        ->toContain('justify-center')
+        ->toContain('max-w-lg')
+        ->not->toContain('left-1/2')
+        ->not->toContain('-translate-x-1/2')
+        ->not->toContain('top-1/2')
+        ->not->toContain('fixed');
+});
+
 it('renders dialog cancel helper with close behavior', function () {
     $html = Blade::render('<x-stencil::dialog.cancel>Cancel</x-stencil::dialog.cancel>');
 
