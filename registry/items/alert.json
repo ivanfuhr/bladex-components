@@ -1,0 +1,30 @@
+{
+    "$schema": "../schema/registry-item.json",
+    "name": "alert",
+    "type": "registry:ui",
+    "title": "Alert",
+    "description": "Inline callout for status, warnings, and informational messages.",
+    "registryDependencies": [
+        "icon"
+    ],
+    "files": [
+        {
+            "path": "alert/description.blade.php",
+            "type": "registry:ui",
+            "target": "alert/description.blade.php",
+            "content": "<div {{\n    $attributes->class([\n        'alert__description',\n        'text-sm opacity-90',\n    ])->merge([\n        'data-alert-description' => true,\n    ])\n}}>\n    {{ $slot }}\n</div>\n"
+        },
+        {
+            "path": "alert/index.blade.php",
+            "type": "registry:ui",
+            "target": "alert/index.blade.php",
+            "content": "@props([\n    'variant' => 'default',\n    'title' => null,\n    'icon' => null,\n])\n\n@php\n    $variantClasses = match ($variant) {\n        'success' => 'border-green-200 bg-green-50 text-green-950 dark:border-green-900 dark:bg-green-950/40 dark:text-green-50',\n        'warning' => 'border-amber-200 bg-amber-50 text-amber-950 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-50',\n        'danger', 'destructive', 'error' => 'border-red-200 bg-red-50 text-red-950 dark:border-red-900 dark:bg-red-950/40 dark:text-red-50',\n        'info' => 'border-sky-200 bg-sky-50 text-sky-950 dark:border-sky-900 dark:bg-sky-950/40 dark:text-sky-50',\n        default => 'border-zinc-200 bg-zinc-50 text-zinc-950 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-zinc-50',\n    };\n@endphp\n\n<div {{\n    $attributes->class([\n        'alert',\n        'relative w-full rounded-xl border px-4 py-3 text-sm',\n        $variantClasses,\n    ])->merge([\n        'role' => 'alert',\n        'data-alert' => true,\n        'data-variant' => $variant,\n    ])\n}}>\n    <div class=\"flex gap-3\">\n        @if (filled($icon))\n            <span class=\"mt-0.5 inline-flex shrink-0\" data-alert-icon aria-hidden=\"true\">\n                <x-ui::icon :name=\"$icon\" class=\"size-4\" />\n            </span>\n        @endif\n        <div class=\"min-w-0 flex-1 space-y-1\">\n            @if (filled($title))\n                <x-ui::alert.title>{{ $title }}</x-ui::alert.title>\n            @endif\n            {{ $slot }}\n        </div>\n    </div>\n</div>\n"
+        },
+        {
+            "path": "alert/title.blade.php",
+            "type": "registry:ui",
+            "target": "alert/title.blade.php",
+            "content": "<h5 {{\n    $attributes->class([\n        'alert__title',\n        'font-medium leading-none tracking-tight',\n    ])->merge([\n        'data-alert-title' => true,\n    ])\n}}>\n    {{ $slot }}\n</h5>\n"
+        }
+    ]
+}

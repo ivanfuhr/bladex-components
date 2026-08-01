@@ -1,0 +1,16 @@
+{
+    "$schema": "../schema/registry-item.json",
+    "name": "skeleton",
+    "type": "registry:ui",
+    "title": "Skeleton",
+    "description": "Animated placeholder for loading states.",
+    "registryDependencies": [],
+    "files": [
+        {
+            "path": "skeleton/index.blade.php",
+            "type": "registry:ui",
+            "target": "skeleton/index.blade.php",
+            "content": "@props([\n    'rounded' => null,\n])\n\n@php\n    $radius = match ($rounded) {\n        'full', 'circle' => 'rounded-full',\n        'none' => 'rounded-none',\n        'sm' => 'rounded-sm',\n        'lg' => 'rounded-lg',\n        default => 'rounded-md',\n    };\n@endphp\n\n<div\n    {{\n        $attributes->class([\n            'skeleton',\n            'animate-pulse bg-zinc-200 dark:bg-zinc-800',\n            $radius,\n        ])->merge([\n            'data-skeleton' => true,\n            'aria-hidden' => 'true',\n        ])\n    }}\n></div>\n"
+        }
+    ]
+}

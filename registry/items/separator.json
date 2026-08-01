@@ -1,0 +1,16 @@
+{
+    "$schema": "../schema/registry-item.json",
+    "name": "separator",
+    "type": "registry:ui",
+    "title": "Separator",
+    "description": "Visual divider for horizontal or vertical layouts.",
+    "registryDependencies": [],
+    "files": [
+        {
+            "path": "separator/index.blade.php",
+            "type": "registry:ui",
+            "target": "separator/index.blade.php",
+            "content": "@props([\n    'orientation' => 'horizontal',\n    'decorative' => true,\n])\n\n@php\n    $isVertical = $orientation === 'vertical';\n@endphp\n\n<div\n    {{\n        $attributes->class([\n            'separator',\n            'shrink-0 bg-zinc-200 dark:bg-zinc-800',\n            $isVertical ? 'mx-2 h-full w-px' : 'my-2 h-px w-full',\n        ])->merge([\n            'data-separator' => true,\n            'data-orientation' => $isVertical ? 'vertical' : 'horizontal',\n            'role' => $decorative ? 'none' : 'separator',\n            'aria-orientation' => $decorative ? null : ($isVertical ? 'vertical' : 'horizontal'),\n        ])\n    }}\n></div>\n"
+        }
+    ]
+}

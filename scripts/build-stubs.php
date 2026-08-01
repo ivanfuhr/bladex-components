@@ -12,4 +12,16 @@ use Ivanfuhr\Stencil\Registry\SupportStubGenerator;
 $generator = new SupportStubGenerator(new OwnedArtifactCompiler);
 $generator->generate($root, $root.'/stubs');
 
+$pint = $root.'/vendor/bin/pint';
+
+if (is_file($pint)) {
+    $command = escapeshellarg(PHP_BINARY).' '.escapeshellarg($pint).' '.escapeshellarg($root.'/stubs/support');
+    passthru($command, $pintExitCode);
+
+    if ($pintExitCode !== 0) {
+        fwrite(STDERR, "Pint failed while formatting generated stubs (exit {$pintExitCode}).\n");
+        exit($pintExitCode);
+    }
+}
+
 fwrite(STDOUT, "Stubs generated under stubs/\n");

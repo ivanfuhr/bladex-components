@@ -22,7 +22,5 @@
     aria-label="{{ __('stencil::messages.color_picker_open') }}"
     hidden
 >
-    <div class="flex flex-col gap-3">
-        {{ $slot }}
-    </div>
+    <div class="flex flex-col gap-3">{{ $slot }}</div>
 </div>

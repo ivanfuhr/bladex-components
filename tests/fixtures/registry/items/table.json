@@ -1,0 +1,58 @@
+{
+    "$schema": "../schema/registry-item.json",
+    "name": "table",
+    "type": "registry:ui",
+    "title": "Table",
+    "description": "Semantic data table primitives with header, body, footer, and caption.",
+    "registryDependencies": [],
+    "files": [
+        {
+            "path": "table/body.blade.php",
+            "type": "registry:ui",
+            "target": "table/body.blade.php",
+            "content": "<tbody {{\n    $attributes->class([\n        'table__body',\n        '[&_tr:last-child]:border-0',\n    ])->merge([\n        'data-table-body' => true,\n    ])\n}}>\n    {{ $slot }}\n</tbody>\n"
+        },
+        {
+            "path": "table/caption.blade.php",
+            "type": "registry:ui",
+            "target": "table/caption.blade.php",
+            "content": "<caption {{\n    $attributes->class([\n        'table__caption',\n        'mt-4 text-sm text-zinc-500 dark:text-zinc-400',\n    ])->merge([\n        'data-table-caption' => true,\n    ])\n}}>\n    {{ $slot }}\n</caption>\n"
+        },
+        {
+            "path": "table/cell.blade.php",
+            "type": "registry:ui",
+            "target": "table/cell.blade.php",
+            "content": "@props([\n    'variant' => 'default',\n])\n\n<td {{\n    $attributes->class([\n        'table__cell',\n        'p-3 align-middle [&:has([role=checkbox])]:pr-0',\n        $variant === 'strong' ? 'font-medium text-zinc-950 dark:text-zinc-50' : null,\n    ])->merge([\n        'data-table-cell' => true,\n        'data-variant' => $variant,\n    ])\n}}>\n    {{ $slot }}\n</td>\n"
+        },
+        {
+            "path": "table/footer.blade.php",
+            "type": "registry:ui",
+            "target": "table/footer.blade.php",
+            "content": "<tfoot {{\n    $attributes->class([\n        'table__footer',\n        'border-t bg-zinc-50 font-medium dark:bg-zinc-900/50 [&>tr]:last:border-b-0',\n    ])->merge([\n        'data-table-footer' => true,\n    ])\n}}>\n    {{ $slot }}\n</tfoot>\n"
+        },
+        {
+            "path": "table/head.blade.php",
+            "type": "registry:ui",
+            "target": "table/head.blade.php",
+            "content": "@props([\n    'sortable' => false,\n    'sorted' => false,\n    'direction' => 'asc',\n])\n\n<th {{\n    $attributes->class([\n        'table__head',\n        'h-10 px-3 text-left align-middle font-medium text-zinc-500 dark:text-zinc-400',\n        '[&:has([role=checkbox])]:pr-0',\n    ])->merge([\n        'data-table-head' => true,\n        'data-sortable' => $sortable ? 'true' : null,\n        'data-sorted' => $sorted ? 'true' : null,\n        'aria-sort' => $sorted ? ($direction === 'desc' ? 'descending' : 'ascending') : ($sortable ? 'none' : null),\n    ])\n}}>\n    {{ $slot }}\n</th>\n"
+        },
+        {
+            "path": "table/header.blade.php",
+            "type": "registry:ui",
+            "target": "table/header.blade.php",
+            "content": "<thead {{\n    $attributes->class([\n        'table__header',\n        '[&_tr]:border-b',\n    ])->merge([\n        'data-table-header' => true,\n    ])\n}}>\n    {{ $slot }}\n</thead>\n"
+        },
+        {
+            "path": "table/index.blade.php",
+            "type": "registry:ui",
+            "target": "table/index.blade.php",
+            "content": "<div {{\n    $attributes->class([\n        'table-wrap',\n        'relative w-full overflow-x-auto',\n    ])->merge([\n        'data-table' => true,\n    ])\n}}>\n    <table class=\"table w-full caption-bottom text-sm\">\n        {{ $slot }}\n    </table>\n</div>\n"
+        },
+        {
+            "path": "table/row.blade.php",
+            "type": "registry:ui",
+            "target": "table/row.blade.php",
+            "content": "<tr {{\n    $attributes->class([\n        'table__row',\n        'border-b border-zinc-200 transition-colors hover:bg-zinc-50/80 dark:border-zinc-800 dark:hover:bg-zinc-900/50',\n        'data-[state=selected]:bg-zinc-100 dark:data-[state=selected]:bg-zinc-800',\n    ])->merge([\n        'data-table-row' => true,\n    ])\n}}>\n    {{ $slot }}\n</tr>\n"
+        }
+    ]
+}

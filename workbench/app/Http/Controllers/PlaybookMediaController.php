@@ -33,6 +33,22 @@ final class PlaybookMediaController
         'color-picker',
         'input-otp',
         'slider',
+        'accordion',
+        'collapsible',
+        'avatar',
+        'badge',
+        'breadcrumb',
+        'card',
+        'dropdown-menu',
+        'separator',
+        'skeleton',
+        'tabs',
+        'tooltip',
+        'toast',
+        'progress',
+        'alert',
+        'table',
+        'pagination',
     ];
 
     public function __construct(

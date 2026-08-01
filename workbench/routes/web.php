@@ -11,7 +11,10 @@ Route::get('/playbook', [PlaybookController::class, 'index'])->name('playbook.in
 
 Route::get('/playbook/media/{component}', [PlaybookMediaController::class, 'show'])
     ->name('playbook.media.show')
-    ->where('component', 'buttons|input|select|typography|icons|label|field|textarea|checkbox|radio|switch|dialog|combobox|file-upload|repeater|pillbox|rating|color-picker|input-otp|slider');
+    ->where(
+        'component',
+        'buttons|input|select|typography|icons|label|field|textarea|checkbox|radio|switch|dialog|combobox|file-upload|repeater|pillbox|rating|color-picker|input-otp|slider|accordion|collapsible|avatar|badge|breadcrumb|card|dropdown-menu|separator|skeleton|tabs|tooltip|toast|progress|alert|table|pagination',
+    );
 
 Route::get('/playbook/{component}', [PlaybookController::class, 'show'])
     ->name('playbook.show')

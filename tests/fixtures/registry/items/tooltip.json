@@ -1,0 +1,34 @@
+{
+    "$schema": "../schema/registry-item.json",
+    "name": "tooltip",
+    "type": "registry:ui",
+    "title": "Tooltip",
+    "description": "Hover and focus tooltip for short contextual hints.",
+    "registryDependencies": [],
+    "files": [
+        {
+            "path": "tooltip/content.blade.php",
+            "type": "registry:ui",
+            "target": "tooltip/content.blade.php",
+            "content": "@aware([\n    'side' => 'top',\n])\n\n@props([\n    'side' => null,\n])\n\n@php\n    $resolvedSide = $side ?? 'top';\n@endphp\n\n<span {{\n    $attributes->class([\n        'tooltip__content',\n        'pointer-events-none z-50 max-w-xs rounded-md bg-zinc-900 px-2 py-1 text-xs font-medium text-zinc-50 shadow-md',\n        'dark:bg-zinc-100 dark:text-zinc-900',\n        'hidden data-[state=open]:block',\n    ])->merge([\n        'role' => 'tooltip',\n        'data-tooltip-content' => true,\n        'data-side' => $resolvedSide,\n        'data-state' => 'closed',\n        'hidden' => true,\n    ])\n}}>\n    {{ $slot }}\n</span>\n"
+        },
+        {
+            "path": "tooltip/index.blade.php",
+            "type": "registry:ui",
+            "target": "tooltip/index.blade.php",
+            "content": "@props([\n    'side' => 'top',\n    'delay' => 200,\n])\n\n<span {{\n    $attributes->class([\n        'tooltip',\n        'relative inline-flex',\n    ])->merge([\n        'data-tooltip' => true,\n        'data-side' => $side,\n        'data-delay' => (string) $delay,\n    ])\n}}>\n    {{ $slot }}\n</span>\n"
+        },
+        {
+            "path": "tooltip/trigger.blade.php",
+            "type": "registry:ui",
+            "target": "tooltip/trigger.blade.php",
+            "content": "<span {{\n    $attributes->class([\n        'tooltip__trigger',\n        'inline-flex',\n    ])->merge([\n        'data-tooltip-trigger' => true,\n    ])\n}}>\n    {{ $slot }}\n</span>\n"
+        },
+        {
+            "path": "tooltip/tooltip.js",
+            "type": "registry:ui",
+            "target": "tooltip/tooltip.js",
+            "content": "/**\n * Stencil \u2014 accessible tooltips (vanilla JS, no Alpine).\n */\n\nconst ROOT_SELECTOR = '[data-tooltip]';\nconst TRIGGER_SELECTOR = '[data-tooltip-trigger]';\nconst CONTENT_SELECTOR = '[data-tooltip-content]';\nconst initialized = new WeakSet();\n\n/**\n * @param {ParentNode} root\n */\nexport function initTooltips(root = document) {\n    root.querySelectorAll(ROOT_SELECTOR).forEach((element) => {\n        if (!(element instanceof HTMLElement)) {\n            return;\n        }\n\n        if (initialized.has(element)) {\n            return;\n        }\n\n        initialized.add(element);\n        bindTooltip(element);\n    });\n}\n\n/**\n * @param {HTMLElement} root\n */\nfunction bindTooltip(root) {\n    const trigger = root.querySelector(TRIGGER_SELECTOR);\n    const content = root.querySelector(CONTENT_SELECTOR);\n\n    if (!(trigger instanceof HTMLElement) || !(content instanceof HTMLElement)) {\n        return;\n    }\n\n    const delay = Number.parseInt(root.dataset.delay || '200', 10) || 200;\n    /** @type {ReturnType<typeof setTimeout> | null} */\n    let showTimer = null;\n    let open = false;\n\n    if (!content.id) {\n        content.id = `tooltip-${Math.random().toString(36).slice(2, 10)}`;\n    }\n\n    const control = trigger.querySelector('button, a, [tabindex]') ?? trigger;\n    control.setAttribute('aria-describedby', content.id);\n\n    const setOpen = (next) => {\n        open = next;\n        content.dataset.state = open ? 'open' : 'closed';\n        content.hidden = !open;\n        content.classList.toggle('hidden', !open);\n\n        if (open) {\n            positionTooltip(content, trigger, root.dataset.side || content.dataset.side || 'top');\n        }\n    };\n\n    const scheduleOpen = () => {\n        window.clearTimeout(showTimer ?? undefined);\n        showTimer = window.setTimeout(() => setOpen(true), delay);\n    };\n\n    const close = () => {\n        window.clearTimeout(showTimer ?? undefined);\n        setOpen(false);\n    };\n\n    trigger.addEventListener('pointerenter', scheduleOpen);\n    trigger.addEventListener('pointerleave', close);\n    control.addEventListener('focus', () => setOpen(true));\n    control.addEventListener('blur', close);\n    root.addEventListener('keydown', (event) => {\n        if (event.key === 'Escape') {\n            close();\n        }\n    });\n}\n\n/**\n * @param {HTMLElement} content\n * @param {HTMLElement} trigger\n * @param {string} side\n */\nfunction positionTooltip(content, trigger, side) {\n    const gap = 6;\n    const rect = trigger.getBoundingClientRect();\n\n    content.style.position = 'fixed';\n    content.style.zIndex = '300';\n\n    const wasHidden = content.hidden;\n    content.hidden = false;\n    content.style.visibility = 'hidden';\n    const width = content.offsetWidth;\n    const height = content.offsetHeight;\n    content.style.visibility = '';\n    content.hidden = wasHidden;\n\n    let top = rect.top;\n    let left = rect.left + rect.width / 2 - width / 2;\n\n    if (side === 'bottom') {\n        top = rect.bottom + gap;\n    } else if (side === 'left') {\n        top = rect.top + rect.height / 2 - height / 2;\n        left = rect.left - gap - width;\n    } else if (side === 'right') {\n        top = rect.top + rect.height / 2 - height / 2;\n        left = rect.right + gap;\n    } else {\n        top = rect.top - gap - height;\n    }\n\n    content.style.top = `${Math.max(4, top)}px`;\n    content.style.left = `${Math.max(4, left)}px`;\n}\n\ndocument.addEventListener('stencil:mount', (event) => {\n    if (!(event instanceof CustomEvent)) {\n        return;\n    }\n\n    const mountRoot = event.detail?.root;\n\n    if (!(mountRoot instanceof HTMLElement)) {\n        return;\n    }\n\n    initTooltips(mountRoot);\n});\n\nif (typeof document !== 'undefined') {\n    if (document.readyState === 'loading') {\n        document.addEventListener('DOMContentLoaded', () => initTooltips());\n    } else {\n        initTooltips();\n    }\n}\n"
+        }
+    ]
+}

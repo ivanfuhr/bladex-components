@@ -22,7 +22,7 @@
 
 | 🧩 **Components** | 📖 **Guide** | 🛠 **Project** |
 | :--- | :--- | :--- |
-| [Button](#button) · [Input](#input) · [Label](#label) · [Field](#field) · [Textarea](#textarea) · [Checkbox](#checkbox) · [Radio](#radio) · [Switch](#switch) · [Select](#select) · [Dialog](#dialog) · [Typography](#typography) · [Icons](#icons) | [Installation](#installation) · [Usage](#usage) · [Registry CLI](#registry-cli) · [Tailwind](#tailwind-css) · [Playbook](#development) | [Changelog](CHANGELOG.md) · [Contributing](.github/CONTRIBUTING.md) · [Security](.github/SECURITY.md) · [License](LICENSE.md) |
+| [Button](#button) · [Input](#input) · [Label](#label) · [Field](#field) · [Textarea](#textarea) · [Checkbox](#checkbox) · [Radio](#radio) · [Switch](#switch) · [Select](#select) · [Dialog](#dialog) · [Accordion](#accordion) · [Collapsible](#collapsible) · [Avatar](#avatar) · [Badge](#badge) · [Breadcrumb](#breadcrumb) · [Card](#card) · [Dropdown Menu](#dropdown-menu) · [Separator](#separator) · [Skeleton](#skeleton) · [Tabs](#tabs) · [Tooltip](#tooltip) · [Toast](#toast) · [Progress](#progress) · [Alert](#alert) · [Table](#table) · [Typography](#typography) · [Icons](#icons) | [Installation](#installation) · [Usage](#usage) · [Registry CLI](#registry-cli) · [Tailwind](#tailwind-css) · [Playbook](#development) | [Changelog](CHANGELOG.md) · [Contributing](.github/CONTRIBUTING.md) · [Security](.github/SECURITY.md) · [License](LICENSE.md) |
 
 <br>
 
@@ -66,7 +66,7 @@ Use the owned Blade namespace in your app:
 <x-ui::input name="email" />
 ```
 
-**Registry UI items:** `button`, `checkbox`, `combobox`, `dialog`, `field`, `file-upload`, `heading`, `icon`, `input`, `input-group`, `input-otp`, `label`, `radio`, `select`, `slider`, `switch`, `text`, `textarea`. Lower-level pieces such as `field`, `input-group`, `label`, and `icon` are usually installed transitively. Components that use Lucide glyphs also install the required icon stubs during `stencil:add`; use `stencil:icon {name}` for any extra icons (see [Icons](#icons)).
+**Registry UI items:** `accordion`, `alert`, `avatar`, `badge`, `breadcrumb`, `button`, `card`, `checkbox`, `collapsible`, `combobox`, `dialog`, `dropdown-menu`, `field`, `file-upload`, `heading`, `icon`, `input`, `input-group`, `input-otp`, `label`, `pagination`, `popover`, `progress`, `radio`, `select`, `separator`, `skeleton`, `slider`, `switch`, `table`, `tabs`, `text`, `textarea`, `toast`, `tooltip`. Lower-level pieces such as `field`, `input-group`, `label`, and `icon` are usually installed transitively. Components that use Lucide glyphs also install the required icon stubs during `stencil:add`; use `stencil:icon {name}` for any extra icons (see [Icons](#icons)).
 
 ### Registry CLI
 
@@ -876,6 +876,433 @@ php artisan stencil:add dialog
 
 <br>
 
+## Accordion
+
+Accessible vertically stacked disclosures ([shadcn Accordion](https://ui.shadcn.com/docs/components/accordion), [Flux accordion](https://fluxui.dev/components/accordion)). Subcomponents include `item`, `trigger`, and `content`. `stencil:add accordion` copies `accordion.js` and patches your Vite entry.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/accordion-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/accordion-light.png">
+  <img src="docs/images/accordion-light.png" alt="Accordion" />
+</picture>
+
+```blade
+<x-ui::accordion exclusive transition>
+    <x-ui::accordion.item value="shipping" :expanded="true">
+        <x-ui::accordion.trigger>What are your shipping options?</x-ui::accordion.trigger>
+        <x-ui::accordion.content>
+            Standard (5–7 days), express (2–3 days), and overnight.
+        </x-ui::accordion.content>
+    </x-ui::accordion.item>
+
+    <x-ui::accordion.item heading="What is your return policy?">
+        30-day money-back guarantee on unused items.
+    </x-ui::accordion.item>
+</x-ui::accordion>
+```
+
+| Prop | Description |
+| --- | --- |
+| `exclusive` / `multiple` | Single open item (`exclusive`) or many (`multiple`) |
+| `transition` | Animate open/close height |
+| `variant="reverse"` | Chevron before the label (Flux) |
+| `bordered` | Rounded bordered shell |
+| `item` → `heading` | Shorthand trigger text (Flux) |
+| `item` → `expanded` / `disabled` | Default open / non-interactive |
+
+```bash
+php artisan stencil:add accordion
+```
+
+<br>
+
+## Collapsible
+
+Single-panel expand/collapse ([shadcn Collapsible](https://ui.shadcn.com/docs/components/collapsible)). Subcomponents include `trigger` and `content`. `stencil:add collapsible` copies `collapsible.js`.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/collapsible-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/collapsible-light.png">
+  <img src="docs/images/collapsible-light.png" alt="Collapsible" />
+</picture>
+
+```blade
+<x-ui::collapsible>
+    <x-ui::collapsible.trigger>Toggle details</x-ui::collapsible.trigger>
+    <x-ui::collapsible.content>
+        Extra product information lives here.
+    </x-ui::collapsible.content>
+</x-ui::collapsible>
+```
+
+```bash
+php artisan stencil:add collapsible
+```
+
+<br>
+
+## Avatar
+
+User image or initials ([shadcn Avatar](https://ui.shadcn.com/docs/components/avatar), [Flux avatar](https://fluxui.dev/components/avatar)). Subcomponents include `image`, `fallback`, and `group`. `stencil:add avatar` copies `avatar.js` for image-error fallback.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/avatar-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/avatar-light.png">
+  <img src="docs/images/avatar-light.png" alt="Avatar" />
+</picture>
+
+```blade
+<x-ui::avatar src="https://example.com/me.jpg" name="Caleb Porzio" circle size="lg" />
+<x-ui::avatar name="Ada Lovelace" color="violet" />
+
+<x-ui::avatar.group>
+    <x-ui::avatar name="One" circle />
+    <x-ui::avatar name="Two" circle />
+</x-ui::avatar.group>
+```
+
+```bash
+php artisan stencil:add avatar
+```
+
+<br>
+
+## Badge
+
+Compact status label ([shadcn Badge](https://ui.shadcn.com/docs/components/badge), [Flux badge](https://fluxui.dev/components/badge)). Optional `badge.close` for dismissible chips.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/badge-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/badge-light.png">
+  <img src="docs/images/badge-light.png" alt="Badge" />
+</picture>
+
+```blade
+<x-ui::badge variant="destructive">Failed</x-ui::badge>
+<x-ui::badge color="lime" rounded>New</x-ui::badge>
+<x-ui::badge>Admin <x-ui::badge.close /></x-ui::badge>
+```
+
+```bash
+php artisan stencil:add badge
+```
+
+<br>
+
+## Breadcrumb
+
+Navigation trail ([shadcn Breadcrumb](https://ui.shadcn.com/docs/components/breadcrumb), [Flux breadcrumbs](https://fluxui.dev/components/breadcrumbs)).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/breadcrumb-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/breadcrumb-light.png">
+  <img src="docs/images/breadcrumb-light.png" alt="Breadcrumb" />
+</picture>
+
+```blade
+<x-ui::breadcrumb>
+    <x-ui::breadcrumb.list>
+        <x-ui::breadcrumb.item href="/">Home</x-ui::breadcrumb.item>
+        <x-ui::breadcrumb.separator />
+        <x-ui::breadcrumb.item>
+            <x-ui::breadcrumb.page>Settings</x-ui::breadcrumb.page>
+        </x-ui::breadcrumb.item>
+    </x-ui::breadcrumb.list>
+</x-ui::breadcrumb>
+```
+
+```bash
+php artisan stencil:add breadcrumb
+```
+
+<br>
+
+## Card
+
+Content container ([shadcn Card](https://ui.shadcn.com/docs/components/card), [Flux card](https://fluxui.dev/components/card)).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/card-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/card-light.png">
+  <img src="docs/images/card-light.png" alt="Card" />
+</picture>
+
+```blade
+<x-ui::card>
+    <x-ui::card.header>
+        <x-ui::card.title>Account</x-ui::card.title>
+        <x-ui::card.description>Manage your profile.</x-ui::card.description>
+    </x-ui::card.header>
+    <x-ui::card.content>…</x-ui::card.content>
+    <x-ui::card.footer>
+        <x-ui::button>Save</x-ui::button>
+    </x-ui::card.footer>
+</x-ui::card>
+```
+
+```bash
+php artisan stencil:add card
+```
+
+<br>
+
+## Dropdown Menu
+
+Accessible action menu ([shadcn Dropdown Menu](https://ui.shadcn.com/docs/components/dropdown-menu), [Flux dropdown](https://fluxui.dev/components/dropdown)). `stencil:add dropdown-menu` copies `dropdown-menu.js`.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/dropdown-menu-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/dropdown-menu-light.png">
+  <img src="docs/images/dropdown-menu-light.png" alt="Dropdown Menu" />
+</picture>
+
+```blade
+<x-ui::dropdown-menu align="end">
+    <x-ui::dropdown-menu.trigger>
+        <x-ui::button variant="outline">Open</x-ui::button>
+    </x-ui::dropdown-menu.trigger>
+    <x-ui::dropdown-menu.content>
+        <x-ui::dropdown-menu.label>Account</x-ui::dropdown-menu.label>
+        <x-ui::dropdown-menu.item>Profile</x-ui::dropdown-menu.item>
+        <x-ui::dropdown-menu.separator />
+        <x-ui::dropdown-menu.item variant="danger" kbd="⌘⌫">Delete</x-ui::dropdown-menu.item>
+    </x-ui::dropdown-menu.content>
+</x-ui::dropdown-menu>
+```
+
+```bash
+php artisan stencil:add dropdown-menu
+```
+
+<br>
+
+## Separator
+
+Horizontal or vertical divider ([shadcn Separator](https://ui.shadcn.com/docs/components/separator)).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/separator-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/separator-light.png">
+  <img src="docs/images/separator-light.png" alt="Separator" />
+</picture>
+
+```blade
+<x-ui::separator />
+<x-ui::separator orientation="vertical" :decorative="false" />
+```
+
+```bash
+php artisan stencil:add separator
+```
+
+<br>
+
+## Skeleton
+
+Loading placeholder ([shadcn Skeleton](https://ui.shadcn.com/docs/components/skeleton)).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/skeleton-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/skeleton-light.png">
+  <img src="docs/images/skeleton-light.png" alt="Skeleton" />
+</picture>
+
+```blade
+<x-ui::skeleton class="h-4 w-48" />
+<x-ui::skeleton rounded="full" class="size-10" />
+```
+
+```bash
+php artisan stencil:add skeleton
+```
+
+<br>
+
+## Tabs
+
+Tabbed panels ([shadcn Tabs](https://ui.shadcn.com/docs/components/tabs), [Flux tabs](https://fluxui.dev/components/tabs)). Variants: `default`, `segmented`, `pills`, `line`. `stencil:add tabs` copies `tabs.js`.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/tabs-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/tabs-light.png">
+  <img src="docs/images/tabs-light.png" alt="Tabs" />
+</picture>
+
+```blade
+<x-ui::tabs default-value="account">
+    <x-ui::tabs.list>
+        <x-ui::tabs.trigger value="account">Account</x-ui::tabs.trigger>
+        <x-ui::tabs.trigger value="password">Password</x-ui::tabs.trigger>
+    </x-ui::tabs.list>
+    <x-ui::tabs.content value="account">Account settings</x-ui::tabs.content>
+    <x-ui::tabs.content value="password">Password settings</x-ui::tabs.content>
+</x-ui::tabs>
+```
+
+```bash
+php artisan stencil:add tabs
+```
+
+<br>
+
+## Tooltip
+
+Hover/focus hint ([shadcn Tooltip](https://ui.shadcn.com/docs/components/tooltip)). `stencil:add tooltip` copies `tooltip.js`.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/tooltip-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/tooltip-light.png">
+  <img src="docs/images/tooltip-light.png" alt="Tooltip" />
+</picture>
+
+```blade
+<x-ui::tooltip side="top">
+    <x-ui::tooltip.trigger>
+        <x-ui::button variant="outline">Hover</x-ui::button>
+    </x-ui::tooltip.trigger>
+    <x-ui::tooltip.content>Add to library</x-ui::tooltip.content>
+</x-ui::tooltip>
+```
+
+```bash
+php artisan stencil:add tooltip
+```
+
+<br>
+
+## Toast
+
+Transient notifications / Sonner-style toasts ([shadcn Toast](https://ui.shadcn.com/docs/components/toast)). Mount `toast.provider` once, then render toasts or call `window.Stencil.toast({ title, description, variant })`.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/toast-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/toast-light.png">
+  <img src="docs/images/toast-light.png" alt="Toast" />
+</picture>
+
+```blade
+<x-ui::toast.provider>
+    <x-ui::toast variant="success" title="Saved" description="Your changes were saved." />
+</x-ui::toast.provider>
+```
+
+```bash
+php artisan stencil:add toast
+```
+
+<br>
+
+## Progress
+
+Progress bar ([shadcn Progress](https://ui.shadcn.com/docs/components/progress)).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/progress-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/progress-light.png">
+  <img src="docs/images/progress-light.png" alt="Progress" />
+</picture>
+
+```blade
+<x-ui::progress :value="40" />
+<x-ui::progress indeterminate />
+```
+
+```bash
+php artisan stencil:add progress
+```
+
+<br>
+
+## Alert
+
+Inline callout ([shadcn Alert](https://ui.shadcn.com/docs/components/alert)). Variants: `default`, `info`, `success`, `warning`, `danger`.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/alert-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/alert-light.png">
+  <img src="docs/images/alert-light.png" alt="Alert" />
+</picture>
+
+```blade
+<x-ui::alert variant="warning" title="Heads up">
+    <x-ui::alert.description>Check your billing details.</x-ui::alert.description>
+</x-ui::alert>
+```
+
+```bash
+php artisan stencil:add alert
+```
+
+<br>
+
+## Table
+
+Semantic data table ([shadcn Table](https://ui.shadcn.com/docs/components/table), [Flux table](https://fluxui.dev/components/table)).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/table-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/table-light.png">
+  <img src="docs/images/table-light.png" alt="Table" />
+</picture>
+
+```blade
+<x-ui::table>
+    <x-ui::table.caption>Recent invoices</x-ui::table.caption>
+    <x-ui::table.header>
+        <x-ui::table.row>
+            <x-ui::table.head>Invoice</x-ui::table.head>
+            <x-ui::table.head>Amount</x-ui::table.head>
+        </x-ui::table.row>
+    </x-ui::table.header>
+    <x-ui::table.body>
+        <x-ui::table.row>
+            <x-ui::table.cell variant="strong">INV001</x-ui::table.cell>
+            <x-ui::table.cell>$250.00</x-ui::table.cell>
+        </x-ui::table.row>
+    </x-ui::table.body>
+</x-ui::table>
+```
+
+```bash
+php artisan stencil:add table
+```
+
+<br>
+
+## Pagination
+
+Page controls ([shadcn Pagination](https://ui.shadcn.com/docs/components/pagination)). Compose manually or pass a Laravel `LengthAwarePaginator`.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/pagination-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/pagination-light.png">
+  <img src="docs/images/pagination-light.png" alt="Pagination" />
+</picture>
+
+```blade
+<x-ui::pagination :paginator="$orders" />
+
+<x-ui::pagination>
+    <x-ui::pagination.content>
+        <x-ui::pagination.item>
+            <x-ui::pagination.previous href="?page=1" />
+        </x-ui::pagination.item>
+        <x-ui::pagination.item>
+            <x-ui::pagination.link href="?page=2" :is-active="true">2</x-ui::pagination.link>
+        </x-ui::pagination.item>
+        <x-ui::pagination.item>
+            <x-ui::pagination.next href="?page=3" />
+        </x-ui::pagination.item>
+    </x-ui::pagination.content>
+</x-ui::pagination>
+```
+
+```bash
+php artisan stencil:add pagination
+```
+
+<br>
+
 ## Typography
 
 `<x-ui::heading />` with semantic levels `1`–`6` and `<x-ui::text />` with the `sm` / `default` / `lg` / `xl` scale, variants, and colors.
@@ -969,7 +1396,7 @@ php vendor/bin/testbench serve --port=8001   # separate terminal
 ./scripts/capture-readme-images.sh
 ```
 
-The script crops to `#readme-media` (fixed `56rem` / 896px width, variable height) with a transparent background at 3× device pixel ratio by default (`STENCIL_SCREENSHOT_SCALE`, `STENCIL_README_MEDIA_WIDTH`; installs `playwright-core` under `scripts/` on first run). Targets: `/playbook/media/{buttons|input|label|field|textarea|checkbox|radio|switch|select|dialog|typography|icons}` and the same paths with `?dark=1`.
+The script crops to `#readme-media` (fixed `56rem` / 896px width, variable height) with a transparent background at 3× device pixel ratio by default (`STENCIL_SCREENSHOT_SCALE`, `STENCIL_README_MEDIA_WIDTH`; installs `playwright-core` under `scripts/` on first run). Targets: `/playbook/media/{buttons|input|label|field|textarea|checkbox|radio|switch|select|dialog|typography|icons|accordion|collapsible|avatar|badge|breadcrumb|card|dropdown-menu|separator|skeleton|tabs|tooltip|toast|progress|alert|table|pagination}` and the same paths with `?dark=1`.
 
 <br>
 

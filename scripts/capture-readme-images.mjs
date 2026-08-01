@@ -7,7 +7,36 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, '..');
 const outDir = path.join(root, 'docs/images');
 const baseUrl = process.env.STENCIL_SCREENSHOT_URL ?? 'http://127.0.0.1:8001';
-const components = ['buttons', 'input', 'select', 'dialog', 'typography', 'icons', 'label', 'field', 'textarea', 'checkbox', 'radio', 'switch'];
+const components = [
+    'buttons',
+    'input',
+    'select',
+    'dialog',
+    'typography',
+    'icons',
+    'label',
+    'field',
+    'textarea',
+    'checkbox',
+    'radio',
+    'switch',
+    'accordion',
+    'collapsible',
+    'avatar',
+    'badge',
+    'breadcrumb',
+    'card',
+    'dropdown-menu',
+    'separator',
+    'skeleton',
+    'tabs',
+    'tooltip',
+    'toast',
+    'progress',
+    'alert',
+    'table',
+    'pagination',
+];
 
 function resolveChromiumExecutable() {
     const candidates = [

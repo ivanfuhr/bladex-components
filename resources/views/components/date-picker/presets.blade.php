@@ -29,9 +29,7 @@
             @endforeach
         </div>
 
-        <div class="min-w-0">
-            {{ $slot }}
-        </div>
+        <div class="min-w-0">{{ $slot }}</div>
     </div>
 @else
     {{ $slot }}
