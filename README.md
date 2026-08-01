@@ -612,13 +612,15 @@ php artisan stencil:add pillbox
 
 The `input` primitive supports optional QoL props (requires `input-enhancements.js` from `stencil:add input`):
 
-- `mask="phone"` or `mask="document"` — formatted display (vanilla mask)
+- `mask` — pattern string; `#` = digit, `A` = letter, anything else is literal
 - `viewable` on `type="password"` — toggle visibility
 - `copyable` — copy value to clipboard
 - `counter` with `maxlength` — live character count
 
 ```blade
-<x-ui::input name="phone" mask="phone" />
+<x-ui::input name="phone" mask="(##) #####-####" />
+<x-ui::input name="cpf" mask="###.###.###-##" />
+<x-ui::input name="plate" mask="AAA-#A##" />
 <x-ui::input name="password" type="password" viewable />
 <x-ui::input name="token" copyable />
 <x-ui::input name="title" counter maxlength="80" />

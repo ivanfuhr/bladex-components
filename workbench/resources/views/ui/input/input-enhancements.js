@@ -5,11 +5,6 @@
 const INPUT_ENHANCED_SELECTOR = '[data-input-enhanced]';
 const initialized = new WeakSet();
 
-const MASK_PRESETS = {
-    phone: '(###) ###-####',
-    document: '###.###.###-##',
-};
-
 /**
  * @param {ParentNode} root
  */
@@ -63,10 +58,10 @@ function bindInputEnhancements(root) {
 
 /**
  * @param {string} pattern
- * @returns {Array<{ type: 'literal' | 'digit', value: string }>}
+ * @returns {Array<{ type: 'literal' | 'digit' | 'letter', value: string }>}
  */
 function parseMask(pattern) {
-    /** @type {Array<{ type: 'literal' | 'digit', value: string }>} */
+    /** @type {Array<{ type: 'literal' | 'digit' | 'letter', value: string }>} */
     const tokens = [];
 
     for (let i = 0; i < pattern.length; i += 1) {
@@ -74,6 +69,8 @@ function parseMask(pattern) {
 
         if (char === '#') {
             tokens.push({ type: 'digit', value: char });
+        } else if (char === 'A') {
+            tokens.push({ type: 'letter', value: char });
         } else {
             tokens.push({ type: 'literal', value: char });
         }
@@ -83,16 +80,32 @@ function parseMask(pattern) {
 }
 
 /**
+ * @param {{ type: 'literal' | 'digit' | 'letter', value: string }} token
+ * @param {string} char
+ * @returns {boolean}
+ */
+function matchesMaskSlot(token, char) {
+    if (token.type === 'digit') {
+        return /\d/.test(char);
+    }
+
+    if (token.type === 'letter') {
+        return /[a-zA-Z]/.test(char);
+    }
+
+    return false;
+}
+
+/**
  * @param {HTMLInputElement} control
  * @param {string} pattern
  */
 function bindMask(control, pattern) {
-    const resolved = MASK_PRESETS[pattern] ?? pattern;
-    const tokens = parseMask(resolved);
+    const tokens = parseMask(pattern);
 
     function formatValue(raw) {
-        const digits = raw.replace(/\D/g, '');
-        let digitIndex = 0;
+        const chars = [...raw].filter((char) => /\d/.test(char) || /[a-zA-Z]/.test(char));
+        let charIndex = 0;
         let output = '';
 
         for (const token of tokens) {
@@ -101,12 +114,16 @@ function bindMask(control, pattern) {
                 continue;
             }
 
-            if (digitIndex >= digits.length) {
+            while (charIndex < chars.length && !matchesMaskSlot(token, chars[charIndex])) {
+                charIndex += 1;
+            }
+
+            if (charIndex >= chars.length) {
                 break;
             }
 
-            output += digits[digitIndex];
-            digitIndex += 1;
+            output += chars[charIndex];
+            charIndex += 1;
         }
 
         return output;

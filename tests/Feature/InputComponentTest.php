@@ -156,14 +156,16 @@ it('forwards disabled, readonly, and loading attributes to the native control', 
 
 it('renders input enhancement markers for mask, viewable, copyable, and counter', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::input name="phone" mask="phone" counter maxlength="20" />
+        <x-stencil::input name="phone" mask="(##) #####-####" counter maxlength="20" />
+        <x-stencil::input name="plate" mask="AAA-#A##" />
         <x-stencil::input name="password" type="password" viewable />
         <x-stencil::input name="token" copyable />
     BLADE);
 
     expect($html)
         ->toContain('data-input-enhanced')
-        ->toContain('data-input-mask="phone"')
+        ->toContain('data-input-mask="(##) #####-####"')
+        ->toContain('data-input-mask="AAA-#A##"')
         ->toContain('data-input-counter')
         ->toContain('data-input-counter-display')
         ->toContain('data-input-viewable')

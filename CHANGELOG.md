@@ -8,6 +8,7 @@
 
 ### Changed
 
+- `input` `mask` — custom pattern (`#` = digit, `A` = letter); removed `phone` / `document` presets.
 - `color-picker` — compound sub-components (`trigger`, `hex`, `content`, `area`, `hue`, `dropper`, `swatches`, `swatch`) with default `shortcut`; flat `dropper` / `swatches` props compose the same parts.
 - `date-picker` — panel sub-components (`panel`, `presets`, `manual-inputs`, `footer`); `withPresets`, `withInputs`, and `withConfirmation` compose those parts in shortcut mode.
 - `datetime-picker` — compound sub-components (`panel`, `time-list`, `footer`) with default `shortcut`.
