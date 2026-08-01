@@ -45,6 +45,7 @@ function bindDropdownMenu(root) {
 
     let open = false;
     let activeIndex = -1;
+    const portalMarker = document.createComment('stencil-dropdown-menu-portal');
 
     trigger.setAttribute('aria-haspopup', 'menu');
     trigger.setAttribute('aria-expanded', 'false');
@@ -60,6 +61,14 @@ function bindDropdownMenu(root) {
             (node) => node instanceof HTMLElement,
         );
 
+    const reposition = () => {
+        if (!open) {
+            return;
+        }
+
+        positionContent(content, trigger, root);
+    };
+
     /**
      * @param {boolean} nextOpen
      * @param {{ focusIndex?: number | 'last' }} [options]
@@ -72,6 +81,7 @@ function bindDropdownMenu(root) {
         trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
 
         if (open) {
+            ensureContentPortaled(content, root, portalMarker);
             positionContent(content, trigger, root);
             const enabled = items();
 
@@ -84,9 +94,17 @@ function bindDropdownMenu(root) {
             }
 
             highlight(enabled, activeIndex);
+            // Remeasure after paint — width can change once portaled/fonts settle.
+            requestAnimationFrame(reposition);
         } else {
             clearHighlight(items());
             activeIndex = -1;
+            restoreContentFromPortal(content, root, portalMarker);
+            content.style.top = '';
+            content.style.left = '';
+            content.style.position = '';
+            content.style.minWidth = '';
+            content.style.zIndex = '';
         }
 
         root.dispatchEvent(
@@ -233,6 +251,9 @@ function bindDropdownMenu(root) {
 
         setOpen(false);
     });
+
+    window.addEventListener('resize', reposition);
+    window.addEventListener('scroll', reposition, true);
 }
 
 /**
@@ -274,6 +295,52 @@ function clearHighlight(items) {
 }
 
 /**
+ * Portal the menu to <body> so position:fixed isn't trapped by transformed ancestors.
+ *
+ * @param {HTMLElement} content
+ * @param {HTMLElement} root
+ * @param {Comment} portalMarker
+ */
+function ensureContentPortaled(content, root, portalMarker) {
+    // Keep overlays inside the README media canvas so #readme-media screenshots include them.
+    if (root.closest('#readme-media') || content.closest('#readme-media')) {
+        return;
+    }
+
+    if (content.parentElement === document.body) {
+        return;
+    }
+
+    if (!portalMarker.parentNode) {
+        root.insertBefore(portalMarker, content);
+    }
+
+    document.body.appendChild(content);
+    content.dataset.dropdownMenuPortaled = 'true';
+}
+
+/**
+ * @param {HTMLElement} content
+ * @param {HTMLElement} root
+ * @param {Comment} portalMarker
+ */
+function restoreContentFromPortal(content, root, portalMarker) {
+    if (content.parentElement !== document.body) {
+        return;
+    }
+
+    if (root.isConnected) {
+        if (portalMarker.parentNode === root) {
+            root.insertBefore(content, portalMarker.nextSibling);
+        } else {
+            root.appendChild(content);
+        }
+    }
+
+    delete content.dataset.dropdownMenuPortaled;
+}
+
+/**
  * @param {HTMLElement} content
  * @param {HTMLElement} trigger
  * @param {HTMLElement} root
@@ -292,9 +359,11 @@ function positionContent(content, trigger, root) {
     const wasHidden = content.hidden;
     content.hidden = false;
     content.style.visibility = 'hidden';
+    content.style.pointerEvents = 'none';
     const height = content.offsetHeight;
     const width = content.offsetWidth;
     content.style.visibility = '';
+    content.style.pointerEvents = '';
     content.hidden = wasHidden;
 
     let top = side === 'top' ? rect.top - gap - height : rect.bottom + gap;

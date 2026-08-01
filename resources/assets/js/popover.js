@@ -159,11 +159,11 @@ function bindPopover(root) {
             return;
         }
 
-        // Nested overlays (select/combobox) portal to body while owned by the popover.
+        // Nested overlays portal to body while owned by the popover.
         if (
             target instanceof Element &&
             target.closest(
-                '[data-select-portaled], [data-combobox-portaled], [data-color-picker-portaled]',
+                '[data-select-portaled], [data-combobox-portaled], [data-color-picker-portaled], [data-dropdown-menu-portaled]',
             )
         ) {
             return;
