@@ -401,7 +401,7 @@
             "name": "popover",
             "type": "registry:ui",
             "title": "Popover",
-            "description": "Anchored floating panel primitive for overlays.",
+            "description": "Anchored floating panel with trigger, Escape/outside dismiss, and focus management.",
             "registryDependencies": []
         },
         {

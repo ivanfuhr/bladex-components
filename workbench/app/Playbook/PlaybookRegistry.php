@@ -50,6 +50,7 @@ final class PlaybookRegistry
             'slugs' => [
                 'dialog',
                 'dropdown-menu',
+                'popover',
                 'tooltip',
             ],
         ],
@@ -155,6 +156,55 @@ final class PlaybookRegistry
     }
 
     /**
+     * Resolve the README media slug for a playground component, if a media view exists.
+     */
+    public function mediaSlug(string $slug): ?string
+    {
+        $resolved = match ($slug) {
+            'text', 'heading' => 'typography',
+            'icon' => 'icons',
+            default => $slug,
+        };
+
+        $path = dirname(__DIR__, 2).'/resources/views/playbook/media/'.$resolved.'.blade.php';
+
+        if (! is_file($path)) {
+            return null;
+        }
+
+        return $resolved;
+    }
+
+    /**
+     * Previous / next siblings within the same catalog category.
+     *
+     * @return array{previous: ?ComponentPlaybook, next: ?ComponentPlaybook}
+     */
+    public function siblings(string $slug): array
+    {
+        foreach ($this->grouped() as $group) {
+            /** @var list<ComponentPlaybook> $playbooks */
+            $playbooks = $group['playbooks'];
+
+            foreach ($playbooks as $index => $playbook) {
+                if ($playbook->slug !== $slug) {
+                    continue;
+                }
+
+                return [
+                    'previous' => $playbooks[$index - 1] ?? null,
+                    'next' => $playbooks[$index + 1] ?? null,
+                ];
+            }
+        }
+
+        return [
+            'previous' => null,
+            'next' => null,
+        ];
+    }
+
+    /**
      * @return Collection<string, ComponentPlaybook>
      */
     private function playbooks(): Collection
@@ -192,6 +242,7 @@ final class PlaybookRegistry
             $this->breadcrumb(),
             $this->card(),
             $this->dropdownMenu(),
+            $this->popover(),
             $this->separator(),
             $this->skeleton(),
             $this->tabs(),
@@ -450,6 +501,7 @@ final class PlaybookRegistry
                 'max' => '',
             ],
             previewView: 'workbench::playbook.previews.repeater',
+            wide: true,
         );
     }
 
@@ -843,6 +895,7 @@ final class PlaybookRegistry
                 'closable' => true,
             ],
             previewView: 'workbench::playbook.previews.dialog',
+            wide: true,
         );
     }
 
@@ -863,6 +916,7 @@ final class PlaybookRegistry
                 'transition' => true,
             ],
             previewView: 'workbench::playbook.previews.accordion',
+            wide: true,
         );
     }
 
@@ -969,6 +1023,7 @@ final class PlaybookRegistry
                 'separator' => 'chevron',
             ],
             previewView: 'workbench::playbook.previews.breadcrumb',
+            wide: true,
         );
     }
 
@@ -985,6 +1040,7 @@ final class PlaybookRegistry
                 'show_footer' => true,
             ],
             previewView: 'workbench::playbook.previews.card',
+            wide: true,
         );
     }
 
@@ -1005,6 +1061,34 @@ final class PlaybookRegistry
                 'align' => 'start',
             ],
             previewView: 'workbench::playbook.previews.dropdown-menu',
+            wide: true,
+        );
+    }
+
+    private function popover(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'popover',
+            title: 'Popover',
+            description: 'Anchored floating panel with trigger, Escape/outside dismiss, and focus management. Requires popover.js.',
+            controls: [
+                new PlaybookControl('align', 'Align', 'select', [
+                    'start' => 'Start',
+                    'center' => 'Center',
+                    'end' => 'End',
+                ], 'start'),
+                new PlaybookControl('side', 'Side', 'select', [
+                    'bottom' => 'Bottom',
+                    'top' => 'Top',
+                    'left' => 'Left',
+                    'right' => 'Right',
+                ], 'bottom'),
+            ],
+            defaultState: [
+                'align' => 'start',
+                'side' => 'bottom',
+            ],
+            previewView: 'workbench::playbook.previews.popover',
         );
     }
 
@@ -1064,6 +1148,7 @@ final class PlaybookRegistry
                 'variant' => 'default',
             ],
             previewView: 'workbench::playbook.previews.tabs',
+            wide: true,
         );
     }
 
@@ -1101,7 +1186,7 @@ final class PlaybookRegistry
                     'warning' => 'Warning',
                     'danger' => 'Danger',
                 ], 'success'),
-                new PlaybookControl('position', 'Position', 'select', [
+                new PlaybookControl('position', 'Position (relative stage)', 'select', [
                     'bottom-right' => 'Bottom right',
                     'bottom-left' => 'Bottom left',
                     'top-right' => 'Top right',
@@ -1113,6 +1198,7 @@ final class PlaybookRegistry
                 'position' => 'bottom-right',
             ],
             previewView: 'workbench::playbook.previews.toast',
+            wide: true,
         );
     }
 
@@ -1183,6 +1269,7 @@ final class PlaybookRegistry
                 'show_badges' => true,
             ],
             previewView: 'workbench::playbook.previews.table',
+            wide: true,
         );
     }
 
@@ -1203,6 +1290,7 @@ final class PlaybookRegistry
                 'size' => 'outline',
             ],
             previewView: 'workbench::playbook.previews.icons',
+            wide: true,
         );
     }
 
@@ -1219,6 +1307,7 @@ final class PlaybookRegistry
                 'show_ellipsis' => true,
             ],
             previewView: 'workbench::playbook.previews.pagination',
+            wide: true,
         );
     }
 
@@ -1244,6 +1333,7 @@ final class PlaybookRegistry
                 'weekNumbers' => false,
             ],
             previewView: 'workbench::playbook.previews.calendar',
+            wide: true,
         );
     }
 
@@ -1269,6 +1359,7 @@ final class PlaybookRegistry
                 'withToday' => true,
             ],
             previewView: 'workbench::playbook.previews.date-picker',
+            wide: true,
         );
     }
 
@@ -1317,6 +1408,7 @@ final class PlaybookRegistry
                 'disabled' => false,
             ],
             previewView: 'workbench::playbook.previews.datetime-picker',
+            wide: true,
         );
     }
 }

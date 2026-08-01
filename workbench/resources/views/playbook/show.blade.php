@@ -5,6 +5,8 @@
 @section('content')
     @php
         $defaultState = $playbook->defaultState;
+        $sectionHeadingClass = 'text-sm font-semibold text-zinc-900 dark:text-zinc-100';
+        $linkClass = 'rounded-sm text-sm font-medium text-zinc-600 transition hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:text-zinc-400 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300/20';
     @endphp
 
     <div
@@ -18,15 +20,15 @@
         })"
         x-init="init()"
     >
-        <aside class="lg:sticky lg:top-24 lg:self-start" aria-label="Component controls">
-            <nav class="mb-6">
-                <a
-                    href="{{ route('playbook.index') }}"
-                    class="inline-flex items-center gap-1 rounded-sm text-sm font-medium text-zinc-600 transition hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:text-zinc-400 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300/20"
-                >
+        <aside class="order-2 lg:sticky lg:top-24 lg:order-1 lg:self-start" aria-label="Component controls">
+            <nav class="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2" aria-label="Playbook wayfinding">
+                <a href="{{ route('playbook.index') }}" class="inline-flex items-center gap-1 {{ $linkClass }}">
                     <span aria-hidden="true">←</span>
                     Catalog
                 </a>
+                @if ($mediaUrl)
+                    <a href="{{ $mediaUrl }}" class="{{ $linkClass }}"> Media page </a>
+                @endif
             </nav>
 
             <div class="space-y-2">
@@ -39,18 +41,18 @@
                 </x-stencil::text>
             </div>
 
-            <div class="mt-8 rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80">
-                <h2 class="text-xs font-semibold tracking-wide text-zinc-500 uppercase dark:text-zinc-400">
-                    Properties
-                </h2>
+            <section
+                class="mt-8 rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80"
+                aria-labelledby="playbook-properties-heading"
+            >
+                <h2 id="playbook-properties-heading" class="{{ $sectionHeadingClass }}">Properties</h2>
                 <form class="mt-4 space-y-4" @submit.prevent>
                     @foreach ($playbook->controls as $control)
                         <div>
                             @if ($control->type === 'checkbox')
                                 <label class="flex cursor-pointer items-start gap-3 rounded-lg border border-transparent px-1 py-1.5 text-sm text-zinc-800 transition hover:bg-zinc-50 dark:text-zinc-200 dark:hover:bg-zinc-800/60">
-                                    <input
-                                        type="checkbox"
-                                        class="mt-0.5 size-4 shrink-0 rounded border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:border-zinc-600 dark:bg-zinc-950 dark:focus-visible:ring-zinc-300/20"
+                                    <x-stencil::checkbox
+                                        class="mt-0.5"
                                         x-model.boolean="state.{{ $control->key }}"
                                         @change="queuePreview()"
                                     />
@@ -77,35 +79,72 @@
                         </div>
                     @endforeach
                 </form>
-            </div>
+            </section>
+
+            @if ($previousPlaybook || $nextPlaybook)
+                <nav
+                    class="mt-6 flex items-center justify-between gap-4 border-t border-zinc-200/80 pt-4 dark:border-zinc-800/80"
+                    aria-label="Sibling components"
+                >
+                    <div class="min-w-0">
+                        @if ($previousPlaybook)
+                            <a
+                                href="{{ route('playbook.show', $previousPlaybook->slug) }}"
+                                class="inline-flex min-w-0 flex-col gap-0.5 {{ $linkClass }}"
+                            >
+                                <span class="text-xs text-zinc-500 dark:text-zinc-400">Previous</span>
+                                <span class="truncate">{{ $previousPlaybook->title }}</span>
+                            </a>
+                        @endif
+                    </div>
+                    <div class="min-w-0 text-right">
+                        @if ($nextPlaybook)
+                            <a
+                                href="{{ route('playbook.show', $nextPlaybook->slug) }}"
+                                class="inline-flex min-w-0 flex-col items-end gap-0.5 {{ $linkClass }}"
+                            >
+                                <span class="text-xs text-zinc-500 dark:text-zinc-400">Next</span>
+                                <span class="truncate">{{ $nextPlaybook->title }}</span>
+                            </a>
+                        @endif
+                    </div>
+                </nav>
+            @endif
         </aside>
 
-        <section class="min-w-0" aria-labelledby="playbook-preview-heading">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-                <h2 id="playbook-preview-heading" class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-                    Live preview
-                </h2>
-                <p
-                    class="text-xs text-zinc-500 dark:text-zinc-400"
-                    aria-live="polite"
-                    aria-atomic="true"
-                    x-text="statusMessage"
-                ></p>
-            </div>
-
-            <div
-                id="playbook-canvas"
-                class="playbook-stage mt-4 flex min-h-[min(24rem,50vh)] items-start justify-center overflow-visible rounded-2xl border border-zinc-200/80 bg-white p-8 shadow-sm ring-1 ring-zinc-950/5 sm:p-12 dark:border-zinc-800 dark:bg-zinc-900/50 dark:ring-white/5"
-                x-bind:aria-busy="loading.toString()"
-            >
-                <div class="w-full max-w-md" x-html="html"></div>
-            </div>
-
-            <p class="mt-3 text-sm text-red-600 dark:text-red-400" x-show="error" x-cloak x-text="error"></p>
-
-            <div class="mt-8 min-w-0" x-show="snippet.length > 0">
+        <div class="order-1 min-w-0 space-y-8 lg:order-2">
+            <section aria-labelledby="playbook-preview-heading">
                 <div class="flex flex-wrap items-center justify-between gap-3">
-                    <h2 class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Code</h2>
+                    <h2 id="playbook-preview-heading" class="{{ $sectionHeadingClass }}">Live preview</h2>
+                    <p
+                        class="text-xs text-zinc-500 dark:text-zinc-400"
+                        aria-live="polite"
+                        aria-atomic="true"
+                        x-text="statusMessage"
+                    ></p>
+                </div>
+
+                <div
+                    id="playbook-canvas"
+                    class="playbook-stage mt-4 flex min-h-[min(24rem,50vh)] items-start justify-center overflow-visible rounded-2xl border border-zinc-200/80 bg-white p-8 shadow-sm ring-1 ring-zinc-950/5 sm:p-12 dark:border-zinc-800 dark:bg-zinc-900/50 dark:ring-white/5"
+                    x-bind:aria-busy="loading.toString()"
+                >
+                    <div
+                        @class([
+                            'w-full',
+                            'max-w-md' => ! $playbook->wide,
+                            'max-w-5xl' => $playbook->wide,
+                        ])
+                        x-html="html"
+                    ></div>
+                </div>
+
+                <p class="mt-3 text-sm text-red-600 dark:text-red-400" x-show="error" x-cloak x-text="error"></p>
+            </section>
+
+            <section class="min-w-0" aria-labelledby="playbook-code-heading" x-show="snippet.length > 0">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <h2 id="playbook-code-heading" class="{{ $sectionHeadingClass }}">Code</h2>
                     <button
                         type="button"
                         class="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-700 shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20"
@@ -117,7 +156,7 @@
                 <div class="playbook-code mt-3 min-w-0 overflow-hidden rounded-2xl border border-zinc-200/80 bg-zinc-50 shadow-sm ring-1 ring-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950 dark:ring-white/5">
                     <pre class="playbook-code__pre max-h-[min(28rem,50vh)] overflow-auto p-4 font-mono text-xs leading-relaxed text-zinc-800 dark:text-zinc-200"><code class="playbook-code__content block whitespace-pre-wrap" x-text="snippet">{{ $initialSnippet }}</code></pre>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </div>
 @endsection

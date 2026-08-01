@@ -11,6 +11,8 @@
                 >Popover with saturation canvas, hue slider, and Tailwind swatches.</x-stencil::text>
         </div>
 
-        <x-stencil::color-picker name="brand_color" value="#3366cc" class="w-full max-w-xs" />
+        <div class="relative mx-auto min-h-[28rem] w-full max-w-xs">
+            <x-stencil::color-picker name="brand_color" value="#3366cc" class="w-full" />
+        </div>
     </div>
 @endsection

@@ -8,6 +8,22 @@ const CLOSE_SELECTOR = '[data-toast-close]';
 const initialized = new WeakSet();
 
 /**
+ * @param {string | undefined} variant
+ * @returns {boolean}
+ */
+function isAssertiveVariant(variant) {
+    return variant === 'danger' || variant === 'destructive' || variant === 'error';
+}
+
+/**
+ * @param {string | undefined} variant
+ * @returns {'alert' | 'status'}
+ */
+function toastRole(variant) {
+    return isAssertiveVariant(variant) ? 'alert' : 'status';
+}
+
+/**
  * @param {ParentNode} root
  */
 export function initToasts(root = document) {
@@ -30,15 +46,16 @@ export function initToasts(root = document) {
  */
 export function toast(options = {}) {
     const provider = document.querySelector(PROVIDER_SELECTOR) ?? createProvider();
+    const variant = options.variant || 'default';
 
     const el = document.createElement('div');
     el.className =
         'toast pointer-events-auto relative w-full rounded-xl border border-zinc-200 bg-white p-4 text-zinc-950 shadow-lg dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50';
     el.dataset.toast = 'true';
-    el.dataset.variant = options.variant || 'default';
+    el.dataset.variant = variant;
     el.dataset.duration = String(options.duration ?? 4000);
     el.dataset.state = 'open';
-    el.setAttribute('role', 'status');
+    el.setAttribute('role', toastRole(variant));
 
     const body = document.createElement('div');
     body.className = 'space-y-1 pr-6';
@@ -59,12 +76,17 @@ export function toast(options = {}) {
         body.appendChild(description);
     }
 
+    const dismissLabel =
+        provider instanceof HTMLElement
+            ? (provider.getAttribute('data-toast-dismiss-label') ?? 'Dismiss')
+            : 'Dismiss';
+
     const close = document.createElement('button');
     close.type = 'button';
     close.className =
         'toast__close absolute right-2 top-2 inline-flex size-6 items-center justify-center rounded-md opacity-70 transition hover:opacity-100';
     close.dataset.toastClose = 'true';
-    close.setAttribute('aria-label', 'Dismiss');
+    close.setAttribute('aria-label', dismissLabel);
     close.textContent = '×';
 
     el.appendChild(body);
@@ -81,7 +103,7 @@ function createProvider() {
     provider.className =
         'toast-provider pointer-events-none fixed bottom-4 right-4 z-[400] flex w-full max-w-sm flex-col gap-2 items-end';
     provider.dataset.toastProvider = 'true';
-    provider.setAttribute('aria-live', 'polite');
+    provider.setAttribute('data-toast-dismiss-label', 'Dismiss');
     document.body.appendChild(provider);
 
     return provider;
@@ -94,14 +116,51 @@ function bindToast(toastEl) {
     const duration = Number.parseInt(toastEl.dataset.duration || '4000', 10);
     /** @type {ReturnType<typeof setTimeout> | null} */
     let timer = null;
+    let remaining = duration;
+    let startedAt = 0;
+    let paused = false;
 
     const dismiss = () => {
         window.clearTimeout(timer ?? undefined);
+        timer = null;
         toastEl.dataset.state = 'closed';
         toastEl.hidden = true;
         toastEl.classList.add('hidden');
         toastEl.dispatchEvent(new CustomEvent('stencil:toast:dismiss', { bubbles: true }));
         window.setTimeout(() => toastEl.remove(), 150);
+    };
+
+    const startTimer = () => {
+        if (duration <= 0 || remaining <= 0) {
+            if (duration > 0 && remaining <= 0) {
+                dismiss();
+            }
+
+            return;
+        }
+
+        startedAt = Date.now();
+        timer = window.setTimeout(dismiss, remaining);
+    };
+
+    const pause = () => {
+        if (paused || duration <= 0 || timer === null) {
+            return;
+        }
+
+        paused = true;
+        window.clearTimeout(timer);
+        timer = null;
+        remaining = Math.max(0, remaining - (Date.now() - startedAt));
+    };
+
+    const resume = () => {
+        if (!paused || duration <= 0) {
+            return;
+        }
+
+        paused = false;
+        startTimer();
     };
 
     toastEl.querySelectorAll(CLOSE_SELECTOR).forEach((button) => {
@@ -111,8 +170,21 @@ function bindToast(toastEl) {
         });
     });
 
+    toastEl.addEventListener('pointerenter', pause);
+    toastEl.addEventListener('pointerleave', resume);
+    toastEl.addEventListener('focusin', pause);
+    toastEl.addEventListener('focusout', (event) => {
+        const next = event.relatedTarget;
+
+        if (next instanceof Node && toastEl.contains(next)) {
+            return;
+        }
+
+        resume();
+    });
+
     if (duration > 0) {
-        timer = window.setTimeout(dismiss, duration);
+        startTimer();
     }
 }
 

@@ -28,7 +28,7 @@
             "path": "tabs/provider.blade.php",
             "type": "registry:ui",
             "target": "tabs/provider.blade.php",
-            "content": "@props([\n    'tabsId' => null,\n])\n\n<div {{ $attributes->class('contents')->merge(['data-tabs-provider' => true]) }}>\n    {{ $slot }}\n</div>\n"
+            "content": "@props([\n    'tabsId' => null,\n])\n\n<div {{ $attributes->class('contents')->merge(['data-tabs-provider' => true]) }}>{{ $slot }}</div>\n"
         },
         {
             "path": "tabs/trigger.blade.php",

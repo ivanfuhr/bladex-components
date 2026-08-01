@@ -12,9 +12,15 @@
             </x-stencil::text>
         </div>
 
-        <div class="mx-auto flex w-full max-w-sm flex-col gap-4">
-            <x-stencil::date-picker name="media_date" value="2026-09-18" with-today />
-            <x-stencil::date-picker name="media_range" mode="range" value="2026-09-14/2026-09-18" with-today />
+        <div class="mx-auto flex w-full max-w-fit flex-col gap-16">
+            <div class="relative min-h-[22rem] w-full max-w-sm min-w-[18rem]">
+                <x-stencil::text size="sm" variant="subtle" class="mb-3">Single</x-stencil::text>
+                <x-stencil::date-picker name="media_date" value="2026-09-18" with-today />
+            </div>
+            <div class="relative min-h-[22rem] w-full max-w-md min-w-[20rem]">
+                <x-stencil::text size="sm" variant="subtle" class="mb-3">Range</x-stencil::text>
+                <x-stencil::date-picker name="media_range" mode="range" value="2026-09-14/2026-09-18" with-today />
+            </div>
         </div>
     </div>
 @endsection

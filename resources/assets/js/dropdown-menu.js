@@ -60,7 +60,11 @@ function bindDropdownMenu(root) {
             (node) => node instanceof HTMLElement,
         );
 
-    const setOpen = (nextOpen) => {
+    /**
+     * @param {boolean} nextOpen
+     * @param {{ focusIndex?: number | 'last' }} [options]
+     */
+    const setOpen = (nextOpen, options = {}) => {
         open = nextOpen;
         content.dataset.state = open ? 'open' : 'closed';
         content.hidden = !open;
@@ -69,9 +73,17 @@ function bindDropdownMenu(root) {
 
         if (open) {
             positionContent(content, trigger, root);
-            activeIndex = 0;
-            highlight(items(), activeIndex);
-            content.focus({ preventScroll: true });
+            const enabled = items();
+
+            if (options.focusIndex === 'last') {
+                activeIndex = Math.max(0, enabled.length - 1);
+            } else if (typeof options.focusIndex === 'number') {
+                activeIndex = options.focusIndex;
+            } else {
+                activeIndex = 0;
+            }
+
+            highlight(enabled, activeIndex);
         } else {
             clearHighlight(items());
             activeIndex = -1;
@@ -93,20 +105,19 @@ function bindDropdownMenu(root) {
     trigger.addEventListener('keydown', (event) => {
         if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
-            setOpen(true);
+            setOpen(true, { focusIndex: 0 });
+
+            return;
+        }
+
+        if (event.key === 'ArrowUp') {
+            event.preventDefault();
+            setOpen(true, { focusIndex: 'last' });
         }
     });
 
     content.addEventListener('keydown', (event) => {
         const enabled = items();
-
-        if (event.key === 'Escape') {
-            event.preventDefault();
-            setOpen(false);
-            trigger.focus();
-
-            return;
-        }
 
         if (event.key === 'ArrowDown') {
             event.preventDefault();
@@ -184,6 +195,25 @@ function bindDropdownMenu(root) {
         const enabled = items();
         activeIndex = enabled.indexOf(item);
         highlight(enabled, activeIndex);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (!open) {
+            return;
+        }
+
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            setOpen(false);
+            trigger.focus();
+
+            return;
+        }
+
+        if (event.key === 'Tab') {
+            // APG: Tab closes the menu and continues native tab navigation.
+            setOpen(false);
+        }
     });
 
     document.addEventListener('pointerdown', (event) => {

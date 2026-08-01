@@ -117,18 +117,21 @@ FORM: Established playbook surface extension (Operate); seed n/a.
 
         {{-- Status strip --}}
         <div class="space-y-3">
-            <x-stencil::alert variant="warning" title="Finish setup before publishing" icon="clipboard">
+            <x-stencil::alert variant="warning" icon="clipboard">
+                <x-stencil::text class="leading-none font-medium tracking-tight">
+                    Finish setup before publishing
+                </x-stencil::text>
                 <x-stencil::alert.description>
                     Add at least one ticket tier and confirm the venue capacity. Your public page stays gated until
                     then.
                 </x-stencil::alert.description>
             </x-stencil::alert>
             <div class="space-y-2">
-                <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center justify-between gap-3" id="setup-progress-label">
                     <x-stencil::text size="sm" variant="subtle">Setup progress</x-stencil::text>
                     <x-stencil::text size="sm" class="font-medium tabular-nums">72%</x-stencil::text>
                 </div>
-                <x-stencil::progress :value="72" />
+                <x-stencil::progress :value="72" aria-labelledby="setup-progress-label" />
             </div>
         </div>
 
@@ -139,7 +142,7 @@ FORM: Established playbook surface extension (Operate); seed n/a.
             @csrf
 
             <x-stencil::tabs default-value="details" variant="line">
-                <x-stencil::tabs.list class="border-b border-zinc-200 dark:border-zinc-800">
+                <x-stencil::tabs.list>
                     <x-stencil::tabs.trigger value="details">Details</x-stencil::tabs.trigger>
                     <x-stencil::tabs.trigger value="schedule">Schedule</x-stencil::tabs.trigger>
                     <x-stencil::tabs.trigger value="guests">Guests</x-stencil::tabs.trigger>
@@ -150,6 +153,7 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                 <x-stencil::tabs.content value="details" class="mt-6!">
                     <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
                         <div class="space-y-6">
+                            <x-stencil::heading :level="2" class="sr-only">Details</x-stencil::heading>
                             <x-stencil::card>
                                 <x-stencil::card.header>
                                     <x-stencil::card.title>Event profile</x-stencil::card.title>
@@ -325,8 +329,12 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                             </x-stencil::card>
                         </div>
 
-                        <aside class="space-y-4">
-                            <div class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900/60">
+                        <aside class="space-y-4" aria-label="Event sidebar">
+                            <div
+                                class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900/60"
+                                aria-busy="true"
+                                aria-live="polite"
+                            >
                                 <x-stencil::heading :level="3" class="text-base!">Live activity</x-stencil::heading>
                                 <x-stencil::text size="sm" variant="subtle" class="mt-1">Refreshing…</x-stencil::text>
                                 <div class="mt-4 space-y-4">
@@ -348,45 +356,44 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                 </div>
                             </div>
 
-                            <div
-                                class="relative rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900/60"
-                                x-data="{ open: false }"
-                            >
+                            <div class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900/60">
                                 <div class="flex items-center justify-between gap-2">
                                     <x-stencil::heading :level="3" class="text-base!">Quick filters</x-stencil::heading>
-                                    <x-stencil::button
-                                        type="button"
-                                        variant="ghost"
-                                        size="sm"
-                                        x-on:click="open = ! open"
-                                    >
-                                        Filters
-                                    </x-stencil::button>
+                                    <x-stencil::popover align="end" side="bottom">
+                                        <x-stencil::popover.trigger>
+                                            <x-stencil::button type="button" variant="ghost" size="sm">
+                                                Filters
+                                            </x-stencil::button>
+                                        </x-stencil::popover.trigger>
+                                        <x-stencil::popover.content class="w-72">
+                                            <div class="space-y-3">
+                                                <x-stencil::field name="filter_track">
+                                                    <x-stencil::field.label>Track</x-stencil::field.label>
+                                                    <x-stencil::select
+                                                        name="filter_track"
+                                                        size="sm"
+                                                        placeholder="Any track"
+                                                    >
+                                                        <x-stencil::select.item value="all">
+                                                            Any track</x-stencil::select.item>
+                                                        <x-stencil::select.item value="core">
+                                                            Core</x-stencil::select.item>
+                                                        <x-stencil::select.item value="ui">UI</x-stencil::select.item>
+                                                    </x-stencil::select>
+                                                </x-stencil::field>
+                                                <x-stencil::button
+                                                    type="button"
+                                                    variant="secondary"
+                                                    size="sm"
+                                                    class="w-full"
+                                                    data-popover-close
+                                                >
+                                                    Apply filters
+                                                </x-stencil::button>
+                                            </div>
+                                        </x-stencil::popover.content>
+                                    </x-stencil::popover>
                                 </div>
-                                <x-stencil::popover
-                                    class="absolute! top-auto! right-4! bottom-auto! left-4! mt-3 w-auto! max-w-none! shadow-md!"
-                                    x-bind:data-state="open ? 'open' : 'closed'"
-                                >
-                                    <div class="space-y-3">
-                                        <x-stencil::field name="filter_track">
-                                            <x-stencil::field.label>Track</x-stencil::field.label>
-                                            <x-stencil::select name="filter_track" size="sm" placeholder="Any track">
-                                                <x-stencil::select.item value="all">Any track</x-stencil::select.item>
-                                                <x-stencil::select.item value="core">Core</x-stencil::select.item>
-                                                <x-stencil::select.item value="ui">UI</x-stencil::select.item>
-                                            </x-stencil::select>
-                                        </x-stencil::field>
-                                        <x-stencil::button
-                                            type="button"
-                                            variant="secondary"
-                                            size="sm"
-                                            class="w-full"
-                                            x-on:click="open = false"
-                                        >
-                                            Apply filters
-                                        </x-stencil::button>
-                                    </div>
-                                </x-stencil::popover>
                             </div>
                         </aside>
                     </div>
@@ -396,6 +403,7 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                 <x-stencil::tabs.content value="schedule" class="mt-6!">
                     <div class="grid gap-8 xl:grid-cols-[minmax(0,1fr)_20rem]">
                         <div class="space-y-6">
+                            <x-stencil::heading :level="2" class="sr-only">Schedule</x-stencil::heading>
                             <x-stencil::card>
                                 <x-stencil::card.header>
                                     <x-stencil::card.title>When &amp; where</x-stencil::card.title>
@@ -463,7 +471,7 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                 </x-stencil::tabs.content>
 
                 {{-- Guests --}}
-                <x-stencil::tabs.content value="guests" class="mt-6!">
+                <x-stencil::tabs.content value="guests" class="mt-6!" id="guests">
                     <div class="space-y-6">
                         <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                             <div class="space-y-1">
@@ -588,6 +596,7 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                 {{-- Settings --}}
                 <x-stencil::tabs.content value="settings" class="mt-6!">
                     <div class="mx-auto max-w-2xl space-y-6">
+                        <x-stencil::heading :level="2" class="sr-only">Settings</x-stencil::heading>
                         <x-stencil::card>
                             <x-stencil::card.header>
                                 <x-stencil::card.title>Advanced</x-stencil::card.title>
@@ -607,7 +616,8 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                                 placeholder="https://hooks.example.test/events"
                                             />
                                         </x-stencil::field>
-                                        <x-stencil::alert variant="info" title="Tip" icon="clipboard">
+                                        <x-stencil::alert variant="info" icon="clipboard">
+                                            <x-stencil::text class="leading-none font-medium tracking-tight">Tip</x-stencil::text>
                                             <x-stencil::alert.description>
                                                 We retry failed deliveries for 24 hours with exponential backoff.
                                             </x-stencil::alert.description>

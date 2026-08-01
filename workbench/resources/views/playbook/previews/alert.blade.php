@@ -17,18 +17,17 @@
         'danger' => 'Your API key was revoked. Generate a new one.',
     ];
     $icons = [
+        'default' => 'clipboard',
         'info' => 'clipboard',
         'success' => 'check',
+        'warning' => 'clipboard',
+        'danger' => 'x',
     ];
     $key = $variant ?? 'default';
 @endphp
 
 <div class="max-w-xl">
-    <x-stencil::alert
-        :variant="$variant"
-        :title="$titles[$key]"
-        :icon="$showIcon && isset($icons[$key]) ? $icons[$key] : null"
-    >
+    <x-stencil::alert :variant="$variant" :title="$titles[$key]" :icon="$showIcon ? $icons[$key] : null">
         <x-stencil::alert.description>{{ $descriptions[$key] }}</x-stencil::alert.description>
     </x-stencil::alert>
 </div>

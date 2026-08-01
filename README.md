@@ -66,7 +66,7 @@ Use the owned Blade namespace in your app:
 <x-ui::input name="email" />
 ```
 
-**Registry UI items:** `accordion`, `alert`, `avatar`, `badge`, `breadcrumb`, `button`, `card`, `checkbox`, `collapsible`, `combobox`, `dialog`, `dropdown-menu`, `field`, `file-upload`, `heading`, `icon`, `input`, `input-group`, `input-otp`, `label`, `pagination`, `popover`, `progress`, `radio`, `select`, `separator`, `skeleton`, `slider`, `switch`, `table`, `tabs`, `text`, `textarea`, `toast`, `tooltip`. Lower-level pieces such as `field`, `input-group`, `label`, and `icon` are usually installed transitively. Components that use Lucide glyphs also install the required icon stubs during `stencil:add`; use `stencil:icon {name}` for any extra icons (see [Icons](#icons)).
+**Registry UI items:** `accordion`, `alert`, `avatar`, `badge`, `breadcrumb`, `button`, `calendar`, `card`, `checkbox`, `collapsible`, `color-picker`, `combobox`, `date-picker`, `datetime-picker`, `dialog`, `dropdown-menu`, `field`, `file-upload`, `heading`, `icon`, `input`, `input-currency`, `input-group`, `input-otp`, `label`, `pagination`, `pillbox`, `popover`, `progress`, `radio`, `rating`, `repeater`, `select`, `separator`, `skeleton`, `slider`, `switch`, `table`, `tabs`, `text`, `textarea`, `time-picker`, `toast`, `tooltip`. Lower-level pieces such as `field`, `input-group`, `label`, and `icon` are usually installed transitively. Components that use Lucide glyphs also install the required icon stubs during `stencil:add`; use `stencil:icon {name}` for any extra icons (see [Icons](#icons)).
 
 ### Registry CLI
 
@@ -110,9 +110,9 @@ Component previews match your GitHub theme via `<picture>` (`prefers-color-schem
 Variants: `outline`, `primary`, `secondary`, `danger`, `ghost`, `subtle`, `link` — sizes `xs`–`lg`, icon mode (`square`), and `leading` / `trailing` slots.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/images/buttons-dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="docs/images/buttons-light.png">
-  <img src="docs/images/buttons-light.png" alt="Button variants" />
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/button-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/button-light.png">
+  <img src="docs/images/button-light.png" alt="Button variants" />
 </picture>
 
 ```blade
@@ -735,6 +735,12 @@ Calendar popover with optional range mode, presets sidebar, manual inputs, and c
 
 `withPresets`, `withInputs`, and `withConfirmation` are shortcut conveniences that compose the matching panel parts.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/date-picker-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/date-picker-light.png">
+  <img src="docs/images/date-picker-light.png" alt="Date Picker" />
+</picture>
+
 ```blade
 <x-ui::date-picker name="published_at" value="2026-07-29" />
 
@@ -752,9 +758,32 @@ Calendar popover with optional range mode, presets sidebar, manual inputs, and c
 
 <br>
 
+## Time Picker
+
+Scrollable time list with optional seconds and clear. `stencil:add time-picker` copies `time-picker.js`.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/time-picker-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/time-picker-light.png">
+  <img src="docs/images/time-picker-light.png" alt="Time Picker" />
+</picture>
+
+```blade
+<x-ui::time-picker name="starts_at" value="09:15" clearable />
+<x-ui::time-picker name="ends_at" value="14:30:00" with-seconds />
+```
+
+<br>
+
 ## Datetime Picker
 
 Date + time selection with calendar and scrollable time list. Subcomponents include `panel`, `time-list`, and `footer`. Reuses `date-picker.button` for the trigger. `stencil:add datetime-picker` copies `datetime-picker.js`.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/datetime-picker-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/datetime-picker-light.png">
+  <img src="docs/images/datetime-picker-light.png" alt="Datetime Picker" />
+</picture>
 
 ```blade
 <x-ui::datetime-picker name="scheduled_at" value="2026-07-29T14:30:00+00:00" />
@@ -767,6 +796,23 @@ Date + time selection with calendar and scrollable time list. Subcomponents incl
         <x-ui::datetime-picker.footer />
     </x-ui::datetime-picker.panel>
 </x-ui::datetime-picker>
+```
+
+<br>
+
+## Calendar
+
+Standalone month grid for single-day or range selection. `stencil:add calendar` copies `calendar.js`.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/calendar-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/calendar-light.png">
+  <img src="docs/images/calendar-light.png" alt="Calendar" />
+</picture>
+
+```blade
+<x-ui::calendar value="2026-09-18" with-today />
+<x-ui::calendar mode="range" value="2026-09-14/2026-09-18" with-today />
 ```
 
 <br>
@@ -1361,7 +1407,7 @@ php artisan stencil:add pagination
 
 ## Typography
 
-`<x-ui::heading />` with semantic levels `1`–`6` and `<x-ui::text />` with the `sm` / `default` / `lg` / `xl` scale, variants, and colors.
+Aggregate README media for `<x-ui::heading />` (semantic levels `1`–`6`) and `<x-ui::text />` (`sm` / `default` / `lg` / `xl` scale, variants, and colors). Playbook keeps separate `heading` and `text` pages; `/playbook/media/typography` captures both.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/typography-dark.png">
@@ -1452,7 +1498,7 @@ php vendor/bin/testbench serve --port=8001   # separate terminal
 ./scripts/capture-readme-images.sh
 ```
 
-The script crops to `#readme-media` (fixed `56rem` / 896px width, variable height) with a transparent background at 3× device pixel ratio by default (`STENCIL_SCREENSHOT_SCALE`, `STENCIL_README_MEDIA_WIDTH`; installs `playwright-core` under `scripts/` on first run). Targets: `/playbook/media/{buttons|input|label|field|textarea|checkbox|radio|switch|select|dialog|typography|icons|accordion|collapsible|avatar|badge|breadcrumb|card|dropdown-menu|separator|skeleton|tabs|tooltip|toast|progress|alert|table|pagination}` and the same paths with `?dark=1`.
+The script crops to `#readme-media` (fixed `56rem` / 896px width, variable height) with a transparent background at 3× device pixel ratio by default (`STENCIL_SCREENSHOT_SCALE`, `STENCIL_README_MEDIA_WIDTH`; installs `playwright-core` under `scripts/` on first run). Targets: `/playbook/media/{button|input|input-currency|select|dialog|typography|icons|label|field|textarea|checkbox|radio|switch|combobox|file-upload|repeater|pillbox|rating|color-picker|input-otp|slider|accordion|collapsible|avatar|badge|breadcrumb|card|dropdown-menu|popover|separator|skeleton|tabs|tooltip|toast|progress|alert|table|pagination|calendar|date-picker|time-picker|datetime-picker}` and the same paths with `?dark=1`. Overlay pickers open before capture; portaling is skipped inside `#readme-media`. List slugs with `node scripts/capture-readme-images.mjs --list`. Legacy `/playbook/media/buttons` redirects to `/playbook/media/button`.
 
 <br>
 

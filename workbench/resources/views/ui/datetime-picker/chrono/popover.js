@@ -10,6 +10,40 @@
 export function positionAnchoredPanel(panel, trigger, options = {}) {
     const gap = options.gap ?? 6;
     const viewportPadding = options.viewportPadding ?? 8;
+    const mediaRoot = trigger.closest('#readme-media');
+
+    // Absolute inside the picker keeps the panel in the #readme-media box for screenshots.
+    if (mediaRoot) {
+        const anchorRoot =
+            trigger.closest(
+                '[data-date-picker], [data-time-picker], [data-datetime-picker], [data-color-picker]',
+            ) ?? trigger.parentElement;
+
+        if (anchorRoot instanceof HTMLElement) {
+            if (getComputedStyle(anchorRoot).position === 'static') {
+                anchorRoot.style.position = 'relative';
+            }
+
+            const triggerRect = trigger.getBoundingClientRect();
+            const rootRect = anchorRoot.getBoundingClientRect();
+
+            panel.style.position = 'absolute';
+            panel.style.left = `${Math.max(0, triggerRect.left - rootRect.left)}px`;
+            panel.style.top = `${triggerRect.bottom - rootRect.top + gap}px`;
+            panel.style.zIndex = '200';
+            panel.style.maxHeight = '';
+
+            if (options.fitContent) {
+                panel.style.width = 'max-content';
+                panel.style.minWidth = '';
+            } else {
+                panel.style.width = `${Math.max(triggerRect.width, panel.offsetWidth || triggerRect.width)}px`;
+                panel.style.minWidth = `${triggerRect.width}px`;
+            }
+
+            return;
+        }
+    }
 
     const rect = trigger.getBoundingClientRect();
 
@@ -58,6 +92,11 @@ export function positionAnchoredPanel(panel, trigger, options = {}) {
  * @param {Comment} portalMarker
  */
 export function ensurePanelPortaled(panel, markerParent, portalMarker) {
+    // Keep overlays inside the README media canvas so #readme-media screenshots include them.
+    if (markerParent?.closest?.('#readme-media') || panel.closest?.('#readme-media')) {
+        return;
+    }
+
     if (panel.parentElement === document.body) {
         return;
     }

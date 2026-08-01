@@ -19,6 +19,7 @@ import { initAccordions } from '../../../resources/assets/js/accordion.js';
 import { initCollapsibles } from '../../../resources/assets/js/collapsible.js';
 import { initAvatars } from '../../../resources/assets/js/avatar.js';
 import { initDropdownMenus } from '../../../resources/assets/js/dropdown-menu.js';
+import { initPopovers } from '../../../resources/assets/js/popover.js';
 import { initTabs } from '../../../resources/assets/js/tabs.js';
 import { initTooltips } from '../../../resources/assets/js/tooltip.js';
 import { initToasts } from '../../../resources/assets/js/toast.js';
@@ -95,6 +96,7 @@ document.addEventListener('alpine:init', () => {
             initCollapsibles(canvas);
             initAvatars(canvas);
             initDropdownMenus(canvas);
+            initPopovers(canvas);
             initTabs(canvas);
             initTooltips(canvas);
             initToasts(canvas);

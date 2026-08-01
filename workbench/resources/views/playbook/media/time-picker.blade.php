@@ -12,7 +12,7 @@
             </x-stencil::text>
         </div>
 
-        <div class="mx-auto w-full max-w-xs">
+        <div class="relative mx-auto min-h-[22rem] w-full max-w-xs">
             <x-stencil::time-picker name="media_time" value="09:15" clearable />
         </div>
     </div>

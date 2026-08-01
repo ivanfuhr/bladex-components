@@ -13,6 +13,8 @@
         'warning' => 'border-amber-200 bg-amber-50 text-amber-950 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-50',
         default => 'border-zinc-200 bg-white text-zinc-950 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50',
     };
+
+    $liveRole = in_array($variant, ['danger', 'destructive', 'error'], true) ? 'alert' : 'status';
 @endphp
 
 <div {{
@@ -26,7 +28,7 @@
         'data-variant' => $variant,
         'data-duration' => (string) $duration,
         'data-state' => $open ? 'open' : 'closed',
-        'role' => 'status',
+        'role' => $liveRole,
         'hidden' => $open ? null : true,
     ])
 }}>

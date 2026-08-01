@@ -56,3 +56,22 @@ it('supports grouped items and disabled state', function () {
         ->toContain('data-disabled="true"')
         ->toContain('Payouts');
 });
+
+it('marks menu content as a closed menu region for the widget script', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-stencil::dropdown-menu>
+            <x-stencil::dropdown-menu.trigger>
+                <button type="button">Open</button>
+            </x-stencil::dropdown-menu.trigger>
+            <x-stencil::dropdown-menu.content>
+                <x-stencil::dropdown-menu.item>One</x-stencil::dropdown-menu.item>
+            </x-stencil::dropdown-menu.content>
+        </x-stencil::dropdown-menu>
+    BLADE);
+
+    expect($html)
+        ->toContain('role="menu"')
+        ->toContain('tabindex="-1"')
+        ->toContain('data-state="closed"')
+        ->toContain('hidden');
+});

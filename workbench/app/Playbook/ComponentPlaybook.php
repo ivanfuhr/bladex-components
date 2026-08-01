@@ -17,6 +17,7 @@ final readonly class ComponentPlaybook
         public array $controls,
         public array $defaultState,
         public string $previewView,
+        public bool $wide = false,
     ) {}
 
     /**

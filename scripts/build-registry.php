@@ -433,12 +433,14 @@ $catalog = [
 
     'popover' => [
         'title' => 'Popover',
-        'description' => 'Anchored floating panel primitive for overlays.',
+        'description' => 'Anchored floating panel with trigger, Escape/outside dismiss, and focus management.',
         'type' => 'registry:ui',
         'registryDependencies' => [],
         'source' => 'popover',
         'targetPrefix' => 'popover',
-        'filesOnly' => ['index.blade.php'],
+        'assets' => [
+            'resources/assets/js/popover.js' => 'popover.js',
+        ],
     ],
     'calendar' => [
         'title' => 'Calendar',

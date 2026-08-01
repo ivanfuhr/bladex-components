@@ -3,7 +3,7 @@
     $showBadges = (bool) ($state['show_badges'] ?? true);
 @endphp
 
-<div class="max-w-2xl rounded-xl border border-zinc-200 dark:border-zinc-800">
+<div class="w-full rounded-xl border border-zinc-200 dark:border-zinc-800">
     <x-stencil::table>
         @if ($showCaption)
             <x-stencil::table.caption>Recent invoices</x-stencil::table.caption>

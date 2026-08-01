@@ -66,18 +66,23 @@
             </div>
 
             <div class="flex shrink-0 items-center gap-2">
+                @php
+                    $catalogActive = request()->routeIs('playbook.index', 'playbook.show');
+                    $showcaseActive = request()->routeIs('playbook.showcase');
+                    $navActive = 'rounded-lg border px-3 py-2 text-xs font-medium shadow-sm transition focus-visible:ring-2 focus-visible:outline-none border-zinc-900 bg-zinc-900 text-zinc-50 hover:bg-zinc-800 focus-visible:ring-zinc-950/20 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-white dark:focus-visible:ring-zinc-300/30';
+                    $navIdle = 'rounded-lg border px-3 py-2 text-xs font-medium shadow-sm transition focus-visible:ring-2 focus-visible:outline-none border-zinc-200 bg-white text-zinc-700 hover:border-zinc-300 hover:bg-zinc-50 focus-visible:ring-zinc-950/10 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20';
+                @endphp
                 <nav aria-label="Playbook" class="flex items-center gap-2">
                     <a
+                        href="{{ route('playbook.index') }}"
+                        class="{{ $catalogActive ? $navActive : $navIdle }}"
+                        @if ($catalogActive) aria-current="page" @endif
+                    >Catalog</a>
+                    <a
                         href="{{ route('playbook.showcase') }}"
-                        @class([
-                            'rounded-lg border px-3 py-2 text-xs font-medium shadow-sm transition focus-visible:ring-2 focus-visible:outline-none',
-                            'border-zinc-900 bg-zinc-900 text-zinc-50 hover:bg-zinc-800 focus-visible:ring-zinc-950/20 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-white dark:focus-visible:ring-zinc-300/30' => request()->routeIs('playbook.showcase'),
-                            'border-zinc-200 bg-white text-zinc-700 hover:border-zinc-300 hover:bg-zinc-50 focus-visible:ring-zinc-950/10 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20' => ! request()->routeIs('playbook.showcase'),
-                        ])
-                        @if (request()->routeIs('playbook.showcase')) aria-current="page" @endif
-                    >
-                        Showcase
-                    </a>
+                        class="{{ $showcaseActive ? $navActive : $navIdle }}"
+                        @if ($showcaseActive) aria-current="page" @endif
+                    >Showcase</a>
                 </nav>
                 <label class="flex cursor-pointer items-center gap-2.5 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs font-medium text-zinc-700 shadow-sm transition focus-within:ring-2 focus-within:ring-zinc-950/10 hover:border-zinc-300 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:focus-within:ring-zinc-300/20 dark:hover:border-zinc-600">
                     <span class="sr-only">Dark mode</span>

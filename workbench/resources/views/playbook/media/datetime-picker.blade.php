@@ -12,7 +12,7 @@
             </x-stencil::text>
         </div>
 
-        <div class="mx-auto w-full max-w-sm">
+        <div class="relative mx-auto min-h-[26rem] w-full max-w-lg">
             <x-stencil::datetime-picker name="media_datetime" value="2026-09-18T09:15" with-today />
         </div>
     </div>

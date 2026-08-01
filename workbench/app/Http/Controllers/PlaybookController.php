@@ -35,12 +35,17 @@ final class PlaybookController
         }
 
         $playbook = $this->registry->get($component);
+        $siblings = $this->registry->siblings($component);
+        $mediaSlug = $this->registry->mediaSlug($component);
 
         return view('workbench::playbook.show', [
             'playbook' => $playbook,
             'initialPreview' => $this->preview->render($component),
             'initialSnippet' => $this->preview->renderSnippet($component),
             'previewUrl' => route('playbook.preview'),
+            'mediaUrl' => $mediaSlug !== null ? route('playbook.media.show', $mediaSlug) : null,
+            'previousPlaybook' => $siblings['previous'],
+            'nextPlaybook' => $siblings['next'],
         ]);
     }
 }

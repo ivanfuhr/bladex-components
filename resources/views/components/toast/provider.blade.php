@@ -21,8 +21,8 @@
     ])->merge([
         'data-toast-provider' => true,
         'data-position' => $position,
-        'aria-live' => 'polite',
-        'aria-relevant' => 'additions text',
+        // Live region lives on each toast (role=status|alert) to avoid nested announcements.
+        'data-toast-dismiss-label' => __('stencil::messages.toast_close'),
     ])
 }}>
     {{ $slot }}

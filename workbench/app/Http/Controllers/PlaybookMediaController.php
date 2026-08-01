@@ -13,7 +13,7 @@ final class PlaybookMediaController
 {
     /** @var list<string> */
     private const array COMPONENTS = [
-        'buttons',
+        'button',
         'input',
         'input-currency',
         'select',
@@ -45,6 +45,7 @@ final class PlaybookMediaController
         'breadcrumb',
         'card',
         'dropdown-menu',
+        'popover',
         'separator',
         'skeleton',
         'tabs',

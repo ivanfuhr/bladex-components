@@ -54,6 +54,57 @@ it('renders the event studio showcase scenario', function () {
     $response->assertSee('data-dialog', false);
     $response->assertSee('data-table', false);
     $response->assertSee('data-toast-provider', false);
+    $response->assertSee('id="guests"', false);
+    $response->assertSee('aria-labelledby="setup-progress-label"', false);
+    $response->assertSee('aria-label="Event sidebar"', false);
+    $response->assertSee('aria-busy="true"', false);
+});
+
+it('marks catalog as the active playbook surface on the index', function () {
+    $response = $this->get('/playbook');
+
+    $response->assertOk();
+    $response->assertSee('aria-current="page"', false);
+    $response->assertSee('>Catalog</a>', false);
+});
+
+it('bridges playground pages to media when a media view exists', function () {
+    $response = $this->get('/playbook/button');
+
+    $response->assertOk();
+    $response->assertSee(route('playbook.media.show', 'button'), false);
+    $response->assertSee('Media page');
+});
+
+it('links sibling components within the same catalog category', function () {
+    $response = $this->get('/playbook/input');
+
+    $response->assertOk();
+    $response->assertSee(route('playbook.show', 'button'), false);
+    $response->assertSee(route('playbook.show', 'input-currency'), false);
+    $response->assertSee('Previous');
+    $response->assertSee('Next');
+});
+
+it('widens the live preview canvas for table demos', function () {
+    $response = $this->get('/playbook/table');
+
+    $response->assertOk();
+    $response->assertSee('max-w-5xl', false);
+    expect($response->getContent())->toContain('max-w-5xl')
+        ->and($response->getContent())->not->toContain('w-full max-w-md');
+});
+
+it('resolves media slugs and siblings from the playbook registry', function () {
+    $registry = app(PlaybookRegistry::class);
+
+    expect($registry->mediaSlug('button'))->toBe('button')
+        ->and($registry->mediaSlug('heading'))->toBe('typography')
+        ->and($registry->mediaSlug('icon'))->toBe('icons')
+        ->and($registry->siblings('input')['previous']?->slug)->toBe('button')
+        ->and($registry->siblings('input')['next']?->slug)->toBe('input-currency')
+        ->and($registry->get('table')->wide)->toBeTrue()
+        ->and($registry->get('button')->wide)->toBeFalse();
 });
 
 it('renders the button playbook page with an initial preview', function () {
@@ -172,6 +223,26 @@ it('redirects the root url to the playbook index', function () {
     $this->get('/')->assertRedirect('/playbook');
 });
 
+it('renders playbook media pages for button and datetime components', function (string $slug) {
+    $this->get('/playbook/media/'.$slug)->assertOk();
+    $this->get('/playbook/media/'.$slug.'?dark=1')->assertOk();
+})->with([
+    'button',
+    'icons',
+    'typography',
+    'calendar',
+    'date-picker',
+    'time-picker',
+    'datetime-picker',
+    'color-picker',
+    'dropdown-menu',
+    'popover',
+]);
+
+it('redirects legacy buttons media slug to button', function () {
+    $this->get('/playbook/media/buttons')->assertRedirect('/playbook/media/button');
+});
+
 it('renders layout and feedback playbook pages with initial previews', function (string $slug, string $marker) {
     $response = $this->get('/playbook/'.$slug);
 
@@ -185,6 +256,7 @@ it('renders layout and feedback playbook pages with initial previews', function 
     ['breadcrumb', 'data-breadcrumb'],
     ['card', 'data-card'],
     ['dropdown-menu', 'data-dropdown-menu'],
+    ['popover', 'data-popover'],
     ['separator', 'data-separator'],
     ['skeleton', 'data-skeleton'],
     ['tabs', 'data-tabs'],

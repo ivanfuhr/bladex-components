@@ -233,8 +233,10 @@ function resolveDialogForTrigger(trigger) {
  * @param {HTMLDialogElement} dialog
  */
 function focusInitialElement(dialog) {
+    const isAlert = dialog.getAttribute('role') === 'alertdialog';
     const focusTarget =
         dialog.querySelector('[data-dialog-initial-focus]') ??
+        (isAlert ? dialog.querySelector('[data-dialog-cancel]') : null) ??
         dialog.querySelector(
             'button:not([data-dialog-close]):not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
         );

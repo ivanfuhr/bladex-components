@@ -17,7 +17,7 @@
     $key = $variant ?? 'default';
 @endphp
 
-<div class="relative min-h-48">
+<div class="relative min-h-48 w-full space-y-3">
     <x-stencil::toast.provider :position="$position" class="!relative !inset-auto !max-w-sm !translate-x-0">
         <x-stencil::toast
             :variant="$variant"
@@ -26,4 +26,7 @@
             :duration="999999"
         />
     </x-stencil::toast.provider>
+    <x-stencil::text size="sm" variant="subtle">
+        Position is simulated inside this relative stage — not a viewport corner.
+    </x-stencil::text>
 </div>

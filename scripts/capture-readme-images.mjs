@@ -7,8 +7,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, '..');
 const outDir = path.join(root, 'docs/images');
 const baseUrl = process.env.STENCIL_SCREENSHOT_URL ?? 'http://127.0.0.1:8001';
+
+/** Media slugs under /playbook/media/{slug} (light + dark). */
 const components = [
-    'buttons',
+    'button',
     'input',
     'input-currency',
     'select',
@@ -36,6 +38,7 @@ const components = [
     'breadcrumb',
     'card',
     'dropdown-menu',
+    'popover',
     'separator',
     'skeleton',
     'tabs',
@@ -45,7 +48,29 @@ const components = [
     'alert',
     'table',
     'pagination',
+    'calendar',
+    'date-picker',
+    'time-picker',
+    'datetime-picker',
 ];
+
+/** Open overlay triggers before capture (panels stay inside #readme-media). */
+const openTriggerSelectors = {
+    'date-picker': '[data-date-picker-trigger]',
+    'time-picker': '[data-time-picker-trigger]',
+    'datetime-picker': '[data-datetime-picker-trigger]',
+    'color-picker': '[data-color-picker-swatch-trigger]',
+};
+
+const listOnly = process.argv.includes('--list');
+
+if (listOnly) {
+    for (const component of components) {
+        console.log(component);
+    }
+
+    process.exit(0);
+}
 
 function resolveChromiumExecutable() {
     const candidates = [
@@ -98,6 +123,17 @@ for (const component of components) {
         await page.goto(url, { waitUntil: 'networkidle' });
         await page.waitForSelector('#readme-media');
         await page.waitForTimeout(400);
+
+        const openSelector = openTriggerSelectors[component];
+
+        if (openSelector) {
+            const trigger = page.locator(`#readme-media ${openSelector}`).first();
+
+            if ((await trigger.count()) > 0) {
+                await trigger.click({ force: true });
+                await page.waitForTimeout(300);
+            }
+        }
 
         const target = path.join(outDir, `${component}-${suffix}.png`);
 

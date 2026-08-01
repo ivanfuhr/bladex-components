@@ -128,5 +128,6 @@ it('renders dialog cancel helper with close behavior', function () {
 
     expect($html)
         ->toContain('data-dialog-close')
+        ->toContain('data-dialog-cancel')
         ->toContain('Cancel');
 });

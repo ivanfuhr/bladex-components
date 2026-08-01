@@ -13,10 +13,23 @@ it('renders a toast provider and toast message', function () {
 
     expect($html)
         ->toContain('data-toast-provider')
-        ->toContain('aria-live="polite"')
+        ->toContain('data-toast-dismiss-label')
+        ->not->toContain('aria-live=')
         ->toContain('data-toast')
         ->toContain('data-variant="success"')
+        ->toContain('role="status"')
         ->toContain('Saved')
         ->toContain('Your changes were saved.')
         ->toContain('data-toast-close');
+});
+
+it('uses alert role for danger toast variants', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-stencil::toast variant="danger" title="Failed" description="Could not save." />
+    BLADE);
+
+    expect($html)
+        ->toContain('data-variant="danger"')
+        ->toContain('role="alert"')
+        ->not->toContain('role="status"');
 });

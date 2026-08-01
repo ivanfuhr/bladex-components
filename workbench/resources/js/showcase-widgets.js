@@ -6,6 +6,7 @@ import '../../../resources/assets/js/tabs.js';
 import '../../../resources/assets/js/accordion.js';
 import '../../../resources/assets/js/collapsible.js';
 import '../../../resources/assets/js/dropdown-menu.js';
+import '../../../resources/assets/js/popover.js';
 import '../../../resources/assets/js/tooltip.js';
 import '../../../resources/assets/js/toast.js';
 import '../../../resources/assets/js/avatar.js';

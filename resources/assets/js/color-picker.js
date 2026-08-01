@@ -292,6 +292,11 @@ function bindColorPicker(root) {
     }
 
     function ensurePortal() {
+        // Keep overlays inside the README media canvas so #readme-media screenshots include them.
+        if (root.closest('#readme-media') || popover.closest('#readme-media')) {
+            return;
+        }
+
         if (popover.parentElement === document.body) {
             return;
         }
@@ -314,6 +319,23 @@ function bindColorPicker(root) {
         const rect = anchor.getBoundingClientRect();
         const gap = 6;
         const viewportPadding = 8;
+
+        if (root.closest('#readme-media')) {
+            if (getComputedStyle(root).position === 'static') {
+                root.style.position = 'relative';
+            }
+
+            const rootRect = root.getBoundingClientRect();
+
+            popover.style.position = 'absolute';
+            popover.style.left = `${Math.max(0, rect.left - rootRect.left)}px`;
+            popover.style.top = `${rect.bottom - rootRect.top + gap}px`;
+            popover.style.width = `${Math.max(rect.width, 288)}px`;
+            popover.style.zIndex = '200';
+            popover.style.maxHeight = '';
+
+            return;
+        }
 
         popover.style.position = 'fixed';
         popover.style.left = `${Math.max(viewportPadding, rect.left)}px`;
