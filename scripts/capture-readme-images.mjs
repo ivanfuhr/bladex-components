@@ -11,6 +11,9 @@ const baseUrl = process.env.STENCIL_SCREENSHOT_URL ?? 'http://127.0.0.1:8001';
 /** Media slugs under /playbook/media/{slug} (light + dark). */
 const components = [
     'button',
+    'button-group',
+    'toggle',
+    'toggle-group',
     'input',
     'input-currency',
     'select',
@@ -41,17 +44,22 @@ const components = [
     'popover',
     'separator',
     'skeleton',
+    'empty',
+    'sidebar',
     'tabs',
+    'stepper',
     'tooltip',
     'toast',
     'progress',
     'alert',
     'table',
+    'stat',
     'pagination',
     'calendar',
     'date-picker',
     'time-picker',
     'datetime-picker',
+    'command',
 ];
 
 /** Open overlay triggers before capture (panels stay inside #readme-media). */
@@ -63,13 +71,22 @@ const openTriggerSelectors = {
 };
 
 const listOnly = process.argv.includes('--list');
+const requested = process.argv.slice(2).filter((arg) => arg !== '--list' && !arg.startsWith('-'));
+const targets = requested.length > 0 ? requested : components;
 
 if (listOnly) {
-    for (const component of components) {
+    for (const component of targets) {
         console.log(component);
     }
 
     process.exit(0);
+}
+
+for (const component of targets) {
+    if (!components.includes(component)) {
+        console.error(`Unknown media component: ${component}`);
+        process.exit(1);
+    }
 }
 
 function resolveChromiumExecutable() {
@@ -113,7 +130,7 @@ const context = await browser.newContext({
 
 const page = await context.newPage();
 
-for (const component of components) {
+for (const component of targets) {
     for (const [suffix, query] of [
         ['light', ''],
         ['dark', '?dark=1'],

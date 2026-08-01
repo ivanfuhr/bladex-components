@@ -118,6 +118,36 @@ $catalog = [
         'source' => 'button',
         'targetPrefix' => 'button',
     ],
+    'button-group' => [
+        'title' => 'Button Group',
+        'description' => 'Visual grouping for related buttons with shared borders, orientation, separators, and text affixes.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['button'],
+        'source' => 'button-group',
+        'targetPrefix' => 'button-group',
+    ],
+    'toggle' => [
+        'title' => 'Toggle',
+        'description' => 'Two-state pressed button control with outline/default variants and size scale.',
+        'type' => 'registry:ui',
+        'registryDependencies' => [],
+        'source' => 'toggle',
+        'targetPrefix' => 'toggle',
+        'assets' => [
+            'resources/assets/js/toggle.js' => 'toggle.js',
+        ],
+    ],
+    'toggle-group' => [
+        'title' => 'Toggle Group',
+        'description' => 'Single or multiple selection group of toggle items with toolbar/radiogroup semantics.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['toggle'],
+        'source' => 'toggle-group',
+        'targetPrefix' => 'toggle-group',
+        'assets' => [
+            'resources/assets/js/toggle-group.js' => 'toggle-group.js',
+        ],
+    ],
     'select' => [
         'title' => 'Select',
         'description' => 'Accessible custom listbox select with compound sub-components and optional Flux-style shortcut.',
@@ -273,6 +303,18 @@ $catalog = [
             'resources/assets/js/dialog.js' => 'dialog.js',
         ],
     ],
+    'command' => [
+        'title' => 'Command',
+        'description' => 'Accessible command palette with typeahead filtering, keyboard navigation, and optional dialog + ⌘K shortcut.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['dialog', 'icon'],
+        'iconDependencies' => ['search', 'x'],
+        'source' => 'command',
+        'targetPrefix' => 'command',
+        'assets' => [
+            'resources/assets/js/command.js' => 'command.js',
+        ],
+    ],
     'accordion' => [
         'title' => 'Accordion',
         'description' => 'Accessible vertically stacked disclosures with exclusive or multiple open items.',
@@ -294,6 +336,18 @@ $catalog = [
         'targetPrefix' => 'collapsible',
         'assets' => [
             'resources/assets/js/collapsible.js' => 'collapsible.js',
+        ],
+    ],
+    'sidebar' => [
+        'title' => 'Sidebar',
+        'description' => 'Composable app-shell sidebar with provider state, collapse modes, mobile overlay, and menu primitives.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['icon', 'button'],
+        'iconDependencies' => ['panel-left'],
+        'source' => 'sidebar',
+        'targetPrefix' => 'sidebar',
+        'assets' => [
+            'resources/assets/js/sidebar.js' => 'sidebar.js',
         ],
     ],
     'avatar' => [
@@ -350,6 +404,36 @@ $catalog = [
         'source' => 'skeleton',
         'targetPrefix' => 'skeleton',
         'filesOnly' => ['index.blade.php'],
+    ],
+    'empty' => [
+        'title' => 'Empty',
+        'description' => 'Composable empty state with media, title, description, and content parts.',
+        'type' => 'registry:ui',
+        'registryDependencies' => [
+            'icon',
+        ],
+        'source' => 'empty',
+        'targetPrefix' => 'empty',
+    ],
+    'stepper' => [
+        'title' => 'Stepper',
+        'description' => 'Composable multi-step wizard indicator with panels and previous/next navigation.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['button', 'icon'],
+        'iconDependencies' => ['check'],
+        'source' => 'stepper',
+        'targetPrefix' => 'stepper',
+        'assets' => [
+            'resources/assets/js/stepper.js' => 'stepper.js',
+        ],
+    ],
+    'stat' => [
+        'title' => 'Stat',
+        'description' => 'Dashboard KPI card with label, value, description, trend, and optional icon.',
+        'type' => 'registry:ui',
+        'registryDependencies' => ['icon'],
+        'source' => 'stat',
+        'targetPrefix' => 'stat',
     ],
     'dropdown-menu' => [
         'title' => 'Dropdown Menu',

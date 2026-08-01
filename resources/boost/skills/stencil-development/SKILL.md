@@ -57,7 +57,13 @@ Owned mode runs `init` scaffolding: `app/Support/Stencil` class maps, `resources
 
 **Dialog:** `stencil:add dialog` copies `dialog.js` and adds it to the same `// stencil-start` block in the Vite entry. Compose `dialog.trigger` + `dialog.content` (optional `name` for Flux-style triggers). Use `window.Stencil.dialog('name').show()` from JavaScript when needed.
 
-**Layout / feedback primitives:** Prefer compound `x-ui::*` composition for `accordion`, `collapsible`, `avatar`, `badge`, `breadcrumb`, `card`, `dropdown-menu`, `popover`, `separator`, `skeleton`, `tabs`, `tooltip`, `toast`, `progress`, `alert`, `table`, and `pagination`. Interactive ones (`accordion`, `collapsible`, `avatar`, `dropdown-menu`, `popover`, `tabs`, `tooltip`, `toast`) install matching `*.js` via `stencil:add`. Toasts: mount `toast.provider` once (layout only — each toast is `role="status"` or `role="alert"` for danger) and call `window.Stencil.toast({ title, description, variant })` when needed. Pagination accepts a Laravel `LengthAwarePaginator` via `:paginator`.
+**Command:** `stencil:add command` copies `command.js` (and installs `dialog`). Compose `command.dialog` for a ⌘K palette, or `command` + `command.item` children; set `:shortcut="false"` for full `command.input` / `command.list` composition.
+
+**Toggle / Toggle Group / Button Group:** `stencil:add toggle` and `toggle-group` copy matching `*.js` into the Vite entry. Use `button-group` for related action buttons (no JS); use `toggle-group` when items represent pressed state.
+
+**Sidebar / Stepper:** `stencil:add sidebar` and `stepper` copy matching `*.js`. Sidebar needs `sidebar.provider` around the shell; stepper pairs indicators with `stepper.content` panels and previous/next controls.
+
+**Layout / feedback primitives:** Prefer compound `x-ui::*` composition for `accordion`, `collapsible`, `avatar`, `badge`, `breadcrumb`, `card`, `dropdown-menu`, `popover`, `separator`, `skeleton`, `empty`, `stat`, `tabs`, `tooltip`, `toast`, `progress`, `alert`, `table`, and `pagination`. Interactive ones (`accordion`, `collapsible`, `avatar`, `dropdown-menu`, `popover`, `tabs`, `tooltip`, `toast`) install matching `*.js` via `stencil:add`. Toasts: mount `toast.provider` once (layout only — each toast is `role="status"` or `role="alert"` for danger) and call `window.Stencil.toast({ title, description, variant })` when needed. Pagination accepts a Laravel `LengthAwarePaginator` via `:paginator`.
 
 **Date / time pickers:** `stencil:add date-picker` (depends on `calendar`, `button`, `input`) installs `date-picker.js` plus shared `calendar.js` and `chrono/*` helpers. Values: single date `Y-m-d`, range `Y-m-d/Y-m-d`, time `H:i`, datetime ISO 8601. Set `timezone` (defaults to `config('app.timezone')`). Also available: `time-picker`, `datetime-picker`, and standalone `calendar`.
 

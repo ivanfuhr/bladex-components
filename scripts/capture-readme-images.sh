@@ -15,7 +15,7 @@ if [[ -f "${SCRIPTS}/package.json" ]]; then
   fi
 
   export STENCIL_SCREENSHOT_URL="${BASE_URL}"
-  node "${SCRIPTS}/capture-readme-images.mjs"
+  node "${SCRIPTS}/capture-readme-images.mjs" "$@"
   echo "Saved element screenshots to docs/images/"
   exit 0
 fi

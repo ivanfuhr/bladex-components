@@ -26,6 +26,7 @@ final class ProjectIntegrator
         'input-otp' => 'input-otp/input-otp.js',
         'slider' => 'slider/slider.js',
         'dialog' => 'dialog/dialog.js',
+        'command' => 'command/command.js',
         'calendar' => 'calendar/calendar.js',
         'date-picker' => 'date-picker/date-picker.js',
         'time-picker' => 'time-picker/time-picker.js',
@@ -37,6 +38,10 @@ final class ProjectIntegrator
         'rating' => 'rating/rating.js',
         'color-picker' => 'color-picker/color-picker.js',
         'textarea' => 'textarea/textarea.js',
+        'sidebar' => 'sidebar/sidebar.js',
+        'stepper' => 'stepper/stepper.js',
+        'toggle' => 'toggle/toggle.js',
+        'toggle-group' => 'toggle-group/toggle-group.js',
     ];
 
     public function ensureTailwind(ProjectConfig $config): void

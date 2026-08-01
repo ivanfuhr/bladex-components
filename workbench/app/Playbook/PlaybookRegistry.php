@@ -19,6 +19,9 @@ final class PlaybookRegistry
             'label' => 'Forms',
             'slugs' => [
                 'button',
+                'button-group',
+                'toggle',
+                'toggle-group',
                 'input',
                 'input-currency',
                 'select',
@@ -49,6 +52,7 @@ final class PlaybookRegistry
             'label' => 'Overlays',
             'slugs' => [
                 'dialog',
+                'command',
                 'dropdown-menu',
                 'popover',
                 'tooltip',
@@ -61,6 +65,7 @@ final class PlaybookRegistry
                 'alert',
                 'progress',
                 'skeleton',
+                'empty',
                 'badge',
             ],
         ],
@@ -69,9 +74,11 @@ final class PlaybookRegistry
             'slugs' => [
                 'breadcrumb',
                 'tabs',
+                'stepper',
                 'pagination',
                 'accordion',
                 'collapsible',
+                'sidebar',
             ],
         ],
         'display' => [
@@ -79,6 +86,7 @@ final class PlaybookRegistry
             'slugs' => [
                 'avatar',
                 'card',
+                'stat',
                 'table',
                 'separator',
                 'icons',
@@ -215,6 +223,9 @@ final class PlaybookRegistry
 
         $definitions = [
             $this->button(),
+            $this->buttonGroup(),
+            $this->toggle(),
+            $this->toggleGroup(),
             $this->input(),
             $this->inputCurrency(),
             $this->select(),
@@ -235,17 +246,22 @@ final class PlaybookRegistry
             $this->text(),
             $this->heading(),
             $this->dialog(),
+            $this->command(),
             $this->accordion(),
             $this->collapsible(),
+            $this->sidebar(),
             $this->avatar(),
             $this->badge(),
             $this->breadcrumb(),
             $this->card(),
+            $this->stat(),
             $this->dropdownMenu(),
             $this->popover(),
             $this->separator(),
             $this->skeleton(),
+            $this->empty(),
             $this->tabs(),
+            $this->stepper(),
             $this->tooltip(),
             $this->toast(),
             $this->progress(),
@@ -308,6 +324,98 @@ final class PlaybookRegistry
                 'show_affixes' => false,
             ],
             previewView: 'workbench::playbook.previews.button',
+        );
+    }
+
+    private function buttonGroup(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'button-group',
+            title: 'Button Group',
+            description: 'Attach related action buttons with shared borders. Use toggle-group for pressed state.',
+            controls: [
+                new PlaybookControl('orientation', 'Orientation', 'select', [
+                    'horizontal' => 'Horizontal',
+                    'vertical' => 'Vertical',
+                ], 'horizontal'),
+                new PlaybookControl('show_separator', 'Separator', 'checkbox', [], false),
+                new PlaybookControl('show_text', 'Text affix', 'checkbox', [], false),
+            ],
+            defaultState: [
+                'orientation' => 'horizontal',
+                'show_separator' => false,
+                'show_text' => false,
+            ],
+            previewView: 'workbench::playbook.previews.button-group',
+        );
+    }
+
+    private function toggle(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'toggle',
+            title: 'Toggle',
+            description: 'Pressed/unpressed button control with aria-pressed. Requires toggle.js.',
+            controls: [
+                new PlaybookControl('variant', 'Variant', 'select', [
+                    'default' => 'Default',
+                    'outline' => 'Outline',
+                ], 'default'),
+                new PlaybookControl('size', 'Size', 'select', [
+                    'sm' => 'Small',
+                    'default' => 'Default',
+                    'lg' => 'Large',
+                ], 'default'),
+                new PlaybookControl('pressed', 'Pressed', 'checkbox', [], false),
+                new PlaybookControl('disabled', 'Disabled', 'checkbox', [], false),
+            ],
+            defaultState: [
+                'variant' => 'default',
+                'size' => 'default',
+                'pressed' => false,
+                'disabled' => false,
+            ],
+            previewView: 'workbench::playbook.previews.toggle',
+        );
+    }
+
+    private function toggleGroup(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'toggle-group',
+            title: 'Toggle Group',
+            description: 'Single or multiple toggle selection with radiogroup/group semantics. Requires toggle-group.js.',
+            controls: [
+                new PlaybookControl('type', 'Type', 'select', [
+                    'single' => 'Single',
+                    'multiple' => 'Multiple',
+                ], 'single'),
+                new PlaybookControl('variant', 'Variant', 'select', [
+                    'default' => 'Default',
+                    'outline' => 'Outline',
+                ], 'outline'),
+                new PlaybookControl('size', 'Size', 'select', [
+                    'sm' => 'Small',
+                    'default' => 'Default',
+                    'lg' => 'Large',
+                ], 'default'),
+                new PlaybookControl('orientation', 'Orientation', 'select', [
+                    'horizontal' => 'Horizontal',
+                    'vertical' => 'Vertical',
+                ], 'horizontal'),
+                new PlaybookControl('spacing', 'Spacing', 'select', [
+                    '0' => 'Connected (0)',
+                    '2' => 'Gapped (2)',
+                ], '0'),
+            ],
+            defaultState: [
+                'type' => 'single',
+                'variant' => 'outline',
+                'size' => 'default',
+                'orientation' => 'horizontal',
+                'spacing' => '0',
+            ],
+            previewView: 'workbench::playbook.previews.toggle-group',
         );
     }
 
@@ -899,6 +1007,19 @@ final class PlaybookRegistry
         );
     }
 
+    private function command(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'command',
+            title: 'Command',
+            description: 'Command palette with typeahead filtering and optional ⌘K dialog. Requires command.js and dialog.js.',
+            controls: [],
+            defaultState: [],
+            previewView: 'workbench::playbook.previews.command',
+            wide: true,
+        );
+    }
+
     private function accordion(): ComponentPlaybook
     {
         return new ComponentPlaybook(
@@ -935,6 +1056,35 @@ final class PlaybookRegistry
                 'transition' => true,
             ],
             previewView: 'workbench::playbook.previews.collapsible',
+        );
+    }
+
+    private function sidebar(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'sidebar',
+            title: 'Sidebar',
+            description: 'App-shell navigation with collapse modes and mobile overlay. Requires sidebar.js in the app entry.',
+            controls: [
+                new PlaybookControl('collapsible', 'Collapsible', 'select', [
+                    'icon' => 'Icon',
+                    'offcanvas' => 'Offcanvas',
+                    'none' => 'None',
+                ], 'icon'),
+                new PlaybookControl('variant', 'Variant', 'select', [
+                    'sidebar' => 'Sidebar',
+                    'floating' => 'Floating',
+                    'inset' => 'Inset',
+                ], 'sidebar'),
+                new PlaybookControl('default_open', 'Default open', 'checkbox', [], true),
+            ],
+            defaultState: [
+                'collapsible' => 'icon',
+                'variant' => 'sidebar',
+                'default_open' => true,
+            ],
+            previewView: 'workbench::playbook.previews.sidebar',
+            wide: true,
         );
     }
 
@@ -1044,6 +1194,35 @@ final class PlaybookRegistry
         );
     }
 
+    private function stat(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'stat',
+            title: 'Stat',
+            description: 'Dashboard KPI card with label, value, trend, and optional icon.',
+            controls: [
+                new PlaybookControl('variant', 'Variant', 'select', [
+                    'default' => 'Default',
+                    'outline' => 'Outline',
+                    'muted' => 'Muted',
+                ], 'default'),
+                new PlaybookControl('trend_direction', 'Trend', 'select', [
+                    'up' => 'Up',
+                    'down' => 'Down',
+                    'neutral' => 'Neutral',
+                ], 'up'),
+                new PlaybookControl('show_icon', 'Icon', 'checkbox', [], true),
+            ],
+            defaultState: [
+                'variant' => 'default',
+                'trend_direction' => 'up',
+                'show_icon' => true,
+            ],
+            previewView: 'workbench::playbook.previews.stat',
+            wide: true,
+        );
+    }
+
     private function dropdownMenu(): ComponentPlaybook
     {
         return new ComponentPlaybook(
@@ -1130,6 +1309,27 @@ final class PlaybookRegistry
         );
     }
 
+    private function empty(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'empty',
+            title: 'Empty',
+            description: 'Composable empty state with media, title, description, and actions.',
+            controls: [
+                new PlaybookControl('show_icon', 'Icon media', 'checkbox', [], true),
+                new PlaybookControl('outline', 'Outline border', 'checkbox', [], true),
+                new PlaybookControl('show_actions', 'Actions', 'checkbox', [], true),
+            ],
+            defaultState: [
+                'show_icon' => true,
+                'outline' => true,
+                'show_actions' => true,
+            ],
+            previewView: 'workbench::playbook.previews.empty',
+            wide: true,
+        );
+    }
+
     private function tabs(): ComponentPlaybook
     {
         return new ComponentPlaybook(
@@ -1148,6 +1348,28 @@ final class PlaybookRegistry
                 'variant' => 'default',
             ],
             previewView: 'workbench::playbook.previews.tabs',
+            wide: true,
+        );
+    }
+
+    private function stepper(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'stepper',
+            title: 'Stepper',
+            description: 'Multi-step wizard indicator with panels and previous/next controls. Requires stepper.js.',
+            controls: [
+                new PlaybookControl('orientation', 'Orientation', 'select', [
+                    'horizontal' => 'Horizontal',
+                    'vertical' => 'Vertical',
+                ], 'horizontal'),
+                new PlaybookControl('linear', 'Linear (block skipping ahead)', 'checkbox', [], true),
+            ],
+            defaultState: [
+                'orientation' => 'horizontal',
+                'linear' => true,
+            ],
+            previewView: 'workbench::playbook.previews.stepper',
             wide: true,
         );
     }

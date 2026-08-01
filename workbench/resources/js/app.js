@@ -6,5 +6,5 @@ window.Alpine = Alpine;
 Alpine.start();
 
 // stencil-start
-import '../views/ui/select/select.js';
+import '../views/ui/dialog/dialog.js';
 // stencil-end

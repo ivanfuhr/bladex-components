@@ -5,6 +5,7 @@ import { initRepeaters } from '../views/ui/repeater/repeater.js';
 import { initInputOtps } from '../views/ui/input-otp/input-otp.js';
 import { initSliders } from '../views/ui/slider/slider.js';
 import { initDialogs } from '../views/ui/dialog/dialog.js';
+import { initCommands } from '../../../resources/assets/js/command.js';
 import { initDatePickers } from '../views/ui/date-picker/date-picker.js';
 import { initCalendars } from '../views/ui/date-picker/calendar.js';
 import { initTimePickers } from '../views/ui/time-picker/time-picker.js';
@@ -17,10 +18,14 @@ import { initInputEnhancements } from '../views/ui/input/input-enhancements.js';
 import { initTextareas } from '../views/ui/textarea/textarea.js';
 import { initAccordions } from '../../../resources/assets/js/accordion.js';
 import { initCollapsibles } from '../../../resources/assets/js/collapsible.js';
+import { initSidebars } from '../../../resources/assets/js/sidebar.js';
 import { initAvatars } from '../../../resources/assets/js/avatar.js';
 import { initDropdownMenus } from '../../../resources/assets/js/dropdown-menu.js';
 import { initPopovers } from '../../../resources/assets/js/popover.js';
 import { initTabs } from '../../../resources/assets/js/tabs.js';
+import { initToggles } from '../../../resources/assets/js/toggle.js';
+import { initToggleGroups } from '../../../resources/assets/js/toggle-group.js';
+import { initSteppers } from '../../../resources/assets/js/stepper.js';
 import { initTooltips } from '../../../resources/assets/js/tooltip.js';
 import { initToasts } from '../../../resources/assets/js/toast.js';
 
@@ -82,6 +87,7 @@ document.addEventListener('alpine:init', () => {
             initInputOtps(canvas);
             initSliders(canvas);
             initDialogs(canvas);
+            initCommands(canvas);
             initCalendars(canvas);
             initDatePickers(canvas);
             initTimePickers(canvas);
@@ -94,10 +100,14 @@ document.addEventListener('alpine:init', () => {
             initTextareas(canvas);
             initAccordions(canvas);
             initCollapsibles(canvas);
+            initSidebars(canvas);
             initAvatars(canvas);
             initDropdownMenus(canvas);
             initPopovers(canvas);
             initTabs(canvas);
+            initToggles(canvas);
+            initToggleGroups(canvas);
+            initSteppers(canvas);
             initTooltips(canvas);
             initToasts(canvas);
         },

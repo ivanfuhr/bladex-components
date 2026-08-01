@@ -87,6 +87,31 @@
             ]
         },
         {
+            "name": "button-group",
+            "type": "registry:ui",
+            "title": "Button Group",
+            "description": "Visual grouping for related buttons with shared borders, orientation, separators, and text affixes.",
+            "registryDependencies": [
+                "button"
+            ]
+        },
+        {
+            "name": "toggle",
+            "type": "registry:ui",
+            "title": "Toggle",
+            "description": "Two-state pressed button control with outline/default variants and size scale.",
+            "registryDependencies": []
+        },
+        {
+            "name": "toggle-group",
+            "type": "registry:ui",
+            "title": "Toggle Group",
+            "description": "Single or multiple selection group of toggle items with toolbar/radiogroup semantics.",
+            "registryDependencies": [
+                "toggle"
+            ]
+        },
+        {
             "name": "select",
             "type": "registry:ui",
             "title": "Select",
@@ -256,6 +281,20 @@
             ]
         },
         {
+            "name": "command",
+            "type": "registry:ui",
+            "title": "Command",
+            "description": "Accessible command palette with typeahead filtering, keyboard navigation, and optional dialog + \u2318K shortcut.",
+            "registryDependencies": [
+                "dialog",
+                "icon"
+            ],
+            "iconDependencies": [
+                "search",
+                "x"
+            ]
+        },
+        {
             "name": "accordion",
             "type": "registry:ui",
             "title": "Accordion",
@@ -273,6 +312,19 @@
             "title": "Collapsible",
             "description": "Accessible single-panel expand/collapse primitive with optional transition.",
             "registryDependencies": []
+        },
+        {
+            "name": "sidebar",
+            "type": "registry:ui",
+            "title": "Sidebar",
+            "description": "Composable app-shell sidebar with provider state, collapse modes, mobile overlay, and menu primitives.",
+            "registryDependencies": [
+                "icon",
+                "button"
+            ],
+            "iconDependencies": [
+                "panel-left"
+            ]
         },
         {
             "name": "avatar",
@@ -325,6 +377,37 @@
             "title": "Skeleton",
             "description": "Animated placeholder for loading states.",
             "registryDependencies": []
+        },
+        {
+            "name": "empty",
+            "type": "registry:ui",
+            "title": "Empty",
+            "description": "Composable empty state with media, title, description, and content parts.",
+            "registryDependencies": [
+                "icon"
+            ]
+        },
+        {
+            "name": "stepper",
+            "type": "registry:ui",
+            "title": "Stepper",
+            "description": "Composable multi-step wizard indicator with panels and previous/next navigation.",
+            "registryDependencies": [
+                "button",
+                "icon"
+            ],
+            "iconDependencies": [
+                "check"
+            ]
+        },
+        {
+            "name": "stat",
+            "type": "registry:ui",
+            "title": "Stat",
+            "description": "Dashboard KPI card with label, value, description, trend, and optional icon.",
+            "registryDependencies": [
+                "icon"
+            ]
         },
         {
             "name": "dropdown-menu",

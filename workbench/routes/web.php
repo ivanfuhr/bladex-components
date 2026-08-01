@@ -17,7 +17,7 @@ Route::get('/playbook/media/{component}', [PlaybookMediaController::class, 'show
     ->name('playbook.media.show')
     ->where(
         'component',
-        'button|input|input-currency|select|typography|icons|label|field|textarea|checkbox|radio|switch|dialog|calendar|date-picker|time-picker|datetime-picker|combobox|file-upload|repeater|pillbox|rating|color-picker|input-otp|slider|accordion|collapsible|avatar|badge|breadcrumb|card|dropdown-menu|popover|separator|skeleton|tabs|tooltip|toast|progress|alert|table|pagination',
+        'button|button-group|toggle|toggle-group|input|input-currency|select|typography|icons|label|field|textarea|checkbox|radio|switch|dialog|command|calendar|date-picker|time-picker|datetime-picker|combobox|file-upload|repeater|pillbox|rating|color-picker|input-otp|slider|accordion|collapsible|avatar|badge|breadcrumb|card|dropdown-menu|popover|separator|skeleton|empty|sidebar|tabs|stepper|tooltip|toast|progress|alert|table|stat|pagination',
     );
 
 Route::get('/playbook/{component}', [PlaybookController::class, 'show'])

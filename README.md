@@ -22,7 +22,7 @@
 
 | 🧩 **Components** | 📖 **Guide** | 🛠 **Project** |
 | :--- | :--- | :--- |
-| [Button](#button) · [Input](#input) · [Label](#label) · [Field](#field) · [Textarea](#textarea) · [Checkbox](#checkbox) · [Radio](#radio) · [Switch](#switch) · [Select](#select) · [Dialog](#dialog) · [Accordion](#accordion) · [Collapsible](#collapsible) · [Avatar](#avatar) · [Badge](#badge) · [Breadcrumb](#breadcrumb) · [Card](#card) · [Dropdown Menu](#dropdown-menu) · [Separator](#separator) · [Skeleton](#skeleton) · [Tabs](#tabs) · [Tooltip](#tooltip) · [Toast](#toast) · [Progress](#progress) · [Alert](#alert) · [Table](#table) · [Typography](#typography) · [Icons](#icons) | [Installation](#installation) · [Usage](#usage) · [Registry CLI](#registry-cli) · [Tailwind](#tailwind-css) · [Playbook](#development) | [Changelog](CHANGELOG.md) · [Contributing](.github/CONTRIBUTING.md) · [Security](.github/SECURITY.md) · [License](LICENSE.md) |
+| [Button](#button) · [Button Group](#button-group) · [Toggle](#toggle) · [Toggle Group](#toggle-group) · [Input](#input) · [Label](#label) · [Field](#field) · [Textarea](#textarea) · [Checkbox](#checkbox) · [Radio](#radio) · [Switch](#switch) · [Select](#select) · [Dialog](#dialog) · [Command](#command) · [Accordion](#accordion) · [Sidebar](#sidebar) · [Collapsible](#collapsible) · [Avatar](#avatar) · [Badge](#badge) · [Breadcrumb](#breadcrumb) · [Card](#card) · [Stat](#stat) · [Dropdown Menu](#dropdown-menu) · [Separator](#separator) · [Skeleton](#skeleton) · [Empty](#empty) · [Tabs](#tabs) · [Stepper](#stepper) · [Tooltip](#tooltip) · [Toast](#toast) · [Progress](#progress) · [Alert](#alert) · [Table](#table) · [Typography](#typography) · [Icons](#icons) | [Installation](#installation) · [Usage](#usage) · [Registry CLI](#registry-cli) · [Tailwind](#tailwind-css) · [Playbook](#development) | [Changelog](CHANGELOG.md) · [Contributing](.github/CONTRIBUTING.md) · [Security](.github/SECURITY.md) · [License](LICENSE.md) |
 
 <br>
 
@@ -66,7 +66,7 @@ Use the owned Blade namespace in your app:
 <x-ui::input name="email" />
 ```
 
-**Registry UI items:** `accordion`, `alert`, `avatar`, `badge`, `breadcrumb`, `button`, `calendar`, `card`, `checkbox`, `collapsible`, `color-picker`, `combobox`, `date-picker`, `datetime-picker`, `dialog`, `dropdown-menu`, `field`, `file-upload`, `heading`, `icon`, `input`, `input-currency`, `input-group`, `input-otp`, `label`, `pagination`, `pillbox`, `popover`, `progress`, `radio`, `rating`, `repeater`, `select`, `separator`, `skeleton`, `slider`, `switch`, `table`, `tabs`, `text`, `textarea`, `time-picker`, `toast`, `tooltip`. Lower-level pieces such as `field`, `input-group`, `label`, and `icon` are usually installed transitively. Components that use Lucide glyphs also install the required icon stubs during `stencil:add`; use `stencil:icon {name}` for any extra icons (see [Icons](#icons)).
+**Registry UI items:** `accordion`, `alert`, `avatar`, `badge`, `breadcrumb`, `button`, `button-group`, `calendar`, `card`, `checkbox`, `collapsible`, `color-picker`, `combobox`, `command`, `date-picker`, `datetime-picker`, `dialog`, `dropdown-menu`, `empty`, `field`, `file-upload`, `heading`, `icon`, `input`, `input-currency`, `input-group`, `input-otp`, `label`, `pagination`, `pillbox`, `popover`, `progress`, `radio`, `rating`, `repeater`, `select`, `separator`, `sidebar`, `skeleton`, `slider`, `stat`, `stepper`, `switch`, `table`, `tabs`, `text`, `textarea`, `time-picker`, `toast`, `toggle`, `toggle-group`, `tooltip`. Lower-level pieces such as `field`, `input-group`, `label`, and `icon` are usually installed transitively. Components that use Lucide glyphs also install the required icon stubs during `stencil:add`; use `stencil:icon {name}` for any extra icons (see [Icons](#icons)).
 
 ### Registry CLI
 
@@ -138,6 +138,102 @@ php artisan stencil:add button icon
 ```
 
 The square button uses the built-in loading icon from `stencil:add icon`.
+
+<br>
+
+## Button Group
+
+Attach related action buttons with shared borders ([shadcn Button Group](https://ui.shadcn.com/docs/components/button-group), [Flux button.group](https://fluxui.dev/components/button)). Use `toggle-group` when items represent pressed state instead of actions. Orientation: `horizontal` (default) or `vertical`. Optional `button-group.separator` and `button-group.text`.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/button-group-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/button-group-light.png">
+  <img src="docs/images/button-group-light.png" alt="Button Group" />
+</picture>
+
+```blade
+<x-ui::button-group aria-label="Document actions">
+    <x-ui::button variant="outline">Archive</x-ui::button>
+    <x-ui::button variant="outline">Report</x-ui::button>
+    <x-ui::button variant="outline">Snooze</x-ui::button>
+</x-ui::button-group>
+
+<x-ui::button-group orientation="vertical" aria-label="Zoom">
+    <x-ui::button variant="outline" square>+</x-ui::button>
+    <x-ui::button variant="outline" square>−</x-ui::button>
+</x-ui::button-group>
+
+<x-ui::button-group aria-label="Clipboard">
+    <x-ui::button variant="outline">Copy</x-ui::button>
+    <x-ui::button-group.separator />
+    <x-ui::button variant="outline">Paste</x-ui::button>
+</x-ui::button-group>
+
+<x-ui::button-group>
+    <x-ui::button-group.text>https://</x-ui::button-group.text>
+    <x-ui::button variant="outline">Open</x-ui::button>
+</x-ui::button-group>
+```
+
+```bash
+php artisan stencil:add button-group
+```
+
+<br>
+
+## Toggle
+
+Two-state pressed button with `aria-pressed` ([shadcn Toggle](https://ui.shadcn.com/docs/components/toggle)). Variants: `default`, `outline`. Sizes: `sm`, `default`, `lg`. `stencil:add toggle` copies `toggle.js` and patches your Vite entry.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/toggle-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/toggle-light.png">
+  <img src="docs/images/toggle-light.png" alt="Toggle" />
+</picture>
+
+```blade
+<x-ui::toggle aria-label="Toggle italic">Italic</x-ui::toggle>
+<x-ui::toggle variant="outline" :pressed="true">Bold</x-ui::toggle>
+<x-ui::toggle size="sm" variant="outline">Small</x-ui::toggle>
+```
+
+```bash
+php artisan stencil:add toggle
+```
+
+<br>
+
+## Toggle Group
+
+Single or multiple selection among toggle items ([shadcn Toggle Group](https://ui.shadcn.com/docs/components/toggle-group), Flux segmented / buttons radio & checkbox groups). `type="single"` uses `role="radiogroup"`; `type="multiple"` uses `role="group"` with `aria-pressed`. Pass `default-value` for the initial selection (string, or array for `multiple`). `spacing="0"` (default) connects items; use `spacing="2"` for a gap. `stencil:add toggle-group` also installs `toggle` and copies `toggle-group.js`.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/toggle-group-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/toggle-group-light.png">
+  <img src="docs/images/toggle-group-light.png" alt="Toggle Group" />
+</picture>
+
+```blade
+<x-ui::toggle-group type="single" variant="outline" default-value="bold" aria-label="Text style">
+    <x-ui::toggle-group.item value="bold">Bold</x-ui::toggle-group.item>
+    <x-ui::toggle-group.item value="italic">Italic</x-ui::toggle-group.item>
+    <x-ui::toggle-group.item value="underline">Underline</x-ui::toggle-group.item>
+</x-ui::toggle-group>
+
+<x-ui::toggle-group type="multiple" variant="outline" :default-value="['bold']" aria-label="Format">
+    <x-ui::toggle-group.item value="bold">Bold</x-ui::toggle-group.item>
+    <x-ui::toggle-group.item value="italic">Italic</x-ui::toggle-group.item>
+</x-ui::toggle-group>
+
+<x-ui::toggle-group orientation="vertical" variant="outline" spacing="2">
+    <x-ui::toggle-group.item value="left">Left</x-ui::toggle-group.item>
+    <x-ui::toggle-group.item value="center">Center</x-ui::toggle-group.item>
+</x-ui::toggle-group>
+```
+
+```bash
+php artisan stencil:add toggle-group
+```
 
 <br>
 
@@ -978,6 +1074,71 @@ php artisan stencil:add dialog
 
 <br>
 
+## Command
+
+Accessible command palette ([shadcn Command](https://ui.shadcn.com/docs/components/command) / [cmdk](https://cmdk.paco.me), [Flux command](https://fluxui.dev/components/command)). Subcomponents include `input`, `list`, `empty`, `group`, `item`, `shortcut`, `separator`, and `dialog`. `stencil:add command` copies `command.js` (and pulls `dialog` via registry dependencies) and patches your Vite entry.
+
+Default `shortcut` wraps items with `command.input`, `command.list`, and `command.empty`. Set `:shortcut="false"` for full composition. Use `command.dialog` for a ⌘K-style modal palette (`shortcut="meta.k"` listens on the document; pair with `dialog.trigger` using the same `name`).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/command-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/command-light.png">
+  <img src="docs/images/command-light.png" alt="Command" />
+</picture>
+
+```blade
+<x-ui::dialog.trigger name="palette">
+    <x-ui::button variant="outline">Search…</x-ui::button>
+</x-ui::dialog.trigger>
+
+<x-ui::command.dialog name="palette" shortcut="meta.k">
+    <x-ui::command placeholder="Type a command or search…">
+        <x-ui::command.group heading="Suggestions">
+            <x-ui::command.item value="calendar" kbd="⌘C">Calendar</x-ui::command.item>
+            <x-ui::command.item value="emoji">Search Emoji</x-ui::command.item>
+            <x-ui::command.item value="calculator">Calculator</x-ui::command.item>
+        </x-ui::command.group>
+        <x-ui::command.separator />
+        <x-ui::command.group heading="Settings">
+            <x-ui::command.item value="profile" kbd="⌘P">Profile</x-ui::command.item>
+            <x-ui::command.item value="billing" kbd="⌘B">Billing</x-ui::command.item>
+            <x-ui::command.item value="settings" kbd="⌘S">Settings</x-ui::command.item>
+        </x-ui::command.group>
+    </x-ui::command>
+</x-ui::command.dialog>
+
+{{-- Inline (no dialog) --}}
+<x-ui::command class="rounded-xl border border-zinc-200 dark:border-zinc-800" placeholder="Filter actions…">
+    <x-ui::command.item value="new-file">Create new file</x-ui::command.item>
+    <x-ui::command.item value="docs" href="/docs">Documentation</x-ui::command.item>
+</x-ui::command>
+
+{{-- Full composition --}}
+<x-ui::command :shortcut="false">
+    <x-ui::command.input placeholder="Search…" />
+    <x-ui::command.list>
+        <x-ui::command.empty>No results found.</x-ui::command.empty>
+        <x-ui::command.item value="settings">Settings</x-ui::command.item>
+    </x-ui::command.list>
+</x-ui::command>
+```
+
+| Prop | Description |
+| --- | --- |
+| `shortcut` (root) | When `true` (default), auto-wraps the slot with input / list / empty |
+| `placeholder` / `empty` | Passed through in shortcut mode |
+| `shortcut` (`dialog`) | Document hotkey, e.g. `meta.k` or `cmd.k` (normalized to `meta.k`) |
+| `name` (`dialog`) | Named dialog for `dialog.trigger` / `window.Stencil.dialog(name)` |
+| `value` / `kbd` / `icon` / `href` (`item`) | Action value, shortcut hint, optional Lucide icon, optional link |
+
+Keyboard: typeahead filter, ↑/↓ highlight, Enter select (dispatches `stencil:command:select` and closes the dialog), Escape clears or closes.
+
+```bash
+php artisan stencil:add command
+```
+
+<br>
+
 ## Accordion
 
 Accessible vertically stacked disclosures ([shadcn Accordion](https://ui.shadcn.com/docs/components/accordion), [Flux accordion](https://fluxui.dev/components/accordion)). Subcomponents include `item`, `trigger`, and `content`. `stencil:add accordion` copies `accordion.js` and patches your Vite entry.
@@ -1014,6 +1175,60 @@ Accessible vertically stacked disclosures ([shadcn Accordion](https://ui.shadcn.
 
 ```bash
 php artisan stencil:add accordion
+```
+
+<br>
+
+## Sidebar
+
+Composable app-shell navigation ([shadcn Sidebar](https://ui.shadcn.com/docs/components/sidebar), [Flux sidebar](https://fluxui.dev/components/sidebar)). Subcomponents include `provider`, `trigger`, `inset`, `header`, `footer`, `content`, `group`, `group-label`, `group-content`, `group-action`, `menu`, `menu-item`, `menu-button`, `menu-action`, `menu-badge`, `menu-sub`, `menu-sub-item`, `menu-sub-button`, `separator`, `rail`, and `backdrop`. Collapse modes: `offcanvas`, `icon`, `none`. Open state persists in `localStorage` (not cookies). `stencil:add sidebar` copies `sidebar.js` and the `panel-left` icon.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/sidebar-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/sidebar-light.png">
+  <img src="docs/images/sidebar-light.png" alt="Sidebar" />
+</picture>
+
+```blade
+<x-ui::sidebar.provider>
+    <x-ui::sidebar collapsible="icon">
+        <x-ui::sidebar.header>
+            <x-ui::sidebar.menu>
+                <x-ui::sidebar.menu-item>
+                    <x-ui::sidebar.menu-button href="/" class="font-semibold">Acme</x-ui::sidebar.menu-button>
+                </x-ui::sidebar.menu-item>
+            </x-ui::sidebar.menu>
+        </x-ui::sidebar.header>
+        <x-ui::sidebar.content>
+            <x-ui::sidebar.group>
+                <x-ui::sidebar.group-label>Platform</x-ui::sidebar.group-label>
+                <x-ui::sidebar.group-content>
+                    <x-ui::sidebar.menu>
+                        <x-ui::sidebar.menu-item>
+                            <x-ui::sidebar.menu-button href="/" active>Home</x-ui::sidebar.menu-button>
+                        </x-ui::sidebar.menu-item>
+                        <x-ui::sidebar.menu-item>
+                            <x-ui::sidebar.menu-button href="/settings">Settings</x-ui::sidebar.menu-button>
+                        </x-ui::sidebar.menu-item>
+                    </x-ui::sidebar.menu>
+                </x-ui::sidebar.group-content>
+            </x-ui::sidebar.group>
+        </x-ui::sidebar.content>
+        <x-ui::sidebar.footer>...</x-ui::sidebar.footer>
+        <x-ui::sidebar.rail />
+    </x-ui::sidebar>
+    <x-ui::sidebar.inset>
+        <header class="flex h-12 items-center gap-2 px-3">
+            <x-ui::sidebar.trigger />
+            <span class="text-sm font-medium">Dashboard</span>
+        </header>
+        {{ $slot }}
+    </x-ui::sidebar.inset>
+</x-ui::sidebar.provider>
+```
+
+```bash
+php artisan stencil:add sidebar
 ```
 
 <br>
@@ -1148,6 +1363,46 @@ php artisan stencil:add card
 
 <br>
 
+## Stat
+
+Dashboard KPI card ([Mary UI Statistic](https://mary-ui.com/docs/components/statistic), [Filament Stats Overview](https://filamentphp.com/docs/5.x/widgets/stats-overview)). Label, value, optional description, trend, and icon — shortcut props or compound parts.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/stat-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/stat-light.png">
+  <img src="docs/images/stat-light.png" alt="Stat" />
+</picture>
+
+```blade
+<x-ui::stat
+    label="Open tickets"
+    value="128"
+    trend="+12.4%"
+    trend-direction="up"
+    description="vs last 7 days"
+    icon="file"
+/>
+
+<x-ui::stat variant="muted">
+    <div class="flex items-start justify-between gap-3">
+        <div class="space-y-1">
+            <x-ui::stat.label>Resolved</x-ui::stat.label>
+            <x-ui::stat.value>86%</x-ui::stat.value>
+        </div>
+        <x-ui::stat.icon>
+            <x-ui::icon name="check" class="size-4" />
+        </x-ui::stat.icon>
+    </div>
+    <x-ui::stat.description>This week</x-ui::stat.description>
+</x-ui::stat>
+```
+
+```bash
+php artisan stencil:add stat
+```
+
+<br>
+
 ## Dropdown Menu
 
 Accessible action menu ([shadcn Dropdown Menu](https://ui.shadcn.com/docs/components/dropdown-menu), [Flux dropdown](https://fluxui.dev/components/dropdown)). `stencil:add dropdown-menu` copies `dropdown-menu.js`.
@@ -1220,6 +1475,37 @@ php artisan stencil:add skeleton
 
 <br>
 
+## Empty
+
+Empty state for lists, tables, and first-run screens ([shadcn Empty](https://ui.shadcn.com/docs/components/empty), [Filament empty-state](https://filamentphp.com/docs/5.x/components/empty-state)). Compose `header` → `media` / `title` / `description`, then `content` for actions. Media `variant="icon"` wraps Lucide icons; pass `icon="…"` or slot custom media. Add `class="border"` for an outlined stage.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/empty-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/empty-light.png">
+  <img src="docs/images/empty-light.png" alt="Empty" />
+</picture>
+
+```blade
+<x-ui::empty class="border">
+    <x-ui::empty.header>
+        <x-ui::empty.media variant="icon" icon="file" />
+        <x-ui::empty.title>No projects yet</x-ui::empty.title>
+        <x-ui::empty.description>
+            You haven't created any projects yet. Get started by creating your first project.
+        </x-ui::empty.description>
+    </x-ui::empty.header>
+    <x-ui::empty.content>
+        <x-ui::button variant="primary">Create project</x-ui::button>
+    </x-ui::empty.content>
+</x-ui::empty>
+```
+
+```bash
+php artisan stencil:add empty
+```
+
+<br>
+
 ## Tabs
 
 Tabbed panels ([shadcn Tabs](https://ui.shadcn.com/docs/components/tabs), [Flux tabs](https://fluxui.dev/components/tabs)). Variants: `default`, `segmented`, `pills`, `line`. `stencil:add tabs` copies `tabs.js`.
@@ -1243,6 +1529,51 @@ Tabbed panels ([shadcn Tabs](https://ui.shadcn.com/docs/components/tabs), [Flux 
 
 ```bash
 php artisan stencil:add tabs
+```
+
+<br>
+
+## Stepper
+
+Multi-step wizard indicator ([Filament Wizard](https://filamentphp.com/docs/3.x/forms/layout/wizard), [shadcn community steppers](https://github.com/francozeta/stepper)). Horizontal or vertical, with complete / current / upcoming states. `stencil:add stepper` copies `stepper.js`.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/stepper-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/stepper-light.png">
+  <img src="docs/images/stepper-light.png" alt="Stepper" />
+</picture>
+
+```blade
+<x-ui::stepper default-value="account">
+    <x-ui::stepper.list>
+        <x-ui::stepper.item value="account" :step="1">
+            <x-ui::stepper.trigger>
+                <x-ui::stepper.indicator />
+                <x-ui::stepper.title>Account</x-ui::stepper.title>
+                <x-ui::stepper.description>Profile details</x-ui::stepper.description>
+            </x-ui::stepper.trigger>
+            <x-ui::stepper.separator />
+        </x-ui::stepper.item>
+        <x-ui::stepper.item value="workspace" :step="2">
+            <x-ui::stepper.trigger>
+                <x-ui::stepper.indicator />
+                <x-ui::stepper.title>Workspace</x-ui::stepper.title>
+            </x-ui::stepper.trigger>
+        </x-ui::stepper.item>
+    </x-ui::stepper.list>
+
+    <x-ui::stepper.content value="account">Account details</x-ui::stepper.content>
+    <x-ui::stepper.content value="workspace">Workspace details</x-ui::stepper.content>
+
+    <x-ui::stepper.navigation>
+        <x-ui::stepper.previous />
+        <x-ui::stepper.next />
+    </x-ui::stepper.navigation>
+</x-ui::stepper>
+```
+
+```bash
+php artisan stencil:add stepper
 ```
 
 <br>
@@ -1498,7 +1829,7 @@ php vendor/bin/testbench serve --port=8001   # separate terminal
 ./scripts/capture-readme-images.sh
 ```
 
-The script crops to `#readme-media` (fixed `56rem` / 896px width, variable height) with a transparent background at 3× device pixel ratio by default (`STENCIL_SCREENSHOT_SCALE`, `STENCIL_README_MEDIA_WIDTH`; installs `playwright-core` under `scripts/` on first run). Targets: `/playbook/media/{button|input|input-currency|select|dialog|typography|icons|label|field|textarea|checkbox|radio|switch|combobox|file-upload|repeater|pillbox|rating|color-picker|input-otp|slider|accordion|collapsible|avatar|badge|breadcrumb|card|dropdown-menu|popover|separator|skeleton|tabs|tooltip|toast|progress|alert|table|pagination|calendar|date-picker|time-picker|datetime-picker}` and the same paths with `?dark=1`. Overlay pickers open before capture; portaling is skipped inside `#readme-media`. List slugs with `node scripts/capture-readme-images.mjs --list`. Legacy `/playbook/media/buttons` redirects to `/playbook/media/button`.
+The script crops to `#readme-media` (fixed `56rem` / 896px width, variable height) with a transparent background at 3× device pixel ratio by default (`STENCIL_SCREENSHOT_SCALE`, `STENCIL_README_MEDIA_WIDTH`; installs `playwright-core` under `scripts/` on first run). Targets: `/playbook/media/{button|button-group|toggle|toggle-group|input|input-currency|select|dialog|command|typography|icons|label|field|textarea|checkbox|radio|switch|combobox|file-upload|repeater|pillbox|rating|color-picker|input-otp|slider|accordion|collapsible|avatar|badge|breadcrumb|card|dropdown-menu|popover|separator|skeleton|empty|sidebar|tabs|stepper|tooltip|toast|progress|alert|table|stat|pagination|calendar|date-picker|time-picker|datetime-picker}` and the same paths with `?dark=1`. Overlay pickers open before capture; portaling is skipped inside `#readme-media`. List slugs with `node scripts/capture-readme-images.mjs --list`. Pass slug arguments to capture a subset. Legacy `/playbook/media/buttons` redirects to `/playbook/media/button`.
 
 <br>
 

@@ -26,8 +26,10 @@ function defaultStencilTestIconNames(): array
         'eye',
         'file',
         'grip-vertical',
+        'panel-left',
         'plus',
         'star',
+        'search',
         'upload',
         'x',
     ];

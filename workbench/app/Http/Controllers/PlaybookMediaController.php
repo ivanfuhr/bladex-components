@@ -14,6 +14,9 @@ final class PlaybookMediaController
     /** @var list<string> */
     private const array COMPONENTS = [
         'button',
+        'button-group',
+        'toggle',
+        'toggle-group',
         'input',
         'input-currency',
         'select',
@@ -26,6 +29,7 @@ final class PlaybookMediaController
         'radio',
         'switch',
         'dialog',
+        'command',
         'calendar',
         'date-picker',
         'time-picker',
@@ -48,12 +52,16 @@ final class PlaybookMediaController
         'popover',
         'separator',
         'skeleton',
+        'empty',
+        'sidebar',
         'tabs',
+        'stepper',
         'tooltip',
         'toast',
         'progress',
         'alert',
         'table',
+        'stat',
         'pagination',
     ];
 

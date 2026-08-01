@@ -80,7 +80,7 @@ it('links sibling components within the same catalog category', function () {
     $response = $this->get('/playbook/input');
 
     $response->assertOk();
-    $response->assertSee(route('playbook.show', 'button'), false);
+    $response->assertSee(route('playbook.show', 'toggle-group'), false);
     $response->assertSee(route('playbook.show', 'input-currency'), false);
     $response->assertSee('Previous');
     $response->assertSee('Next');
@@ -101,7 +101,9 @@ it('resolves media slugs and siblings from the playbook registry', function () {
     expect($registry->mediaSlug('button'))->toBe('button')
         ->and($registry->mediaSlug('heading'))->toBe('typography')
         ->and($registry->mediaSlug('icon'))->toBe('icons')
-        ->and($registry->siblings('input')['previous']?->slug)->toBe('button')
+        ->and($registry->mediaSlug('empty'))->toBe('empty')
+        ->and($registry->mediaSlug('sidebar'))->toBe('sidebar')
+        ->and($registry->siblings('input')['previous']?->slug)->toBe('toggle-group')
         ->and($registry->siblings('input')['next']?->slug)->toBe('input-currency')
         ->and($registry->get('table')->wide)->toBeTrue()
         ->and($registry->get('button')->wide)->toBeFalse();
@@ -228,6 +230,9 @@ it('renders playbook media pages for button and datetime components', function (
     $this->get('/playbook/media/'.$slug.'?dark=1')->assertOk();
 })->with([
     'button',
+    'button-group',
+    'toggle',
+    'toggle-group',
     'icons',
     'typography',
     'calendar',
@@ -237,6 +242,11 @@ it('renders playbook media pages for button and datetime components', function (
     'color-picker',
     'dropdown-menu',
     'popover',
+    'command',
+    'empty',
+    'sidebar',
+    'stepper',
+    'stat',
 ]);
 
 it('redirects legacy buttons media slug to button', function () {
@@ -256,15 +266,20 @@ it('renders layout and feedback playbook pages with initial previews', function 
     ['breadcrumb', 'data-breadcrumb'],
     ['card', 'data-card'],
     ['dropdown-menu', 'data-dropdown-menu'],
+    ['command', 'data-command'],
     ['popover', 'data-popover'],
     ['separator', 'data-separator'],
     ['skeleton', 'data-skeleton'],
+    ['empty', 'data-empty'],
+    ['sidebar', 'data-sidebar-provider'],
     ['tabs', 'data-tabs'],
+    ['stepper', 'data-stepper'],
     ['tooltip', 'data-tooltip'],
     ['toast', 'data-toast-provider'],
     ['progress', 'data-progress'],
     ['alert', 'data-alert'],
     ['table', 'data-table'],
+    ['stat', 'data-stat'],
     ['icons', 'data-icon'],
     ['pagination', 'data-pagination'],
 ]);
