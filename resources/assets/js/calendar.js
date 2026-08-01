@@ -119,6 +119,46 @@ export function bindCalendar(root) {
         );
     }
 
+    function focusedDay() {
+        return state.selection.focus ?? state.selection.start ?? state.selection.end ?? state.today;
+    }
+
+    function ensureFocusVisible(day) {
+        const viewStart = new DateValue(state.viewMonth.getYear(), state.viewMonth.getMonth(), 1);
+        const lastMonth = state.viewMonth.addMonths(config.monthCount - 1);
+        const viewEnd = new DateValue(
+            lastMonth.getYear(),
+            lastMonth.getMonth(),
+            lastMonth.getDaysInMonth(),
+        );
+
+        if (day.isBefore(viewStart)) {
+            state.viewMonth = new DateValue(day.getYear(), day.getMonth(), 1);
+        } else if (day.isAfter(viewEnd)) {
+            state.viewMonth = new DateValue(day.getYear(), day.getMonth(), 1).addMonths(
+                -(config.monthCount - 1),
+            );
+        }
+    }
+
+    function focusActiveDayButton() {
+        const iso = focusedDay().toIsoDateString();
+        const button =
+            root.querySelector(`[data-calendar-day="${iso}"][tabindex="0"]`) ??
+            root.querySelector(`[data-calendar-day="${iso}"]:not([disabled])`);
+
+        if (button instanceof HTMLButtonElement) {
+            button.focus();
+        }
+    }
+
+    function moveFocusTo(day) {
+        state.selection.focus = day;
+        ensureFocusVisible(day);
+        render();
+        focusActiveDayButton();
+    }
+
     prevBtn?.addEventListener('click', () => {
         state.viewMonth = state.viewMonth.addMonths(-1);
         render();
@@ -132,13 +172,17 @@ export function bindCalendar(root) {
     todayBtn?.addEventListener('click', () => {
         if (state.today.isSameDay(state.viewMonth) === false) {
             state.viewMonth = state.today.getCopy();
+            state.selection.focus = state.today.getCopy();
             render();
+            focusActiveDayButton();
 
             return;
         }
 
+        state.selection.focus = state.today.getCopy();
         selectDay(state.today, state, config);
         render();
+        focusActiveDayButton();
 
         if (!config.withConfirmation && shouldCommitSelection(state, config)) {
             commitSelection();
@@ -165,8 +209,10 @@ export function bindCalendar(root) {
             return;
         }
 
+        state.selection.focus = day;
         selectDay(day, state, config);
         render();
+        focusActiveDayButton();
 
         if (!config.withConfirmation && shouldCommitSelection(state, config)) {
             commitSelection();
@@ -174,30 +220,75 @@ export function bindCalendar(root) {
     });
 
     root.addEventListener('keydown', (event) => {
-        if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
+        const dayTarget =
+            event.target instanceof Element ? event.target.closest('[data-calendar-day]') : null;
+
+        if (!dayTarget && event.target !== root) {
+            return;
+        }
+
+        const navigationKeys = [
+            'ArrowLeft',
+            'ArrowRight',
+            'ArrowUp',
+            'ArrowDown',
+            'Home',
+            'End',
+            'PageUp',
+            'PageDown',
+        ];
+
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+
+            const day = focusedDay();
+
+            if (!isSelectable(day, config, state.today)) {
+                return;
+            }
+
+            selectDay(day, state, config);
+            state.selection.focus = day;
+            render();
+            focusActiveDayButton();
+
+            if (!config.withConfirmation && shouldCommitSelection(state, config)) {
+                commitSelection();
+            }
+
+            return;
+        }
+
+        if (!navigationKeys.includes(event.key)) {
             return;
         }
 
         event.preventDefault();
-        const delta =
-            event.key === 'ArrowLeft'
-                ? -1
-                : event.key === 'ArrowRight'
-                  ? 1
-                  : event.key === 'ArrowUp'
-                    ? -7
-                    : 7;
-        const base =
-            state.selection.focus ?? state.selection.start ?? state.selection.end ?? state.today;
-        const next = base.incrementDays(delta);
 
-        state.selection.focus = next;
-        selectDay(next, state, config);
-        render();
+        const base = focusedDay();
+        let next = base;
 
-        if (!config.withConfirmation && shouldCommitSelection(state, config)) {
-            commitSelection();
+        if (event.key === 'ArrowLeft') {
+            next = base.incrementDays(-1);
+        } else if (event.key === 'ArrowRight') {
+            next = base.incrementDays(1);
+        } else if (event.key === 'ArrowUp') {
+            next = base.incrementDays(-7);
+        } else if (event.key === 'ArrowDown') {
+            next = base.incrementDays(7);
+        } else if (event.key === 'Home') {
+            const offset = (base.getDayOfWeek() - config.startDay + 7) % 7;
+            next = base.incrementDays(-offset);
+        } else if (event.key === 'End') {
+            const offset = (base.getDayOfWeek() - config.startDay + 7) % 7;
+            next = base.incrementDays(6 - offset);
+        } else if (event.key === 'PageUp') {
+            next = base.addMonths(event.shiftKey ? -12 : -1);
+        } else if (event.key === 'PageDown') {
+            next = base.addMonths(event.shiftKey ? 12 : 1);
         }
+
+        moveFocusTo(next);
     });
 
     root.addEventListener('calendar:confirm', () => {
@@ -312,6 +403,7 @@ function loadInitialSelection(state, config, initial = '') {
 function loadValueIntoState(value, state, mode) {
     state.selection.start = null;
     state.selection.end = null;
+    state.selection.focus = null;
 
     if (!value) {
         return;
@@ -321,11 +413,13 @@ function loadValueIntoState(value, state, mode) {
         const { start, end } = parseRangeValue(value);
         state.selection.start = DateValue.fromIsoDateString(start ?? '');
         state.selection.end = DateValue.fromIsoDateString(end ?? '');
+        state.selection.focus = state.selection.end ?? state.selection.start;
 
         return;
     }
 
     state.selection.start = DateValue.fromIsoDateString(value.split(',')[0] ?? value);
+    state.selection.focus = state.selection.start;
 }
 
 /**
@@ -387,7 +481,7 @@ function serializeSelection(state, mode) {
 /**
  * @param {DateValue} viewMonth
  * @param {ReturnType<typeof readConfig>} config
- * @param {{ today: DateValue, selection: { start: DateValue | null, end: DateValue | null } }} state
+ * @param {{ today: DateValue, selection: { start: DateValue | null, end: DateValue | null, focus: DateValue | null } }} state
  */
 function buildMonthTable(viewMonth, config, state) {
     const wrap = document.createElement('div');
@@ -395,15 +489,13 @@ function buildMonthTable(viewMonth, config, state) {
     wrap.style.width = '17.5rem';
     wrap.style.flexShrink = '0';
 
+    const focusDay =
+        state.selection.focus ?? state.selection.start ?? state.selection.end ?? state.today;
+
     if (config.monthCount > 1) {
         const monthTitle = document.createElement('div');
-        monthTitle.className = 'calendar__month-title';
-        monthTitle.style.marginBottom = '0.5rem';
-        monthTitle.style.textAlign = 'center';
-        monthTitle.style.fontSize = '0.875rem';
-        monthTitle.style.fontWeight = '500';
-        monthTitle.style.lineHeight = '1.25rem';
-        monthTitle.style.color = 'var(--calendar-month-title-color, rgb(24 24 27))';
+        monthTitle.className =
+            'calendar__month-title mb-2 text-center text-sm font-medium leading-5 text-zinc-800 dark:text-zinc-50';
         monthTitle.textContent = formatDateValue(viewMonth, config.locale, {
             month: 'long',
             year: 'numeric',
@@ -463,6 +555,7 @@ function buildMonthTable(viewMonth, config, state) {
                 }),
             );
             btn.setAttribute('aria-selected', isSelected(cellDay, state) ? 'true' : 'false');
+            btn.tabIndex = !disabled && inMonth && cellDay.isSameDay(focusDay) ? 0 : -1;
 
             if (!inMonth) {
                 btn.classList.add('opacity-40');

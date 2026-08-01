@@ -83,9 +83,7 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                             <x-stencil::dropdown-menu.shortcut>⌘E</x-stencil::dropdown-menu.shortcut>
                         </x-stencil::dropdown-menu.item>
                         <x-stencil::dropdown-menu.separator />
-                        <x-stencil::dropdown-menu.item variant="danger">
-                            Archive event
-                        </x-stencil::dropdown-menu.item>
+                        <x-stencil::dropdown-menu.item variant="danger"> Archive event </x-stencil::dropdown-menu.item>
                     </x-stencil::dropdown-menu.content>
                 </x-stencil::dropdown-menu>
 
@@ -104,7 +102,8 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                             <x-stencil::field name="publish_note">
                                 <x-stencil::field.label>Release note</x-stencil::field.label>
                                 <x-stencil::input name="publish_note" placeholder="What changed for attendees?" />
-                                <x-stencil::field.description>Shown once in the organizer activity feed.</x-stencil::field.description>
+                                <x-stencil::field.description>
+                                    Shown once in the organizer activity feed.</x-stencil::field.description>
                             </x-stencil::field>
                         </div>
                         <x-stencil::dialog.footer>
@@ -120,7 +119,8 @@ FORM: Established playbook surface extension (Operate); seed n/a.
         <div class="space-y-3">
             <x-stencil::alert variant="warning" title="Finish setup before publishing" icon="clipboard">
                 <x-stencil::alert.description>
-                    Add at least one ticket tier and confirm the venue capacity. Your public page stays gated until then.
+                    Add at least one ticket tier and confirm the venue capacity. Your public page stays gated until
+                    then.
                 </x-stencil::alert.description>
             </x-stencil::alert>
             <div class="space-y-2">
@@ -172,7 +172,8 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                             suffix=".events.test"
                                             value="northwind-summit"
                                         />
-                                        <x-stencil::field.description>Lowercase letters, numbers, and hyphens.</x-stencil::field.description>
+                                        <x-stencil::field.description>
+                                            Lowercase letters, numbers, and hyphens.</x-stencil::field.description>
                                     </x-stencil::field>
 
                                     <x-stencil::field name="summary">
@@ -181,7 +182,8 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                             name="summary"
                                             rows="3"
                                             placeholder="One short paragraph for search results and invites…"
-                                        >Two days of talks, workshops, and hallway track for Laravel teams shipping Blade UIs.</x-stencil::textarea>
+                                            >Two days of talks, workshops, and hallway track for Laravel teams shipping
+                                            Blade UIs.</x-stencil::textarea>
                                     </x-stencil::field>
 
                                     <div class="grid gap-5 sm:grid-cols-2">
@@ -190,29 +192,41 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                             <x-stencil::select name="format" placeholder="Choose format…">
                                                 <x-stencil::select.group>
                                                     <x-stencil::select.label>In person</x-stencil::select.label>
-                                                    <x-stencil::select.item value="conference">Conference</x-stencil::select.item>
-                                                    <x-stencil::select.item value="workshop">Workshop</x-stencil::select.item>
+                                                    <x-stencil::select.item value="conference">
+                                                        Conference</x-stencil::select.item>
+                                                    <x-stencil::select.item value="workshop">
+                                                        Workshop</x-stencil::select.item>
                                                 </x-stencil::select.group>
                                                 <x-stencil::select.separator />
                                                 <x-stencil::select.item value="hybrid">Hybrid</x-stencil::select.item>
-                                                <x-stencil::select.item value="online">Online only</x-stencil::select.item>
+                                                <x-stencil::select.item value="online">
+                                                    Online only</x-stencil::select.item>
                                             </x-stencil::select>
                                         </x-stencil::field>
 
                                         <x-stencil::field name="venue_city">
                                             <x-stencil::field.label>City</x-stencil::field.label>
-                                            <x-stencil::combobox name="venue_city" placeholder="Search cities…" value="porto-alegre">
+                                            <x-stencil::combobox
+                                                name="venue_city"
+                                                placeholder="Search cities…"
+                                                value="porto-alegre"
+                                            >
                                                 <x-stencil::combobox.group>
                                                     <x-stencil::combobox.label>Brazil</x-stencil::combobox.label>
-                                                    <x-stencil::combobox.item value="porto-alegre">Porto Alegre</x-stencil::combobox.item>
-                                                    <x-stencil::combobox.item value="sao-paulo">São Paulo</x-stencil::combobox.item>
-                                                    <x-stencil::combobox.item value="curitiba">Curitiba</x-stencil::combobox.item>
+                                                    <x-stencil::combobox.item value="porto-alegre">
+                                                        Porto Alegre</x-stencil::combobox.item>
+                                                    <x-stencil::combobox.item value="sao-paulo">
+                                                        São Paulo</x-stencil::combobox.item>
+                                                    <x-stencil::combobox.item value="curitiba">
+                                                        Curitiba</x-stencil::combobox.item>
                                                 </x-stencil::combobox.group>
                                                 <x-stencil::combobox.separator />
                                                 <x-stencil::combobox.group>
                                                     <x-stencil::combobox.label>Elsewhere</x-stencil::combobox.label>
-                                                    <x-stencil::combobox.item value="lisbon">Lisbon</x-stencil::combobox.item>
-                                                    <x-stencil::combobox.item value="berlin">Berlin</x-stencil::combobox.item>
+                                                    <x-stencil::combobox.item value="lisbon">
+                                                        Lisbon</x-stencil::combobox.item>
+                                                    <x-stencil::combobox.item value="berlin">
+                                                        Berlin</x-stencil::combobox.item>
                                                 </x-stencil::combobox.group>
                                             </x-stencil::combobox>
                                         </x-stencil::field>
@@ -250,7 +264,8 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                             <x-stencil::card>
                                 <x-stencil::card.header>
                                     <x-stencil::card.title>Ticketing</x-stencil::card.title>
-                                    <x-stencil::card.description>Capacity, price range, and visibility.</x-stencil::card.description>
+                                    <x-stencil::card.description>
+                                        Capacity, price range, and visibility.</x-stencil::card.description>
                                 </x-stencil::card.header>
                                 <x-stencil::card.content class="space-y-5">
                                     <x-stencil::radio.group name="access" legend="Access model">
@@ -274,8 +289,15 @@ FORM: Established playbook surface extension (Operate); seed n/a.
 
                                     <x-stencil::field name="capacity">
                                         <x-stencil::field.label>Venue capacity</x-stencil::field.label>
-                                        <x-stencil::slider name="capacity" :value="320" :min="50" :max="800" class="max-w-md" />
-                                        <x-stencil::field.description>Soft cap for waitlist messaging.</x-stencil::field.description>
+                                        <x-stencil::slider
+                                            name="capacity"
+                                            :value="320"
+                                            :min="50"
+                                            :max="800"
+                                            class="max-w-md"
+                                        />
+                                        <x-stencil::field.description>
+                                            Soft cap for waitlist messaging.</x-stencil::field.description>
                                     </x-stencil::field>
 
                                     <x-stencil::field name="expected_score">
@@ -288,14 +310,16 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                     <x-stencil::field name="waitlist" orientation="inline">
                                         <div class="flex min-w-0 flex-1 flex-col gap-1">
                                             <x-stencil::field.label>Enable waitlist</x-stencil::field.label>
-                                            <x-stencil::field.description>When capacity is reached.</x-stencil::field.description>
+                                            <x-stencil::field.description>
+                                                When capacity is reached.</x-stencil::field.description>
                                         </div>
                                         <x-stencil::switch name="waitlist" :checked="true" />
                                     </x-stencil::field>
 
                                     <x-stencil::field name="code_of_conduct" orientation="inline">
                                         <x-stencil::checkbox name="code_of_conduct" value="1" :checked="true" />
-                                        <x-stencil::field.label>Require code of conduct acknowledgment</x-stencil::field.label>
+                                        <x-stencil::field.label>
+                                            Require code of conduct acknowledgment</x-stencil::field.label>
                                     </x-stencil::field>
                                 </x-stencil::card.content>
                             </x-stencil::card>
@@ -330,7 +354,12 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                             >
                                 <div class="flex items-center justify-between gap-2">
                                     <x-stencil::heading :level="3" class="text-base!">Quick filters</x-stencil::heading>
-                                    <x-stencil::button type="button" variant="ghost" size="sm" x-on:click="open = ! open">
+                                    <x-stencil::button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        x-on:click="open = ! open"
+                                    >
                                         Filters
                                     </x-stencil::button>
                                 </div>
@@ -347,7 +376,13 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                                 <x-stencil::select.item value="ui">UI</x-stencil::select.item>
                                             </x-stencil::select>
                                         </x-stencil::field>
-                                        <x-stencil::button type="button" variant="secondary" size="sm" class="w-full" x-on:click="open = false">
+                                        <x-stencil::button
+                                            type="button"
+                                            variant="secondary"
+                                            size="sm"
+                                            class="w-full"
+                                            x-on:click="open = false"
+                                        >
                                             Apply filters
                                         </x-stencil::button>
                                     </div>
@@ -364,7 +399,8 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                             <x-stencil::card>
                                 <x-stencil::card.header>
                                     <x-stencil::card.title>When &amp; where</x-stencil::card.title>
-                                    <x-stencil::card.description>Date, doors, and kickoff datetime.</x-stencil::card.description>
+                                    <x-stencil::card.description>
+                                        Date, doors, and kickoff datetime.</x-stencil::card.description>
                                 </x-stencil::card.header>
                                 <x-stencil::card.content class="grid gap-5 sm:grid-cols-2">
                                     <x-stencil::field name="event_date">
@@ -387,7 +423,8 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                             <x-stencil::card>
                                 <x-stencil::card.header>
                                     <x-stencil::card.title>Sessions</x-stencil::card.title>
-                                    <x-stencil::card.description>Repeating rows for the day schedule.</x-stencil::card.description>
+                                    <x-stencil::card.description>
+                                        Repeating rows for the day schedule.</x-stencil::card.description>
                                 </x-stencil::card.header>
                                 <x-stencil::card.content>
                                     <x-stencil::repeater
@@ -401,7 +438,10 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                     >
                                         <x-stencil::repeater.item>
                                             <div class="grid gap-3 sm:grid-cols-2">
-                                                <x-stencil::input data-repeater-field="title" placeholder="Session title" />
+                                                <x-stencil::input
+                                                    data-repeater-field="title"
+                                                    placeholder="Session title"
+                                                />
                                                 <x-stencil::input data-repeater-field="room" placeholder="Room" />
                                             </div>
                                             <x-stencil::repeater.remove />
@@ -459,7 +499,12 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                     <x-stencil::table.row>
                                         <x-stencil::table.cell variant="strong">
                                             <div class="flex items-center gap-3">
-                                                <x-stencil::avatar name="Taylor Otwell" size="sm" circle color="indigo" />
+                                                <x-stencil::avatar
+                                                    name="Taylor Otwell"
+                                                    size="sm"
+                                                    circle
+                                                    color="indigo"
+                                                />
                                                 Taylor Otwell
                                             </div>
                                         </x-stencil::table.cell>
@@ -508,7 +553,8 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                     <x-stencil::pagination.link href="#guests">1</x-stencil::pagination.link>
                                 </x-stencil::pagination.item>
                                 <x-stencil::pagination.item>
-                                    <x-stencil::pagination.link href="#guests" :is-active="true">2</x-stencil::pagination.link>
+                                    <x-stencil::pagination.link href="#guests" :is-active="true">
+                                        2</x-stencil::pagination.link>
                                 </x-stencil::pagination.item>
                                 <x-stencil::pagination.item>
                                     <x-stencil::pagination.link href="#guests">3</x-stencil::pagination.link>
@@ -545,11 +591,13 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                         <x-stencil::card>
                             <x-stencil::card.header>
                                 <x-stencil::card.title>Advanced</x-stencil::card.title>
-                                <x-stencil::card.description>Optional tooling most organizers leave closed.</x-stencil::card.description>
+                                <x-stencil::card.description>
+                                    Optional tooling most organizers leave closed.</x-stencil::card.description>
                             </x-stencil::card.header>
                             <x-stencil::card.content class="space-y-4">
                                 <x-stencil::collapsible>
-                                    <x-stencil::collapsible.trigger>Webhook &amp; integrations</x-stencil::collapsible.trigger>
+                                    <x-stencil::collapsible.trigger>
+                                        Webhook &amp; integrations</x-stencil::collapsible.trigger>
                                     <x-stencil::collapsible.content class="mt-3 space-y-4">
                                         <x-stencil::field name="webhook_url">
                                             <x-stencil::field.label>Webhook URL</x-stencil::field.label>
@@ -571,9 +619,11 @@ FORM: Established playbook surface extension (Operate); seed n/a.
 
                                 <x-stencil::accordion exclusive bordered>
                                     <x-stencil::accordion.item value="refunds" :expanded="true">
-                                        <x-stencil::accordion.trigger>What is the refund policy?</x-stencil::accordion.trigger>
+                                        <x-stencil::accordion.trigger>
+                                            What is the refund policy?</x-stencil::accordion.trigger>
                                         <x-stencil::accordion.content>
-                                            Full refunds until 14 days before the event. After that, tickets convert to credit for next year.
+                                            Full refunds until 14 days before the event. After that, tickets convert to
+                                            credit for next year.
                                         </x-stencil::accordion.content>
                                     </x-stencil::accordion.item>
                                     <x-stencil::accordion.item heading="Can I transfer a ticket?">
@@ -587,7 +637,8 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                             <x-stencil::card.footer class="flex flex-wrap items-center justify-between gap-3">
                                 <x-stencil::dialog>
                                     <x-stencil::dialog.trigger>
-                                        <x-stencil::button type="button" variant="danger">Cancel event</x-stencil::button>
+                                        <x-stencil::button type="button" variant="danger"
+                                            >Cancel event</x-stencil::button>
                                     </x-stencil::dialog.trigger>
                                     <x-stencil::dialog.content alert>
                                         <x-stencil::dialog.header>
@@ -598,7 +649,8 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                         </x-stencil::dialog.header>
                                         <x-stencil::dialog.footer>
                                             <x-stencil::dialog.cancel>Keep event</x-stencil::dialog.cancel>
-                                            <x-stencil::dialog.action variant="danger">Cancel event</x-stencil::dialog.action>
+                                            <x-stencil::dialog.action variant="danger">
+                                                Cancel event</x-stencil::dialog.action>
                                         </x-stencil::dialog.footer>
                                     </x-stencil::dialog.content>
                                 </x-stencil::dialog>

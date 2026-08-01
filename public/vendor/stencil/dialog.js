@@ -82,7 +82,10 @@ function openDialog(dialog) {
 
     dialog.dataset.state = 'open';
     dialog.dispatchEvent(
-        new CustomEvent('stencil:dialog:open', { bubbles: true, detail: { name: dialog.dataset.dialogName ?? null } }),
+        new CustomEvent('stencil:dialog:open', {
+            bubbles: true,
+            detail: { name: dialog.dataset.dialogName ?? null },
+        }),
     );
 
     focusInitialElement(dialog);
@@ -164,15 +167,19 @@ function bindDialog(dialog) {
  */
 function bindTrigger(trigger) {
     trigger.addEventListener('click', (event) => {
-        const target = event.target instanceof Element
-            ? event.target.closest('button, a[href], [role="button"]')
-            : null;
+        const target =
+            event.target instanceof Element
+                ? event.target.closest('button, a[href], [role="button"]')
+                : null;
 
         if (target instanceof HTMLButtonElement && target.disabled) {
             return;
         }
 
-        if (target instanceof HTMLAnchorElement && target.getAttribute('aria-disabled') === 'true') {
+        if (
+            target instanceof HTMLAnchorElement &&
+            target.getAttribute('aria-disabled') === 'true'
+        ) {
             return;
         }
 
@@ -229,7 +236,7 @@ function focusInitialElement(dialog) {
     const focusTarget =
         dialog.querySelector('[data-dialog-initial-focus]') ??
         dialog.querySelector(
-            'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+            'button:not([data-dialog-close]):not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
         );
 
     if (focusTarget instanceof HTMLElement) {
@@ -268,6 +275,20 @@ if (typeof window !== 'undefined') {
         closeAll: () => closeAllDialogs(),
     };
 }
+
+document.addEventListener('stencil:mount', (event) => {
+    if (!(event instanceof CustomEvent)) {
+        return;
+    }
+
+    const mountRoot = event.detail?.root;
+
+    if (!(mountRoot instanceof HTMLElement)) {
+        return;
+    }
+
+    initDialogs(mountRoot);
+});
 
 if (typeof document !== 'undefined') {
     if (document.readyState === 'loading') {

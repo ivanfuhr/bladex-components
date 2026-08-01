@@ -7,7 +7,8 @@
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::badge /&gt;</p>
             <x-stencil::heading :level="2">Badge</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle">Compact status labels with variants, colors, and dismiss.</x-stencil::text>
+            <x-stencil::text size="sm" variant="subtle"
+                >Compact status labels with variants, colors, and dismiss.</x-stencil::text>
         </div>
 
         <div class="space-y-8">

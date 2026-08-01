@@ -22,7 +22,7 @@
             <nav class="mb-6">
                 <a
                     href="{{ route('playbook.index') }}"
-                    class="inline-flex items-center gap-1 text-sm font-medium text-zinc-600 transition hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-50"
+                    class="inline-flex items-center gap-1 rounded-sm text-sm font-medium text-zinc-600 transition hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:text-zinc-400 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300/20"
                 >
                     <span aria-hidden="true">←</span>
                     Catalog
@@ -86,25 +86,22 @@
                     Live preview
                 </h2>
                 <p
-                    class="text-xs text-zinc-500 transition-opacity dark:text-zinc-400"
-                    x-show="loading"
-                    x-cloak
-                    x-transition:enter="transition ease-out duration-150"
-                    x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100"
-                >
-                    Updating preview…
-                </p>
+                    class="text-xs text-zinc-500 dark:text-zinc-400"
+                    aria-live="polite"
+                    aria-atomic="true"
+                    x-text="statusMessage"
+                ></p>
             </div>
 
             <div
                 id="playbook-canvas"
                 class="playbook-stage mt-4 flex min-h-[min(24rem,50vh)] items-start justify-center overflow-visible rounded-2xl border border-zinc-200/80 bg-white p-8 shadow-sm ring-1 ring-zinc-950/5 sm:p-12 dark:border-zinc-800 dark:bg-zinc-900/50 dark:ring-white/5"
-                aria-live="polite"
-                aria-atomic="true"
+                x-bind:aria-busy="loading.toString()"
             >
                 <div class="w-full max-w-md" x-html="html"></div>
             </div>
+
+            <p class="mt-3 text-sm text-red-600 dark:text-red-400" x-show="error" x-cloak x-text="error"></p>
 
             <div class="mt-8 min-w-0" x-show="snippet.length > 0">
                 <div class="flex flex-wrap items-center justify-between gap-3">
@@ -114,7 +111,7 @@
                         class="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-700 shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20"
                         @click="copySnippet()"
                     >
-                        <span x-text="copied ? 'Copied' : 'Copy'"></span>
+                        <span x-text="copyLabel()"></span>
                     </button>
                 </div>
                 <div class="playbook-code mt-3 min-w-0 overflow-hidden rounded-2xl border border-zinc-200/80 bg-zinc-50 shadow-sm ring-1 ring-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950 dark:ring-white/5">

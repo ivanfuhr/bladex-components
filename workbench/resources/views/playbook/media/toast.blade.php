@@ -12,11 +12,7 @@
         </div>
 
         <div class="mx-auto flex w-full max-w-sm flex-col gap-3">
-            <x-stencil::toast
-                title="Saved"
-                description="Your changes were saved."
-                :duration="999999"
-            />
+            <x-stencil::toast title="Saved" description="Your changes were saved." :duration="999999" />
             <x-stencil::toast
                 variant="success"
                 title="Invite sent"

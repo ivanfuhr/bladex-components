@@ -69,3 +69,19 @@ it('marks multiple mode when exclusive is false', function () {
         ->toContain('data-accordion-variant="reverse"')
         ->toContain('rounded-xl');
 });
+
+it('hides closed transition panels from the accessibility tree', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-stencil::accordion transition>
+            <x-stencil::accordion.item value="a">
+                <x-stencil::accordion.trigger>Title</x-stencil::accordion.trigger>
+                <x-stencil::accordion.content>Body</x-stencil::accordion.content>
+            </x-stencil::accordion.item>
+        </x-stencil::accordion>
+    BLADE);
+
+    expect($html)
+        ->toContain('data-accordion-transition="true"')
+        ->toContain('aria-hidden="true"')
+        ->toContain('inert');
+});

@@ -61,6 +61,8 @@ function bindDatetimePicker(root) {
     const step = 30;
     const portalMarker = document.createComment('stencil-datetime-picker-portal');
     let isOpen = false;
+    /** @type {number} */
+    let activeTimeIndex = 0;
 
     let selectedDate = '';
     let selectedTime = withSeconds ? '00:00:00' : '00:00';
@@ -73,6 +75,9 @@ function bindDatetimePicker(root) {
     }
 
     if (timeList instanceof HTMLElement) {
+        timeList.setAttribute('role', 'listbox');
+        timeList.tabIndex = -1;
+
         for (let minutes = 0; minutes < 24 * 60; minutes += step) {
             const h = Math.floor(minutes / 60);
             const m = minutes % 60;
@@ -86,8 +91,38 @@ function bindDatetimePicker(root) {
                 'flex w-full rounded-lg px-2 py-1.5 text-left text-sm tabular-nums hover:bg-zinc-100 dark:hover:bg-zinc-800';
             button.dataset.datetimePickerTime = value;
             button.textContent = formatTimeLabel(value, locale, timeZone, withSeconds);
+            button.setAttribute('role', 'option');
+            button.tabIndex = -1;
             timeList.appendChild(button);
         }
+    }
+
+    function timeOptionElements() {
+        if (!(timeList instanceof HTMLElement)) {
+            return [];
+        }
+
+        return [...timeList.querySelectorAll('[data-datetime-picker-time]')].filter(
+            (el) => el instanceof HTMLElement,
+        );
+    }
+
+    function focusTimeOption(index) {
+        const list = timeOptionElements();
+
+        if (list.length === 0) {
+            return;
+        }
+
+        activeTimeIndex = Math.max(0, Math.min(index, list.length - 1));
+
+        list.forEach((el, i) => {
+            el.tabIndex = i === activeTimeIndex ? 0 : -1;
+        });
+
+        const active = list[activeTimeIndex];
+        active?.focus();
+        active?.scrollIntoView({ block: 'nearest' });
     }
 
     function loadFromHidden() {
@@ -120,6 +155,12 @@ function bindDatetimePicker(root) {
 
         loadFromHidden();
         syncTimeListSelection();
+
+        if (calendarEl instanceof HTMLElement) {
+            calendarEl.focus();
+        } else {
+            panel.focus();
+        }
     }
 
     function close() {
@@ -130,7 +171,10 @@ function bindDatetimePicker(root) {
         panel.removeAttribute('aria-modal');
         restorePanelFromPortal(panel, root, portalMarker);
 
-        trigger?.setAttribute('aria-expanded', 'false');
+        if (trigger instanceof HTMLElement) {
+            trigger.setAttribute('aria-expanded', 'false');
+            trigger.focus();
+        }
     }
 
     function composeIso() {
@@ -158,11 +202,9 @@ function bindDatetimePicker(root) {
             return;
         }
 
-        timeList.querySelectorAll('[data-datetime-picker-time]').forEach((el) => {
-            if (!(el instanceof HTMLElement)) {
-                return;
-            }
+        const list = timeOptionElements();
 
+        list.forEach((el, index) => {
             const selected = el.dataset.datetimePickerTime === selectedTime;
             el.setAttribute('aria-selected', selected ? 'true' : 'false');
             el.classList.toggle('bg-zinc-900', selected);
@@ -171,11 +213,19 @@ function bindDatetimePicker(root) {
             el.classList.toggle('dark:text-zinc-900', selected);
             el.classList.toggle('hover:bg-zinc-100', !selected);
             el.classList.toggle('dark:hover:bg-zinc-800', !selected);
+            el.tabIndex = -1;
 
             if (selected) {
+                activeTimeIndex = index;
+                el.tabIndex = 0;
                 el.scrollIntoView({ block: 'nearest' });
             }
         });
+
+        if (list.length > 0 && !list.some((el) => el.tabIndex === 0)) {
+            list[0].tabIndex = 0;
+            activeTimeIndex = 0;
+        }
     }
 
     function displayValue(value) {
@@ -221,6 +271,55 @@ function bindDatetimePicker(root) {
         if (option instanceof HTMLElement && option.dataset.datetimePickerTime) {
             selectedTime = option.dataset.datetimePickerTime;
             syncTimeListSelection();
+            focusTimeOption(activeTimeIndex);
+        }
+    });
+
+    timeList?.addEventListener('keydown', (event) => {
+        if (!isOpen) {
+            return;
+        }
+
+        const list = timeOptionElements();
+
+        if (list.length === 0) {
+            return;
+        }
+
+        let nextIndex = activeTimeIndex;
+
+        switch (event.key) {
+            case 'ArrowDown':
+                event.preventDefault();
+                nextIndex = Math.min(activeTimeIndex + 1, list.length - 1);
+                break;
+            case 'ArrowUp':
+                event.preventDefault();
+                nextIndex = Math.max(activeTimeIndex - 1, 0);
+                break;
+            case 'Home':
+                event.preventDefault();
+                nextIndex = 0;
+                break;
+            case 'End':
+                event.preventDefault();
+                nextIndex = list.length - 1;
+                break;
+            case 'Enter':
+            case ' ':
+                event.preventDefault();
+                nextIndex = activeTimeIndex;
+                break;
+            default:
+                return;
+        }
+
+        const next = list[nextIndex];
+
+        if (next?.dataset.datetimePickerTime) {
+            selectedTime = next.dataset.datetimePickerTime;
+            syncTimeListSelection();
+            focusTimeOption(activeTimeIndex);
         }
     });
 
@@ -252,6 +351,7 @@ function bindDatetimePicker(root) {
             return;
         }
 
+        event.preventDefault();
         loadFromHidden();
         close();
     });

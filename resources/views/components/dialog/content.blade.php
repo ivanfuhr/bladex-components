@@ -8,8 +8,6 @@
     'alert' => false,
     'open' => false,
     'preview' => false,
-    'titleId' => null,
-    'descriptionId' => null,
 ])
 
 @aware([
@@ -52,9 +50,21 @@
     $isPreview = (bool) $preview;
     $isOpen = (bool) $open;
 
-    $dialogBaseId = 'dialog-'.str_replace('.', '', uniqid('', true));
-    $titleId ??= $dialogBaseId.'-title';
-    $descriptionId ??= $dialogBaseId.'-description';
+    // Render the slot once so title/description can mint their own ids, then
+    // wire aria-labelledby / aria-describedby from those ids (avoids @aware
+    // blind spots when ids are generated inside the parent view).
+    $slotHtml = $slot->toHtml();
+
+    $titleId = null;
+    $descriptionId = null;
+
+    if (preg_match('/\sdata-dialog-title="([^"]+)"/', $slotHtml, $titleMatch) === 1) {
+        $titleId = $titleMatch[1];
+    }
+
+    if (preg_match('/\sdata-dialog-description="([^"]+)"/', $slotHtml, $descriptionMatch) === 1) {
+        $descriptionId = $descriptionMatch[1];
+    }
 @endphp
 
 @if ($isPreview)
@@ -82,8 +92,8 @@
             class="{{ $previewPanelClasses }}"
             role="{{ $alert ? 'alertdialog' : 'dialog' }}"
             aria-modal="true"
-            aria-labelledby="{{ $titleId }}"
-            aria-describedby="{{ $descriptionId }}"
+            @if (filled($titleId)) aria-labelledby="{{ $titleId }}" @endif
+            @if (filled($descriptionId)) aria-describedby="{{ $descriptionId }}" @endif
             data-dialog-content
             data-dialog-preview
         >
@@ -101,7 +111,7 @@
                     </button>
                 @endif
 
-                {{ $slot }}
+                {!! $slotHtml !!}
             </div>
         </div>
     </div>
@@ -113,8 +123,8 @@
             'data-dialog-name' => filled($name) ? $name : null,
             'data-dialog-flyout' => $isFlyout ? 'true' : 'false',
             'aria-modal' => 'true',
-            'aria-labelledby' => $titleId,
-            'aria-describedby' => $descriptionId,
+            'aria-labelledby' => filled($titleId) ? $titleId : null,
+            'aria-describedby' => filled($descriptionId) ? $descriptionId : null,
             'role' => $alert ? 'alertdialog' : 'dialog',
             'open' => $isOpen ? true : null,
         ])
@@ -131,7 +141,7 @@
                 </button>
             @endif
 
-            {{ $slot }}
+            {!! $slotHtml !!}
         </div>
     </dialog>
 @endif

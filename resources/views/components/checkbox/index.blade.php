@@ -8,6 +8,7 @@
 
 @aware([
     'fieldInvalid' => false,
+    'controlId' => null,
 ])
 
 @php
@@ -18,6 +19,10 @@
 
     $formControl = app(FormControlClassMap::class);
     $interactionState = app(InteractionStateAttributes::class);
+
+    $resolvedControlId = $attributes->get('id')
+        ?? $controlId
+        ?? (filled($name) ? $name : null);
 
     // Checkmark SVG is applied in stencil.css — Tailwind does not emit
     // checked:bg-[url(data:...)] when the class lives only inside a PHP string.
@@ -30,6 +35,7 @@
 
     $controlAttributes = $interactionState->apply(
         $attributes
+            ->except(['id'])
             ->class($controlClasses)
             ->merge([
                 'type' => 'checkbox',
@@ -37,6 +43,10 @@
             ]),
         ['nativeDisabled' => true],
     );
+
+    if (filled($resolvedControlId)) {
+        $controlAttributes = $controlAttributes->merge(['id' => $resolvedControlId]);
+    }
 
     if (filled($name)) {
         $controlAttributes = $controlAttributes->merge(['name' => $name]);

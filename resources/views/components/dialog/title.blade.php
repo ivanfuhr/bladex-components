@@ -1,13 +1,13 @@
-@aware([
-    'titleId' => null,
-])
+@php
+    $titleId = $attributes->get('id') ?? 'dialog-title-'.str_replace('.', '', uniqid('', true));
+@endphp
 
 <x-stencil::heading
     level="2"
     {{
-        $attributes->merge([
+        $attributes->except(['id'])->merge([
             'id' => $titleId,
-            'data-dialog-title' => true,
+            'data-dialog-title' => $titleId,
         ])
     }}
 >

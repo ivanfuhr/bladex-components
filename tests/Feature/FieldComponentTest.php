@@ -45,6 +45,46 @@ it('renders field description using the message primitive', function () {
         ->toContain('Helper copy.');
 });
 
+it('associates field labels with nested controls via control id', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-stencil::field name="email">
+            <x-stencil::field.label>Email</x-stencil::field.label>
+            <x-stencil::input name="email" type="email" />
+        </x-stencil::field>
+    BLADE);
+
+    expect($html)
+        ->toContain('for="email"')
+        ->toContain('id="email"');
+});
+
+it('associates checkbox labels so clicking the label toggles the control', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-stencil::field name="terms" orientation="inline">
+            <x-stencil::checkbox name="terms" />
+            <x-stencil::field.label>Accept terms</x-stencil::field.label>
+        </x-stencil::field>
+    BLADE);
+
+    expect($html)
+        ->toContain('for="terms"')
+        ->toContain('id="terms"')
+        ->toContain('type="checkbox"');
+});
+
+it('respects an explicit control-id over the field name', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-stencil::field name="email" control-id="signup-email">
+            <x-stencil::field.label>Email</x-stencil::field.label>
+            <x-stencil::input name="email" type="email" />
+        </x-stencil::field>
+    BLADE);
+
+    expect($html)
+        ->toContain('for="signup-email"')
+        ->toContain('id="signup-email"');
+});
+
 it('renders wildcard field errors for indexed validation keys', function () {
     $bag = new MessageBag([
         'members.0.name' => ['Name is required.'],

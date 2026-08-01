@@ -9,7 +9,92 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class PlaybookRegistry
 {
-    /** @var Collection<int, ComponentPlaybook>|null */
+    /**
+     * Catalog sections for the playbook index (Operate IA).
+     *
+     * @var array<string, array{label: string, slugs: list<string>}>
+     */
+    private const CATEGORIES = [
+        'forms' => [
+            'label' => 'Forms',
+            'slugs' => [
+                'button',
+                'input',
+                'input-currency',
+                'select',
+                'combobox',
+                'file-upload',
+                'repeater',
+                'pillbox',
+                'rating',
+                'color-picker',
+                'input-otp',
+                'slider',
+                'label',
+                'field',
+                'textarea',
+                'checkbox',
+                'radio',
+                'switch',
+            ],
+        ],
+        'typography' => [
+            'label' => 'Typography',
+            'slugs' => [
+                'text',
+                'heading',
+            ],
+        ],
+        'overlays' => [
+            'label' => 'Overlays',
+            'slugs' => [
+                'dialog',
+                'dropdown-menu',
+                'tooltip',
+            ],
+        ],
+        'feedback' => [
+            'label' => 'Feedback',
+            'slugs' => [
+                'toast',
+                'alert',
+                'progress',
+                'skeleton',
+                'badge',
+            ],
+        ],
+        'navigation' => [
+            'label' => 'Navigation',
+            'slugs' => [
+                'breadcrumb',
+                'tabs',
+                'pagination',
+                'accordion',
+                'collapsible',
+            ],
+        ],
+        'display' => [
+            'label' => 'Display',
+            'slugs' => [
+                'avatar',
+                'card',
+                'table',
+                'separator',
+                'icons',
+            ],
+        ],
+        'datetime' => [
+            'label' => 'Date & time',
+            'slugs' => [
+                'calendar',
+                'date-picker',
+                'time-picker',
+                'datetime-picker',
+            ],
+        ],
+    ];
+
+    /** @var Collection<string, ComponentPlaybook>|null */
     private ?Collection $playbooks = null;
 
     /**
@@ -18,6 +103,39 @@ final class PlaybookRegistry
     public function all(): array
     {
         return $this->playbooks()->values()->all();
+    }
+
+    /**
+     * @return list<array{key: string, label: string, playbooks: list<ComponentPlaybook>}>
+     */
+    public function grouped(): array
+    {
+        $bySlug = $this->playbooks();
+        $groups = [];
+
+        foreach (self::CATEGORIES as $key => $meta) {
+            $playbooks = [];
+
+            foreach ($meta['slugs'] as $slug) {
+                $playbook = $bySlug->get($slug);
+
+                if ($playbook instanceof ComponentPlaybook) {
+                    $playbooks[] = $playbook;
+                }
+            }
+
+            if ($playbooks === []) {
+                continue;
+            }
+
+            $groups[] = [
+                'key' => $key,
+                'label' => $meta['label'],
+                'playbooks' => $playbooks,
+            ];
+        }
+
+        return $groups;
     }
 
     public function get(string $slug): ComponentPlaybook

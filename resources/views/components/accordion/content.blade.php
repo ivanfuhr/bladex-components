@@ -27,6 +27,8 @@
         'data-accordion-content' => true,
         'data-state' => $isExpanded ? 'open' : 'closed',
         'hidden' => (! $transition && ! $isExpanded) ? true : null,
+        'inert' => ($transition && ! $isExpanded) ? true : null,
+        'aria-hidden' => ($transition && ! $isExpanded) ? 'true' : null,
     ])
 }}>
     <div class="accordion__content-inner min-h-0 px-4 pb-4" data-accordion-content-inner>{{ $slot }}</div>

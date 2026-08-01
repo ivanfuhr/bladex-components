@@ -66,11 +66,11 @@
     @if (filled($maxRange)) data-calendar-max-range="{{ $maxRange }}" @endif
     data-calendar-size-class="{{ $sizeClasses }}"
 >
-    <div
-        class="mb-2 flex items-center justify-between gap-2"
-        data-calendar-header
-    >
-        <span class="min-w-0 truncate text-sm font-medium text-zinc-800 dark:text-zinc-50" data-calendar-month-label></span>
+    <div class="mb-2 flex items-center justify-between gap-2" data-calendar-header>
+        <span
+            class="min-w-0 truncate text-sm font-medium text-zinc-800 dark:text-zinc-50"
+            data-calendar-month-label
+        ></span>
         <div class="flex shrink-0 items-center gap-0.5">
             @if ($withToday)
                 <button

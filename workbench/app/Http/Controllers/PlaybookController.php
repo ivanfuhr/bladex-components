@@ -19,7 +19,7 @@ final class PlaybookController
     public function index(): View
     {
         return view('workbench::playbook.index', [
-            'playbooks' => $this->registry->all(),
+            'categories' => $this->registry->grouped(),
         ]);
     }
 

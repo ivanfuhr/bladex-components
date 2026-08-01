@@ -28,6 +28,10 @@
             ]),
         ['nativeDisabled' => true],
     );
+
+    if ($disabled) {
+        $triggerAttributes = $triggerAttributes->merge(['disabled' => true]);
+    }
 @endphp
 
 <button {{ $triggerAttributes }} data-time-picker-trigger>

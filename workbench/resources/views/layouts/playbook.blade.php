@@ -13,6 +13,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title', 'Stencil Playbook')</title>
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('stencil-playbook-dark') === '1') {
+                    document.documentElement.classList.add('dark', 'scheme-dark');
+                } else {
+                    document.documentElement.classList.add('scheme-light');
+                }
+            } catch (e) {
+                document.documentElement.classList.add('scheme-light');
+            }
+        })();
+    </script>
     <x-stencil::fonts />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -32,13 +45,13 @@
                     class="flex size-9 shrink-0 items-center justify-center rounded-lg border border-zinc-200 bg-white text-sm font-semibold tracking-tight text-zinc-900 shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20"
                     aria-label="Stencil Playbook home"
                 >
-                    BX
+                    S
                 </a>
                 <div class="min-w-0">
                     <div class="flex flex-wrap items-center gap-2">
                         <a
                             href="{{ route('playbook.index') }}"
-                            class="truncate text-sm font-semibold tracking-tight text-zinc-950 dark:text-zinc-50"
+                            class="truncate text-sm font-semibold tracking-tight text-zinc-950 focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:text-zinc-50 dark:focus-visible:ring-zinc-300/20"
                         >
                             Stencil Playbook
                         </a>
@@ -53,26 +66,35 @@
             </div>
 
             <div class="flex shrink-0 items-center gap-2">
-                <a
-                    href="{{ route('playbook.showcase') }}"
-                    class="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs font-medium text-zinc-700 shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20"
-                >
-                    Showcase
-                </a>
-                <label class="flex cursor-pointer items-center gap-2.5 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs font-medium text-zinc-700 shadow-sm transition hover:border-zinc-300 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-600">
-                    <span class="sr-only">Dark preview</span>
-                    <span class="hidden sm:inline" aria-hidden="true">Dark preview</span>
+                <nav aria-label="Playbook" class="flex items-center gap-2">
+                    <a
+                        href="{{ route('playbook.showcase') }}"
+                        @class([
+                            'rounded-lg border px-3 py-2 text-xs font-medium shadow-sm transition focus-visible:ring-2 focus-visible:outline-none',
+                            'border-zinc-900 bg-zinc-900 text-zinc-50 hover:bg-zinc-800 focus-visible:ring-zinc-950/20 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-white dark:focus-visible:ring-zinc-300/30' => request()->routeIs('playbook.showcase'),
+                            'border-zinc-200 bg-white text-zinc-700 hover:border-zinc-300 hover:bg-zinc-50 focus-visible:ring-zinc-950/10 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20' => ! request()->routeIs('playbook.showcase'),
+                        ])
+                        @if (request()->routeIs('playbook.showcase')) aria-current="page" @endif
+                    >
+                        Showcase
+                    </a>
+                </nav>
+                <label class="flex cursor-pointer items-center gap-2.5 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs font-medium text-zinc-700 shadow-sm transition focus-within:ring-2 focus-within:ring-zinc-950/10 hover:border-zinc-300 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:focus-within:ring-zinc-300/20 dark:hover:border-zinc-600">
+                    <span class="sr-only">Dark mode</span>
+                    <span class="hidden sm:inline" aria-hidden="true">Dark mode</span>
                     <input
                         type="checkbox"
+                        role="switch"
                         class="size-4 rounded border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:border-zinc-600 dark:bg-zinc-950 dark:focus-visible:ring-zinc-300/20"
                         x-model="dark"
+                        x-bind:aria-checked="dark.toString()"
                     />
                 </label>
             </div>
         </div>
     </header>
 
-    <main id="playbook-main" class="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
+    <main id="playbook-main" tabindex="-1" class="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
         @yield('content')
     </main>
 </body>

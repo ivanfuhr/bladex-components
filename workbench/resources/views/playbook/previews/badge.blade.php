@@ -6,10 +6,10 @@
 @endphp
 
 <x-stencil::badge :variant="$variant" :color="$color" :rounded="$rounded">
-  @if ($dismissible)
-    Admin
-    <x-stencil::badge.close />
-  @else
-    {{ $color === 'lime' ? 'New' : ($variant === 'destructive' ? 'Failed' : 'Badge') }}
-  @endif
+    @if ($dismissible)
+        Admin
+        <x-stencil::badge.close />
+    @else
+        {{ $color === 'lime' ? 'New' : ($variant === 'destructive' ? 'Failed' : 'Badge') }}
+    @endif
 </x-stencil::badge>

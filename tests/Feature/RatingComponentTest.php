@@ -13,8 +13,11 @@ it('renders a rating with hidden input and stars', function () {
         ->toContain('name="score"')
         ->toContain('value="3"')
         ->toContain('data-rating-star')
-        ->toContain('role="slider"')
-        ->toContain('aria-valuenow="3"');
+        ->toContain('role="radiogroup"')
+        ->toContain('role="radio"')
+        ->toContain('aria-checked="true"')
+        ->toContain('text-zinc-500')
+        ->toContain('!text-amber-700');
 });
 
 it('requires a name attribute', function () {

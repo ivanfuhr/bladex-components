@@ -4,3 +4,7 @@ import './showcase-widgets.js';
 window.Alpine = Alpine;
 
 Alpine.start();
+
+// stencil-start
+import '../views/ui/dialog/dialog.js';
+// stencil-end

@@ -47,9 +47,13 @@ function bindTimePicker(root) {
 
     const portalMarker = document.createComment('stencil-time-picker-portal');
     let open = false;
+    /** @type {number} */
+    let activeIndex = 0;
 
     const options = buildOptions(step, withSeconds, unavailable);
 
+    panel.setAttribute('role', 'listbox');
+    panel.tabIndex = -1;
     panel.innerHTML = '';
     options.forEach((time) => {
         const button = document.createElement('button');
@@ -59,10 +63,36 @@ function bindTimePicker(root) {
         button.dataset.timePickerOption = time;
         button.textContent = formatTimeLabel(time, locale, timeZone, withSeconds);
         button.setAttribute('role', 'option');
+        button.tabIndex = -1;
         panel.appendChild(button);
     });
 
+    function optionElements() {
+        return [...panel.querySelectorAll('[data-time-picker-option]')].filter(
+            (el) => el instanceof HTMLElement,
+        );
+    }
+
+    function focusOption(index) {
+        const list = optionElements();
+
+        if (list.length === 0) {
+            return;
+        }
+
+        activeIndex = Math.max(0, Math.min(index, list.length - 1));
+
+        list.forEach((el, i) => {
+            el.tabIndex = i === activeIndex ? 0 : -1;
+        });
+
+        const active = list[activeIndex];
+        active?.focus();
+        active?.scrollIntoView({ block: 'nearest' });
+    }
+
     function setOpen(next) {
+        const wasOpen = open;
         open = next;
         panel.hidden = !next;
 
@@ -73,7 +103,12 @@ function bindTimePicker(root) {
         if (next && trigger instanceof HTMLElement) {
             ensurePanelPortaled(panel, root, portalMarker);
             positionAnchoredPanel(panel, trigger);
-            panel.focus();
+
+            const list = optionElements();
+            const selectedIdx = list.findIndex((el) => el.getAttribute('aria-selected') === 'true');
+            focusOption(selectedIdx >= 0 ? selectedIdx : 0);
+        } else if (wasOpen && !next && trigger instanceof HTMLElement) {
+            trigger.focus();
         }
     }
 
@@ -120,9 +155,38 @@ function bindTimePicker(root) {
         setOpen(false);
     }
 
+    function isTriggerDisabled() {
+        return (
+            (trigger instanceof HTMLButtonElement && trigger.disabled) ||
+            (trigger instanceof HTMLInputElement && trigger.disabled) ||
+            (trigger instanceof HTMLElement && trigger.getAttribute('aria-disabled') === 'true')
+        );
+    }
+
     trigger?.addEventListener('click', (event) => {
         event.preventDefault();
+
+        if (isTriggerDisabled()) {
+            return;
+        }
+
         setOpen(!open);
+    });
+
+    trigger?.addEventListener('keydown', (event) => {
+        if (isTriggerDisabled() || open) {
+            return;
+        }
+
+        if (
+            event.key === 'ArrowDown' ||
+            event.key === 'ArrowUp' ||
+            event.key === 'Enter' ||
+            event.key === ' '
+        ) {
+            event.preventDefault();
+            setOpen(true);
+        }
     });
 
     root.querySelectorAll('[data-time-picker-clear]').forEach((clear) => {
@@ -144,6 +208,56 @@ function bindTimePicker(root) {
         }
     });
 
+    panel.addEventListener('keydown', (event) => {
+        if (!open) {
+            return;
+        }
+
+        const list = optionElements();
+
+        if (list.length === 0) {
+            return;
+        }
+
+        switch (event.key) {
+            case 'ArrowDown':
+                event.preventDefault();
+                focusOption(activeIndex + 1);
+                break;
+            case 'ArrowUp':
+                event.preventDefault();
+                focusOption(activeIndex - 1);
+                break;
+            case 'Home':
+                event.preventDefault();
+                focusOption(0);
+                break;
+            case 'End':
+                event.preventDefault();
+                focusOption(list.length - 1);
+                break;
+            case 'Enter':
+            case ' ':
+                event.preventDefault();
+                {
+                    const active = list[activeIndex];
+                    if (active?.dataset.timePickerOption) {
+                        apply(active.dataset.timePickerOption);
+                    }
+                }
+                break;
+            case 'Escape':
+                event.preventDefault();
+                setOpen(false);
+                break;
+            case 'Tab':
+                setOpen(false);
+                break;
+            default:
+                break;
+        }
+    });
+
     document.addEventListener('pointerdown', (event) => {
         if (!open) {
             return;
@@ -154,6 +268,15 @@ function bindTimePicker(root) {
         if (target instanceof Node && !root.contains(target) && !panel.contains(target)) {
             setOpen(false);
         }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (!open || event.key !== 'Escape') {
+            return;
+        }
+
+        event.preventDefault();
+        setOpen(false);
     });
 
     if (hidden.value) {

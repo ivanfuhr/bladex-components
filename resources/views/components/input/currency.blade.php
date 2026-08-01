@@ -11,6 +11,7 @@
 
 @aware([
     'fieldInvalid' => false,
+    'controlId' => null,
 ])
 
 @php
@@ -19,6 +20,10 @@
     use Ivanfuhr\Stencil\Support\Interaction\InteractionStateAttributes;
 
     $invalid = $invalid || $fieldInvalid;
+
+    $resolvedControlId = $attributes->get('id')
+        ?? $controlId
+        ?? (filled($name) ? $name : null);
 
     $currencyCode = filled($currency) ? (string) $currency : Number::defaultCurrency();
     $localeCode = filled($locale) ? (string) $locale : Number::defaultLocale();
@@ -78,7 +83,7 @@
 
     $controlAttributes = $interactionState->apply(
         $attributes
-            ->except(['class', 'class:input', 'input:class', 'name', 'value', 'currency', 'locale', 'precision', 'mode'])
+            ->except(['class', 'class:input', 'input:class', 'name', 'value', 'currency', 'locale', 'precision', 'mode', 'id'])
             ->class([$controlClasses, $controlExtraClass])
             ->merge([
                 'type' => 'text',
@@ -89,6 +94,10 @@
                 'data-input-currency-display' => true,
             ]),
     );
+
+    if (filled($resolvedControlId)) {
+        $controlAttributes = $controlAttributes->merge(['id' => $resolvedControlId]);
+    }
 
     if ($invalid) {
         $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);

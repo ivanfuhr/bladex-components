@@ -10,6 +10,7 @@
 
 @aware([
     'fieldInvalid' => false,
+    'controlId' => null,
 ])
 
 @php
@@ -21,6 +22,10 @@
     }
 
     $invalid = $invalid || $fieldInvalid;
+
+    $resolvedControlId = $attributes->get('id')
+        ?? $controlId
+        ?? $name;
 
     $fieldName = Str::endsWith($name, '[]') ? $name : $name.'[]';
 
@@ -40,7 +45,7 @@
     ])->filter()->implode(' ');
 
     $rootAttributes = $attributes
-        ->except(['name', 'value', 'placeholder', 'max', 'invalid', 'disabled', 'size'])
+        ->except(['name', 'value', 'placeholder', 'max', 'invalid', 'disabled', 'size', 'id'])
         ->class($rootClasses)
         ->merge([
             'data-pillbox' => true,
@@ -98,6 +103,7 @@
             data-pillbox-input
             placeholder="{{ $resolvedPlaceholder }}"
             autocomplete="off"
+            @if (filled($resolvedControlId)) id="{{ $resolvedControlId }}" @endif
             @if ($disabled) disabled @endif
             @if ($invalid) aria-invalid="true" @endif
         />

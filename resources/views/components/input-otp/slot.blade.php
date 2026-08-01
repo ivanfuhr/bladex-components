@@ -5,7 +5,6 @@
     'disabled' => false,
     'mode' => 'numeric',
     'length' => 6,
-    'value' => null,
     'inputOtpId' => null,
     'name' => null,
     'controlId' => null,
@@ -16,6 +15,7 @@
     'invalid' => false,
     'disabled' => false,
     'size' => null,
+    'value' => null,
 ])
 
 @php

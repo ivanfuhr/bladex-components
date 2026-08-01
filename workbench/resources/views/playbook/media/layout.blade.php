@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="antialiased {{ ($dark ?? false) ? 'dark' : '' }}">
+<html lang="en" class="antialiased {{ ($dark ?? false) ? 'dark scheme-dark' : 'scheme-light' }}">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -33,8 +33,8 @@
     </style>
 </head>
 <body class="text-zinc-900 dark:text-zinc-50">
-    <div id="readme-media" class="w-full">
+    <main id="readme-media" class="w-full">
         @yield('content')
-    </div>
+    </main>
 </body>
 </html>

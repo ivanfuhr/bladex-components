@@ -18,7 +18,7 @@
 @endphp
 
 <div class="relative min-h-48">
-    <x-stencil::toast.provider :position="$position" class="!relative !inset-auto !translate-x-0 !max-w-sm">
+    <x-stencil::toast.provider :position="$position" class="!relative !inset-auto !max-w-sm !translate-x-0">
         <x-stencil::toast
             :variant="$variant"
             :title="$titles[$key]"

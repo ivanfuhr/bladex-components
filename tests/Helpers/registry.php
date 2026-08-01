@@ -159,6 +159,7 @@ function cleanupOwnedProjectArtifacts(?string $basePath = null): void
     }
 
     deleteDirectoryWithoutFacades($base.DIRECTORY_SEPARATOR.'resources/views/ui');
+    deleteDirectoryWithoutFacades($base.DIRECTORY_SEPARATOR.'app/View/Components/Ui');
     deleteDirectoryWithoutFacades($base.DIRECTORY_SEPARATOR.'app/Support/Stencil');
     deleteDirectoryWithoutFacades($langPath.DIRECTORY_SEPARATOR.'stencil-ui');
 

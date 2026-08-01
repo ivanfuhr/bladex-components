@@ -19,6 +19,10 @@ final class Field extends Component
         public string $orientation = 'block',
         public ?string $controlId = null,
     ) {
+        if (! filled($this->controlId) && filled($this->name)) {
+            $this->controlId = $this->name;
+        }
+
         $this->fieldInvalid = $invalid;
 
         if ($this->fieldInvalid || ! filled($name)) {

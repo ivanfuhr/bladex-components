@@ -40,6 +40,20 @@ it('renders an open collapsible and disabled state', function () {
         ->toContain('Visible content.');
 });
 
+it('keeps closed transition content inert for assistive tech', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-stencil::collapsible transition>
+            <x-stencil::collapsible.trigger>Toggle</x-stencil::collapsible.trigger>
+            <x-stencil::collapsible.content>Hidden body.</x-stencil::collapsible.content>
+        </x-stencil::collapsible>
+    BLADE);
+
+    expect($html)
+        ->toContain('data-collapsible-transition="true"')
+        ->toContain('aria-hidden="true"')
+        ->toContain('inert');
+});
+
 it('supports as-child trigger wrapping', function () {
     $html = Blade::render(<<<'BLADE'
         <x-stencil::collapsible>

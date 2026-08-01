@@ -7,6 +7,7 @@
 
 @aware([
     'fieldInvalid' => false,
+    'controlId' => null,
 ])
 
 @php
@@ -17,6 +18,10 @@
 
     $formControl = app(FormControlClassMap::class);
     $interactionState = app(InteractionStateAttributes::class);
+
+    $resolvedControlId = $attributes->get('id')
+        ?? $controlId
+        ?? $attributes->get('name');
 
     $userClass = $attributes->get('class');
     $applyFullWidth = ! filled($userClass);
@@ -56,12 +61,16 @@
 
     $controlAttributes = $interactionState->apply(
         $attributes
-            ->except(['class', 'class:textarea', 'textarea:class', 'autosize', 'counter'])
+            ->except(['class', 'class:textarea', 'textarea:class', 'autosize', 'counter', 'id'])
             ->class([$controlClasses, $controlExtraClass])
             ->merge([
                 'data-textarea-control' => true,
             ]),
     );
+
+    if (filled($resolvedControlId)) {
+        $controlAttributes = $controlAttributes->merge(['id' => $resolvedControlId]);
+    }
 
     if ($isInvalid) {
         $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);

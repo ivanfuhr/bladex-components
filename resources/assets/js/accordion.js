@@ -146,12 +146,24 @@ function applyItemState(item, open) {
         content.classList.toggle('opacity-0', !open);
         content.classList.remove('hidden');
         content.hidden = false;
+
+        if (open) {
+            content.removeAttribute('inert');
+            content.removeAttribute('aria-hidden');
+        } else {
+            content.setAttribute('inert', '');
+            content.setAttribute('aria-hidden', 'true');
+        }
     } else if (open) {
         content.hidden = false;
         content.classList.remove('hidden');
+        content.removeAttribute('inert');
+        content.removeAttribute('aria-hidden');
     } else {
         content.hidden = true;
         content.classList.add('hidden');
+        content.removeAttribute('inert');
+        content.removeAttribute('aria-hidden');
     }
 }
 

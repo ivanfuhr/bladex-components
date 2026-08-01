@@ -1,6 +1,8 @@
 <?php
 
 declare(strict_types=1);
+use Workbench\App\Playbook\PlaybookPreviewRenderer;
+use Workbench\App\Playbook\PlaybookRegistry;
 
 it('lists playbook components on the index', function () {
     $response = $this->get('/playbook');
@@ -23,6 +25,24 @@ it('lists playbook components on the index', function () {
     $response->assertSee('Datetime Picker');
     $response->assertSee('Calendar');
     $response->assertSee('Event Studio showcase');
+    $response->assertSee('Forms');
+    $response->assertSee('Typography');
+    $response->assertSee('Overlays');
+    $response->assertSee('Feedback');
+    $response->assertSee('Navigation');
+    $response->assertSee('Display');
+    $response->assertSee('Date & time');
+});
+
+it('groups every playbook component into a catalog category', function () {
+    $registry = app(PlaybookRegistry::class);
+    $groupedSlugs = collect($registry->grouped())
+        ->flatMap(fn (array $category) => collect($category['playbooks'])->pluck('slug'))
+        ->all();
+
+    expect($groupedSlugs)
+        ->toHaveCount(count($registry->all()))
+        ->toEqualCanonicalizing(collect($registry->all())->pluck('slug')->all());
 });
 
 it('renders the event studio showcase scenario', function () {
@@ -178,8 +198,8 @@ it('renders layout and feedback playbook pages with initial previews', function 
 ]);
 
 it('emits well-formed blade snippets for every playbook component', function () {
-    $renderer = app(\Workbench\App\Playbook\PlaybookPreviewRenderer::class);
-    $registry = app(\Workbench\App\Playbook\PlaybookRegistry::class);
+    $renderer = app(PlaybookPreviewRenderer::class);
+    $registry = app(PlaybookRegistry::class);
 
     foreach ($registry->all() as $playbook) {
         $snippet = $renderer->renderSnippet($playbook->slug);

@@ -10,7 +10,7 @@
             <x-stencil::text size="sm" variant="subtle">Hover and focus hints for controls.</x-stencil::text>
         </div>
 
-        <div class="flex flex-wrap items-end justify-center overflow-visible px-16 pt-12" style="gap: 6rem;">
+        <div class="flex flex-wrap items-end justify-center overflow-visible px-16 pt-12" style="gap: 6rem">
             <div class="relative inline-flex min-h-[5rem] items-end justify-center">
                 <x-stencil::tooltip side="top">
                     <x-stencil::tooltip.trigger>
@@ -19,8 +19,15 @@
                     <x-stencil::tooltip.content
                         data-state="open"
                         :hidden="false"
-                        class="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 block!"
-                        style="position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 0.5rem; display: block;"
+                        class="absolute bottom-full left-1/2 mb-2 block! -translate-x-1/2"
+                        style="
+                            position: absolute;
+                            bottom: 100%;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            margin-bottom: 0.5rem;
+                            display: block;
+                        "
                     >
                         Add to library
                     </x-stencil::tooltip.content>
@@ -37,8 +44,15 @@
                     <x-stencil::tooltip.content
                         data-state="open"
                         :hidden="false"
-                        class="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 block!"
-                        style="position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 0.5rem; display: block;"
+                        class="absolute bottom-full left-1/2 mb-2 block! -translate-x-1/2"
+                        style="
+                            position: absolute;
+                            bottom: 100%;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            margin-bottom: 0.5rem;
+                            display: block;
+                        "
                     >
                         Create project
                     </x-stencil::tooltip.content>

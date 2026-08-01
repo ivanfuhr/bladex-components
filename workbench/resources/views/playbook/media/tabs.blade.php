@@ -7,7 +7,8 @@
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::tabs /&gt;</p>
             <x-stencil::heading :level="2">Tabs</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle">Tabbed panels with default, segmented, pills, and line variants.</x-stencil::text>
+            <x-stencil::text size="sm" variant="subtle"
+                >Tabbed panels with default, segmented, pills, and line variants.</x-stencil::text>
         </div>
 
         <div class="grid gap-10 lg:grid-cols-2">
@@ -18,8 +19,10 @@
                         <x-stencil::tabs.trigger value="account">Account</x-stencil::tabs.trigger>
                         <x-stencil::tabs.trigger value="password">Password</x-stencil::tabs.trigger>
                     </x-stencil::tabs.list>
-                    <x-stencil::tabs.content value="account">Manage your account settings and preferences.</x-stencil::tabs.content>
-                    <x-stencil::tabs.content value="password">Update your password and security options.</x-stencil::tabs.content>
+                    <x-stencil::tabs.content value="account">
+                        Manage your account settings and preferences.</x-stencil::tabs.content>
+                    <x-stencil::tabs.content value="password">
+                        Update your password and security options.</x-stencil::tabs.content>
                 </x-stencil::tabs>
             </div>
 
@@ -31,7 +34,8 @@
                         <x-stencil::tabs.trigger value="analytics">Analytics</x-stencil::tabs.trigger>
                         <x-stencil::tabs.trigger value="reports">Reports</x-stencil::tabs.trigger>
                     </x-stencil::tabs.list>
-                    <x-stencil::tabs.content value="overview">Project overview and recent activity.</x-stencil::tabs.content>
+                    <x-stencil::tabs.content value="overview">
+                        Project overview and recent activity.</x-stencil::tabs.content>
                     <x-stencil::tabs.content value="analytics">Traffic and conversion metrics.</x-stencil::tabs.content>
                     <x-stencil::tabs.content value="reports">Exportable weekly reports.</x-stencil::tabs.content>
                 </x-stencil::tabs>

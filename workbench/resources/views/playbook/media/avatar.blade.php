@@ -7,7 +7,8 @@
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::avatar /&gt;</p>
             <x-stencil::heading :level="2">Avatar</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle">User image or initials, including stacked groups.</x-stencil::text>
+            <x-stencil::text size="sm" variant="subtle"
+                >User image or initials, including stacked groups.</x-stencil::text>
         </div>
 
         <div class="space-y-8">

@@ -23,6 +23,8 @@
         'data-collapsible-content' => true,
         'data-state' => $isOpen ? 'open' : 'closed',
         'hidden' => (! $transition && ! $isOpen) ? true : null,
+        'inert' => ($transition && ! $isOpen) ? true : null,
+        'aria-hidden' => ($transition && ! $isOpen) ? 'true' : null,
     ])
 }}>
     <div class="collapsible__content-inner min-h-0" data-collapsible-content-inner>{{ $slot }}</div>

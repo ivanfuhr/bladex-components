@@ -7,7 +7,8 @@
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::skeleton /&gt;</p>
             <x-stencil::heading :level="2">Skeleton</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle">Loading placeholders for content that is still arriving.</x-stencil::text>
+            <x-stencil::text size="sm" variant="subtle"
+                >Loading placeholders for content that is still arriving.</x-stencil::text>
         </div>
 
         <div class="max-w-md space-y-6">

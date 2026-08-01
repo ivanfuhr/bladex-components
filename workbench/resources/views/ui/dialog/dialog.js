@@ -236,7 +236,7 @@ function focusInitialElement(dialog) {
     const focusTarget =
         dialog.querySelector('[data-dialog-initial-focus]') ??
         dialog.querySelector(
-            'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+            'button:not([data-dialog-close]):not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
         );
 
     if (focusTarget instanceof HTMLElement) {
@@ -275,6 +275,20 @@ if (typeof window !== 'undefined') {
         closeAll: () => closeAllDialogs(),
     };
 }
+
+document.addEventListener('stencil:mount', (event) => {
+    if (!(event instanceof CustomEvent)) {
+        return;
+    }
+
+    const mountRoot = event.detail?.root;
+
+    if (!(mountRoot instanceof HTMLElement)) {
+        return;
+    }
+
+    initDialogs(mountRoot);
+});
 
 if (typeof document !== 'undefined') {
     if (document.readyState === 'loading') {

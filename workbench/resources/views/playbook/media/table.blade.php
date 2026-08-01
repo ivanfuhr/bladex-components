@@ -7,7 +7,8 @@
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::table /&gt;</p>
             <x-stencil::heading :level="2">Table</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle">Semantic data table with caption, header, body, and footer.</x-stencil::text>
+            <x-stencil::text size="sm" variant="subtle"
+                >Semantic data table with caption, header, body, and footer.</x-stencil::text>
         </div>
 
         <div class="max-w-2xl rounded-xl border border-zinc-200 dark:border-zinc-800">

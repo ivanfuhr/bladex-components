@@ -236,7 +236,7 @@ function focusInitialElement(dialog) {
     const focusTarget =
         dialog.querySelector('[data-dialog-initial-focus]') ??
         dialog.querySelector(
-            'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+            'button:not([data-dialog-close]):not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
         );
 
     if (focusTarget instanceof HTMLElement) {

@@ -9,4 +9,6 @@
         ])
     }}
     data-datetime-picker-time-list
+    role="listbox"
+    tabindex="-1"
 ></div>

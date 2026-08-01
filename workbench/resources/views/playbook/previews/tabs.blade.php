@@ -12,11 +12,7 @@
         <x-stencil::tabs.content value="account">
             Manage your account settings and preferences.
         </x-stencil::tabs.content>
-        <x-stencil::tabs.content value="password">
-            Update your password and security options.
-        </x-stencil::tabs.content>
-        <x-stencil::tabs.content value="notifications">
-            Choose which emails you receive.
-        </x-stencil::tabs.content>
+        <x-stencil::tabs.content value="password"> Update your password and security options. </x-stencil::tabs.content>
+        <x-stencil::tabs.content value="notifications"> Choose which emails you receive. </x-stencil::tabs.content>
     </x-stencil::tabs>
 </div>

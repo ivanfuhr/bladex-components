@@ -31,6 +31,40 @@ it('renders a dialog with trigger, content, and data attributes', function () {
         ->toContain('Description');
 });
 
+it('wires matching title and description ids for aria labelling', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-stencil::dialog.content>
+            <x-stencil::dialog.title>Confirm</x-stencil::dialog.title>
+            <x-stencil::dialog.description>This cannot be undone.</x-stencil::dialog.description>
+        </x-stencil::dialog.content>
+    BLADE);
+
+    expect($html)->toMatch('/aria-labelledby="([^"]+)"/');
+    preg_match('/aria-labelledby="([^"]+)"/', $html, $labelledBy);
+    preg_match('/aria-describedby="([^"]+)"/', $html, $describedBy);
+
+    expect($labelledBy[1])->not->toBeEmpty();
+    expect($describedBy[1])->not->toBeEmpty();
+
+    expect($html)
+        ->toContain('id="'.$labelledBy[1].'"')
+        ->toContain('id="'.$describedBy[1].'"')
+        ->toContain('data-dialog-title="'.$labelledBy[1].'"')
+        ->toContain('data-dialog-description="'.$describedBy[1].'"');
+});
+
+it('omits aria-describedby when no description is present', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-stencil::dialog.content>
+            <x-stencil::dialog.title>Confirm</x-stencil::dialog.title>
+        </x-stencil::dialog.content>
+    BLADE);
+
+    expect($html)
+        ->toContain('aria-labelledby="')
+        ->not->toContain('aria-describedby');
+});
+
 it('renders alert dialog semantics and small size', function () {
     $html = Blade::render(<<<'BLADE'
         <x-stencil::dialog.content name="delete" size="sm" :alert="true" :closable="false">

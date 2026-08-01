@@ -32,7 +32,12 @@ document.addEventListener('alpine:init', () => {
         snippet: config.initialSnippet ?? '',
         loading: false,
         copied: false,
+        copyFailed: false,
+        error: null,
+        statusMessage: '',
         timer: null,
+        abortController: null,
+        statusClearTimer: null,
 
         init() {
             this.$watch('html', () => {
@@ -100,8 +105,33 @@ document.addEventListener('alpine:init', () => {
             this.timer = setTimeout(() => this.refreshPreview(), 150);
         },
 
+        setStatus(message, { clearAfterMs = 0 } = {}) {
+            clearTimeout(this.statusClearTimer);
+            this.statusMessage = message;
+
+            if (clearAfterMs > 0) {
+                this.statusClearTimer = setTimeout(() => {
+                    this.statusMessage = '';
+                }, clearAfterMs);
+            }
+        },
+
+        copyLabel() {
+            if (this.copyFailed) {
+                return 'Copy failed';
+            }
+
+            return this.copied ? 'Copied' : 'Copy';
+        },
+
         async refreshPreview() {
+            this.abortController?.abort();
+            this.abortController = new AbortController();
+            const { signal } = this.abortController;
+
             this.loading = true;
+            this.error = null;
+            this.setStatus('Updating preview…');
 
             try {
                 const token =
@@ -119,6 +149,7 @@ document.addEventListener('alpine:init', () => {
                         component: this.component,
                         state: this.state,
                     }),
+                    signal,
                 });
 
                 if (!response.ok) {
@@ -128,8 +159,19 @@ document.addEventListener('alpine:init', () => {
                 const data = await response.json();
                 this.html = data.html;
                 this.snippet = data.snippet ?? '';
+                this.error = null;
+                this.setStatus('Preview updated', { clearAfterMs: 1500 });
+            } catch (error) {
+                if (error?.name === 'AbortError') {
+                    return;
+                }
+
+                this.error = 'Preview failed to update. Try changing a property again.';
+                this.setStatus('Preview failed');
             } finally {
-                this.loading = false;
+                if (!signal.aborted) {
+                    this.loading = false;
+                }
             }
         },
 
@@ -141,11 +183,18 @@ document.addEventListener('alpine:init', () => {
             try {
                 await navigator.clipboard.writeText(this.snippet);
                 this.copied = true;
+                this.copyFailed = false;
+                this.setStatus('Code copied', { clearAfterMs: 2000 });
                 setTimeout(() => {
                     this.copied = false;
                 }, 2000);
             } catch {
-                //
+                this.copied = false;
+                this.copyFailed = true;
+                this.setStatus('Copy failed', { clearAfterMs: 2500 });
+                setTimeout(() => {
+                    this.copyFailed = false;
+                }, 2500);
             }
         },
     }));

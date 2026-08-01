@@ -63,7 +63,17 @@ it('renders time picker with hidden input', function (): void {
     expect($html)
         ->toContain('data-time-picker')
         ->toContain('name="starts_at"')
-        ->toContain('value="09:30"');
+        ->toContain('value="09:30"')
+        ->toContain('role="listbox"')
+        ->toContain('aria-haspopup="listbox"');
+});
+
+it('applies disabled to the time picker trigger button', function (): void {
+    $html = Blade::render('<x-stencil::time-picker name="starts_at" disabled />');
+
+    expect($html)
+        ->toContain('data-time-picker-trigger')
+        ->toContain('disabled');
 });
 
 it('renders datetime picker hidden iso value', function (): void {
@@ -76,7 +86,8 @@ it('renders datetime picker hidden iso value', function (): void {
         ->toContain('name="scheduled_at"')
         ->toContain('data-datetime-picker-panel')
         ->toContain('data-datetime-picker-time-list')
-        ->toContain('data-datetime-picker-confirm');
+        ->toContain('data-datetime-picker-confirm')
+        ->toContain('role="listbox"');
 });
 
 it('renders full datetime picker compound structure without shortcut', function (): void {
@@ -98,4 +109,39 @@ it('renders full datetime picker compound structure without shortcut', function 
         ->toContain('data-datetime-picker-time-list')
         ->toContain('data-datetime-picker-confirm')
         ->toContain('name="scheduled_at"');
+});
+
+it('calendar script follows APG keyboard and dark-aware month titles', function (): void {
+    $source = (string) file_get_contents(dirname(__DIR__, 2).'/resources/assets/js/calendar.js');
+
+    expect($source)
+        ->toContain("event.key === 'Home'")
+        ->toContain("event.key === 'End'")
+        ->toContain("event.key === 'PageUp'")
+        ->toContain("event.key === 'PageDown'")
+        ->toContain('dark:text-zinc-50')
+        ->toContain('btn.tabIndex')
+        ->not->toContain('rgb(24 24 27)');
+});
+
+it('time picker script restores focus on escape and exposes listbox keyboard', function (): void {
+    $source = (string) file_get_contents(dirname(__DIR__, 2).'/resources/assets/js/time-picker.js');
+
+    expect($source)
+        ->toContain("role', 'listbox'")
+        ->toContain("case 'Home':")
+        ->toContain("case 'End':")
+        ->toContain("case 'Escape':")
+        ->toContain('trigger.focus()');
+});
+
+it('datetime picker script focuses calendar on open and restores trigger on escape', function (): void {
+    $source = (string) file_get_contents(dirname(__DIR__, 2).'/resources/assets/js/datetime-picker.js');
+
+    expect($source)
+        ->toContain('calendarEl.focus()')
+        ->toContain('trigger.focus()')
+        ->toContain("role', 'listbox'")
+        ->toContain("case 'Home':")
+        ->toContain("case 'End':");
 });

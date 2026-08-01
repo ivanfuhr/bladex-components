@@ -29,7 +29,9 @@ export function initRatings(root = document) {
 function bindRating(root) {
     /** @type {HTMLInputElement | null} */
     const hiddenInput = root.querySelector('[data-rating-hidden-input]');
-    const stars = root.querySelectorAll('[data-rating-star]');
+    const stars = Array.from(root.querySelectorAll('[data-rating-star]')).filter(
+        (node) => node instanceof HTMLButtonElement,
+    );
     const max = Number.parseInt(root.getAttribute('data-rating-max') ?? '5', 10);
     const disabled = root.hasAttribute('data-disabled');
 
@@ -47,31 +49,33 @@ function bindRating(root) {
 
     /**
      * @param {number} value
+     * @param {{ focus?: boolean }} [options]
      */
-    function setValue(value) {
+    function setValue(value, options = {}) {
         const clamped = Math.max(0, Math.min(max, value));
         hiddenInput.value = String(clamped);
-        root.setAttribute('aria-valuenow', String(clamped));
 
         stars.forEach((star) => {
-            if (!(star instanceof HTMLElement)) {
-                return;
-            }
-
             const starValue = Number.parseInt(star.getAttribute('data-rating-value') ?? '0', 10);
             const active = starValue <= clamped;
-            star.classList.toggle('!text-amber-400', active);
+            const checked = starValue === clamped;
+
+            star.classList.toggle('!text-amber-700', active);
             star.classList.toggle('dark:!text-amber-400', active);
+            star.setAttribute('aria-checked', checked ? 'true' : 'false');
+
+            const isTabStop = checked || (clamped === 0 && starValue === 1);
+            star.tabIndex = isTabStop ? 0 : -1;
+
+            if (options.focus && isTabStop) {
+                star.focus();
+            }
         });
 
         dispatchChange(hiddenInput);
     }
 
     stars.forEach((star) => {
-        if (!(star instanceof HTMLButtonElement)) {
-            return;
-        }
-
         star.addEventListener('click', (event) => {
             event.preventDefault();
 
@@ -83,42 +87,52 @@ function bindRating(root) {
             const current = Number.parseInt(hiddenInput.value || '0', 10);
 
             if (current === value) {
-                setValue(0);
+                setValue(0, { focus: true });
             } else {
-                setValue(value);
+                setValue(value, { focus: true });
             }
         });
-    });
 
-    root.addEventListener('keydown', (event) => {
-        if (disabled) {
-            return;
-        }
+        star.addEventListener('keydown', (event) => {
+            if (disabled) {
+                return;
+            }
 
-        const current = Number.parseInt(hiddenInput.value || '0', 10);
+            const current = Number.parseInt(hiddenInput.value || '0', 10);
+            const starValue = Number.parseInt(star.getAttribute('data-rating-value') ?? '0', 10);
 
-        switch (event.key) {
-            case 'ArrowRight':
-            case 'ArrowUp':
-                event.preventDefault();
-                setValue(current + 1);
-                break;
-            case 'ArrowLeft':
-            case 'ArrowDown':
-                event.preventDefault();
-                setValue(current - 1);
-                break;
-            case 'Home':
-                event.preventDefault();
-                setValue(0);
-                break;
-            case 'End':
-                event.preventDefault();
-                setValue(max);
-                break;
-            default:
-                break;
-        }
+            switch (event.key) {
+                case 'ArrowRight':
+                case 'ArrowUp':
+                    event.preventDefault();
+                    setValue(Math.min(max, (current || starValue) + 1), { focus: true });
+                    break;
+                case 'ArrowLeft':
+                case 'ArrowDown':
+                    event.preventDefault();
+                    setValue(Math.max(1, (current || starValue) - 1), { focus: true });
+                    break;
+                case 'Home':
+                    event.preventDefault();
+                    setValue(1, { focus: true });
+                    break;
+                case 'End':
+                    event.preventDefault();
+                    setValue(max, { focus: true });
+                    break;
+                case ' ':
+                case 'Enter':
+                    event.preventDefault();
+                    if (current === starValue) {
+                        setValue(0, { focus: true });
+                    } else {
+                        setValue(starValue, { focus: true });
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
     });
 }
 

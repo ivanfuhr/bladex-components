@@ -74,7 +74,7 @@
         @if ($useSeparator)
             <x-stencil::input-otp.group>
                 @for ($i = 0; $i < $half; $i++)
-                    <x-stencil::input-otp.slot :index="$i" />
+                    <x-stencil::input-otp.slot :index="$i" :value="$scalarValue" />
                 @endfor
             </x-stencil::input-otp.group>
 
@@ -82,13 +82,13 @@
 
             <x-stencil::input-otp.group>
                 @for ($i = $half; $i < $length; $i++)
-                    <x-stencil::input-otp.slot :index="$i" />
+                    <x-stencil::input-otp.slot :index="$i" :value="$scalarValue" />
                 @endfor
             </x-stencil::input-otp.group>
         @else
             <x-stencil::input-otp.group>
                 @for ($i = 0; $i < $length; $i++)
-                    <x-stencil::input-otp.slot :index="$i" />
+                    <x-stencil::input-otp.slot :index="$i" :value="$scalarValue" />
                 @endfor
             </x-stencil::input-otp.group>
         @endif

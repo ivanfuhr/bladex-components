@@ -15,6 +15,7 @@
 
 @aware([
     'fieldInvalid' => false,
+    'controlId' => null,
 ])
 
 @php
@@ -24,6 +25,10 @@
     use Ivanfuhr\Stencil\Support\Typography\TypographyClassMap;
 
     $invalid = $invalid || $fieldInvalid;
+
+    $resolvedControlId = $attributes->get('id')
+        ?? $controlId
+        ?? $attributes->get('name');
 
     $typography = app(TypographyClassMap::class);
     $formControl = app(FormControlClassMap::class);
@@ -106,13 +111,17 @@
 
     $controlAttributes = $interactionState->apply(
         $attributes
-            ->except(['class', 'class:input', 'input:class', 'prefix', 'suffix', 'leading', 'trailing', 'mask', 'viewable', 'copyable', 'counter'])
+            ->except(['class', 'class:input', 'input:class', 'prefix', 'suffix', 'leading', 'trailing', 'mask', 'viewable', 'copyable', 'counter', 'id'])
             ->class([$controlClasses, $controlExtraClass])
             ->merge([
                 'type' => $type,
                 'data-input-control' => true,
             ]),
     );
+
+    if (filled($resolvedControlId)) {
+        $controlAttributes = $controlAttributes->merge(['id' => $resolvedControlId]);
+    }
 
     if ($hasMask) {
         $controlAttributes = $controlAttributes->merge([
