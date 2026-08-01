@@ -143,7 +143,7 @@ The square button uses the built-in loading icon from `stencil:add icon`.
 
 ## Input
 
-Affixes, `prefix` / `suffix`, and `invalid`, `disabled`, and `readonly` states.
+Affixes, `prefix` / `suffix` (shortcut sugar for `input.group` + `group.prefix` / `group.suffix`), and `invalid`, `disabled`, and `readonly` states.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/input-dark.png">
@@ -162,6 +162,13 @@ Affixes, `prefix` / `suffix`, and `invalid`, `disabled`, and `readonly` states.
 </x-ui::input>
 
 <x-ui::input name="site" placeholder="yoursite" prefix="https://" suffix=".com" />
+
+{{-- Explicit group composition (same markup as prefix / suffix shortcuts) --}}
+<x-ui::input.group class="max-w-md">
+    <x-ui::input.group.prefix>https://</x-ui::input.group.prefix>
+    <x-ui::input name="website" in-group placeholder="example.com" />
+    <x-ui::input.group.suffix>.com</x-ui::input.group.suffix>
+</x-ui::input.group>
 
 <x-ui::input name="email" value="not-an-email" invalid />
 
@@ -654,12 +661,68 @@ Star rating with numeric hidden value. `stencil:add rating` copies `rating.js`.
 
 ## Color Picker
 
-SV canvas, hue slider, Tailwind swatches, and hex field in a popover. `stencil:add color-picker` copies `color-picker.js`.
+SV canvas, hue slider, Tailwind swatches, and hex field in a popover. Subcomponents include `trigger`, `hex`, `content`, `area`, `hue`, `dropper`, `swatches`, and `swatch`. `stencil:add color-picker` copies `color-picker.js`.
+
+Default `shortcut` composes the trigger and popover tree. Use `:dropper="true"` or `:swatches="false"` on the root, or nest parts explicitly with `:shortcut="false"`.
 
 ```blade
 <x-ui::color-picker name="brand_color" value="#3366cc" />
 <x-ui::color-picker name="accent" :dropper="true" />
 <x-ui::color-picker name="theme" :swatches="['#ef4444', '#22c55e', '#3b82f6']" />
+
+<x-ui::color-picker name="brand_color" value="#3366cc" :shortcut="false">
+    <x-ui::color-picker.trigger current-value="#3366cc" popover-id="brand-popover">
+        <x-ui::color-picker.hex current-value="#3366cc" popover-id="brand-popover" />
+    </x-ui::color-picker.trigger>
+    <x-ui::color-picker.content popover-id="brand-popover">
+        <x-ui::color-picker.area />
+        <x-ui::color-picker.hue />
+        <x-ui::color-picker.dropper />
+        <x-ui::color-picker.swatches />
+    </x-ui::color-picker.content>
+</x-ui::color-picker>
+```
+
+<br>
+
+## Date Picker
+
+Calendar popover with optional range mode, presets sidebar, manual inputs, and confirmation footer. Subcomponents include `button`, `selected`, `input`, `panel`, `presets`, `manual-inputs`, and `footer`. `stencil:add date-picker` copies `date-picker.js` and `calendar.js`.
+
+`withPresets`, `withInputs`, and `withConfirmation` are shortcut conveniences that compose the matching panel parts.
+
+```blade
+<x-ui::date-picker name="published_at" value="2026-07-29" />
+
+<x-ui::date-picker name="range_at" mode="range" with-presets with-inputs with-confirmation />
+
+<x-ui::date-picker name="published_at" value="2026-07-29" :shortcut="false">
+    <x-ui::date-picker.button />
+    <x-ui::date-picker.panel>
+        <x-ui::date-picker.manual-inputs />
+        <x-ui::calendar value="2026-07-29" />
+        <x-ui::date-picker.footer />
+    </x-ui::date-picker.panel>
+</x-ui::date-picker>
+```
+
+<br>
+
+## Datetime Picker
+
+Date + time selection with calendar and scrollable time list. Subcomponents include `panel`, `time-list`, and `footer`. Reuses `date-picker.button` for the trigger. `stencil:add datetime-picker` copies `datetime-picker.js`.
+
+```blade
+<x-ui::datetime-picker name="scheduled_at" value="2026-07-29T14:30:00+00:00" />
+
+<x-ui::datetime-picker name="scheduled_at" :shortcut="false">
+    <x-ui::date-picker.button data-datetime-picker-trigger />
+    <x-ui::datetime-picker.panel>
+        <x-ui::calendar value="2026-07-29" data-datetime-picker-calendar />
+        <x-ui::datetime-picker.time-list />
+        <x-ui::datetime-picker.footer />
+    </x-ui::datetime-picker.panel>
+</x-ui::datetime-picker>
 ```
 
 <br>

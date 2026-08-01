@@ -187,6 +187,74 @@ Ship flexible Blade components that consumers assemble from small pieces, while 
 </x-stencil::input-otp>
 ```
 
+### Input prefix / suffix (shortcut + full composition)
+
+```blade
+{{-- Shortcut: prefix / suffix props compose input.group parts --}}
+<x-stencil::input name="website" prefix="https://" suffix=".test" placeholder="example.com" />
+
+{{-- Full: explicit group tree --}}
+<x-stencil::input.group>
+    <x-stencil::input.group.prefix>https://</x-stencil::input.group.prefix>
+    <x-stencil::input name="website" in-group placeholder="example.com" />
+    <x-stencil::input.group.suffix>.test</x-stencil::input.group.suffix>
+</x-stencil::input.group>
+```
+
+### Color picker (shortcut + full composition)
+
+```blade
+{{-- Shortcut: default trigger + popover tree (loads color-picker.js) --}}
+<x-stencil::color-picker name="brand" value="#3366cc" :dropper="true" />
+
+{{-- Full: :shortcut="false" and explicit trigger / content tree --}}
+<x-stencil::color-picker name="brand" value="#3366cc" :shortcut="false">
+    <x-stencil::color-picker.trigger current-value="#3366cc" popover-id="brand-popover">
+        <x-stencil::color-picker.hex current-value="#3366cc" popover-id="brand-popover" />
+    </x-stencil::color-picker.trigger>
+    <x-stencil::color-picker.content popover-id="brand-popover">
+        <x-stencil::color-picker.area />
+        <x-stencil::color-picker.hue />
+        <x-stencil::color-picker.dropper />
+        <x-stencil::color-picker.swatches />
+    </x-stencil::color-picker.content>
+</x-stencil::color-picker>
+```
+
+### Date picker (shortcut + full composition)
+
+```blade
+{{-- Shortcut: with* booleans compose panel parts --}}
+<x-stencil::date-picker name="published_at" with-presets with-confirmation />
+
+{{-- Full: :shortcut="false" and explicit trigger / panel tree --}}
+<x-stencil::date-picker name="published_at" :shortcut="false">
+    <x-stencil::date-picker.button />
+    <x-stencil::date-picker.panel>
+        <x-stencil::date-picker.presets />
+        <x-stencil::calendar />
+        <x-stencil::date-picker.footer />
+    </x-stencil::date-picker.panel>
+</x-stencil::date-picker>
+```
+
+### Datetime picker (shortcut + full composition)
+
+```blade
+{{-- Shortcut: default trigger + panel tree (loads datetime-picker.js) --}}
+<x-stencil::datetime-picker name="scheduled_at" />
+
+{{-- Full: :shortcut="false" and explicit trigger / panel tree --}}
+<x-stencil::datetime-picker name="scheduled_at" :shortcut="false">
+    <x-stencil::date-picker.button data-datetime-picker-trigger />
+    <x-stencil::datetime-picker.panel>
+        <x-stencil::calendar data-datetime-picker-calendar />
+        <x-stencil::datetime-picker.time-list />
+        <x-stencil::datetime-picker.footer />
+    </x-stencil::datetime-picker.panel>
+</x-stencil::datetime-picker>
+```
+
 ### Slider / range (shortcut + full composition)
 
 ```blade

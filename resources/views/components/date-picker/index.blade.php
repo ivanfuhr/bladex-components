@@ -81,84 +81,77 @@
         <input type="hidden" value="{{ $resolvedValue }}" data-date-picker-hidden-input />
     @endif
 
-    @if (isset($trigger))
-        {{ $trigger }}
-    @elseif ($shortcut)
-        @if ($type === 'input')
+    @if ($shortcut)
+        @if (isset($trigger))
+            {{ $trigger }}
+        @elseif ($type === 'input')
             <x-stencil::date-picker.input :$placeholder :$invalid :$disabled :$clearable :$size />
         @else
             <x-stencil::date-picker.button :$placeholder :$invalid :$disabled :$clearable :$size />
         @endif
-    @else
-        {{ $slot }}
-    @endif
 
-    <div
-        class="date-picker__panel z-50 w-max max-w-[calc(100vw-2rem)] rounded-xl border border-zinc-200 bg-white p-2 shadow-xl dark:border-zinc-800 dark:bg-zinc-950"
-        data-date-picker-panel
-        hidden
-        aria-hidden="true"
-        tabindex="-1"
-        aria-label="{{ $range ? __('stencil::messages.date_picker_range_placeholder') : __('stencil::messages.date_picker_placeholder') }}"
-    >
-        <div class="grid sm:grid-cols-[auto_1fr]">
-            @if ($presetMeta !== [])
-                <div class="hidden border-e border-zinc-200 p-2 sm:block dark:border-zinc-800" data-date-picker-presets>
-                    @foreach ($presetMeta as $preset)
-                        <x-stencil::button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            class="block w-full justify-start rounded-lg px-2 py-1.5 text-left text-zinc-600 dark:text-zinc-300"
-                            data-date-picker-preset="{{ $preset['key'] }}"
-                            data-date-picker-preset-start="{{ $preset['start'] }}"
-                            data-date-picker-preset-end="{{ $preset['end'] }}"
-                        >
-                            {{ $preset['label'] }}
-                        </x-stencil::button>
-                    @endforeach
+        <x-stencil::date-picker.panel :$range>
+            @if ($withPresets && $presetMeta !== [])
+                <x-stencil::date-picker.presets :preset-meta="$presetMeta">
+                    @if ($withInputs)
+                        <x-stencil::date-picker.manual-inputs />
+                    @endif
+
+                    <x-stencil::calendar
+                        :mode="$mode"
+                        :months="$monthCount"
+                        :value="$resolvedValue"
+                        :min="$min"
+                        :max="$max"
+                        :unavailable="$unavailable"
+                        :start-day="$startDay"
+                        :locale="$resolvedLocale"
+                        :timezone="$resolvedTimezone"
+                        :week-numbers="$weekNumbers"
+                        :selectable-header="$selectableHeader"
+                        :with-today="$withToday"
+                        :fixed-weeks="$fixedWeeks"
+                        :open-to="$openTo"
+                        :force-open-to="$forceOpenTo"
+                        :size="$size ?? 'default'"
+                        :min-range="$minRange"
+                        :max-range="$maxRange"
+                    />
+                </x-stencil::date-picker.presets>
+            @else
+                <div class="min-w-0">
+                    @if ($withInputs)
+                        <x-stencil::date-picker.manual-inputs />
+                    @endif
+
+                    <x-stencil::calendar
+                        :mode="$mode"
+                        :months="$monthCount"
+                        :value="$resolvedValue"
+                        :min="$min"
+                        :max="$max"
+                        :unavailable="$unavailable"
+                        :start-day="$startDay"
+                        :locale="$resolvedLocale"
+                        :timezone="$resolvedTimezone"
+                        :week-numbers="$weekNumbers"
+                        :selectable-header="$selectableHeader"
+                        :with-today="$withToday"
+                        :fixed-weeks="$fixedWeeks"
+                        :open-to="$openTo"
+                        :force-open-to="$forceOpenTo"
+                        :size="$size ?? 'default'"
+                        :min-range="$minRange"
+                        :max-range="$maxRange"
+                    />
                 </div>
             @endif
 
-            <div class="min-w-0">
-                @if ($withInputs)
-                    <div class="mb-2 border-b border-zinc-200 pb-2 dark:border-zinc-800" data-date-picker-manual-inputs>
-                        <x-stencil::input type="text" placeholder="YYYY-MM-DD" data-date-picker-manual-input />
-                    </div>
-                @endif
-
-                <x-stencil::calendar
-                    :mode="$mode"
-                    :months="$monthCount"
-                    :value="$resolvedValue"
-                    :min="$min"
-                    :max="$max"
-                    :unavailable="$unavailable"
-                    :start-day="$startDay"
-                    :locale="$resolvedLocale"
-                    :timezone="$resolvedTimezone"
-                    :week-numbers="$weekNumbers"
-                    :selectable-header="$selectableHeader"
-                    :with-today="$withToday"
-                    :fixed-weeks="$fixedWeeks"
-                    :open-to="$openTo"
-                    :force-open-to="$forceOpenTo"
-                    :size="$size ?? 'default'"
-                    :min-range="$minRange"
-                    :max-range="$maxRange"
-                />
-            </div>
-        </div>
-
-        @if ($withConfirmation)
-            <div class="mt-2 flex justify-end gap-2 border-t border-zinc-200 pt-2 dark:border-zinc-800">
-                <x-stencil::button type="button" variant="ghost" data-date-picker-cancel>
-                    {{ __('stencil::messages.date_picker_cancel') }}
-                </x-stencil::button>
-                <x-stencil::button type="button" variant="primary" data-date-picker-confirm>
-                    {{ $range ? __('stencil::messages.date_picker_select_range') : __('stencil::messages.date_picker_select_date') }}
-                </x-stencil::button>
-            </div>
-        @endif
-    </div>
+            @if ($withConfirmation)
+                <x-stencil::date-picker.footer :$range />
+            @endif
+        </x-stencil::date-picker.panel>
+    @else
+        {{ $slot }}
+    @endif
 </div>

@@ -6,6 +6,13 @@
 
 - Registry item: `key-value` — use `repeater` directly for dynamic key/value rows.
 
+### Changed
+
+- `color-picker` — compound sub-components (`trigger`, `hex`, `content`, `area`, `hue`, `dropper`, `swatches`, `swatch`) with default `shortcut`; flat `dropper` / `swatches` props compose the same parts.
+- `date-picker` — panel sub-components (`panel`, `presets`, `manual-inputs`, `footer`); `withPresets`, `withInputs`, and `withConfirmation` compose those parts in shortcut mode.
+- `datetime-picker` — compound sub-components (`panel`, `time-list`, `footer`) with default `shortcut`.
+- `input` — `prefix` / `suffix` props now compose `input.group` + `group.prefix` / `group.suffix` instead of duplicating markup.
+
 ### Added
 
 - Registry item: `pillbox` — tags input with `pillbox.js`, dedupe, max, and `name[]` submission.

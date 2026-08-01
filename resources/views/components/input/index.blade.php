@@ -102,13 +102,6 @@
         ! $hasGroupAffix ? $userClass : null,
     ])->filter()->implode(' ');
 
-    $groupClasses = collect([
-        'input-group',
-        'flex min-w-0 items-stretch',
-        $applyFullWidth && $hasGroupAffix ? 'w-full' : null,
-        $hasGroupAffix ? $userClass : null,
-    ])->filter()->implode(' ');
-
     $controlExtraClass = $attributes->get('class:input') ?? $attributes->get('input:class');
 
     $controlAttributes = $interactionState->apply(
@@ -149,108 +142,169 @@
         $affixIconClasses,
         '[&_[data-icon]]:text-zinc-500 dark:[&_[data-icon]]:text-zinc-400',
     ])->implode(' ');
+
+    $wrapperTagAttributes = new \Illuminate\View\ComponentAttributeBag([
+        'data-input' => true,
+    ])->class($wrapperClasses);
+
+    if ($hasEnhancements) {
+        $wrapperTagAttributes = $wrapperTagAttributes->merge(['data-input-enhanced' => true]);
+    }
+
+    if ($hasMask) {
+        $wrapperTagAttributes = $wrapperTagAttributes->merge(['data-input-mask' => $mask]);
+    }
+
+    if ($hasViewable) {
+        $wrapperTagAttributes = $wrapperTagAttributes->merge(['data-input-viewable' => true]);
+    }
+
+    if ($hasCopyable) {
+        $wrapperTagAttributes = $wrapperTagAttributes->merge(['data-input-copyable' => true]);
+    }
+
+    if ($hasCounter) {
+        $wrapperTagAttributes = $wrapperTagAttributes->merge(['data-input-counter' => true]);
+    }
 @endphp
 
 @if ($hasGroupAffix)
-    <div @class([$groupClasses]) data-input-group>
+    <x-stencil::input.group @class([$userClass])>
         @if ($prefixText !== null)
-            <div
-                @class([
-                    'input-group__prefix',
-                    'inline-flex shrink-0 items-center rounded-l-md border border-r-0 border-zinc-200 bg-zinc-50 px-3',
-                    'dark:border-zinc-800 dark:bg-zinc-900',
-                ])
-                data-input-group-prefix
-            >
-                <x-stencil::text inline size="sm" variant="subtle">{{ $prefixText }}</x-stencil::text>
+            <x-stencil::input.group.prefix>{{ $prefixText }}</x-stencil::input.group.prefix>
+        @endif
+
+        <div {{ $wrapperTagAttributes }}>
+            @if ($hasLeading)
+                <div @class([$leadingAffixClasses])>
+                    @if ($leadingContent instanceof ComponentSlot)
+                        {{ $leadingContent }}
+                    @else
+                        <x-stencil::text
+                            inline
+                            size="sm"
+                            variant="subtle"
+                            class="input__leading-text"
+                        >{{ $leadingContent }}</x-stencil::text>
+                    @endif
+                </div>
+            @endif
+
+            <input {{ $controlAttributes }} />
+
+            @if ($hasTrailing)
+                <div @class([$trailingAffixClasses])>
+                    @if ($trailingContent instanceof ComponentSlot)
+                        {{ $trailingContent }}
+                    @else
+                        <x-stencil::text
+                            inline
+                            size="sm"
+                            variant="subtle"
+                            class="input__trailing-text"
+                        >{{ $trailingContent }}</x-stencil::text>
+                    @endif
+                </div>
+            @endif
+
+            @if ($hasViewable || $hasCopyable)
+                <div class="input__actions absolute inset-y-0 right-0 z-10 flex items-center gap-0.5 pr-1">
+                    @if ($hasViewable)
+                        <button
+                            type="button"
+                            class="inline-flex size-8 items-center justify-center rounded-md text-zinc-500 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:text-zinc-400 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300/20"
+                            data-input-view-toggle
+                            aria-label="{{ __('stencil::messages.input_toggle_password') }}"
+                            aria-pressed="false"
+                        >
+                            <x-stencil::icon name="eye" class="size-4" />
+                        </button>
+                    @endif
+
+                    @if ($hasCopyable)
+                        <button
+                            type="button"
+                            class="inline-flex size-8 items-center justify-center rounded-md text-zinc-500 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:text-zinc-400 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300/20"
+                            data-input-copy
+                            aria-label="{{ __('stencil::messages.input_copy') }}"
+                        >
+                            <x-stencil::icon name="clipboard" class="size-4" />
+                        </button>
+                    @endif
+                </div>
+            @endif
+        </div>
+
+        @if ($suffixText !== null)
+            <x-stencil::input.group.suffix>{{ $suffixText }}</x-stencil::input.group.suffix>
+        @endif
+    </x-stencil::input.group>
+@else
+    <div {{ $wrapperTagAttributes }}>
+        @if ($hasLeading)
+            <div @class([$leadingAffixClasses])>
+                @if ($leadingContent instanceof ComponentSlot)
+                    {{ $leadingContent }}
+                @else
+                    <x-stencil::text
+                        inline
+                        size="sm"
+                        variant="subtle"
+                        class="input__leading-text"
+                    >{{ $leadingContent }}</x-stencil::text>
+                @endif
             </div>
         @endif
+
+        <input {{ $controlAttributes }} />
+
+        @if ($hasTrailing)
+            <div @class([$trailingAffixClasses])>
+                @if ($trailingContent instanceof ComponentSlot)
+                    {{ $trailingContent }}
+                @else
+                    <x-stencil::text
+                        inline
+                        size="sm"
+                        variant="subtle"
+                        class="input__trailing-text"
+                    >{{ $trailingContent }}</x-stencil::text>
+                @endif
+            </div>
+        @endif
+
+        @if ($hasViewable || $hasCopyable)
+            <div class="input__actions absolute inset-y-0 right-0 z-10 flex items-center gap-0.5 pr-1">
+                @if ($hasViewable)
+                    <button
+                        type="button"
+                        class="inline-flex size-8 items-center justify-center rounded-md text-zinc-500 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:text-zinc-400 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300/20"
+                        data-input-view-toggle
+                        aria-label="{{ __('stencil::messages.input_toggle_password') }}"
+                        aria-pressed="false"
+                    >
+                        <x-stencil::icon name="eye" class="size-4" />
+                    </button>
+                @endif
+
+                @if ($hasCopyable)
+                    <button
+                        type="button"
+                        class="inline-flex size-8 items-center justify-center rounded-md text-zinc-500 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:text-zinc-400 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300/20"
+                        data-input-copy
+                        aria-label="{{ __('stencil::messages.input_copy') }}"
+                    >
+                        <x-stencil::icon name="clipboard" class="size-4" />
+                    </button>
+                @endif
+            </div>
+        @endif
+    </div>
 @endif
-
-<div
-    @class([$wrapperClasses])
-    @if ($hasEnhancements) data-input-enhanced @if ($hasMask) data-input-mask="{{ $mask }}" @endif @if ($hasViewable) data-input-viewable @endif @if ($hasCopyable) data-input-copyable @endif @if ($hasCounter) data-input-counter @endif @endif
-    data-input
->
-    @if ($hasLeading)
-        <div @class([$leadingAffixClasses])>
-            @if ($leadingContent instanceof ComponentSlot)
-                {{ $leadingContent }}
-            @else
-                <x-stencil::text
-                    inline
-                    size="sm"
-                    variant="subtle"
-                    class="input__leading-text"
-                >{{ $leadingContent }}</x-stencil::text>
-            @endif
-        </div>
-    @endif
-
-    <input {{ $controlAttributes }} />
-
-    @if ($hasTrailing)
-        <div @class([$trailingAffixClasses])>
-            @if ($trailingContent instanceof ComponentSlot)
-                {{ $trailingContent }}
-            @else
-                <x-stencil::text
-                    inline
-                    size="sm"
-                    variant="subtle"
-                    class="input__trailing-text"
-                >{{ $trailingContent }}</x-stencil::text>
-            @endif
-        </div>
-    @endif
-
-    @if ($hasViewable || $hasCopyable)
-        <div class="input__actions absolute inset-y-0 right-0 z-10 flex items-center gap-0.5 pr-1">
-            @if ($hasViewable)
-                <button
-                    type="button"
-                    class="inline-flex size-8 items-center justify-center rounded-md text-zinc-500 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:text-zinc-400 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300/20"
-                    data-input-view-toggle
-                    aria-label="{{ __('stencil::messages.input_toggle_password') }}"
-                    aria-pressed="false"
-                >
-                    <x-stencil::icon name="eye" class="size-4" />
-                </button>
-            @endif
-
-            @if ($hasCopyable)
-                <button
-                    type="button"
-                    class="inline-flex size-8 items-center justify-center rounded-md text-zinc-500 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:text-zinc-400 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300/20"
-                    data-input-copy
-                    aria-label="{{ __('stencil::messages.input_copy') }}"
-                >
-                    <x-stencil::icon name="clipboard" class="size-4" />
-                </button>
-            @endif
-        </div>
-    @endif
-</div>
 
 @if ($hasCounter)
     <div
         class="input__counter mt-1 text-right text-xs text-zinc-500 dark:text-zinc-400"
         data-input-counter-display
     ></div>
-@endif
-
-@if ($hasGroupAffix)
-    @if ($suffixText !== null)
-        <div
-            @class([
-                'input-group__suffix',
-                'inline-flex shrink-0 items-center rounded-r-md border border-l-0 border-zinc-200 bg-zinc-50 px-3',
-                'dark:border-zinc-800 dark:bg-zinc-900',
-            ])
-            data-input-group-suffix
-        >
-            <x-stencil::text inline size="sm" variant="subtle">{{ $suffixText }}</x-stencil::text>
-        </div>
-    @endif
-    </div>
 @endif
