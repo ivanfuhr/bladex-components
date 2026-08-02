@@ -22,14 +22,12 @@
 @endphp
 
 @if ($asChild)
-    <div
-        {{
-            $attributes->class([...array_filter($classes), 'contents'])->merge([
-                'data-sidebar-menu-action' => true,
-                'data-sidebar' => 'menu-action',
-            ])
-        }}
-    >
+    <div {{
+        $attributes->class([...array_filter($classes), 'contents'])->merge([
+            'data-sidebar-menu-action' => true,
+            'data-sidebar' => 'menu-action',
+        ])
+    }}>
         {{ $slot }}
     </div>
 @else

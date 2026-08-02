@@ -18,7 +18,5 @@
         {{ $slot }}
     </div>
 @else
-    <div {{ $attributes->class($classes)->merge(['data-sidebar-group-label' => true]) }}>
-        {{ $slot }}
-    </div>
+    <div {{ $attributes->class($classes)->merge(['data-sidebar-group-label' => true]) }}>{{ $slot }}</div>
 @endif

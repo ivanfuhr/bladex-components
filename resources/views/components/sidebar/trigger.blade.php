@@ -3,13 +3,11 @@
 ])
 
 @if ($asChild)
-    <div
-        {{
-            $attributes->class(['sidebar__trigger', 'contents'])->merge([
-                'data-sidebar-trigger' => true,
-            ])
-        }}
-    >
+    <div {{
+        $attributes->class(['sidebar__trigger', 'contents'])->merge([
+            'data-sidebar-trigger' => true,
+        ])
+    }}>
         {{ $slot }}
     </div>
 @else

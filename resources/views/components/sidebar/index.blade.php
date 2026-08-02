@@ -14,44 +14,40 @@
 @endphp
 
 @if ($isNonCollapsible)
-    <aside
-        {{
-            $attributes->except('aria-label')->class([
-                'sidebar',
-                'flex h-full w-[var(--stencil-sidebar-width)] flex-col border-r border-zinc-200 bg-zinc-50 text-zinc-700',
-                'dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100',
-            ])->merge([
-                'data-sidebar' => true,
-                'data-sidebar-root' => true,
-                'data-side' => $resolvedSide,
-                'data-variant' => $resolvedVariant,
-                'data-collapsible-mode' => 'none',
-                'data-state' => 'expanded',
-                'aria-label' => $label,
-            ])
-        }}
-    >
+    <aside {{
+        $attributes->except('aria-label')->class([
+            'sidebar',
+            'flex h-full w-[var(--stencil-sidebar-width)] flex-col border-r border-zinc-200 bg-zinc-50 text-zinc-700',
+            'dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100',
+        ])->merge([
+            'data-sidebar' => true,
+            'data-sidebar-root' => true,
+            'data-side' => $resolvedSide,
+            'data-variant' => $resolvedVariant,
+            'data-collapsible-mode' => 'none',
+            'data-state' => 'expanded',
+            'aria-label' => $label,
+        ])
+    }}>
         {{ $slot }}
     </aside>
 @else
-    <div
-        {{
-            $attributes->except('aria-label')->class([
-                'sidebar',
-                'group peer text-zinc-700 dark:text-zinc-100',
-            ])->merge([
-                'data-sidebar' => true,
-                'data-sidebar-root' => true,
-                'data-side' => $resolvedSide,
-                'data-variant' => $resolvedVariant,
-                'data-collapsible-mode' => $resolvedCollapsible,
-                'data-collapsible' => '',
-                'data-state' => 'expanded',
-                'data-mobile' => 'false',
-                'data-mobile-open' => 'false',
-            ])
-        }}
-    >
+    <div {{
+        $attributes->except('aria-label')->class([
+            'sidebar',
+            'group peer text-zinc-700 dark:text-zinc-100',
+        ])->merge([
+            'data-sidebar' => true,
+            'data-sidebar-root' => true,
+            'data-side' => $resolvedSide,
+            'data-variant' => $resolvedVariant,
+            'data-collapsible-mode' => $resolvedCollapsible,
+            'data-collapsible' => '',
+            'data-state' => 'expanded',
+            'data-mobile' => 'false',
+            'data-mobile-open' => 'false',
+        ])
+    }}>
         {{-- Desktop layout spacer (hidden on mobile). --}}
         <div
             data-sidebar-gap
@@ -88,7 +84,7 @@
         >
             <div
                 data-sidebar-inner
-                class="flex h-full w-full flex-col bg-zinc-50 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-zinc-200 group-data-[variant=floating]:shadow-sm dark:group-data-[variant=floating]:border-zinc-800"
+                class="flex h-full w-full flex-col bg-zinc-50 text-zinc-700 group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-zinc-200 group-data-[variant=floating]:shadow-sm dark:bg-zinc-900 dark:text-zinc-100 dark:group-data-[variant=floating]:border-zinc-800"
                 role="navigation"
                 aria-label="{{ $label }}"
             >

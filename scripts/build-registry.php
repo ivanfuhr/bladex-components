@@ -435,6 +435,17 @@ $catalog = [
         'source' => 'stat',
         'targetPrefix' => 'stat',
     ],
+    'chart' => [
+        'title' => 'Chart',
+        'description' => 'Composable SVG charts with line, area, bar, axis, tooltip, legend, and summary primitives.',
+        'type' => 'registry:ui',
+        'registryDependencies' => [],
+        'source' => 'chart',
+        'targetPrefix' => 'chart',
+        'assets' => [
+            'resources/assets/js/chart.js' => 'chart.js',
+        ],
+    ],
     'dropdown-menu' => [
         'title' => 'Dropdown Menu',
         'description' => 'Accessible action menu with trigger, items, groups, shortcuts, and keyboard navigation.',

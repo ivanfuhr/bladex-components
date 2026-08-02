@@ -4,7 +4,12 @@
 @endphp
 
 <div @class(['w-full', $orientation === 'vertical' ? 'max-w-2xl' : 'max-w-3xl'])>
-    <x-stencil::stepper default-value="account" :orientation="$orientation" :linear="$linear" stepper-id="playbook-stepper">
+    <x-stencil::stepper
+        default-value="account"
+        :orientation="$orientation"
+        :linear="$linear"
+        stepper-id="playbook-stepper"
+    >
         <x-stencil::stepper.list>
             <x-stencil::stepper.item value="account" :step="1">
                 <x-stencil::stepper.trigger>

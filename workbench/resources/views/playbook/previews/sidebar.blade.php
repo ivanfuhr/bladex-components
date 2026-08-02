@@ -5,11 +5,7 @@
 @endphp
 
 <div class="h-[28rem] overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800">
-    <x-stencil::sidebar.provider
-        :default-open="$defaultOpen"
-        storage-key="stencil-playbook-sidebar"
-        class="min-h-full"
-    >
+    <x-stencil::sidebar.provider :default-open="$defaultOpen" storage-key="stencil-playbook-sidebar" class="min-h-full">
         <x-stencil::sidebar :collapsible="$collapsible" :variant="$variant">
             <x-stencil::sidebar.header>
                 <x-stencil::sidebar.menu>
@@ -28,9 +24,7 @@
                     <x-stencil::sidebar.group-content>
                         <x-stencil::sidebar.menu>
                             <x-stencil::sidebar.menu-item>
-                                <x-stencil::sidebar.menu-button href="#" active>
-                                    Home
-                                </x-stencil::sidebar.menu-button>
+                                <x-stencil::sidebar.menu-button href="#" active> Home </x-stencil::sidebar.menu-button>
                             </x-stencil::sidebar.menu-item>
                             <x-stencil::sidebar.menu-item>
                                 <x-stencil::sidebar.menu-button href="#">Projects</x-stencil::sidebar.menu-button>
@@ -40,10 +34,12 @@
                                 <x-stencil::sidebar.menu-button href="#">Settings</x-stencil::sidebar.menu-button>
                                 <x-stencil::sidebar.menu-sub>
                                     <x-stencil::sidebar.menu-sub-item>
-                                        <x-stencil::sidebar.menu-sub-button href="#">General</x-stencil::sidebar.menu-sub-button>
+                                        <x-stencil::sidebar.menu-sub-button href="#">
+                                            General</x-stencil::sidebar.menu-sub-button>
                                     </x-stencil::sidebar.menu-sub-item>
                                     <x-stencil::sidebar.menu-sub-item>
-                                        <x-stencil::sidebar.menu-sub-button href="#" active>Team</x-stencil::sidebar.menu-sub-button>
+                                        <x-stencil::sidebar.menu-sub-button href="#" active>
+                                            Team</x-stencil::sidebar.menu-sub-button>
                                     </x-stencil::sidebar.menu-sub-item>
                                 </x-stencil::sidebar.menu-sub>
                             </x-stencil::sidebar.menu-item>
@@ -83,7 +79,10 @@
             </header>
             <div class="p-4">
                 <p class="text-sm text-zinc-600 dark:text-zinc-400">
-                    Main content sits in <code class="font-mono text-xs">sidebar.inset</code>. Toggle with the trigger or <kbd class="rounded border border-zinc-200 px-1 font-mono text-[10px] dark:border-zinc-700">⌘B</kbd>.
+                    Main content sits in <code class="font-mono text-xs">sidebar.inset</code>. Toggle with the trigger
+                    or
+                    <kbd class="rounded border border-zinc-200 px-1 font-mono text-[10px] dark:border-zinc-700">⌘B</kbd
+                    >.
                 </p>
             </div>
         </x-stencil::sidebar.inset>

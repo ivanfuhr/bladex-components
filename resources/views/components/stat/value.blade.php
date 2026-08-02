@@ -5,4 +5,6 @@
     ])->merge([
         'data-stat-value' => true,
     ])
-}}>{{ $slot }}</div>
+}}>
+    {{ $slot }}
+</div>

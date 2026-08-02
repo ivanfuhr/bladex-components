@@ -36,13 +36,11 @@
                 'group-data-[state=completed]/step:hidden',
             ])
         >{{ $label }}</span>
-        <span
-            @class([
-                'stepper__indicator-check',
-                $isCompleted ? 'inline-flex' : 'hidden',
-                'group-data-[state=completed]/step:inline-flex group-data-[state=active]/step:hidden group-data-[state=inactive]/step:hidden',
-            ])
-        >
+        <span @class([
+            'stepper__indicator-check',
+            $isCompleted ? 'inline-flex' : 'hidden',
+            'group-data-[state=completed]/step:inline-flex group-data-[state=active]/step:hidden group-data-[state=inactive]/step:hidden',
+        ])>
             <x-stencil::icon name="check" class="size-4" />
         </span>
     @endif

@@ -8,18 +8,16 @@
         : null;
 @endphp
 
-<div
-    {{
-        $attributes->class([
-            'command__group',
-            'overflow-hidden p-1 text-zinc-950 dark:text-zinc-50',
-        ])->merge([
-            'role' => 'group',
-            'data-command-group' => true,
-            'aria-labelledby' => $headingId,
-        ])
-    }}
->
+<div {{
+    $attributes->class([
+        'command__group',
+        'overflow-hidden p-1 text-zinc-950 dark:text-zinc-50',
+    ])->merge([
+        'role' => 'group',
+        'data-command-group' => true,
+        'aria-labelledby' => $headingId,
+    ])
+}}>
     @if (filled($heading))
         <div
             id="{{ $headingId }}"

@@ -27,6 +27,7 @@ import { initToggles } from '../../../resources/assets/js/toggle.js';
 import { initToggleGroups } from '../../../resources/assets/js/toggle-group.js';
 import { initSteppers } from '../../../resources/assets/js/stepper.js';
 import { initTooltips } from '../../../resources/assets/js/tooltip.js';
+import { initCharts } from '../../../resources/assets/js/chart.js';
 import { initToasts } from '../../../resources/assets/js/toast.js';
 
 document.addEventListener('alpine:init', () => {
@@ -109,6 +110,7 @@ document.addEventListener('alpine:init', () => {
             initToggleGroups(canvas);
             initSteppers(canvas);
             initTooltips(canvas);
+            initCharts(canvas);
             initToasts(canvas);
         },
 

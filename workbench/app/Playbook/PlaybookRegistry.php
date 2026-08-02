@@ -87,6 +87,7 @@ final class PlaybookRegistry
                 'avatar',
                 'card',
                 'stat',
+                'chart',
                 'table',
                 'separator',
                 'icons',
@@ -255,6 +256,7 @@ final class PlaybookRegistry
             $this->breadcrumb(),
             $this->card(),
             $this->stat(),
+            $this->chart(),
             $this->dropdownMenu(),
             $this->popover(),
             $this->separator(),
@@ -1219,6 +1221,27 @@ final class PlaybookRegistry
                 'show_icon' => true,
             ],
             previewView: 'workbench::playbook.previews.stat',
+            wide: true,
+        );
+    }
+
+    private function chart(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'chart',
+            title: 'Chart',
+            description: 'Composable SVG charts with line, area, bar, axis, tooltip, and cursor primitives. Requires chart.js.',
+            controls: [
+                new PlaybookControl('variant', 'Variant', 'select', [
+                    'line' => 'Line',
+                    'area' => 'Area',
+                    'bar' => 'Bar',
+                ], 'line'),
+            ],
+            defaultState: [
+                'variant' => 'line',
+            ],
+            previewView: 'workbench::playbook.previews.chart',
             wide: true,
         );
     }

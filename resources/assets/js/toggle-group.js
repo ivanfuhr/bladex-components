@@ -112,8 +112,7 @@ function bindToggleGroup(root) {
             return;
         }
 
-        const item =
-            event.target instanceof Element ? event.target.closest(ITEM_SELECTOR) : null;
+        const item = event.target instanceof Element ? event.target.closest(ITEM_SELECTOR) : null;
 
         if (!(item instanceof HTMLButtonElement) || !root.contains(item) || item.disabled) {
             return;
@@ -139,8 +138,7 @@ function bindToggleGroup(root) {
     });
 
     root.addEventListener('keydown', (event) => {
-        const item =
-            event.target instanceof Element ? event.target.closest(ITEM_SELECTOR) : null;
+        const item = event.target instanceof Element ? event.target.closest(ITEM_SELECTOR) : null;
 
         if (!(item instanceof HTMLButtonElement) || !root.contains(item)) {
             return;

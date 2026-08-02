@@ -410,6 +410,13 @@
             ]
         },
         {
+            "name": "chart",
+            "type": "registry:ui",
+            "title": "Chart",
+            "description": "Composable SVG charts with line, area, bar, axis, tooltip, legend, and summary primitives.",
+            "registryDependencies": []
+        },
+        {
             "name": "dropdown-menu",
             "type": "registry:ui",
             "title": "Dropdown Menu",

@@ -22,7 +22,7 @@
 
 | 🧩 **Components** | 📖 **Guide** | 🛠 **Project** |
 | :--- | :--- | :--- |
-| [Button](#button) · [Button Group](#button-group) · [Toggle](#toggle) · [Toggle Group](#toggle-group) · [Input](#input) · [Label](#label) · [Field](#field) · [Textarea](#textarea) · [Checkbox](#checkbox) · [Radio](#radio) · [Switch](#switch) · [Select](#select) · [Dialog](#dialog) · [Command](#command) · [Accordion](#accordion) · [Sidebar](#sidebar) · [Collapsible](#collapsible) · [Avatar](#avatar) · [Badge](#badge) · [Breadcrumb](#breadcrumb) · [Card](#card) · [Stat](#stat) · [Dropdown Menu](#dropdown-menu) · [Separator](#separator) · [Skeleton](#skeleton) · [Empty](#empty) · [Tabs](#tabs) · [Stepper](#stepper) · [Tooltip](#tooltip) · [Toast](#toast) · [Progress](#progress) · [Alert](#alert) · [Table](#table) · [Typography](#typography) · [Icons](#icons) | [Installation](#installation) · [Usage](#usage) · [Registry CLI](#registry-cli) · [Tailwind](#tailwind-css) · [Playbook](#development) | [Changelog](CHANGELOG.md) · [Contributing](.github/CONTRIBUTING.md) · [Security](.github/SECURITY.md) · [License](LICENSE.md) |
+| [Button](#button) · [Button Group](#button-group) · [Toggle](#toggle) · [Toggle Group](#toggle-group) · [Input](#input) · [Label](#label) · [Field](#field) · [Textarea](#textarea) · [Checkbox](#checkbox) · [Radio](#radio) · [Switch](#switch) · [Select](#select) · [Dialog](#dialog) · [Command](#command) · [Accordion](#accordion) · [Sidebar](#sidebar) · [Collapsible](#collapsible) · [Avatar](#avatar) · [Badge](#badge) · [Breadcrumb](#breadcrumb) · [Card](#card) · [Stat](#stat) · [Chart](#chart) · [Dropdown Menu](#dropdown-menu) · [Separator](#separator) · [Skeleton](#skeleton) · [Empty](#empty) · [Tabs](#tabs) · [Stepper](#stepper) · [Tooltip](#tooltip) · [Toast](#toast) · [Progress](#progress) · [Alert](#alert) · [Table](#table) · [Typography](#typography) · [Icons](#icons) | [Installation](#installation) · [Usage](#usage) · [Registry CLI](#registry-cli) · [Tailwind](#tailwind-css) · [Playbook](#development) | [Changelog](CHANGELOG.md) · [Contributing](.github/CONTRIBUTING.md) · [Security](.github/SECURITY.md) · [License](LICENSE.md) |
 
 <br>
 
@@ -66,7 +66,7 @@ Use the owned Blade namespace in your app:
 <x-ui::input name="email" />
 ```
 
-**Registry UI items:** `accordion`, `alert`, `avatar`, `badge`, `breadcrumb`, `button`, `button-group`, `calendar`, `card`, `checkbox`, `collapsible`, `color-picker`, `combobox`, `command`, `date-picker`, `datetime-picker`, `dialog`, `dropdown-menu`, `empty`, `field`, `file-upload`, `heading`, `icon`, `input`, `input-currency`, `input-group`, `input-otp`, `label`, `pagination`, `pillbox`, `popover`, `progress`, `radio`, `rating`, `repeater`, `select`, `separator`, `sidebar`, `skeleton`, `slider`, `stat`, `stepper`, `switch`, `table`, `tabs`, `text`, `textarea`, `time-picker`, `toast`, `toggle`, `toggle-group`, `tooltip`. Lower-level pieces such as `field`, `input-group`, `label`, and `icon` are usually installed transitively. Components that use Lucide glyphs also install the required icon stubs during `stencil:add`; use `stencil:icon {name}` for any extra icons (see [Icons](#icons)).
+**Registry UI items:** `accordion`, `alert`, `avatar`, `badge`, `breadcrumb`, `button`, `button-group`, `calendar`, `card`, `chart`, `checkbox`, `collapsible`, `color-picker`, `combobox`, `command`, `date-picker`, `datetime-picker`, `dialog`, `dropdown-menu`, `empty`, `field`, `file-upload`, `heading`, `icon`, `input`, `input-currency`, `input-group`, `input-otp`, `label`, `pagination`, `pillbox`, `popover`, `progress`, `radio`, `rating`, `repeater`, `select`, `separator`, `sidebar`, `skeleton`, `slider`, `stat`, `stepper`, `switch`, `table`, `tabs`, `text`, `textarea`, `time-picker`, `toast`, `toggle`, `toggle-group`, `tooltip`. Lower-level pieces such as `field`, `input-group`, `label`, and `icon` are usually installed transitively. Components that use Lucide glyphs also install the required icon stubs during `stencil:add`; use `stencil:icon {name}` for any extra icons (see [Icons](#icons)).
 
 ### Registry CLI
 
@@ -1399,6 +1399,37 @@ Dashboard KPI card ([Mary UI Statistic](https://mary-ui.com/docs/components/stat
 
 ```bash
 php artisan stencil:add stat
+```
+
+<br>
+
+## Chart
+
+Composable SVG charts with zero chart-library dependencies ([Flux chart](https://fluxui.dev/components/chart), [shadcn chart tokens](https://ui.shadcn.com/docs/components/chart)). Compose `chart.svg` with `line`, `area`, `bar`, `point`, `axis`, `cursor`, `tooltip`, `legend`, and `summary`. Reference series colors with `var(--chart-1)` through `var(--chart-5)` from owned `stencil.css`. `stencil:add chart` copies `chart.js`.
+
+```blade
+<x-ui::chart :value="$data" class="aspect-[3/1]">
+    <x-ui::chart.svg>
+        <x-ui::chart.line field="visitors" class="text-[var(--chart-3)]" />
+        <x-ui::chart.axis axis="x" field="date">
+            <x-ui::chart.axis.line />
+            <x-ui::chart.axis.tick />
+        </x-ui::chart.axis>
+        <x-ui::chart.axis axis="y">
+            <x-ui::chart.axis.grid />
+            <x-ui::chart.axis.tick />
+        </x-ui::chart.axis>
+        <x-ui::chart.cursor />
+    </x-ui::chart.svg>
+    <x-ui::chart.tooltip>
+        <x-ui::chart.tooltip.heading field="date" />
+        <x-ui::chart.tooltip.value field="visitors" label="Visitors" />
+    </x-ui::chart.tooltip>
+</x-ui::chart>
+```
+
+```bash
+php artisan stencil:add chart
 ```
 
 <br>

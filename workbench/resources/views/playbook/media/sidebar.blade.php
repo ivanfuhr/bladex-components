@@ -7,7 +7,8 @@
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::sidebar /&gt;</p>
             <x-stencil::heading :level="2">Sidebar</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle">Composable app-shell navigation with collapse and mobile overlay.</x-stencil::text>
+            <x-stencil::text size="sm" variant="subtle"
+                >Composable app-shell navigation with collapse and mobile overlay.</x-stencil::text>
         </div>
 
         <div class="h-[26rem] overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800">
@@ -29,13 +30,16 @@
                             <x-stencil::sidebar.group-content>
                                 <x-stencil::sidebar.menu>
                                     <x-stencil::sidebar.menu-item>
-                                        <x-stencil::sidebar.menu-button href="#" active>Home</x-stencil::sidebar.menu-button>
+                                        <x-stencil::sidebar.menu-button href="#" active>
+                                            Home</x-stencil::sidebar.menu-button>
                                     </x-stencil::sidebar.menu-item>
                                     <x-stencil::sidebar.menu-item>
-                                        <x-stencil::sidebar.menu-button href="#">Projects</x-stencil::sidebar.menu-button>
+                                        <x-stencil::sidebar.menu-button href="#">
+                                            Projects</x-stencil::sidebar.menu-button>
                                     </x-stencil::sidebar.menu-item>
                                     <x-stencil::sidebar.menu-item>
-                                        <x-stencil::sidebar.menu-button href="#">Settings</x-stencil::sidebar.menu-button>
+                                        <x-stencil::sidebar.menu-button href="#">
+                                            Settings</x-stencil::sidebar.menu-button>
                                     </x-stencil::sidebar.menu-item>
                                 </x-stencil::sidebar.menu>
                             </x-stencil::sidebar.group-content>
@@ -56,7 +60,8 @@
                         <span class="text-sm font-medium text-zinc-950 dark:text-zinc-50">Dashboard</span>
                     </header>
                     <div class="p-4">
-                        <x-stencil::text size="sm" variant="subtle">Inset content area for the active page.</x-stencil::text>
+                        <x-stencil::text size="sm" variant="subtle"
+                            >Inset content area for the active page.</x-stencil::text>
                     </div>
                 </x-stencil::sidebar.inset>
             </x-stencil::sidebar.provider>

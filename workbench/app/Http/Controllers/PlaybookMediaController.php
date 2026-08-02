@@ -62,6 +62,7 @@ final class PlaybookMediaController
         'alert',
         'table',
         'stat',
+        'chart',
         'pagination',
     ];
 

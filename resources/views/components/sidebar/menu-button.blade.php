@@ -41,15 +41,13 @@
 @endphp
 
 @if ($asChild)
-    <div
-        {{
-            $attributes->class([...$classes, 'contents'])->merge([
-                'data-sidebar-menu-button' => true,
-                'data-size' => $size,
-                'data-active' => $isActive ? 'true' : 'false',
-            ])
-        }}
-    >
+    <div {{
+        $attributes->class([...$classes, 'contents'])->merge([
+            'data-sidebar-menu-button' => true,
+            'data-size' => $size,
+            'data-active' => $isActive ? 'true' : 'false',
+        ])
+    }}>
         {{ $slot }}
     </div>
 @else

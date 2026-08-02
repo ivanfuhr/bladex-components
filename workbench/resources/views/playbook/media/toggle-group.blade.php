@@ -38,7 +38,13 @@
 
             <div class="space-y-3">
                 <x-stencil::text size="sm" variant="subtle">Vertical</x-stencil::text>
-                <x-stencil::toggle-group orientation="vertical" variant="outline" spacing="2" default-value="left" aria-label="Align">
+                <x-stencil::toggle-group
+                    orientation="vertical"
+                    variant="outline"
+                    spacing="2"
+                    default-value="left"
+                    aria-label="Align"
+                >
                     <x-stencil::toggle-group.item value="left">Left</x-stencil::toggle-group.item>
                     <x-stencil::toggle-group.item value="center">Center</x-stencil::toggle-group.item>
                     <x-stencil::toggle-group.item value="right">Right</x-stencil::toggle-group.item>

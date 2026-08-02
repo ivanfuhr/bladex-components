@@ -70,7 +70,10 @@ function bindSidebarProvider(provider) {
             control.setAttribute('aria-expanded', expandedForControls ? 'true' : 'false');
         });
 
-        document.documentElement.classList.toggle('stencil-sidebar-mobile-open', isMobile && openMobile);
+        document.documentElement.classList.toggle(
+            'stencil-sidebar-mobile-open',
+            isMobile && openMobile,
+        );
     };
 
     /**
@@ -117,7 +120,9 @@ function bindSidebarProvider(provider) {
             return;
         }
 
-        const control = target.closest(`${TRIGGER_SELECTOR}, ${RAIL_SELECTOR}, ${BACKDROP_SELECTOR}`);
+        const control = target.closest(
+            `${TRIGGER_SELECTOR}, ${RAIL_SELECTOR}, ${BACKDROP_SELECTOR}`,
+        );
 
         if (!(control instanceof HTMLElement) || !provider.contains(control)) {
             return;
@@ -150,7 +155,12 @@ function bindSidebarProvider(provider) {
         ) {
             const tag = event.target instanceof HTMLElement ? event.target.tagName : '';
 
-            if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || event.target?.isContentEditable) {
+            if (
+                tag === 'INPUT' ||
+                tag === 'TEXTAREA' ||
+                tag === 'SELECT' ||
+                event.target?.isContentEditable
+            ) {
                 return;
             }
 

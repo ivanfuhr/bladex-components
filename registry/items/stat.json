@@ -12,13 +12,13 @@
             "path": "stat/description.blade.php",
             "type": "registry:ui",
             "target": "stat/description.blade.php",
-            "content": "<div {{\n    $attributes->class([\n        'stat__description',\n        'text-xs text-zinc-500 dark:text-zinc-400',\n    ])->merge([\n        'data-stat-description' => true,\n    ])\n}}>{{ $slot }}</div>\n"
+            "content": "<div {{\n    $attributes->class([\n        'stat__description',\n        'text-xs text-zinc-500 dark:text-zinc-400',\n    ])->merge([\n        'data-stat-description' => true,\n    ])\n}}>\n    {{ $slot }}\n</div>\n"
         },
         {
             "path": "stat/icon.blade.php",
             "type": "registry:ui",
             "target": "stat/icon.blade.php",
-            "content": "<span {{\n    $attributes->class([\n        'stat__icon',\n        'inline-flex size-9 shrink-0 items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 text-zinc-600',\n        'dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300',\n    ])->merge([\n        'data-stat-icon' => true,\n        'aria-hidden' => 'true',\n    ])\n}}>{{ $slot }}</span>\n"
+            "content": "<span\n    {{\n        $attributes->class([\n            'stat__icon',\n            'inline-flex size-9 shrink-0 items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 text-zinc-600',\n            'dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300',\n        ])->merge([\n            'data-stat-icon' => true,\n            'aria-hidden' => 'true',\n        ])\n    }}\n>{{ $slot }}</span>\n"
         },
         {
             "path": "stat/index.blade.php",
@@ -30,19 +30,19 @@
             "path": "stat/label.blade.php",
             "type": "registry:ui",
             "target": "stat/label.blade.php",
-            "content": "<div {{\n    $attributes->class([\n        'stat__label',\n        'text-sm font-medium text-zinc-500 dark:text-zinc-400',\n    ])->merge([\n        'data-stat-label' => true,\n    ])\n}}>{{ $slot }}</div>\n"
+            "content": "<div {{\n    $attributes->class([\n        'stat__label',\n        'text-sm font-medium text-zinc-500 dark:text-zinc-400',\n    ])->merge([\n        'data-stat-label' => true,\n    ])\n}}>\n    {{ $slot }}\n</div>\n"
         },
         {
             "path": "stat/trend.blade.php",
             "type": "registry:ui",
             "target": "stat/trend.blade.php",
-            "content": "@props([\n    'direction' => null,\n])\n\n@php\n    $directionClasses = match ($direction) {\n        'up' => 'text-emerald-700 dark:text-emerald-400',\n        'down' => 'text-red-700 dark:text-red-400',\n        'neutral' => 'text-zinc-600 dark:text-zinc-300',\n        default => 'text-zinc-600 dark:text-zinc-300',\n    };\n@endphp\n\n<span {{\n    $attributes->class([\n        'stat__trend',\n        'inline-flex items-center gap-1 text-xs font-medium tabular-nums',\n        $directionClasses,\n    ])->merge([\n        'data-stat-trend' => true,\n        'data-direction' => filled($direction) ? (string) $direction : null,\n    ])\n}}>{{ $slot }}</span>\n"
+            "content": "@props([\n    'direction' => null,\n])\n\n@php\n    $directionClasses = match ($direction) {\n        'up' => 'text-emerald-700 dark:text-emerald-400',\n        'down' => 'text-red-700 dark:text-red-400',\n        'neutral' => 'text-zinc-600 dark:text-zinc-300',\n        default => 'text-zinc-600 dark:text-zinc-300',\n    };\n@endphp\n\n<span\n    {{\n        $attributes->class([\n            'stat__trend',\n            'inline-flex items-center gap-1 text-xs font-medium tabular-nums',\n            $directionClasses,\n        ])->merge([\n            'data-stat-trend' => true,\n            'data-direction' => filled($direction) ? (string) $direction : null,\n        ])\n    }}\n>{{ $slot }}</span>\n"
         },
         {
             "path": "stat/value.blade.php",
             "type": "registry:ui",
             "target": "stat/value.blade.php",
-            "content": "<div {{\n    $attributes->class([\n        'stat__value',\n        'text-2xl font-semibold tracking-tight text-zinc-950 tabular-nums dark:text-zinc-50',\n    ])->merge([\n        'data-stat-value' => true,\n    ])\n}}>{{ $slot }}</div>\n"
+            "content": "<div {{\n    $attributes->class([\n        'stat__value',\n        'text-2xl font-semibold tracking-tight text-zinc-950 tabular-nums dark:text-zinc-50',\n    ])->merge([\n        'data-stat-value' => true,\n    ])\n}}>\n    {{ $slot }}\n</div>\n"
         }
     ]
 }

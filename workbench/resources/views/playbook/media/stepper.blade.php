@@ -7,7 +7,8 @@
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::stepper /&gt;</p>
             <x-stencil::heading :level="2">Stepper</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle">Multi-step wizard indicator with panels and navigation.</x-stencil::text>
+            <x-stencil::text size="sm" variant="subtle"
+                >Multi-step wizard indicator with panels and navigation.</x-stencil::text>
         </div>
 
         <x-stencil::stepper default-value="workspace" stepper-id="media-stepper" class="max-w-3xl">

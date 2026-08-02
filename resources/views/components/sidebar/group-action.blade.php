@@ -19,10 +19,7 @@
         {{ $slot }}
     </div>
 @else
-    <button
-        type="button"
-        {{ $attributes->class($classes)->merge(['data-sidebar-group-action' => true]) }}
-    >
+    <button type="button" {{ $attributes->class($classes)->merge(['data-sidebar-group-action' => true]) }}>
         {{ $slot }}
     </button>
 @endif

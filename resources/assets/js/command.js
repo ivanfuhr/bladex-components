@@ -452,7 +452,9 @@ function bindCommand(root) {
 
                 break;
             case 'Escape': {
-                const dialog = root.closest('dialog[data-dialog-content], dialog[data-command-dialog]');
+                const dialog = root.closest(
+                    'dialog[data-dialog-content], dialog[data-command-dialog]',
+                );
 
                 if (dialog instanceof HTMLDialogElement && dialog.open) {
                     event.preventDefault();

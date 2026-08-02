@@ -196,7 +196,11 @@ function bindStepper(root) {
                 ? target.closest(TRIGGER_SELECTOR)
                 : null;
 
-        if (!(trigger instanceof HTMLButtonElement) || !root.contains(trigger) || trigger.disabled) {
+        if (
+            !(trigger instanceof HTMLButtonElement) ||
+            !root.contains(trigger) ||
+            trigger.disabled
+        ) {
             return;
         }
 
@@ -249,7 +253,10 @@ function bindStepper(root) {
 
         const nextTrigger = enabled[nextIndex];
 
-        if (!(nextTrigger instanceof HTMLButtonElement) || typeof nextTrigger.dataset.value !== 'string') {
+        if (
+            !(nextTrigger instanceof HTMLButtonElement) ||
+            typeof nextTrigger.dataset.value !== 'string'
+        ) {
             return;
         }
 

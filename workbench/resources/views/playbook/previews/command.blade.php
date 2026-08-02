@@ -29,7 +29,10 @@
         </x-stencil::command>
     </x-stencil::command.dialog>
 
-    <x-stencil::command class="rounded-xl border border-zinc-200 shadow-sm dark:border-zinc-800" placeholder="Filter actions…">
+    <x-stencil::command
+        class="rounded-xl border border-zinc-200 shadow-sm dark:border-zinc-800"
+        placeholder="Filter actions…"
+    >
         <x-stencil::command.group heading="Actions">
             <x-stencil::command.item value="new-file">Create new file</x-stencil::command.item>
             <x-stencil::command.item value="new-project" kbd="⌘⇧N">Create new project</x-stencil::command.item>
