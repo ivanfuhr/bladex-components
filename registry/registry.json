@@ -500,12 +500,27 @@
             "title": "Calendar",
             "description": "Accessible calendar grid for date and range selection.",
             "registryDependencies": [
-                "icon"
+                "icon",
+                "date-utils"
             ],
             "iconDependencies": [
                 "chevron-left",
                 "chevron-right"
             ]
+        },
+        {
+            "name": "date-utils",
+            "type": "registry:asset",
+            "title": "Date Utils",
+            "description": "Shared date parsing, values, and timezone formatting for pickers.",
+            "registryDependencies": []
+        },
+        {
+            "name": "anchored-panel",
+            "type": "registry:asset",
+            "title": "Anchored Panel",
+            "description": "Shared panel positioning and portal helpers for picker overlays.",
+            "registryDependencies": []
         },
         {
             "name": "date-picker",
@@ -516,7 +531,9 @@
                 "button",
                 "input",
                 "calendar",
-                "icon"
+                "icon",
+                "date-utils",
+                "anchored-panel"
             ],
             "iconDependencies": [
                 "calendar",
@@ -531,7 +548,9 @@
             "description": "Time selection list with configurable steps and unavailable slots.",
             "registryDependencies": [
                 "input",
-                "icon"
+                "icon",
+                "date-utils",
+                "anchored-panel"
             ],
             "iconDependencies": [
                 "chevron-down"
@@ -545,7 +564,9 @@
             "registryDependencies": [
                 "button",
                 "calendar",
-                "date-picker"
+                "date-picker",
+                "date-utils",
+                "anchored-panel"
             ]
         }
     ]

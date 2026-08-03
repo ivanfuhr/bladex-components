@@ -2,9 +2,9 @@
  * Stencil — calendar grid (vanilla JS).
  */
 
-import { DateValue } from './chrono/date-value.js';
-import { formatRangeValue, parseRangeValue } from './chrono/parse.js';
-import { formatDateValue, todayInTimeZone } from './chrono/timezone.js';
+import { DateValue } from '../../../js/ui/date-value.js';
+import { formatRangeValue, parseRangeValue } from '../../../js/ui/date-parse.js';
+import { formatDateValue, todayInTimeZone } from '../../../js/ui/date-timezone.js';
 
 const CALENDAR_SELECTOR = '[data-calendar]';
 const initialized = new WeakSet();

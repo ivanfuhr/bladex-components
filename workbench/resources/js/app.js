@@ -6,5 +6,6 @@ window.Alpine = Alpine;
 Alpine.start();
 
 // stencil-start
-import '../views/ui/textarea/textarea.js';
+import '../views/ui/input/input-enhancements.js';
+import '../views/ui/repeater/repeater.js';
 // stencil-end

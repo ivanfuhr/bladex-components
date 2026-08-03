@@ -7,7 +7,7 @@ import { initSliders } from '../views/ui/slider/slider.js';
 import { initDialogs } from '../views/ui/dialog/dialog.js';
 import { initCommands } from '../../../resources/assets/js/command.js';
 import { initDatePickers } from '../views/ui/date-picker/date-picker.js';
-import { initCalendars } from '../views/ui/date-picker/calendar.js';
+import { initCalendars } from '../views/ui/calendar/calendar.js';
 import { initTimePickers } from '../views/ui/time-picker/time-picker.js';
 import { initDatetimePickers } from '../views/ui/datetime-picker/datetime-picker.js';
 import { initInputCurrencies } from '../views/ui/input/input-currency.js';

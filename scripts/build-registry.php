@@ -23,7 +23,7 @@ if (! is_dir($componentsPath)) {
     exit(1);
 }
 
-/** @var array<string, array{title: string, description: string, type: string, registryDependencies: list<string>, iconDependencies?: list<string>, source?: string, targetPrefix?: string, filesOnly?: list<string>, assets?: array<string, string>}> $catalog */
+/** @var array<string, array{title: string, description: string, type: string, registryDependencies: list<string>, iconDependencies?: list<string>, source?: string, targetPrefix?: string, filesOnly?: list<string>, assets?: array<string, string>, assetOnly?: bool, appFiles?: array<string, string>}> $catalog */
 $chronoAppFiles = [
     'src/Support/Chrono/ChronoFormatter.php' => 'app/Support/Stencil/Chrono/ChronoFormatter.php',
     'src/Support/Chrono/DateRange.php' => 'app/Support/Stencil/Chrono/DateRange.php',
@@ -541,64 +541,72 @@ $catalog = [
         'title' => 'Calendar',
         'description' => 'Accessible calendar grid for date and range selection.',
         'type' => 'registry:ui',
-        'registryDependencies' => ['icon'],
+        'registryDependencies' => ['icon', 'date-utils'],
         'iconDependencies' => ['chevron-left', 'chevron-right'],
         'source' => 'calendar',
         'targetPrefix' => 'calendar',
         'appFiles' => $chronoAppFiles,
         'assets' => [
             'resources/assets/js/calendar.js' => 'calendar.js',
-            'resources/assets/js/chrono/date-value.js' => 'chrono/date-value.js',
-            'resources/assets/js/chrono/parse.js' => 'chrono/parse.js',
-            'resources/assets/js/chrono/timezone.js' => 'chrono/timezone.js',
+        ],
+    ],
+    'date-utils' => [
+        'title' => 'Date Utils',
+        'description' => 'Shared date parsing, values, and timezone formatting for pickers.',
+        'type' => 'registry:asset',
+        'registryDependencies' => [],
+        'assetOnly' => true,
+        'assets' => [
+            'resources/assets/js/date-value.js' => 'date-value.js',
+            'resources/assets/js/date-parse.js' => 'date-parse.js',
+            'resources/assets/js/date-timezone.js' => 'date-timezone.js',
+        ],
+    ],
+    'anchored-panel' => [
+        'title' => 'Anchored Panel',
+        'description' => 'Shared panel positioning and portal helpers for picker overlays.',
+        'type' => 'registry:asset',
+        'registryDependencies' => [],
+        'assetOnly' => true,
+        'assets' => [
+            'resources/assets/js/anchored-panel.js' => 'anchored-panel.js',
         ],
     ],
     'date-picker' => [
         'title' => 'Date Picker',
         'description' => 'Date and range picker with presets, confirmation, and timezone-aware values.',
         'type' => 'registry:ui',
-        'registryDependencies' => ['button', 'input', 'calendar', 'icon'],
+        'registryDependencies' => ['button', 'input', 'calendar', 'icon', 'date-utils', 'anchored-panel'],
         'iconDependencies' => ['calendar', 'x', 'chevron-down'],
         'source' => 'date-picker',
         'targetPrefix' => 'date-picker',
         'appFiles' => $chronoAppFiles,
         'assets' => [
             'resources/assets/js/date-picker.js' => 'date-picker.js',
-            'resources/assets/js/calendar.js' => 'calendar.js',
-            'resources/assets/js/chrono/date-value.js' => 'chrono/date-value.js',
-            'resources/assets/js/chrono/parse.js' => 'chrono/parse.js',
-            'resources/assets/js/chrono/timezone.js' => 'chrono/timezone.js',
-            'resources/assets/js/chrono/popover.js' => 'chrono/popover.js',
         ],
     ],
     'time-picker' => [
         'title' => 'Time Picker',
         'description' => 'Time selection list with configurable steps and unavailable slots.',
         'type' => 'registry:ui',
-        'registryDependencies' => ['input', 'icon'],
+        'registryDependencies' => ['input', 'icon', 'date-utils', 'anchored-panel'],
         'iconDependencies' => ['chevron-down'],
         'source' => 'time-picker',
         'targetPrefix' => 'time-picker',
         'assets' => [
             'resources/assets/js/time-picker.js' => 'time-picker.js',
-            'resources/assets/js/chrono/popover.js' => 'chrono/popover.js',
-            'resources/assets/js/chrono/timezone.js' => 'chrono/timezone.js',
         ],
     ],
     'datetime-picker' => [
         'title' => 'DateTime Picker',
         'description' => 'Combined date and time picker with ISO 8601 form values.',
         'type' => 'registry:ui',
-        'registryDependencies' => ['button', 'calendar', 'date-picker'],
+        'registryDependencies' => ['button', 'calendar', 'date-picker', 'date-utils', 'anchored-panel'],
         'source' => 'datetime-picker',
         'targetPrefix' => 'datetime-picker',
         'appFiles' => $chronoAppFiles,
         'assets' => [
             'resources/assets/js/datetime-picker.js' => 'datetime-picker.js',
-            'resources/assets/js/calendar.js' => 'calendar.js',
-            'resources/assets/js/chrono/date-value.js' => 'chrono/date-value.js',
-            'resources/assets/js/chrono/parse.js' => 'chrono/parse.js',
-            'resources/assets/js/chrono/timezone.js' => 'chrono/timezone.js',
         ],
     ],
 ];
@@ -606,17 +614,23 @@ $catalog = [
 $indexItems = [];
 
 foreach ($catalog as $name => $meta) {
+    $assetOnly = (bool) ($meta['assetOnly'] ?? false);
+    $isAssetPackage = ($meta['type'] ?? '') === 'registry:asset';
     $source = $meta['source'] ?? $name;
     $targetPrefix = $meta['targetPrefix'] ?? $name;
     $sourceDir = $componentsPath.'/'.$source;
 
-    if (! is_dir($sourceDir)) {
-        fwrite(STDERR, "Missing component directory for catalog item [{$name}]: {$sourceDir}\n");
-        exit(1);
-    }
+    $files = [];
 
-    $filesOnly = $meta['filesOnly'] ?? null;
-    $files = collectBladeFiles($sourceDir, $targetPrefix, $filesOnly, $compiler);
+    if (! $assetOnly) {
+        if (! is_dir($sourceDir)) {
+            fwrite(STDERR, "Missing component directory for catalog item [{$name}]: {$sourceDir}\n");
+            exit(1);
+        }
+
+        $filesOnly = $meta['filesOnly'] ?? null;
+        $files = collectBladeFiles($sourceDir, $targetPrefix, $filesOnly, $compiler);
+    }
 
     foreach ($meta['assets'] ?? [] as $packageRelative => $targetName) {
         $assetPath = $root.'/'.$packageRelative;
@@ -627,11 +641,14 @@ foreach ($catalog as $name => $meta) {
             exit(1);
         }
 
-        $assetTarget = rtrim($targetPrefix, '/').'/'.$targetName;
+        $assetTarget = $isAssetPackage
+            ? $targetName
+            : rtrim($targetPrefix, '/').'/'.$targetName;
+        $fileType = $isAssetPackage ? 'registry:asset' : 'registry:ui';
 
         $files[] = [
             'path' => $assetTarget,
-            'type' => 'registry:ui',
+            'type' => $fileType,
             'target' => $assetTarget,
             'content' => $assetContent,
         ];

@@ -1,7 +1,11 @@
 ---
 name: stencil-development
 description: >
-  Configure and apply the Stencil package in Laravel applications.
+  Install and apply ivanfuhr/stencil in Laravel apps: registry CLI
+  (stencil:init/add/update/remove/list/icon), owned x-ui::* Blade UI,
+  Tailwind v4 + Vite integration, Lucide icons, and composition patterns.
+  Use when adding Stencil components, wiring stencil.json, fixing missing
+  UI/Tailwind/JS setup, or choosing between x-ui:: and x-stencil::.
 license: MIT
 metadata:
   author: Ivan Führ
@@ -9,28 +13,170 @@ metadata:
 
 # Stencil
 
-Use this skill when a Laravel application needs to integrate the Stencil package.
+Use this skill when a Laravel app should adopt or extend `ivanfuhr/stencil`.
 
 ## Primary Goal
 
-- apply the `ivanfuhr/stencil` package's public API in the smallest correct way
+Ship the smallest correct owned UI: install via the registry CLI, compose with `x-ui::*`, and leave production able to run without the package (`composer install --no-dev`).
+
+## Mental Model
+
+Stencil is a **dev-only registry CLI** (shadcn-style for Blade). It copies markup, support classes, CSS, and JS into the host app. You customize those owned files; you do not treat vendor views as the production surface.
+
+| Mode | Namespace | When |
+| --- | --- | --- |
+| **Owned (default)** | `x-ui::*` | App UI. Files live under `resources/views/ui`. Commit them. |
+| **Vendor preview (optional)** | `x-stencil::*` | Quick local check while the package is installed. Not the production path. |
+
+Always prefer owned mode for app work.
 
 ## Workflow
 
-### 1. Inspect the Laravel app context
+### 1. Confirm context
 
-- confirm the app is a Laravel project
-- inspect the target code paths where the package should be applied
+- Laravel app with Tailwind v4 + Vite (typical Breeze/Fortify/Jetstream or similar).
+- Decide which UI pieces are needed (form field, dialog, sidebar, etc.).
+- If `stencil.json` is missing, start at step 2. If present, jump to step 3.
 
-### 2. Choose adoption mode
+### 2. Install and init (once per app)
 
-**Owned mode (recommended)** — `composer require --dev ivanfuhr/stencil`:
-
-```blade
-<x-stencil::input name="email" />
+```bash
+composer require --dev ivanfuhr/stencil
+php artisan stencil:init
 ```
 
-**Owned mode** — shadcn-style registry install into `resources/views/ui` (production runs without the package):
+Optional config publish:
+
+```bash
+php artisan vendor:publish --tag=stencil-config
+```
+
+`stencil:init` creates/scaffolds:
+
+- `stencil.json` + `stencil.lock`
+- `resources/css/stencil.css` and a marked import in `resources/css/app.css` (`/* stencil-start */` … `/* stencil-end */`)
+- `app/Support/Stencil` support classes
+- `App\Providers\StencilUiServiceProvider` (registered in `bootstrap/providers.php` when that file exists)
+- empty owned UI roots for later `stencil:add`
+
+Include fonts once in the layout after init:
+
+```blade
+<x-ui::fonts />
+```
+
+### 3. Install only what you need
+
+```bash
+php artisan stencil:list
+php artisan stencil:add input button select
+```
+
+Rules:
+
+- `stencil:add` resolves `registryDependencies` and declared Lucide `iconDependencies` automatically.
+- Prefer root items (`input`, `select`, `dialog`); transitive pieces (`field`, `label`, `input-group`, `icon`) usually arrive with them.
+- Interactive components also copy JS and patch the Vite entry inside `// stencil-start` … `// stencil-end`.
+- Shared date helpers install under `resources/js/ui/` (for example `date-value.js`, `date-parse.js`, `date-timezone.js`, `anchored-panel.js`); component scripts stay beside owned views (for example `resources/views/ui/select/select.js`).
+- After adding JS-backed items, rebuild frontend assets (`npm run dev` / `npm run build`).
+
+Useful flags:
+
+| Command | Flags / notes |
+| --- | --- |
+| `stencil:init` | `--force` overwrites existing `stencil.json` / scaffold targets |
+| `stencil:add {names}` | `--overwrite`, `--dry-run` |
+| `stencil:update {name?}` | `--overwrite` when local files diverge |
+| `stencil:remove {names}` | `--keep-files` drops lock entries only |
+| `stencil:list` | `--installed`, `--all` |
+| `stencil:icon {names}` | Lucide stubs → `resources/views/ui/icons` (`--force`, `--path=`) |
+
+Default registry URL: `package://registry.json` via `config('stencil.default_registry_url')` (overridable in `stencil.json`).
+
+### 4. Compose with owned components
+
+Use the anonymous path prefix:
+
+```blade
+{{-- correct --}}
+<x-ui::input name="email" />
+<x-ui::field name="email">
+    <x-ui::field.label>Email</x-ui::field.label>
+    <x-ui::input id="email" name="email" type="email" />
+    <x-ui::field.errors name="email" />
+</x-ui::field>
+
+{{-- wrong --}}
+<x-ui.input name="email" />
+```
+
+Composition defaults:
+
+1. **Shortcut first** — many roots default `shortcut` to `true` and wrap children (select, combobox, command, slider, file-upload, input-otp, color-picker, date/time pickers). Pass only the varying pieces (usually items).
+2. **Full tree when needed** — set `:shortcut="false"` and compose explicit children (`select.trigger` / `select.content`, etc.).
+3. **Field shell for forms** — wrap controls in `field` for label, description, and Laravel `$errors`; inline controls use `orientation="inline"`.
+4. **Own the files** — customize under `resources/views/ui` and `app/Support/Stencil`. Do not import Tailwind sources from `vendor/`.
+
+### 5. Wire layout / theme
+
+- Keep the `stencil.css` import created by init.
+- Class-based dark mode: put `class="dark"` on `<html>` (or a root wrapper). Components ship light styles by default.
+- With `APP_DEBUG=true` and the package installed, missing Tailwind integration throws on HTTP requests. Opt out with `validate_tailwind_integration => false` in config if intentional.
+- Mount `toast.provider` once in the layout when using toasts; call `window.Stencil.toast({ title, description, variant })`.
+- Named dialogs: `window.Stencil.dialog('name').show()` / `window.Stencil.dialogs.closeAll()`.
+
+### 6. Verify before finishing
+
+- [ ] Needed items appear in `php artisan stencil:list --installed` / `stencil.lock`
+- [ ] Views render as `x-ui::*` (not `x-stencil::*`) in app code
+- [ ] `resources/css/app.css` still has the stencil import markers
+- [ ] JS-backed components appear in the Vite entry stencil block
+- [ ] Owned files are committed so production can drop the dev package
+
+## Owned Paths
+
+| Artifact | Default path |
+| --- | --- |
+| Blade UI | `resources/views/ui` |
+| Icons | `resources/views/ui/icons` |
+| Shared JS helpers | `resources/js/ui` |
+| Support classes | `app/Support/Stencil` |
+| Project config / lock | `stencil.json`, `stencil.lock` |
+| Tailwind entry helper | `resources/css/stencil.css` |
+
+## Choose a Registry Item
+
+Install the closest root name, then copy usage from the package README (swap any mental `x-stencil::` examples to `x-ui::`).
+
+| Need | Add |
+| --- | --- |
+| Text / text / money / OTP / files | `input`, `textarea`, `input-currency`, `input-otp`, `file-upload` |
+| Field chrome / labels | usually via `input` deps; or `field`, `label` |
+| Buttons / pressed state / grouped actions | `button`, `toggle`, `toggle-group`, `button-group` |
+| Lists / autocomplete | `select`, `combobox`, `pillbox` |
+| Boolean / choice | `checkbox`, `radio`, `switch`, `rating` |
+| Overlay / menus | `dialog`, `command`, `dropdown-menu`, `popover`, `tooltip`, `toast` |
+| Disclosure / nav shell | `accordion`, `collapsible`, `sidebar`, `tabs`, `stepper`, `breadcrumb` |
+| Layout / feedback | `card`, `stat`, `chart`, `alert`, `empty`, `skeleton`, `separator`, `progress`, `badge`, `avatar` |
+| Data display | `table`, `pagination` (`:paginator` for `LengthAwarePaginator`) |
+| Dates / times | `date-picker`, `time-picker`, `datetime-picker`, `calendar` |
+| Color | `color-picker` |
+| Typography | `text`, `heading` (+ layout `<x-ui::fonts />`) |
+| Icons | `icon` + `stencil:icon {lucide-name}` for extras |
+| Repeatable rows | `repeater` |
+| Slider / range | `slider` |
+
+Full catalog: `php artisan stencil:list` (also documented in the package README).
+
+## Typography and Icons
+
+- Scale: `sm`, `default`, `lg`, `xl` — `config/stencil.php` → `typography.*`, overridable in `stencil.json`.
+- `<x-ui::text />` uses the scale; `<x-ui::heading />` sizes from `level` (no `size` / `font` props).
+- Icons: `stencil:add icon` for the loading spinner primitive; `stencil:icon search` for Lucide stubs → `<x-ui::icon name="search" />` / generated `x-ui::icon.*` stubs.
+
+## Examples
+
+**Email field (owned)**
 
 ```bash
 php artisan stencil:init
@@ -38,69 +184,47 @@ php artisan stencil:add input
 ```
 
 ```blade
-<x-ui::input name="email" />
+<x-ui::field name="email">
+    <x-ui::field.label>Email</x-ui::field.label>
+    <x-ui::input id="email" name="email" type="email" />
+    <x-ui::field.errors name="email" />
+</x-ui::field>
 ```
 
-Owned mode runs `init` scaffolding: `app/Support/Stencil` class maps, `resources/css/stencil.css`, `App\Providers\StencilUiServiceProvider`, and marked patches in `resources/css/app.css` / `resources/js/app.js`. Registry `add` installs owned Blade (`x-ui::`) and co-located scripts such as `resources/views/ui/select/select.js`.
+**Select shortcut**
 
-**Tailwind:** Scan app paths via `resources/css/stencil.css` (created by `init`; includes `@custom-variant dark` for class-based `dark:*`). Do not import Tailwind sources from `vendor/`. With `APP_DEBUG=true` and the dev package installed, missing integration throws on HTTP requests; set `validate_tailwind_integration` to `false` in config to opt out. Components default to light styles; add `class="dark"` on the layout for dark UIs.
+```bash
+php artisan stencil:add select
+```
 
-**Select:** `stencil:add select` copies `select.js` and patches the Vite entry. Default `shortcut` wraps `select.item` children; set `:shortcut="false"` for full `select.trigger` / `select.content` composition.
+```blade
+<x-ui::select name="industry" placeholder="Choose industry…">
+    <x-ui::select.item value="photo">Photography</x-ui::select.item>
+</x-ui::select>
+```
 
-**Combobox:** `stencil:add combobox` copies `combobox.js` and patches the Vite entry. Filterable single-select with `role="combobox"`. Default `shortcut` wraps items with `combobox.input` / `combobox.content` / `combobox.empty`; set `:shortcut="false"` for full composition.
+**Vendor preview only (do not ship as app UI)**
 
-**File Upload:** `stencil:add file-upload` copies `file-upload.js` and patches the Vite entry. Native `<input type="file">` with drag-and-drop dropzone, selected-file list, and client-side remove. Supports `multiple`, `accept`, `disabled`, `invalid`, and Field `$errors`. Default `shortcut` renders dropzone + list; set `:shortcut="false"` for full composition.
+```blade
+<x-stencil::input name="email" />
+```
 
-**Input OTP:** `stencil:add input-otp` copies `input-otp.js` and patches the Vite entry. Labeled digit/character slots with paste and arrow/backspace navigation. Hidden input submits the combined value. Supports `length` (default 6), `mode` (`numeric` | `alphanumeric`), `separated`, `disabled`, `invalid`, and Field `$errors`. Default `shortcut` renders slots; set `:shortcut="false"` for `group` / `slot` / `separator` composition.
+## Lookup Order
 
-**Slider:** `stencil:add slider` copies `slider.js` and patches the Vite entry. Single or dual-thumb range with `role="slider"`, keyboard arrows / Home / End / PageUp / PageDown, and a hidden form value. Supports `min`, `max`, `step`, `value` (number or `[low, high]`), `:range`, `disabled`, `invalid`, and Field `$errors`. Default `shortcut` renders track / range / thumb; set `:shortcut="false"` for full composition.
+When stuck, read in this order:
 
-**Dialog:** `stencil:add dialog` copies `dialog.js` and adds it to the same `// stencil-start` block in the Vite entry. Compose `dialog.trigger` + `dialog.content` (optional `name` for Flux-style triggers). Use `window.Stencil.dialog('name').show()` from JavaScript when needed.
-
-**Command:** `stencil:add command` copies `command.js` (and installs `dialog`). Compose `command.dialog` for a ⌘K palette, or `command` + `command.item` children; set `:shortcut="false"` for full `command.input` / `command.list` composition.
-
-**Toggle / Toggle Group / Button Group:** `stencil:add toggle` and `toggle-group` copy matching `*.js` into the Vite entry. Use `button-group` for related action buttons (no JS); use `toggle-group` when items represent pressed state.
-
-**Sidebar / Stepper:** `stencil:add sidebar` and `stepper` copy matching `*.js`. Sidebar needs `sidebar.provider` around the shell; stepper pairs indicators with `stepper.content` panels and previous/next controls.
-
-**Layout / feedback primitives:** Prefer compound `x-ui::*` composition for `accordion`, `collapsible`, `avatar`, `badge`, `breadcrumb`, `card`, `chart`, `dropdown-menu`, `popover`, `separator`, `skeleton`, `empty`, `stat`, `tabs`, `tooltip`, `toast`, `progress`, `alert`, `table`, and `pagination`. Interactive ones (`accordion`, `collapsible`, `avatar`, `chart`, `dropdown-menu`, `popover`, `tabs`, `tooltip`, `toast`) install matching `*.js` via `stencil:add`. Toasts: mount `toast.provider` once (layout only — each toast is `role="status"` or `role="alert"` for danger) and call `window.Stencil.toast({ title, description, variant })` when needed. Pagination accepts a Laravel `LengthAwarePaginator` via `:paginator`.
-
-**Date / time pickers:** `stencil:add date-picker` (depends on `calendar`, `button`, `input`) installs `date-picker.js` plus shared `calendar.js` and `chrono/*` helpers. Values: single date `Y-m-d`, range `Y-m-d/Y-m-d`, time `H:i`, datetime ISO 8601. Set `timezone` (defaults to `config('app.timezone')`). Also available: `time-picker`, `datetime-picker`, and standalone `calendar`.
-
-### 3. Registry CLI
-
-| Command | Purpose |
-| --- | --- |
-| `stencil:init` | Create `stencil.json`, scaffold owned support/CSS, and empty `stencil.lock` |
-| `stencil:add {names}` | Fetch items from the remote registry; resolve `registryDependencies` |
-| `stencil:update {name?}` | Sync installed files; use `--overwrite` if edited locally |
-| `stencil:remove {names}` | Remove lock entries and files (`--keep-files` optional) |
-| `stencil:list` | List registry index (`--installed` for installed names) |
-
-Default registry URL: `config('stencil.default_registry_url')` (overridable in `stencil.json`).
-
-### Typography
-
-- Shared size scale: `sm`, `default`, `lg`, `xl` — configured in `config/stencil.php` (`typography.scale`), overridable in `stencil.json`.
-- Pairing defaults: `typography.defaults.text_size` + `heading_level`; default heading is one scale step above default text.
-- Google Fonts (CDN): `typography.fonts` + `typography.roles` (`body`, `heading`). Include `<x-stencil::fonts />` in the layout once.
-- Components: `<x-stencil::text />`, `<x-stencil::heading />` — font role is automatic; heading size follows `level` (no `size`/`font` props).
-- Owned: `stencil:add text heading` → `<x-ui::text />`, `<x-ui::heading />`.
-
-## Rules, References, and Templates
-
-Read before executing:
-
-- package README usage section
-- `resources/boost/skills/composing-blade-components/SKILL.md` for component structure
-
-## Examples
-
-- Form field: init → add `input` → `<x-ui::input name="email" />` with Tailwind in the host app
-- Quick prototype without copying views: `<x-stencil::input />` from vendor
+1. Host app: `stencil.json`, `stencil.lock`, `resources/views/ui/**`, Vite entry stencil block
+2. Package README — Installation, Usage, Registry CLI, and the specific component section
+3. Installed owned view for props/slots (`resources/views/ui/{name}`)
+4. `resources/boost/skills/composing-blade-components/SKILL.md` — composition principles (examples there use `x-stencil::` for package sources; translate to `x-ui::` in apps)
 
 ## Anti-patterns
 
-- do not document package internals here; keep the skill focused on adoption in Laravel apps
-- do not use `resources/views/components/ui` for owned mode; owned path is `resources/views/ui`
-- do not expect `<x-ui.input>`; the owned namespace uses `x-ui::input` (anonymous path prefix)
+- Using `x-stencil::*` as the app’s permanent UI while owned mode is available
+- Writing components to `resources/views/components/ui` — owned path is `resources/views/ui`
+- Using `<x-ui.input>` — owned namespace is `<x-ui::input>`
+- Importing Tailwind or component CSS from `vendor/ivanfuhr/stencil`
+- Re-implementing a registry component instead of `stencil:add`
+- Documenting or depending on package internals (`src/Registry/*`, workbench, playbook) as consumer API
+- Forgetting to commit owned UI / support / icon files before deploying with `--no-dev`
+- Skipping `stencil:init` and hand-creating partial scaffolding

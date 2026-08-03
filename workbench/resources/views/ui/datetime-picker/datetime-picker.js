@@ -2,14 +2,14 @@
  * Stencil — datetime picker (vanilla JS).
  */
 
-import { bindCalendar } from './calendar.js';
+import { bindCalendar } from '../calendar/calendar.js';
 import {
     ensurePanelPortaled,
     positionAnchoredPanel,
     restorePanelFromPortal,
-} from './chrono/popover.js';
-import { toIsoDateTimeString } from './chrono/parse.js';
-import { formatDateTimeLabel, formatTimeLabel } from './chrono/timezone.js';
+} from '../../../js/ui/anchored-panel.js';
+import { toIsoDateTimeString } from '../../../js/ui/date-parse.js';
+import { formatDateTimeLabel, formatTimeLabel } from '../../../js/ui/date-timezone.js';
 
 const SELECTOR = '[data-datetime-picker]';
 const initialized = new WeakSet();

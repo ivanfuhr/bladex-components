@@ -2,8 +2,8 @@
  * Stencil — time picker (vanilla JS).
  */
 
-import { ensurePanelPortaled, positionAnchoredPanel } from './chrono/popover.js';
-import { formatTimeLabel } from './chrono/timezone.js';
+import { ensurePanelPortaled, positionAnchoredPanel } from '../../../js/ui/anchored-panel.js';
+import { formatTimeLabel } from '../../../js/ui/date-timezone.js';
 
 const SELECTOR = '[data-time-picker]';
 const initialized = new WeakSet();
