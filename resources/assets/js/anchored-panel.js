@@ -152,12 +152,4 @@ export function bindPopoverDismiss(root, panel, onClose, signal) {
         },
         options,
     );
-
-    window.addEventListener(
-        'scroll',
-        () => {
-            onClose();
-        },
-        { capture: true, ...options },
-    );
 }

@@ -3,6 +3,7 @@
  */
 
 import { createBindSignal } from './shared/lifecycle.js';
+import { acquireBodyScrollLock } from './shared/scroll-lock.js';
 
 const ROOT_SELECTOR = '[data-popover]';
 const TRIGGER_SELECTOR = '[data-popover-trigger]';
@@ -55,6 +56,8 @@ function bindPopover(root) {
 
     const signal = createBindSignal(root);
     let open = content.dataset.state === 'open' && !content.hidden;
+    /** @type {(() => void) | null} */
+    let releaseScrollLock = null;
 
     trigger.setAttribute('aria-haspopup', 'dialog');
     trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -81,10 +84,17 @@ function bindPopover(root) {
         trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
 
         if (open) {
+            releaseScrollLock?.();
+            releaseScrollLock = acquireBodyScrollLock(content, { signal });
             positionContent(content, trigger, root);
             focusFirstIn(content);
-        } else if (options.restoreFocus !== false) {
-            trigger.focus({ preventScroll: true });
+        } else {
+            releaseScrollLock?.();
+            releaseScrollLock = null;
+
+            if (options.restoreFocus !== false) {
+                trigger.focus({ preventScroll: true });
+            }
         }
 
         root.dispatchEvent(
@@ -196,6 +206,7 @@ function bindPopover(root) {
     );
 
     if (open) {
+        releaseScrollLock = acquireBodyScrollLock(content, { signal });
         positionContent(content, trigger, root);
     }
 }

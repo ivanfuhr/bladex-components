@@ -3,6 +3,7 @@
  */
 
 import { createBindSignal } from './shared/lifecycle.js';
+import { acquireBodyScrollLock } from './shared/scroll-lock.js';
 
 const ROOT_SELECTOR = '[data-dropdown-menu]';
 const TRIGGER_SELECTOR = '[data-dropdown-menu-trigger]';
@@ -57,6 +58,8 @@ function bindDropdownMenu(root) {
 
     let open = false;
     let activeIndex = -1;
+    /** @type {(() => void) | null} */
+    let releaseScrollLock = null;
     const portalMarker = document.createComment('stencil-dropdown-menu-portal');
     const signal = createBindSignal(root);
 
@@ -83,26 +86,6 @@ function bindDropdownMenu(root) {
     };
 
     /**
-     * Close on ancestor/page scroll so fixed+portaled content doesn't stick to the
-     * viewport after the trigger scrolls away. Ignore scrolls inside the menu itself.
-     *
-     * @param {Event} event
-     */
-    const onScroll = (event) => {
-        if (!open) {
-            return;
-        }
-
-        const target = event.target;
-
-        if (target instanceof Node && content.contains(target)) {
-            return;
-        }
-
-        setOpen(false);
-    };
-
-    /**
      * @param {boolean} nextOpen
      * @param {{ focusIndex?: number | 'last' }} [options]
      */
@@ -114,6 +97,8 @@ function bindDropdownMenu(root) {
         trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
 
         if (open) {
+            releaseScrollLock?.();
+            releaseScrollLock = acquireBodyScrollLock(content, { signal });
             ensureContentPortaled(content, root, portalMarker);
             positionContent(content, trigger, root);
             const enabled = items();
@@ -130,6 +115,8 @@ function bindDropdownMenu(root) {
             // Remeasure after paint — width can change once portaled/fonts settle.
             requestAnimationFrame(reposition);
         } else {
+            releaseScrollLock?.();
+            releaseScrollLock = null;
             clearHighlight(items());
             activeIndex = -1;
             restoreContentFromPortal(content, root, portalMarker);
@@ -294,7 +281,6 @@ function bindDropdownMenu(root) {
     );
 
     window.addEventListener('resize', reposition, { signal });
-    window.addEventListener('scroll', onScroll, { capture: true, signal });
 }
 
 /**

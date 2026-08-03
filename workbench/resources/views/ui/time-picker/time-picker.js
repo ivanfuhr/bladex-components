@@ -5,6 +5,7 @@
 import { ensurePanelPortaled, positionAnchoredPanel, restorePanelFromPortal } from '../../../js/ui/anchored-panel.js';
 import { formatTimeLabel } from '../../../js/ui/date-timezone.js';
 import { createBindSignal } from '../../../js/ui/lifecycle.js';
+import { acquireBodyScrollLock } from '../../../js/ui/scroll-lock.js';
 
 const SELECTOR = '[data-time-picker]';
 const initialized = new WeakSet();
@@ -59,6 +60,8 @@ function bindTimePicker(root) {
     const portalMarker = document.createComment('stencil-time-picker-portal');
     const signal = createBindSignal(root);
     let open = false;
+    /** @type {(() => void) | null} */
+    let releaseScrollLock = null;
     /** @type {number} */
     let activeIndex = 0;
 
@@ -113,6 +116,8 @@ function bindTimePicker(root) {
         }
 
         if (next && trigger instanceof HTMLElement) {
+            releaseScrollLock?.();
+            releaseScrollLock = acquireBodyScrollLock(panel, { signal });
             ensurePanelPortaled(panel, root, portalMarker);
             positionAnchoredPanel(panel, trigger);
 
@@ -120,11 +125,16 @@ function bindTimePicker(root) {
             const selectedIdx = list.findIndex((el) => el.getAttribute('aria-selected') === 'true');
             focusOption(selectedIdx >= 0 ? selectedIdx : 0);
         } else if (wasOpen && !next) {
+            releaseScrollLock?.();
+            releaseScrollLock = null;
             restorePanelFromPortal(panel, root, portalMarker);
 
             if (trigger instanceof HTMLElement) {
                 trigger.focus();
             }
+        } else if (!next) {
+            releaseScrollLock?.();
+            releaseScrollLock = null;
         }
     }
 

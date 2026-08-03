@@ -11,6 +11,7 @@ import {
 import { formatRangeValue } from '../../../js/ui/date-parse.js';
 import { formatDateLabel } from '../../../js/ui/date-timezone.js';
 import { createBindSignal } from '../../../js/ui/lifecycle.js';
+import { acquireBodyScrollLock } from '../../../js/ui/scroll-lock.js';
 
 const SELECTOR = '[data-date-picker]';
 const initialized = new WeakSet();
@@ -65,6 +66,8 @@ function bindDatePicker(root) {
     const portalMarker = document.createComment('stencil-date-picker-portal');
     const signal = createBindSignal(root);
     let isOpen = false;
+    /** @type {(() => void) | null} */
+    let releaseScrollLock = null;
 
     /** @type {ReturnType<typeof bindCalendar> | null} */
     let calendarApi = null;
@@ -101,6 +104,8 @@ function bindDatePicker(root) {
         panel.removeAttribute('aria-hidden');
         panel.setAttribute('role', 'dialog');
         panel.setAttribute('aria-modal', 'true');
+        releaseScrollLock?.();
+        releaseScrollLock = acquireBodyScrollLock(panel, { signal });
 
         if (trigger instanceof HTMLElement) {
             trigger.setAttribute('aria-expanded', 'true');
@@ -123,6 +128,8 @@ function bindDatePicker(root) {
         panel.setAttribute('aria-hidden', 'true');
         panel.removeAttribute('role');
         panel.removeAttribute('aria-modal');
+        releaseScrollLock?.();
+        releaseScrollLock = null;
         restorePanelFromPortal(panel, root, portalMarker);
 
         if (trigger instanceof HTMLElement) {
@@ -234,18 +241,6 @@ function bindDatePicker(root) {
             close();
         },
         { signal },
-    );
-
-    window.addEventListener(
-        'scroll',
-        () => {
-            if (!isOpen || !(trigger instanceof HTMLElement)) {
-                return;
-            }
-
-            positionAnchoredPanel(panel, trigger, { fitContent: true });
-        },
-        { capture: true, signal },
     );
 
     displayValue(hidden.value);

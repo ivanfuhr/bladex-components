@@ -24,7 +24,7 @@
     @endif
 
     <div
-        class="time-picker__panel fixed z-50 hidden max-h-80 min-w-48 overflow-y-auto rounded-lg border border-zinc-200 bg-white p-1 shadow-lg dark:border-zinc-800 dark:bg-zinc-950"
+        class="time-picker__panel fixed z-50 max-h-80 min-w-48 overflow-y-auto rounded-lg border border-zinc-200 bg-white p-1 shadow-lg dark:border-zinc-800 dark:bg-zinc-950"
         data-time-picker-panel
         role="listbox"
         tabindex="-1"

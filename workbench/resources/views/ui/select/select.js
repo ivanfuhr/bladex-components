@@ -3,6 +3,7 @@
  */
 
 import { createBindSignal } from '../../../js/ui/lifecycle.js';
+import { acquireBodyScrollLock } from '../../../js/ui/scroll-lock.js';
 
 const SELECT_SELECTOR = '[data-select]';
 const initialized = new WeakSet();
@@ -87,6 +88,8 @@ function bindSelect(root) {
     let activeIndex = -1;
     let typeahead = '';
     let typeaheadTimer = /** @type {ReturnType<typeof setTimeout> | null} */ (null);
+    /** @type {(() => void) | null} */
+    let releaseScrollLock = null;
 
     const countTemplate = root.getAttribute('data-select-count-template') ?? '{count} selected';
     const chipRemoveLabel = root.getAttribute('data-select-chip-remove-label') ?? 'Remove';
@@ -260,6 +263,8 @@ function bindSelect(root) {
         content.hidden = !next;
 
         if (next) {
+            releaseScrollLock?.();
+            releaseScrollLock = acquireBodyScrollLock(content, { signal });
             positionContent();
             const list = enabledOptions();
             const selected = getSelectedValues();
@@ -274,6 +279,8 @@ function bindSelect(root) {
             highlightActive();
             content.focus();
         } else {
+            releaseScrollLock?.();
+            releaseScrollLock = null;
             clearHighlights();
             activeIndex = -1;
             trigger.focus();
@@ -548,16 +555,6 @@ function bindSelect(root) {
             }
         },
         { signal },
-    );
-
-    window.addEventListener(
-        'scroll',
-        () => {
-            if (open) {
-                positionContent();
-            }
-        },
-        { capture: true, signal },
     );
 
     trigger.addEventListener('keydown', (event) => {

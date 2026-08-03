@@ -65,7 +65,11 @@ it('renders time picker with hidden input', function (): void {
         ->toContain('name="starts_at"')
         ->toContain('value="09:30"')
         ->toContain('role="listbox"')
-        ->toContain('aria-haspopup="listbox"');
+        ->toContain('aria-haspopup="listbox"')
+        ->toContain('data-time-picker-panel')
+        ->toContain('hidden');
+
+    expect($html)->not->toMatch('/data-time-picker-panel[^>]*\bclass="[^"]*\bhidden\b/');
 });
 
 it('applies disabled to the time picker trigger button', function (): void {

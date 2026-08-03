@@ -2107,6 +2107,110 @@
     return controller.signal;
   }
 
+  // resources/assets/js/shared/scroll-lock.js
+  var lockCount = 0;
+  var lockedScrollY = 0;
+  var allowGetters = /* @__PURE__ */ new Set();
+  function toAllowGetter(allowed) {
+    if (typeof allowed === "function") {
+      return () => normalizeElements(allowed());
+    }
+    const snapshot = normalizeElements(allowed);
+    return () => snapshot;
+  }
+  function normalizeElements(value) {
+    if (!value) {
+      return [];
+    }
+    const list = Array.isArray(value) ? value : [value];
+    return list.filter((el) => el instanceof Element);
+  }
+  function isAllowedTarget(event) {
+    const target = event.target;
+    if (!(target instanceof Node)) {
+      return false;
+    }
+    for (const getter of allowGetters) {
+      for (const root of getter()) {
+        if (root.contains(target)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  function onScrollAttempt(event) {
+    if (isAllowedTarget(event)) {
+      return;
+    }
+    event.preventDefault();
+  }
+  function onWindowScroll() {
+    if (window.scrollY !== lockedScrollY) {
+      window.scrollTo(0, lockedScrollY);
+    }
+  }
+  function onKeyScrollAttempt(event) {
+    if (isAllowedTarget(event)) {
+      return;
+    }
+    const keys = /* @__PURE__ */ new Set([
+      "ArrowUp",
+      "ArrowDown",
+      "PageUp",
+      "PageDown",
+      "Home",
+      "End",
+      " ",
+      "Spacebar"
+    ]);
+    if (!keys.has(event.key)) {
+      return;
+    }
+    const target = event.target;
+    if (target instanceof HTMLElement && (target.isContentEditable || target.matches('input, textarea, select, [role="textbox"], [role="combobox"]'))) {
+      return;
+    }
+    event.preventDefault();
+  }
+  function applyLockStyles() {
+    lockedScrollY = window.scrollY;
+    document.addEventListener("wheel", onScrollAttempt, { passive: false, capture: true });
+    document.addEventListener("touchmove", onScrollAttempt, { passive: false, capture: true });
+    document.addEventListener("keydown", onKeyScrollAttempt, { capture: true });
+    window.addEventListener("scroll", onWindowScroll, { passive: false, capture: true });
+  }
+  function clearLockStyles() {
+    document.removeEventListener("wheel", onScrollAttempt, { capture: true });
+    document.removeEventListener("touchmove", onScrollAttempt, { capture: true });
+    document.removeEventListener("keydown", onKeyScrollAttempt, { capture: true });
+    window.removeEventListener("scroll", onWindowScroll, { capture: true });
+    window.scrollTo(0, lockedScrollY);
+  }
+  function acquireBodyScrollLock(allowed = null, options = {}) {
+    var _a5;
+    const getter = toAllowGetter(allowed);
+    allowGetters.add(getter);
+    lockCount += 1;
+    if (lockCount === 1) {
+      applyLockStyles();
+    }
+    let released = false;
+    const release = () => {
+      if (released) {
+        return;
+      }
+      released = true;
+      allowGetters.delete(getter);
+      lockCount = Math.max(0, lockCount - 1);
+      if (lockCount === 0) {
+        clearLockStyles();
+      }
+    };
+    (_a5 = options.signal) == null ? void 0 : _a5.addEventListener("abort", release, { once: true });
+    return release;
+  }
+
   // resources/assets/js/color-picker.js
   var COLOR_PICKER_SELECTOR = "[data-color-picker]";
   var initialized6 = /* @__PURE__ */ new WeakSet();
@@ -2246,6 +2350,7 @@
     let portalInserted = false;
     const signal = createBindSignal(root);
     let open = false;
+    let releaseScrollLock = null;
     let draggingArea = false;
     let hue = 0;
     let saturation = 100;
@@ -2364,9 +2469,14 @@
       hexInput.setAttribute("aria-expanded", open ? "true" : "false");
       popover.hidden = !open;
       if (open) {
+        releaseScrollLock == null ? void 0 : releaseScrollLock();
+        releaseScrollLock = acquireBodyScrollLock(popover, { signal });
         syncHsvFromHex(hiddenInput.value || "#000000");
         renderPickerUi();
         positionPopover();
+      } else {
+        releaseScrollLock == null ? void 0 : releaseScrollLock();
+        releaseScrollLock = null;
       }
     }
     function updateAreaFromPointer(clientX, clientY) {
@@ -2500,15 +2610,6 @@
       },
       { signal }
     );
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (open) {
-          positionPopover();
-        }
-      },
-      { capture: true, signal }
-    );
     const initial = hiddenInput.value || "#000000";
     if (HEX_PATTERN.test(initial)) {
       setValue(initial, { dispatch: false });
@@ -2593,6 +2694,7 @@
     let open = false;
     let activeIndex = -1;
     let committedLabel = "";
+    let releaseScrollLock = null;
     function dispatchValueEvents(target) {
       target.dispatchEvent(new Event("input", { bubbles: true }));
       target.dispatchEvent(new Event("change", { bubbles: true }));
@@ -2828,6 +2930,8 @@
       }
       content.hidden = !next;
       if (next) {
+        releaseScrollLock == null ? void 0 : releaseScrollLock();
+        releaseScrollLock = acquireBodyScrollLock(content, { signal });
         if (!opts.keepFilter) {
           applyFilter(input.value);
         }
@@ -2850,6 +2954,8 @@
         activeIndex = list.length > 0 ? index : -1;
         highlightActive();
       } else {
+        releaseScrollLock == null ? void 0 : releaseScrollLock();
+        releaseScrollLock = null;
         clearHighlights();
         activeIndex = -1;
         applyFilter("");
@@ -3017,15 +3123,6 @@
         }
       },
       { signal }
-    );
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (open) {
-          positionContent3();
-        }
-      },
-      { capture: true, signal }
     );
     input.addEventListener("keydown", (event) => {
       if (input.disabled) {
@@ -3620,6 +3717,7 @@
     const portalMarker = document.createComment("stencil-date-picker-portal");
     const signal = createBindSignal(root);
     let isOpen = false;
+    let releaseScrollLock = null;
     let calendarApi = null;
     if (calendarEl instanceof HTMLElement) {
       calendarApi = bindCalendar(calendarEl);
@@ -3649,6 +3747,8 @@
       panel.removeAttribute("aria-hidden");
       panel.setAttribute("role", "dialog");
       panel.setAttribute("aria-modal", "true");
+      releaseScrollLock == null ? void 0 : releaseScrollLock();
+      releaseScrollLock = acquireBodyScrollLock(panel, { signal });
       if (trigger instanceof HTMLElement) {
         trigger.setAttribute("aria-expanded", "true");
         ensurePanelPortaled(panel, root, portalMarker);
@@ -3667,6 +3767,8 @@
       panel.setAttribute("aria-hidden", "true");
       panel.removeAttribute("role");
       panel.removeAttribute("aria-modal");
+      releaseScrollLock == null ? void 0 : releaseScrollLock();
+      releaseScrollLock = null;
       restorePanelFromPortal(panel, root, portalMarker);
       if (trigger instanceof HTMLElement) {
         trigger.setAttribute("aria-expanded", "false");
@@ -3761,16 +3863,6 @@
       },
       { signal }
     );
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (!isOpen || !(trigger instanceof HTMLElement)) {
-          return;
-        }
-        positionAnchoredPanel(panel, trigger, { fitContent: true });
-      },
-      { capture: true, signal }
-    );
     displayValue(hidden.value);
   }
   function formatDisplay(value, range, locale) {
@@ -3843,6 +3935,7 @@
     const portalMarker = document.createComment("stencil-datetime-picker-portal");
     const signal = createBindSignal(root);
     let isOpen = false;
+    let releaseScrollLock = null;
     let activeTimeIndex = 0;
     let selectedDate = "";
     let selectedTime = withSeconds ? "00:00:00" : "00:00";
@@ -3906,6 +3999,8 @@
       panel.removeAttribute("aria-hidden");
       panel.setAttribute("role", "dialog");
       panel.setAttribute("aria-modal", "true");
+      releaseScrollLock == null ? void 0 : releaseScrollLock();
+      releaseScrollLock = acquireBodyScrollLock(panel, { signal });
       if (trigger instanceof HTMLElement) {
         trigger.setAttribute("aria-expanded", "true");
         ensurePanelPortaled(panel, root, portalMarker);
@@ -3925,6 +4020,8 @@
       panel.setAttribute("aria-hidden", "true");
       panel.removeAttribute("role");
       panel.removeAttribute("aria-modal");
+      releaseScrollLock == null ? void 0 : releaseScrollLock();
+      releaseScrollLock = null;
       restorePanelFromPortal(panel, root, portalMarker);
       if (trigger instanceof HTMLElement) {
         trigger.setAttribute("aria-expanded", "false");
@@ -4085,16 +4182,6 @@
         close();
       },
       { signal }
-    );
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (!isOpen || !(trigger instanceof HTMLElement)) {
-          return;
-        }
-        positionAnchoredPanel(panel, trigger, { fitContent: true });
-      },
-      { capture: true, signal }
     );
     if (hidden.value) {
       loadFromHidden();
@@ -4362,6 +4449,7 @@
     }
     let open = false;
     let activeIndex = -1;
+    let releaseScrollLock = null;
     const portalMarker = document.createComment("stencil-dropdown-menu-portal");
     const signal = createBindSignal(root);
     trigger.setAttribute("aria-haspopup", "menu");
@@ -4379,16 +4467,6 @@
       }
       positionContent(content, trigger, root);
     };
-    const onScroll = (event) => {
-      if (!open) {
-        return;
-      }
-      const target = event.target;
-      if (target instanceof Node && content.contains(target)) {
-        return;
-      }
-      setOpen(false);
-    };
     const setOpen = (nextOpen, options = {}) => {
       open = nextOpen;
       content.dataset.state = open ? "open" : "closed";
@@ -4396,6 +4474,8 @@
       content.classList.toggle("hidden", !open);
       trigger.setAttribute("aria-expanded", open ? "true" : "false");
       if (open) {
+        releaseScrollLock == null ? void 0 : releaseScrollLock();
+        releaseScrollLock = acquireBodyScrollLock(content, { signal });
         ensureContentPortaled(content, root, portalMarker);
         positionContent(content, trigger, root);
         const enabled = items();
@@ -4409,6 +4489,8 @@
         highlight(enabled, activeIndex);
         requestAnimationFrame(reposition);
       } else {
+        releaseScrollLock == null ? void 0 : releaseScrollLock();
+        releaseScrollLock = null;
         clearHighlight(items());
         activeIndex = -1;
         restoreContentFromPortal(content, root, portalMarker);
@@ -4534,7 +4616,6 @@
       { signal }
     );
     window.addEventListener("resize", reposition, { signal });
-    window.addEventListener("scroll", onScroll, { capture: true, signal });
   }
   function resolveTriggerControl(wrap) {
     if (wrap.matches('button, a[href], [role="button"]')) {
@@ -5577,6 +5658,7 @@
     }
     const signal = createBindSignal(root);
     let open = content.dataset.state === "open" && !content.hidden;
+    let releaseScrollLock = null;
     trigger.setAttribute("aria-haspopup", "dialog");
     trigger.setAttribute("aria-expanded", open ? "true" : "false");
     if (!content.id) {
@@ -5593,10 +5675,16 @@
       content.classList.toggle("hidden", !open);
       trigger.setAttribute("aria-expanded", open ? "true" : "false");
       if (open) {
+        releaseScrollLock == null ? void 0 : releaseScrollLock();
+        releaseScrollLock = acquireBodyScrollLock(content, { signal });
         positionContent2(content, trigger, root);
         focusFirstIn(content);
-      } else if (options.restoreFocus !== false) {
-        trigger.focus({ preventScroll: true });
+      } else {
+        releaseScrollLock == null ? void 0 : releaseScrollLock();
+        releaseScrollLock = null;
+        if (options.restoreFocus !== false) {
+          trigger.focus({ preventScroll: true });
+        }
       }
       root.dispatchEvent(
         new CustomEvent("stencil:popover:change", {
@@ -5681,6 +5769,7 @@
       { signal }
     );
     if (open) {
+      releaseScrollLock = acquireBodyScrollLock(content, { signal });
       positionContent2(content, trigger, root);
     }
   }
@@ -6288,6 +6377,7 @@
       /** @type {ReturnType<typeof setTimeout> | null} */
       null
     );
+    let releaseScrollLock = null;
     const countTemplate = (_a5 = root.getAttribute("data-select-count-template")) != null ? _a5 : "{count} selected";
     const chipRemoveLabel = (_b = root.getAttribute("data-select-chip-remove-label")) != null ? _b : "Remove";
     const placeholderFromValueEl = valueEl instanceof HTMLElement && valueEl.getAttribute("data-placeholder") === "true" ? (_d = (_c = valueEl.textContent) == null ? void 0 : _c.trim()) != null ? _d : "" : "";
@@ -6405,6 +6495,8 @@
       trigger.setAttribute("aria-expanded", next ? "true" : "false");
       content.hidden = !next;
       if (next) {
+        releaseScrollLock == null ? void 0 : releaseScrollLock();
+        releaseScrollLock = acquireBodyScrollLock(content, { signal });
         positionContent3();
         const list = enabledOptions();
         const selected = getSelectedValues();
@@ -6422,6 +6514,8 @@
         highlightActive();
         content.focus();
       } else {
+        releaseScrollLock == null ? void 0 : releaseScrollLock();
+        releaseScrollLock = null;
         clearHighlights();
         activeIndex = -1;
         trigger.focus();
@@ -6624,15 +6718,6 @@
         }
       },
       { signal }
-    );
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (open) {
-          positionContent3();
-        }
-      },
-      { capture: true, signal }
     );
     trigger.addEventListener("keydown", (event) => {
       if (trigger.disabled) {
@@ -7634,6 +7719,7 @@
     const portalMarker = document.createComment("stencil-time-picker-portal");
     const signal = createBindSignal(root);
     let open = false;
+    let releaseScrollLock = null;
     let activeIndex = 0;
     const options = buildOptions(step, withSeconds, unavailable);
     panel.setAttribute("role", "listbox");
@@ -7675,16 +7761,23 @@
         trigger.setAttribute("aria-expanded", next ? "true" : "false");
       }
       if (next && trigger instanceof HTMLElement) {
+        releaseScrollLock == null ? void 0 : releaseScrollLock();
+        releaseScrollLock = acquireBodyScrollLock(panel, { signal });
         ensurePanelPortaled(panel, root, portalMarker);
         positionAnchoredPanel(panel, trigger);
         const list = optionElements();
         const selectedIdx = list.findIndex((el) => el.getAttribute("aria-selected") === "true");
         focusOption(selectedIdx >= 0 ? selectedIdx : 0);
       } else if (wasOpen && !next) {
+        releaseScrollLock == null ? void 0 : releaseScrollLock();
+        releaseScrollLock = null;
         restorePanelFromPortal(panel, root, portalMarker);
         if (trigger instanceof HTMLElement) {
           trigger.focus();
         }
+      } else if (!next) {
+        releaseScrollLock == null ? void 0 : releaseScrollLock();
+        releaseScrollLock = null;
       }
     }
     function apply(time) {

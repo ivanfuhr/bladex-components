@@ -3,6 +3,7 @@
  */
 
 import { createBindSignal } from '../../../js/ui/lifecycle.js';
+import { acquireBodyScrollLock } from '../../../js/ui/scroll-lock.js';
 
 const COMBOBOX_SELECTOR = '[data-combobox]';
 const initialized = new WeakSet();
@@ -97,6 +98,8 @@ function bindCombobox(root) {
     let activeIndex = -1;
     /** @type {string} */
     let committedLabel = '';
+    /** @type {(() => void) | null} */
+    let releaseScrollLock = null;
 
     function dispatchValueEvents(target) {
         target.dispatchEvent(new Event('input', { bubbles: true }));
@@ -440,6 +443,9 @@ function bindCombobox(root) {
         content.hidden = !next;
 
         if (next) {
+            releaseScrollLock?.();
+            releaseScrollLock = acquireBodyScrollLock(content, { signal });
+
             if (!opts.keepFilter) {
                 applyFilter(input.value);
             }
@@ -462,6 +468,8 @@ function bindCombobox(root) {
             activeIndex = list.length > 0 ? index : -1;
             highlightActive();
         } else {
+            releaseScrollLock?.();
+            releaseScrollLock = null;
             clearHighlights();
             activeIndex = -1;
             applyFilter('');
@@ -680,16 +688,6 @@ function bindCombobox(root) {
             }
         },
         { signal },
-    );
-
-    window.addEventListener(
-        'scroll',
-        () => {
-            if (open) {
-                positionContent();
-            }
-        },
-        { capture: true, signal },
     );
 
     input.addEventListener('keydown', (event) => {

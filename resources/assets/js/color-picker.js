@@ -3,6 +3,7 @@
  */
 
 import { createBindSignal } from './shared/lifecycle.js';
+import { acquireBodyScrollLock } from './shared/scroll-lock.js';
 
 const COLOR_PICKER_SELECTOR = '[data-color-picker]';
 const initialized = new WeakSet();
@@ -225,6 +226,8 @@ function bindColorPicker(root) {
     let portalInserted = false;
     const signal = createBindSignal(root);
     let open = false;
+    /** @type {(() => void) | null} */
+    let releaseScrollLock = null;
     let draggingArea = false;
 
     let hue = 0;
@@ -390,9 +393,14 @@ function bindColorPicker(root) {
         popover.hidden = !open;
 
         if (open) {
+            releaseScrollLock?.();
+            releaseScrollLock = acquireBodyScrollLock(popover, { signal });
             syncHsvFromHex(hiddenInput.value || '#000000');
             renderPickerUi();
             positionPopover();
+        } else {
+            releaseScrollLock?.();
+            releaseScrollLock = null;
         }
     }
 
@@ -566,16 +574,6 @@ function bindColorPicker(root) {
             }
         },
         { signal },
-    );
-
-    window.addEventListener(
-        'scroll',
-        () => {
-            if (open) {
-                positionPopover();
-            }
-        },
-        { capture: true, signal },
     );
 
     const initial = hiddenInput.value || '#000000';
