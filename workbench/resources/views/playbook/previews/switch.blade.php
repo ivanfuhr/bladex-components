@@ -5,16 +5,10 @@
     $disabled = (bool) ($state['disabled'] ?? false);
 @endphp
 
-<x-stencil::field name="notifications" orientation="inline" class="max-w-md">
+<x-ui::field name="notifications" orientation="inline" class="max-w-md">
     <div class="flex flex-1 flex-col gap-1">
-        <x-stencil::field.label>Notifications</x-stencil::field.label>
-        <x-stencil::field.description>Email alerts for account activity.</x-stencil::field.description>
+        <x-ui::field.label>Notifications</x-ui::field.label>
+        <x-ui::field.description>Email alerts for account activity.</x-ui::field.description>
     </div>
-    <x-stencil::switch
-        name="notifications"
-        :size="$size"
-        :checked="$checked"
-        :invalid="$invalid"
-        :disabled="$disabled"
-    />
-</x-stencil::field>
+    <x-ui::switch name="notifications" :size="$size" :checked="$checked" :invalid="$invalid" :disabled="$disabled" />
+</x-ui::field>

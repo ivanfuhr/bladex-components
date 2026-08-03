@@ -6,16 +6,16 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders an empty state with media, title, description, and content', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::empty class="border">
-            <x-stencil::empty.header>
-                <x-stencil::empty.media variant="icon" icon="file" />
-                <x-stencil::empty.title>No projects yet</x-stencil::empty.title>
-                <x-stencil::empty.description>Get started by creating a project.</x-stencil::empty.description>
-            </x-stencil::empty.header>
-            <x-stencil::empty.content>
+        <x-ui::empty class="border">
+            <x-ui::empty.header>
+                <x-ui::empty.media variant="icon" icon="file" />
+                <x-ui::empty.title>No projects yet</x-ui::empty.title>
+                <x-ui::empty.description>Get started by creating a project.</x-ui::empty.description>
+            </x-ui::empty.header>
+            <x-ui::empty.content>
                 <button type="button">Create project</button>
-            </x-stencil::empty.content>
-        </x-stencil::empty>
+            </x-ui::empty.content>
+        </x-ui::empty>
     BLADE);
 
     expect($html)
@@ -33,14 +33,14 @@ it('renders an empty state with media, title, description, and content', functio
 
 it('supports default media variant without an icon prop', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::empty>
-            <x-stencil::empty.header>
-                <x-stencil::empty.media>
+        <x-ui::empty>
+            <x-ui::empty.header>
+                <x-ui::empty.media>
                     <span data-custom-media>Avatar</span>
-                </x-stencil::empty.media>
-                <x-stencil::empty.title level="2">Inbox zero</x-stencil::empty.title>
-            </x-stencil::empty.header>
-        </x-stencil::empty>
+                </x-ui::empty.media>
+                <x-ui::empty.title level="2">Inbox zero</x-ui::empty.title>
+            </x-ui::empty.header>
+        </x-ui::empty>
     BLADE);
 
     expect($html)

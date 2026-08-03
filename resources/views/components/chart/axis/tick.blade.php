@@ -1,13 +1,3 @@
-@aware(['axis' => 'x', 'position' => null])
-
-@props([
-    'format' => null,
-])
-
-@php
-    $encodedFormat = is_array($format) ? \Illuminate\Support\Js::encode($format) : $format;
-@endphp
-
 @if ($axis === 'x')
     <template data-chart-template="tick-label" @if (filled($encodedFormat)) data-format="{{ $encodedFormat }}" @endif>
         <g>

@@ -5,6 +5,9 @@
  *   @import "../../../resources/tailwind/stencil.css";
  */
 
+/* Stable if this file is ever linked before a Vite Tailwind build. */
+@layer theme, base, components, utilities;
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -25,6 +28,24 @@
 
 @source "../views/**/*.blade.php";
 @source "../../src/Support/**/*.php";
+/* Dialog open: utilities live only in these PHP class maps — not all Components. */
+@source "../../src/View/Components/Dialog/Content.php";
+@source "../../src/View/Components/Command/Dialog.php";
+@source inline("open:opacity-100 open:motion-safe:scale-100");
+
+/*
+ * Native <dialog> open visibility safety net. Unlayered so it always wins over
+ * opacity-0 if scanners miss open: utilities.
+ */
+.dialog__content:is(:open, [open]) {
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .dialog__content:is(:open, [open]) {
+        scale: 1;
+    }
+}
 
 @layer components {
     /*

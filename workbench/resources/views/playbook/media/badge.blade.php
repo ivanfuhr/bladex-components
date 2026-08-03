@@ -6,33 +6,33 @@
     <div class="space-y-10">
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::badge /&gt;</p>
-            <x-stencil::heading :level="2">Badge</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle"
-                >Compact status labels with variants, colors, and dismiss.</x-stencil::text>
+            <x-ui::heading :level="2">Badge</x-ui::heading>
+            <x-ui::text size="sm" variant="subtle"
+                >Compact status labels with variants, colors, and dismiss.</x-ui::text>
         </div>
 
         <div class="space-y-8">
             <div class="space-y-3">
-                <x-stencil::text size="sm" variant="subtle">Variants</x-stencil::text>
+                <x-ui::text size="sm" variant="subtle">Variants</x-ui::text>
                 <div class="flex flex-wrap items-center gap-2">
-                    <x-stencil::badge>Secondary</x-stencil::badge>
-                    <x-stencil::badge variant="default">Default</x-stencil::badge>
-                    <x-stencil::badge variant="outline">Outline</x-stencil::badge>
-                    <x-stencil::badge variant="destructive">Failed</x-stencil::badge>
-                    <x-stencil::badge variant="ghost">Ghost</x-stencil::badge>
+                    <x-ui::badge>Secondary</x-ui::badge>
+                    <x-ui::badge variant="default">Default</x-ui::badge>
+                    <x-ui::badge variant="outline">Outline</x-ui::badge>
+                    <x-ui::badge variant="destructive">Failed</x-ui::badge>
+                    <x-ui::badge variant="ghost">Ghost</x-ui::badge>
                 </div>
             </div>
 
             <div class="space-y-3">
-                <x-stencil::text size="sm" variant="subtle">Colors · rounded · dismissible</x-stencil::text>
+                <x-ui::text size="sm" variant="subtle">Colors · rounded · dismissible</x-ui::text>
                 <div class="flex flex-wrap items-center gap-2">
-                    <x-stencil::badge color="lime" rounded>New</x-stencil::badge>
-                    <x-stencil::badge color="violet" rounded>Beta</x-stencil::badge>
-                    <x-stencil::badge color="blue">Info</x-stencil::badge>
-                    <x-stencil::badge>
+                    <x-ui::badge color="lime" rounded>New</x-ui::badge>
+                    <x-ui::badge color="violet" rounded>Beta</x-ui::badge>
+                    <x-ui::badge color="blue">Info</x-ui::badge>
+                    <x-ui::badge>
                         Admin
-                        <x-stencil::badge.close />
-                    </x-stencil::badge>
+                        <x-ui::badge.close />
+                    </x-ui::badge>
                 </div>
             </div>
         </div>

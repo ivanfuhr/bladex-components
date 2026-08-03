@@ -7,7 +7,7 @@
     $locale = (string) ($state['locale'] ?? 'pt_BR');
 @endphp
 
-<x-stencil::input.currency
+<x-ui::input.currency
     name="amount"
     :value="$value"
     :currency="$currency"

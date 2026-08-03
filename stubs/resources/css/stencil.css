@@ -79,3 +79,17 @@
         @apply border-red-500;
     }
 }
+
+/*
+ * Native <dialog> open visibility. Unlayered so it cannot invert Tailwind
+ * cascade layer order if this file is ever linked before a Vite build.
+ */
+.dialog__content:is(:open, [open]) {
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .dialog__content:is(:open, [open]) {
+        scale: 1;
+    }
+}

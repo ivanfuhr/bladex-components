@@ -1,18 +1,3 @@
-@props([
-    'side' => 'left',
-    'variant' => 'sidebar',
-    'collapsible' => 'offcanvas',
-])
-
-@php
-    $resolvedSide = in_array($side, ['left', 'right'], true) ? $side : 'left';
-    $resolvedVariant = in_array($variant, ['sidebar', 'floating', 'inset'], true) ? $variant : 'sidebar';
-    $resolvedCollapsible = in_array($collapsible, ['offcanvas', 'icon', 'none'], true) ? $collapsible : 'offcanvas';
-    $isNonCollapsible = $resolvedCollapsible === 'none';
-    $isFloatingOrInset = $resolvedVariant === 'floating' || $resolvedVariant === 'inset';
-    $label = $attributes->get('aria-label', 'Sidebar');
-@endphp
-
 @if ($isNonCollapsible)
     <aside {{
         $attributes->except('aria-label')->class([
@@ -92,6 +77,6 @@
             </div>
         </div>
 
-        <x-stencil::sidebar.backdrop />
+        <x-ui::sidebar.backdrop />
     </div>
 @endif

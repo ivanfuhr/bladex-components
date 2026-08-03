@@ -35,10 +35,8 @@
                 <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">
                     &lt;x-ui::<span class="text-zinc-800 dark:text-zinc-200">{{ $playbook->slug }}</span> /&gt;
                 </p>
-                <x-stencil::heading :level="1"> {{ $playbook->title }} </x-stencil::heading>
-                <x-stencil::text size="sm" variant="subtle" class="max-w-prose">
-                    {{ $playbook->description }}
-                </x-stencil::text>
+                <x-ui::heading :level="1"> {{ $playbook->title }} </x-ui::heading>
+                <x-ui::text size="sm" variant="subtle" class="max-w-prose"> {{ $playbook->description }} </x-ui::text>
             </div>
 
             <section
@@ -51,7 +49,7 @@
                         <div>
                             @if ($control->type === 'checkbox')
                                 <label class="flex cursor-pointer items-start gap-3 rounded-lg border border-transparent px-1 py-1.5 text-sm text-zinc-800 transition hover:bg-zinc-50 dark:text-zinc-200 dark:hover:bg-zinc-800/60">
-                                    <x-stencil::checkbox
+                                    <x-ui::checkbox
                                         class="mt-0.5"
                                         x-model.boolean="state.{{ $control->key }}"
                                         @change="queuePreview()"

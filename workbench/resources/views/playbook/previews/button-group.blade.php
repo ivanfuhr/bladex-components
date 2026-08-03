@@ -5,15 +5,15 @@
 @endphp
 
 <div class="flex flex-col gap-4">
-    <x-stencil::button-group :orientation="$orientation" aria-label="Document actions">
+    <x-ui::button-group :orientation="$orientation" aria-label="Document actions">
         @if ($showText)
-            <x-stencil::button-group.text>Export</x-stencil::button-group.text>
+            <x-ui::button-group.text>Export</x-ui::button-group.text>
         @endif
-        <x-stencil::button variant="outline">Archive</x-stencil::button>
+        <x-ui::button variant="outline">Archive</x-ui::button>
         @if ($showSeparator)
-            <x-stencil::button-group.separator />
+            <x-ui::button-group.separator />
         @endif
-        <x-stencil::button variant="outline">Report</x-stencil::button>
-        <x-stencil::button variant="outline">Snooze</x-stencil::button>
-    </x-stencil::button-group>
+        <x-ui::button variant="outline">Report</x-ui::button>
+        <x-ui::button variant="outline">Snooze</x-ui::button>
+    </x-ui::button-group>
 </div>

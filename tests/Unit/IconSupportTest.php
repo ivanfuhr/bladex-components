@@ -23,7 +23,7 @@ SVG;
 
     expect($stub)
         ->toContain('@props([')
-        ->toContain('<x-stencil::icon.lucide')
+        ->toContain('<x-ui::icon.lucide')
         ->toContain('<circle cx="11" cy="11" r="8"/>')
         ->not->toContain('width="24"');
 });
@@ -49,7 +49,7 @@ SVG;
 it('lets explicit size classes override the lucide variant box', function (): void {
     seedStencilTestIcons(['upload']);
 
-    $html = Blade::render('<x-stencil::icon name="upload" class="size-6 text-zinc-600" />');
+    $html = Blade::render('<x-ui::icon name="upload" class="size-6 text-zinc-600" />');
 
     expect($html)
         ->toContain('block shrink-0')

@@ -22,9 +22,9 @@ final class LucideIconStubGenerator
     'variant' => 'outline',
 ])
 
-<x-stencil::icon.lucide :variant="\$variant" {{ \$attributes }}>
+<x-ui::icon.lucide :variant="\$variant" {{ \$attributes }}>
 {$inner}
-</x-stencil::icon.lucide>
+</x-ui::icon.lucide>
 BLADE;
     }
 

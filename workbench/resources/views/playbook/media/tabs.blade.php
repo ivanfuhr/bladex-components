@@ -6,53 +6,52 @@
     <div class="space-y-10">
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::tabs /&gt;</p>
-            <x-stencil::heading :level="2">Tabs</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle"
-                >Tabbed panels with default, segmented, pills, and line variants.</x-stencil::text>
+            <x-ui::heading :level="2">Tabs</x-ui::heading>
+            <x-ui::text size="sm" variant="subtle"
+                >Tabbed panels with default, segmented, pills, and line variants.</x-ui::text>
         </div>
 
         <div class="grid gap-10 lg:grid-cols-2">
             <div class="space-y-3">
-                <x-stencil::text size="sm" variant="subtle">Default</x-stencil::text>
-                <x-stencil::tabs default-value="account">
-                    <x-stencil::tabs.list>
-                        <x-stencil::tabs.trigger value="account">Account</x-stencil::tabs.trigger>
-                        <x-stencil::tabs.trigger value="password">Password</x-stencil::tabs.trigger>
-                    </x-stencil::tabs.list>
-                    <x-stencil::tabs.content value="account">
-                        Manage your account settings and preferences.</x-stencil::tabs.content>
-                    <x-stencil::tabs.content value="password">
-                        Update your password and security options.</x-stencil::tabs.content>
-                </x-stencil::tabs>
+                <x-ui::text size="sm" variant="subtle">Default</x-ui::text>
+                <x-ui::tabs default-value="account">
+                    <x-ui::tabs.list>
+                        <x-ui::tabs.trigger value="account">Account</x-ui::tabs.trigger>
+                        <x-ui::tabs.trigger value="password">Password</x-ui::tabs.trigger>
+                    </x-ui::tabs.list>
+                    <x-ui::tabs.content value="account">
+                        Manage your account settings and preferences.</x-ui::tabs.content>
+                    <x-ui::tabs.content value="password">
+                        Update your password and security options.</x-ui::tabs.content>
+                </x-ui::tabs>
             </div>
 
             <div class="space-y-3">
-                <x-stencil::text size="sm" variant="subtle">Line</x-stencil::text>
-                <x-stencil::tabs default-value="overview" variant="line">
-                    <x-stencil::tabs.list>
-                        <x-stencil::tabs.trigger value="overview">Overview</x-stencil::tabs.trigger>
-                        <x-stencil::tabs.trigger value="analytics">Analytics</x-stencil::tabs.trigger>
-                        <x-stencil::tabs.trigger value="reports">Reports</x-stencil::tabs.trigger>
-                    </x-stencil::tabs.list>
-                    <x-stencil::tabs.content value="overview">
-                        Project overview and recent activity.</x-stencil::tabs.content>
-                    <x-stencil::tabs.content value="analytics">Traffic and conversion metrics.</x-stencil::tabs.content>
-                    <x-stencil::tabs.content value="reports">Exportable weekly reports.</x-stencil::tabs.content>
-                </x-stencil::tabs>
+                <x-ui::text size="sm" variant="subtle">Line</x-ui::text>
+                <x-ui::tabs default-value="overview" variant="line">
+                    <x-ui::tabs.list>
+                        <x-ui::tabs.trigger value="overview">Overview</x-ui::tabs.trigger>
+                        <x-ui::tabs.trigger value="analytics">Analytics</x-ui::tabs.trigger>
+                        <x-ui::tabs.trigger value="reports">Reports</x-ui::tabs.trigger>
+                    </x-ui::tabs.list>
+                    <x-ui::tabs.content value="overview"> Project overview and recent activity.</x-ui::tabs.content>
+                    <x-ui::tabs.content value="analytics">Traffic and conversion metrics.</x-ui::tabs.content>
+                    <x-ui::tabs.content value="reports">Exportable weekly reports.</x-ui::tabs.content>
+                </x-ui::tabs>
             </div>
 
             <div class="space-y-3">
-                <x-stencil::text size="sm" variant="subtle">Pills</x-stencil::text>
-                <x-stencil::tabs default-value="all" variant="pills">
-                    <x-stencil::tabs.list>
-                        <x-stencil::tabs.trigger value="all">All</x-stencil::tabs.trigger>
-                        <x-stencil::tabs.trigger value="active">Active</x-stencil::tabs.trigger>
-                        <x-stencil::tabs.trigger value="archived">Archived</x-stencil::tabs.trigger>
-                    </x-stencil::tabs.list>
-                    <x-stencil::tabs.content value="all">Showing every item in the collection.</x-stencil::tabs.content>
-                    <x-stencil::tabs.content value="active">Only active items.</x-stencil::tabs.content>
-                    <x-stencil::tabs.content value="archived">Archived items.</x-stencil::tabs.content>
-                </x-stencil::tabs>
+                <x-ui::text size="sm" variant="subtle">Pills</x-ui::text>
+                <x-ui::tabs default-value="all" variant="pills">
+                    <x-ui::tabs.list>
+                        <x-ui::tabs.trigger value="all">All</x-ui::tabs.trigger>
+                        <x-ui::tabs.trigger value="active">Active</x-ui::tabs.trigger>
+                        <x-ui::tabs.trigger value="archived">Archived</x-ui::tabs.trigger>
+                    </x-ui::tabs.list>
+                    <x-ui::tabs.content value="all">Showing every item in the collection.</x-ui::tabs.content>
+                    <x-ui::tabs.content value="active">Only active items.</x-ui::tabs.content>
+                    <x-ui::tabs.content value="archived">Archived items.</x-ui::tabs.content>
+                </x-ui::tabs>
             </div>
         </div>
     </div>

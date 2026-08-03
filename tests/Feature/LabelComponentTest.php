@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Blade;
 
 it('renders a label with for attribute and data marker', function () {
-    $html = Blade::render('<x-stencil::label for="email">Email</x-stencil::label>');
+    $html = Blade::render('<x-ui::label for="email">Email</x-ui::label>');
 
     expect($html)
         ->toContain('data-label')
@@ -14,7 +14,7 @@ it('renders a label with for attribute and data marker', function () {
 });
 
 it('renders optional badge and required indicator', function () {
-    $html = Blade::render('<x-stencil::label for="email" badge="Required" :required="true">Email</x-stencil::label>');
+    $html = Blade::render('<x-ui::label for="email" badge="Required" :required="true">Email</x-ui::label>');
 
     expect($html)
         ->toContain('data-label-badge')

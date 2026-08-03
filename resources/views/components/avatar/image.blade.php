@@ -1,8 +1,3 @@
-@props([
-    'src',
-    'alt' => 'Avatar',
-])
-
 <img {{
     $attributes->class([
         'avatar__image',

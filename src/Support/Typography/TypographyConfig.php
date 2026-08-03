@@ -5,16 +5,11 @@ declare(strict_types=1);
 namespace Ivanfuhr\Stencil\Support\Typography;
 
 use Illuminate\Support\Arr;
-use Ivanfuhr\Stencil\Support\ProjectConfig;
 
 final class TypographyConfig
 {
     /** @var list<string> */
     public const array SCALE_KEYS = ['sm', 'default', 'lg', 'xl'];
-
-    public function __construct(
-        private readonly ProjectConfig $projectConfig,
-    ) {}
 
     /**
      * @return array<string, mixed>
@@ -27,14 +22,7 @@ final class TypographyConfig
             $base = [];
         }
 
-        $project = $this->projectConfig->tryRead();
-        $override = is_array($project) ? Arr::get($project, 'typography', []) : [];
-
-        if (! is_array($override)) {
-            $override = [];
-        }
-
-        return $this->mergeTypography($base, $override);
+        return $base;
     }
 
     /**
@@ -227,21 +215,5 @@ final class TypographyConfig
             'lg' => ['text' => 'text-lg', 'leading' => 'leading-7'],
             'xl' => ['text' => 'text-xl', 'leading' => 'leading-8'],
         ];
-    }
-
-    /**
-     * @param  array<string, mixed>  $base
-     * @param  array<string, mixed>  $override
-     * @return array<string, mixed>
-     */
-    private function mergeTypography(array $base, array $override): array
-    {
-        $merged = array_replace_recursive($base, $override);
-
-        if (isset($merged['scale']) && is_array($merged['scale'])) {
-            $merged['scale'] = array_intersect_key($merged['scale'], array_flip(self::SCALE_KEYS));
-        }
-
-        return $merged;
     }
 }

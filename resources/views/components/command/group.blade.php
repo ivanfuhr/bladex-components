@@ -1,13 +1,3 @@
-@props([
-    'heading' => null,
-])
-
-@php
-    $headingId = filled($heading)
-        ? 'command-group-'.str_replace('.', '', uniqid('', true))
-        : null;
-@endphp
-
 <div {{
     $attributes->class([
         'command__group',

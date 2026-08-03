@@ -134,22 +134,30 @@ export function restorePanelFromPortal(panel, markerParent, portalMarker) {
  * @param {HTMLElement} root
  * @param {HTMLElement} panel
  * @param {() => void} onClose
+ * @param {AbortSignal} [signal]
  */
-export function bindPopoverDismiss(root, panel, onClose) {
+export function bindPopoverDismiss(root, panel, onClose, signal) {
     const contains = (target) =>
         target instanceof Node && (root.contains(target) || panel.contains(target));
 
-    document.addEventListener('pointerdown', (event) => {
-        if (!contains(event.target)) {
-            onClose();
-        }
-    });
+    /** @type {AddEventListenerOptions} */
+    const options = signal ? { signal } : {};
+
+    document.addEventListener(
+        'pointerdown',
+        (event) => {
+            if (!contains(event.target)) {
+                onClose();
+            }
+        },
+        options,
+    );
 
     window.addEventListener(
         'scroll',
         () => {
             onClose();
         },
-        true,
+        { capture: true, ...options },
     );
 }

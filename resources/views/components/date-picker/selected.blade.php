@@ -1,15 +1,3 @@
-@props([
-    'placeholder' => null,
-])
-
-@aware([
-    'placeholder' => null,
-])
-
-@php
-    $resolvedPlaceholder = filled($placeholder) ? $placeholder : null;
-@endphp
-
 <span
     {{
         $attributes->class([

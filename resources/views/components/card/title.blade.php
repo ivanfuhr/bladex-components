@@ -1,12 +1,4 @@
-@props([
-    'level' => 3,
-])
-
-@php
-    $level = max(1, min(6, (int) $level));
-@endphp
-
-<h{{ $level }}
+<h{{ $resolvedLevel }}
     {{
         $attributes->class([
             'card__title',
@@ -17,4 +9,4 @@
     }}
 >
     {{ $slot }}
-</h{{ $level }}>
+</h{{ $resolvedLevel }}>

@@ -1,200 +1,21 @@
-@props([
-    'type' => 'text',
-    'invalid' => false,
-    'size' => null,
-    'inGroup' => false,
-    'prefix' => null,
-    'suffix' => null,
-    'leading' => null,
-    'trailing' => null,
-    'mask' => null,
-    'viewable' => false,
-    'copyable' => false,
-    'counter' => false,
-])
-
-@aware([
-    'fieldInvalid' => false,
-    'controlId' => null,
-])
-
-@php
-    use Illuminate\View\ComponentSlot;
-    use Ivanfuhr\Stencil\Support\Form\FormControlClassMap;
-    use Ivanfuhr\Stencil\Support\Interaction\InteractionStateAttributes;
-    use Ivanfuhr\Stencil\Support\Typography\TypographyClassMap;
-
-    $invalid = $invalid || $fieldInvalid;
-
-    $resolvedControlId = $attributes->get('id')
-        ?? $controlId
-        ?? $attributes->get('name');
-
-    $typography = app(TypographyClassMap::class);
-    $formControl = app(FormControlClassMap::class);
-    $interactionState = app(InteractionStateAttributes::class);
-
-    $userClass = $attributes->get('class');
-    $applyFullWidth = ! filled($userClass);
-
-    $prefixText = filled($prefix) ? $prefix : null;
-    $suffixText = filled($suffix) ? $suffix : null;
-    $hasGroupAffix = $prefixText !== null || $suffixText !== null;
-    $useInGroup = $inGroup || $hasGroupAffix;
-
-    $resolveAffix = static function (mixed $value): array {
-        if ($value instanceof ComponentSlot) {
-            return [! $value->isEmpty(), $value->isEmpty() ? null : $value];
-        }
-
-        if (filled($value)) {
-            return [true, $value];
-        }
-
-        return [false, null];
-    };
-
-    [$hasLeading, $leadingContent] = $resolveAffix($leading ?? null);
-    [$hasTrailing, $trailingContent] = $resolveAffix($trailing ?? null);
-
-    $hasViewable = $viewable && $type === 'password';
-    $hasCopyable = (bool) $copyable;
-    $hasCounter = (bool) $counter;
-    $hasMask = filled($mask);
-    $hasEnhancements = $hasViewable || $hasCopyable || $hasCounter || $hasMask;
-
-    $trailingSlotIsIcon = false;
-
-    if ($hasTrailing && $trailingContent instanceof ComponentSlot && ! $trailingContent->isEmpty()) {
-        $trailingSlotIsIcon = str_contains($trailingContent->toHtml(), 'data-icon');
-    }
-
-    $trailingAffixWidth = $trailingSlotIsIcon ? 'w-9' : 'w-14';
-
-    $leadingControlPadding = $hasLeading ? '!pl-9' : null;
-
-    $trailingControlPadding = match (true) {
-        ! $hasTrailing && ! $hasViewable && ! $hasCopyable => null,
-        $hasTrailing && $trailingSlotIsIcon => '!pr-9',
-        $hasTrailing => '!pr-14',
-        $hasViewable && $hasCopyable => '!pr-[4.5rem]',
-        $hasViewable || $hasCopyable => '!pr-9',
-        default => null,
-    };
-
-    $controlClasses = collect([
-        'input__control',
-        'flex w-full min-w-0',
-        $formControl->fieldSurfaceClasses($size),
-        'placeholder:text-zinc-500 dark:placeholder:text-zinc-400',
-        $formControl->invalidFieldClasses(),
-        $leadingControlPadding,
-        $trailingControlPadding,
-        $invalid ? 'border-red-500 focus-visible:ring-red-500/20 dark:border-red-500' : null,
-        $useInGroup ? 'shadow-none focus-visible:z-10' : null,
-        $prefixText !== null && $suffixText !== null ? 'rounded-none border-l-0 border-r-0' : null,
-        $prefixText !== null && $suffixText === null ? 'rounded-l-none border-l-0' : null,
-        $suffixText !== null && $prefixText === null ? 'rounded-r-none border-r-0' : null,
-        $useInGroup && ! $hasGroupAffix ? 'rounded-none' : null,
-    ])->filter()->implode(' ');
-
-    $wrapperClasses = collect([
-        'input',
-        'relative flex min-w-0 items-stretch overflow-visible',
-        $applyFullWidth && ! $hasGroupAffix ? 'w-full' : null,
-        $hasGroupAffix ? 'flex-1' : null,
-        $hasLeading || $hasTrailing || $hasViewable || $hasCopyable ? 'input--with-affixes' : null,
-        ! $hasGroupAffix ? $userClass : null,
-    ])->filter()->implode(' ');
-
-    $controlExtraClass = $attributes->get('class:input') ?? $attributes->get('input:class');
-
-    $controlAttributes = $interactionState->apply(
-        $attributes
-            ->except(['class', 'class:input', 'input:class', 'prefix', 'suffix', 'leading', 'trailing', 'mask', 'viewable', 'copyable', 'counter', 'id'])
-            ->class([$controlClasses, $controlExtraClass])
-            ->merge([
-                'type' => $type,
-                'data-input-control' => true,
-            ]),
-    );
-
-    if (filled($resolvedControlId)) {
-        $controlAttributes = $controlAttributes->merge(['id' => $resolvedControlId]);
-    }
-
-    if ($hasMask) {
-        $controlAttributes = $controlAttributes->merge([
-            'data-input-mask-control' => true,
-        ]);
-    }
-
-    if ($invalid) {
-        $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);
-    }
-
-    $affixIconClasses = $size === 'sm'
-        ? '[&_[data-icon]]:size-3.5'
-        : '[&_[data-icon]]:size-4';
-
-    $leadingAffixClasses = collect([
-        'input__leading',
-        'pointer-events-none absolute inset-y-0 left-0 flex w-9 items-center justify-center',
-        $affixIconClasses,
-        '[&_[data-icon]]:text-zinc-500 dark:[&_[data-icon]]:text-zinc-400',
-    ])->implode(' ');
-
-    $trailingAffixClasses = collect([
-        'input__trailing',
-        'absolute inset-y-0 right-0 z-10 flex items-center justify-center',
-        $trailingAffixWidth,
-        $affixIconClasses,
-        '[&_[data-icon]]:text-zinc-500 dark:[&_[data-icon]]:text-zinc-400',
-    ])->implode(' ');
-
-    $wrapperTagAttributes = new \Illuminate\View\ComponentAttributeBag([
-        'data-input' => true,
-    ])->class($wrapperClasses);
-
-    if ($hasEnhancements) {
-        $wrapperTagAttributes = $wrapperTagAttributes->merge(['data-input-enhanced' => true]);
-    }
-
-    if ($hasMask) {
-        $wrapperTagAttributes = $wrapperTagAttributes->merge(['data-input-mask' => $mask]);
-    }
-
-    if ($hasViewable) {
-        $wrapperTagAttributes = $wrapperTagAttributes->merge(['data-input-viewable' => true]);
-    }
-
-    if ($hasCopyable) {
-        $wrapperTagAttributes = $wrapperTagAttributes->merge(['data-input-copyable' => true]);
-    }
-
-    if ($hasCounter) {
-        $wrapperTagAttributes = $wrapperTagAttributes->merge(['data-input-counter' => true]);
-    }
-@endphp
-
 @if ($hasGroupAffix)
-    <x-stencil::input.group @class([$userClass])>
+    <x-ui::input.group @class([$userClass])>
         @if ($prefixText !== null)
-            <x-stencil::input.group.prefix>{{ $prefixText }}</x-stencil::input.group.prefix>
+            <x-ui::input.group.prefix>{{ $prefixText }}</x-ui::input.group.prefix>
         @endif
 
         <div {{ $wrapperTagAttributes }}>
             @if ($hasLeading)
                 <div @class([$leadingAffixClasses])>
-                    @if ($leadingContent instanceof ComponentSlot)
+                    @if ($leadingContent instanceof \Illuminate\View\ComponentSlot)
                         {{ $leadingContent }}
                     @else
-                        <x-stencil::text
+                        <x-ui::text
                             inline
                             size="sm"
                             variant="subtle"
                             class="input__leading-text"
-                        >{{ $leadingContent }}</x-stencil::text>
+                        >{{ $leadingContent }}</x-ui::text>
                     @endif
                 </div>
             @endif
@@ -203,15 +24,15 @@
 
             @if ($hasTrailing)
                 <div @class([$trailingAffixClasses])>
-                    @if ($trailingContent instanceof ComponentSlot)
+                    @if ($trailingContent instanceof \Illuminate\View\ComponentSlot)
                         {{ $trailingContent }}
                     @else
-                        <x-stencil::text
+                        <x-ui::text
                             inline
                             size="sm"
                             variant="subtle"
                             class="input__trailing-text"
-                        >{{ $trailingContent }}</x-stencil::text>
+                        >{{ $trailingContent }}</x-ui::text>
                     @endif
                 </div>
             @endif
@@ -223,10 +44,10 @@
                             type="button"
                             class="inline-flex size-8 items-center justify-center rounded-md text-zinc-500 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:text-zinc-400 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300/20"
                             data-input-view-toggle
-                            aria-label="{{ __('stencil::messages.input_toggle_password') }}"
+                            aria-label="{{ __('Toggle password visibility') }}"
                             aria-pressed="false"
                         >
-                            <x-stencil::icon name="eye" class="size-4" />
+                            <x-ui::icon name="eye" class="size-4" />
                         </button>
                     @endif
 
@@ -235,32 +56,39 @@
                             type="button"
                             class="inline-flex size-8 items-center justify-center rounded-md text-zinc-500 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:text-zinc-400 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300/20"
                             data-input-copy
-                            aria-label="{{ __('stencil::messages.input_copy') }}"
+                            aria-label="{{ __('Copy to clipboard') }}"
                         >
-                            <x-stencil::icon name="clipboard" class="size-4" />
+                            <x-ui::icon name="clipboard" class="size-4" />
                         </button>
                     @endif
                 </div>
             @endif
+
+            @if ($hasCounter)
+                <div
+                    class="input__counter mt-1 w-full basis-full text-right text-xs text-zinc-500 dark:text-zinc-400"
+                    data-input-counter-display
+                ></div>
+            @endif
         </div>
 
         @if ($suffixText !== null)
-            <x-stencil::input.group.suffix>{{ $suffixText }}</x-stencil::input.group.suffix>
+            <x-ui::input.group.suffix>{{ $suffixText }}</x-ui::input.group.suffix>
         @endif
-    </x-stencil::input.group>
+    </x-ui::input.group>
 @else
     <div {{ $wrapperTagAttributes }}>
         @if ($hasLeading)
             <div @class([$leadingAffixClasses])>
-                @if ($leadingContent instanceof ComponentSlot)
+                @if ($leadingContent instanceof \Illuminate\View\ComponentSlot)
                     {{ $leadingContent }}
                 @else
-                    <x-stencil::text
+                    <x-ui::text
                         inline
                         size="sm"
                         variant="subtle"
                         class="input__leading-text"
-                    >{{ $leadingContent }}</x-stencil::text>
+                    >{{ $leadingContent }}</x-ui::text>
                 @endif
             </div>
         @endif
@@ -269,15 +97,15 @@
 
         @if ($hasTrailing)
             <div @class([$trailingAffixClasses])>
-                @if ($trailingContent instanceof ComponentSlot)
+                @if ($trailingContent instanceof \Illuminate\View\ComponentSlot)
                     {{ $trailingContent }}
                 @else
-                    <x-stencil::text
+                    <x-ui::text
                         inline
                         size="sm"
                         variant="subtle"
                         class="input__trailing-text"
-                    >{{ $trailingContent }}</x-stencil::text>
+                    >{{ $trailingContent }}</x-ui::text>
                 @endif
             </div>
         @endif
@@ -289,10 +117,10 @@
                         type="button"
                         class="inline-flex size-8 items-center justify-center rounded-md text-zinc-500 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:text-zinc-400 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300/20"
                         data-input-view-toggle
-                        aria-label="{{ __('stencil::messages.input_toggle_password') }}"
+                        aria-label="{{ __('Toggle password visibility') }}"
                         aria-pressed="false"
                     >
-                        <x-stencil::icon name="eye" class="size-4" />
+                        <x-ui::icon name="eye" class="size-4" />
                     </button>
                 @endif
 
@@ -301,19 +129,19 @@
                         type="button"
                         class="inline-flex size-8 items-center justify-center rounded-md text-zinc-500 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:text-zinc-400 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300/20"
                         data-input-copy
-                        aria-label="{{ __('stencil::messages.input_copy') }}"
+                        aria-label="{{ __('Copy to clipboard') }}"
                     >
-                        <x-stencil::icon name="clipboard" class="size-4" />
+                        <x-ui::icon name="clipboard" class="size-4" />
                     </button>
                 @endif
             </div>
         @endif
-    </div>
-@endif
 
-@if ($hasCounter)
-    <div
-        class="input__counter mt-1 text-right text-xs text-zinc-500 dark:text-zinc-400"
-        data-input-counter-display
-    ></div>
+        @if ($hasCounter)
+            <div
+                class="input__counter mt-1 w-full basis-full text-right text-xs text-zinc-500 dark:text-zinc-400"
+                data-input-counter-display
+            ></div>
+        @endif
+    </div>
 @endif

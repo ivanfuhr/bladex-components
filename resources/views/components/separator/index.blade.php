@@ -1,12 +1,3 @@
-@props([
-    'orientation' => 'horizontal',
-    'decorative' => true,
-])
-
-@php
-    $isVertical = $orientation === 'vertical';
-@endphp
-
 <div
     {{
         $attributes->class([

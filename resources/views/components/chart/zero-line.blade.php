@@ -1,5 +1,3 @@
-@aware(['axis' => 'x'])
-
 <template data-chart-template="zero-line">
     <line
         {{

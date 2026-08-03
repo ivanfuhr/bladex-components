@@ -1,16 +1,3 @@
-@aware([
-    'defaultValue' => null,
-    'value' => null,
-    'step' => null,
-    'completed' => null,
-])
-
-@php
-    $isCurrent = filled($defaultValue) && filled($value) && (string) $value === (string) $defaultValue;
-    $isCompleted = $completed === true;
-    $label = filled($step) ? (string) $step : (filled($value) ? (string) $value : '');
-@endphp
-
 <span {{
     $attributes->class([
         'stepper__indicator',
@@ -41,7 +28,7 @@
             $isCompleted ? 'inline-flex' : 'hidden',
             'group-data-[state=completed]/step:inline-flex group-data-[state=active]/step:hidden group-data-[state=inactive]/step:hidden',
         ])>
-            <x-stencil::icon name="check" class="size-4" />
+            <x-ui::icon name="check" class="size-4" />
         </span>
     @endif
 </span>

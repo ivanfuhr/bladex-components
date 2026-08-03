@@ -21,7 +21,6 @@ abstract class WorkbenchTestCase extends TestCase
         parent::defineEnvironment($app);
 
         $app['config']->set('app.key', 'base64:'.base64_encode(str_repeat('a', 32)));
-        $app['config']->set('stencil.validate_tailwind_integration', true);
     }
 
     protected function defineRoutes($router): void

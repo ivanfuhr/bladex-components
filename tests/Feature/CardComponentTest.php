@@ -6,14 +6,14 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a card with header content and footer', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::card>
-            <x-stencil::card.header>
-                <x-stencil::card.title>Account</x-stencil::card.title>
-                <x-stencil::card.description>Manage your profile.</x-stencil::card.description>
-            </x-stencil::card.header>
-            <x-stencil::card.content>Body</x-stencil::card.content>
-            <x-stencil::card.footer>Actions</x-stencil::card.footer>
-        </x-stencil::card>
+        <x-ui::card>
+            <x-ui::card.header>
+                <x-ui::card.title>Account</x-ui::card.title>
+                <x-ui::card.description>Manage your profile.</x-ui::card.description>
+            </x-ui::card.header>
+            <x-ui::card.content>Body</x-ui::card.content>
+            <x-ui::card.footer>Actions</x-ui::card.footer>
+        </x-ui::card>
     BLADE);
 
     expect($html)
@@ -29,7 +29,7 @@ it('renders a card with header content and footer', function () {
 });
 
 it('supports small card size', function () {
-    $html = Blade::render('<x-stencil::card size="sm">Compact</x-stencil::card>');
+    $html = Blade::render('<x-ui::card size="sm">Compact</x-ui::card>');
 
     expect($html)
         ->toContain('data-size="sm"')

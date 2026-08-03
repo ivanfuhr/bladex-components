@@ -6,29 +6,29 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a sidebar provider with shell landmarks and trigger', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::sidebar.provider storage-key="test-sidebar" :default-open="true">
-            <x-stencil::sidebar collapsible="icon">
-                <x-stencil::sidebar.header>Brand</x-stencil::sidebar.header>
-                <x-stencil::sidebar.content>
-                    <x-stencil::sidebar.group>
-                        <x-stencil::sidebar.group-label>Platform</x-stencil::sidebar.group-label>
-                        <x-stencil::sidebar.group-content>
-                            <x-stencil::sidebar.menu>
-                                <x-stencil::sidebar.menu-item>
-                                    <x-stencil::sidebar.menu-button href="/" active>Home</x-stencil::sidebar.menu-button>
-                                </x-stencil::sidebar.menu-item>
-                            </x-stencil::sidebar.menu>
-                        </x-stencil::sidebar.group-content>
-                    </x-stencil::sidebar.group>
-                </x-stencil::sidebar.content>
-                <x-stencil::sidebar.footer>Account</x-stencil::sidebar.footer>
-                <x-stencil::sidebar.rail />
-            </x-stencil::sidebar>
-            <x-stencil::sidebar.inset>
-                <x-stencil::sidebar.trigger />
+        <x-ui::sidebar.provider storage-key="test-sidebar" :default-open="true">
+            <x-ui::sidebar collapsible="icon">
+                <x-ui::sidebar.header>Brand</x-ui::sidebar.header>
+                <x-ui::sidebar.content>
+                    <x-ui::sidebar.group>
+                        <x-ui::sidebar.group-label>Platform</x-ui::sidebar.group-label>
+                        <x-ui::sidebar.group-content>
+                            <x-ui::sidebar.menu>
+                                <x-ui::sidebar.menu-item>
+                                    <x-ui::sidebar.menu-button href="/" active>Home</x-ui::sidebar.menu-button>
+                                </x-ui::sidebar.menu-item>
+                            </x-ui::sidebar.menu>
+                        </x-ui::sidebar.group-content>
+                    </x-ui::sidebar.group>
+                </x-ui::sidebar.content>
+                <x-ui::sidebar.footer>Account</x-ui::sidebar.footer>
+                <x-ui::sidebar.rail />
+            </x-ui::sidebar>
+            <x-ui::sidebar.inset>
+                <x-ui::sidebar.trigger />
                 <p>Main</p>
-            </x-stencil::sidebar.inset>
-        </x-stencil::sidebar.provider>
+            </x-ui::sidebar.inset>
+        </x-ui::sidebar.provider>
     BLADE);
 
     expect($html)
@@ -56,12 +56,12 @@ it('renders a sidebar provider with shell landmarks and trigger', function () {
 
 it('supports offcanvas and inset variants on the sidebar root', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::sidebar.provider>
-            <x-stencil::sidebar collapsible="offcanvas" variant="inset" side="right">
-                <x-stencil::sidebar.content>Nav</x-stencil::sidebar.content>
-            </x-stencil::sidebar>
-            <x-stencil::sidebar.inset>Body</x-stencil::sidebar.inset>
-        </x-stencil::sidebar.provider>
+        <x-ui::sidebar.provider>
+            <x-ui::sidebar collapsible="offcanvas" variant="inset" side="right">
+                <x-ui::sidebar.content>Nav</x-ui::sidebar.content>
+            </x-ui::sidebar>
+            <x-ui::sidebar.inset>Body</x-ui::sidebar.inset>
+        </x-ui::sidebar.provider>
     BLADE);
 
     expect($html)
@@ -75,9 +75,9 @@ it('supports offcanvas and inset variants on the sidebar root', function () {
 
 it('renders a non-collapsible sidebar without backdrop or rail chrome', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::sidebar collapsible="none">
-            <x-stencil::sidebar.content>Static</x-stencil::sidebar.content>
-        </x-stencil::sidebar>
+        <x-ui::sidebar collapsible="none">
+            <x-ui::sidebar.content>Static</x-ui::sidebar.content>
+        </x-ui::sidebar>
     BLADE);
 
     expect($html)
@@ -89,25 +89,25 @@ it('renders a non-collapsible sidebar without backdrop or rail chrome', function
 
 it('renders menu actions, badges, and nested submenus', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::sidebar.provider>
-            <x-stencil::sidebar>
-                <x-stencil::sidebar.content>
-                    <x-stencil::sidebar.menu>
-                        <x-stencil::sidebar.menu-item>
-                            <x-stencil::sidebar.menu-button href="#">Projects</x-stencil::sidebar.menu-button>
-                            <x-stencil::sidebar.menu-action aria-label="Add project">+</x-stencil::sidebar.menu-action>
-                            <x-stencil::sidebar.menu-badge>3</x-stencil::sidebar.menu-badge>
-                            <x-stencil::sidebar.menu-sub>
-                                <x-stencil::sidebar.menu-sub-item>
-                                    <x-stencil::sidebar.menu-sub-button href="#" active>Alpha</x-stencil::sidebar.menu-sub-button>
-                                </x-stencil::sidebar.menu-sub-item>
-                            </x-stencil::sidebar.menu-sub>
-                        </x-stencil::sidebar.menu-item>
-                    </x-stencil::sidebar.menu>
-                    <x-stencil::sidebar.separator />
-                </x-stencil::sidebar.content>
-            </x-stencil::sidebar>
-        </x-stencil::sidebar.provider>
+        <x-ui::sidebar.provider>
+            <x-ui::sidebar>
+                <x-ui::sidebar.content>
+                    <x-ui::sidebar.menu>
+                        <x-ui::sidebar.menu-item>
+                            <x-ui::sidebar.menu-button href="#">Projects</x-ui::sidebar.menu-button>
+                            <x-ui::sidebar.menu-action aria-label="Add project">+</x-ui::sidebar.menu-action>
+                            <x-ui::sidebar.menu-badge>3</x-ui::sidebar.menu-badge>
+                            <x-ui::sidebar.menu-sub>
+                                <x-ui::sidebar.menu-sub-item>
+                                    <x-ui::sidebar.menu-sub-button href="#" active>Alpha</x-ui::sidebar.menu-sub-button>
+                                </x-ui::sidebar.menu-sub-item>
+                            </x-ui::sidebar.menu-sub>
+                        </x-ui::sidebar.menu-item>
+                    </x-ui::sidebar.menu>
+                    <x-ui::sidebar.separator />
+                </x-ui::sidebar.content>
+            </x-ui::sidebar>
+        </x-ui::sidebar.provider>
     BLADE);
 
     expect($html)
@@ -123,15 +123,25 @@ it('renders menu actions, badges, and nested submenus', function () {
 
 it('supports as-child trigger wrapping', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::sidebar.provider>
-            <x-stencil::sidebar.trigger as-child>
-                <x-stencil::button variant="outline" square>Toggle</x-stencil::button>
-            </x-stencil::sidebar.trigger>
-        </x-stencil::sidebar.provider>
+        <x-ui::sidebar.provider>
+            <x-ui::sidebar.trigger as-child>
+                <x-ui::button variant="outline" square>Toggle</x-ui::button>
+            </x-ui::sidebar.trigger>
+        </x-ui::sidebar.provider>
     BLADE);
 
     expect($html)
         ->toContain('data-sidebar-trigger')
         ->toContain('contents')
         ->toContain('Toggle');
+});
+
+it('sidebar script tears down document and matchMedia listeners with createBindSignal', function () {
+    $source = (string) file_get_contents(dirname(__DIR__, 2).'/resources/assets/js/sidebar.js');
+
+    expect($source)
+        ->toContain('createBindSignal')
+        ->toContain("document.addEventListener('keydown', onKeydown, { signal })")
+        ->toContain("media.addEventListener('change', onMediaChange, { signal })")
+        ->toContain('stencil:mount');
 });

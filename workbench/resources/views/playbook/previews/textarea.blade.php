@@ -4,7 +4,7 @@
     $disabled = (bool) ($state['disabled'] ?? false);
 @endphp
 
-<x-stencil::textarea
+<x-ui::textarea
     name="bio"
     placeholder="Tell us about yourself…"
     rows="4"

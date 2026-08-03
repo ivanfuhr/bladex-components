@@ -1,7 +1,3 @@
-@props([
-    'asChild' => false,
-])
-
 @if ($asChild)
     <div {{
         $attributes->class(['sidebar__trigger', 'contents'])->merge([
@@ -28,7 +24,7 @@
         }}
     >
         @if ($slot->isEmpty())
-            <x-stencil::icon name="panel-left" class="size-4 rtl:rotate-180" />
+            <x-ui::icon name="panel-left" class="size-4 rtl:rotate-180" />
             <span class="sr-only">Toggle sidebar</span>
         @else
             {{ $slot }}

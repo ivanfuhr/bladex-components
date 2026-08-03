@@ -20,57 +20,57 @@
 
 <div class="w-full max-w-3xl">
     @if ($variant === 'bar')
-        <x-stencil::chart :value="$barData" label="Monthly revenue" class="aspect-[3/1] w-full">
-            <x-stencil::chart.svg gutter="24 16 40 56">
-                <x-stencil::chart.bar field="revenue" class="text-[var(--chart-3)]" width="70%" />
-                <x-stencil::chart.axis axis="x" field="month">
-                    <x-stencil::chart.axis.line />
-                    <x-stencil::chart.axis.tick />
-                </x-stencil::chart.axis>
-                <x-stencil::chart.axis axis="y" tick-prefix="$" :format="['maximumFractionDigits' => 0]">
-                    <x-stencil::chart.axis.grid />
-                    <x-stencil::chart.axis.tick />
-                </x-stencil::chart.axis>
-                <x-stencil::chart.cursor type="area" />
-            </x-stencil::chart.svg>
-            <x-stencil::chart.tooltip>
-                <x-stencil::chart.tooltip.heading field="month" />
-                <x-stencil::chart.tooltip.value field="revenue" label="Revenue" prefix="$" />
-            </x-stencil::chart.tooltip>
-        </x-stencil::chart>
+        <x-ui::chart :value="$barData" label="Monthly revenue" class="aspect-[3/1] w-full">
+            <x-ui::chart.svg gutter="24 16 40 56">
+                <x-ui::chart.bar field="revenue" class="text-[var(--chart-3)]" width="70%" />
+                <x-ui::chart.axis axis="x" field="month">
+                    <x-ui::chart.axis.line />
+                    <x-ui::chart.axis.tick />
+                </x-ui::chart.axis>
+                <x-ui::chart.axis axis="y" tick-prefix="$" :format="['maximumFractionDigits' => 0]">
+                    <x-ui::chart.axis.grid />
+                    <x-ui::chart.axis.tick />
+                </x-ui::chart.axis>
+                <x-ui::chart.cursor type="area" />
+            </x-ui::chart.svg>
+            <x-ui::chart.tooltip>
+                <x-ui::chart.tooltip.heading field="month" />
+                <x-ui::chart.tooltip.value field="revenue" label="Revenue" prefix="$" />
+            </x-ui::chart.tooltip>
+        </x-ui::chart>
     @elseif ($variant === 'area')
-        <x-stencil::chart :value="$lineData" label="Daily visitors" class="aspect-[3/1] w-full">
-            <x-stencil::chart.svg>
-                <x-stencil::chart.line field="visitors" class="text-[var(--chart-3)]" curve="none" />
-                <x-stencil::chart.area field="visitors" class="text-[var(--chart-3)]/25" curve="none" />
-                <x-stencil::chart.axis axis="x" field="date">
-                    <x-stencil::chart.axis.tick />
-                </x-stencil::chart.axis>
-                <x-stencil::chart.axis axis="y">
-                    <x-stencil::chart.axis.grid />
-                    <x-stencil::chart.axis.tick />
-                </x-stencil::chart.axis>
-            </x-stencil::chart.svg>
-        </x-stencil::chart>
+        <x-ui::chart :value="$lineData" label="Daily visitors" class="aspect-[3/1] w-full">
+            <x-ui::chart.svg>
+                <x-ui::chart.line field="visitors" class="text-[var(--chart-3)]" curve="none" />
+                <x-ui::chart.area field="visitors" class="text-[var(--chart-3)]/25" curve="none" />
+                <x-ui::chart.axis axis="x" field="date">
+                    <x-ui::chart.axis.tick />
+                </x-ui::chart.axis>
+                <x-ui::chart.axis axis="y">
+                    <x-ui::chart.axis.grid />
+                    <x-ui::chart.axis.tick />
+                </x-ui::chart.axis>
+            </x-ui::chart.svg>
+        </x-ui::chart>
     @else
-        <x-stencil::chart :value="$lineData" label="Daily visitors" class="aspect-[3/1] w-full">
-            <x-stencil::chart.svg>
-                <x-stencil::chart.line field="visitors" class="text-[var(--chart-3)]" />
-                <x-stencil::chart.point field="visitors" class="text-[var(--chart-3)]" />
-                <x-stencil::chart.axis axis="x" field="date">
-                    <x-stencil::chart.axis.line />
-                    <x-stencil::chart.axis.tick />
-                </x-stencil::chart.axis>
-                <x-stencil::chart.axis axis="y">
-                    <x-stencil::chart.axis.grid />
-                    <x-stencil::chart.axis.tick />
-                </x-stencil::chart.axis>
-                <x-stencil::chart.cursor />
-            </x-stencil::chart.svg>
-            <x-stencil::chart.tooltip>
-                <x-stencil::chart.tooltip.heading field="date" />
-                <x-stencil::chart.tooltip.value field="visitors" label="Visitors" />
-            </x-stencil::chart.tooltip>
-        </x-stencil::chart>
+        <x-ui::chart :value="$lineData" label="Daily visitors" class="aspect-[3/1] w-full">
+            <x-ui::chart.svg>
+                <x-ui::chart.line field="visitors" class="text-[var(--chart-3)]" />
+                <x-ui::chart.point field="visitors" class="text-[var(--chart-3)]" />
+                <x-ui::chart.axis axis="x" field="date">
+                    <x-ui::chart.axis.line />
+                    <x-ui::chart.axis.tick />
+                </x-ui::chart.axis>
+                <x-ui::chart.axis axis="y">
+                    <x-ui::chart.axis.grid />
+                    <x-ui::chart.axis.tick />
+                </x-ui::chart.axis>
+                <x-ui::chart.cursor />
+            </x-ui::chart.svg>
+            <x-ui::chart.tooltip>
+                <x-ui::chart.tooltip.heading field="date" />
+                <x-ui::chart.tooltip.value field="visitors" label="Visitors" />
+            </x-ui::chart.tooltip>
+        </x-ui::chart>
     @endif
 </div>

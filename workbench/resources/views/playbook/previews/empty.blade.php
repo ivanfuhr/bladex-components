@@ -5,23 +5,23 @@
 @endphp
 
 <div class="w-full max-w-lg">
-    <x-stencil::empty @class(['border border-zinc-200 dark:border-zinc-800' => $outline])>
-        <x-stencil::empty.header>
+    <x-ui::empty @class(['border border-zinc-200 dark:border-zinc-800' => $outline])>
+        <x-ui::empty.header>
             @if ($showIcon)
-                <x-stencil::empty.media variant="icon" icon="file" />
+                <x-ui::empty.media variant="icon" icon="file" />
             @endif
-            <x-stencil::empty.title>No projects yet</x-stencil::empty.title>
-            <x-stencil::empty.description>
+            <x-ui::empty.title>No projects yet</x-ui::empty.title>
+            <x-ui::empty.description>
                 You haven't created any projects yet. Get started by creating your first project.
-            </x-stencil::empty.description>
-        </x-stencil::empty.header>
+            </x-ui::empty.description>
+        </x-ui::empty.header>
         @if ($showActions)
-            <x-stencil::empty.content>
+            <x-ui::empty.content>
                 <div class="flex flex-wrap items-center justify-center gap-2">
-                    <x-stencil::button variant="primary">Create project</x-stencil::button>
-                    <x-stencil::button variant="outline">Import project</x-stencil::button>
+                    <x-ui::button variant="primary">Create project</x-ui::button>
+                    <x-ui::button variant="outline">Import project</x-ui::button>
                 </div>
-            </x-stencil::empty.content>
+            </x-ui::empty.content>
         @endif
-    </x-stencil::empty>
+    </x-ui::empty>
 </div>

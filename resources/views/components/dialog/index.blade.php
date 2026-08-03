@@ -1,7 +1,3 @@
-@props([
-    'name' => null,
-])
-
 <div
     {{ $attributes->class(['dialog', 'contents']) }}
     data-dialog

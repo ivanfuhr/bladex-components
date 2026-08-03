@@ -1,10 +1,3 @@
-@php
-    $emptyClasses = collect([
-        'command__empty',
-        'py-6 text-center text-sm text-zinc-500 dark:text-zinc-400',
-    ])->implode(' ');
-@endphp
-
 <div {{
     $attributes->class($emptyClasses)->merge([
         'role' => 'presentation',
@@ -12,5 +5,5 @@
         'data-command-empty' => true,
     ])
 }}>
-    {{ $slot->isNotEmpty() ? $slot : __('stencil::messages.command_empty') }}
+    {{ $slot->isNotEmpty() ? $slot : __('No results found.') }}
 </div>

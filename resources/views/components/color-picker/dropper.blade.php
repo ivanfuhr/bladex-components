@@ -1,7 +1,3 @@
-@aware([
-    'disabled' => false,
-])
-
 <button
     type="button"
     {{
@@ -10,13 +6,13 @@
         ])
     }}
     data-color-picker-dropper
-    aria-label="{{ __('stencil::messages.color_picker_dropper') }}"
+    aria-label="{{ __('Pick color from screen') }}"
     hidden
     @if ($disabled) disabled @endif
 >
-    <x-stencil::icon.lucide class="size-4">
+    <x-ui::icon.lucide class="size-4">
         <path d="m2 22 1-1h3l9.5-9.5a2.12 2.12 0 0 0-3-3L3 18v3Z" />
         <path d="M15 6l3 3" />
         <path d="m18 3 3 3" />
-    </x-stencil::icon.lucide>
+    </x-ui::icon.lucide>
 </button>

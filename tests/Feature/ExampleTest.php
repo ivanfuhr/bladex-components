@@ -13,11 +13,12 @@ it('returns the same instance from the container', function () {
 });
 
 it('merges the package config', function () {
-    expect(config('stencil.placeholder'))->toBe('default');
+    expect(config('stencil.typography.defaults.text_size'))->toBe('default');
 });
 
-it('loads the package translations', function () {
-    expect(trans('stencil::messages.placeholder'))->toBe('Stencil placeholder translation.');
+it('renders inline translation strings in placeholder view', function () {
+    expect(__('Stencil'))->toBe('Stencil');
+    expect(__('Stencil placeholder translation.'))->toBe('Stencil placeholder translation.');
 });
 
 it('loads the package views', function () {

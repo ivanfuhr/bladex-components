@@ -1,40 +1,9 @@
-@props([
-    'name' => null,
-    'value' => null,
-    'placeholder' => null,
-    'invalid' => false,
-    'disabled' => false,
-    'clearable' => false,
-    'size' => null,
-    'timezone' => null,
-    'locale' => null,
-    'withSeconds' => false,
-    'timeStep' => 30,
-    'withToday' => false,
-    'shortcut' => true,
-])
-
-@aware([
-    'fieldInvalid' => false,
-])
-
-@php
-    use Ivanfuhr\Stencil\Support\Date\DateFormatter;
-
-    $invalid = $invalid || $fieldInvalid;
-    $resolvedTimezone = DateFormatter::resolveTimezone($timezone);
-    $resolvedLocale = $locale ?? app()->getLocale();
-    $resolvedValue = DateFormatter::normalizeDateTimeValue($value, $resolvedTimezone);
-    $resolvedPlaceholder = $placeholder ?? __('stencil::messages.datetime_picker_placeholder');
-
-    $datePart = $resolvedValue ? explode('T', $resolvedValue)[0] ?? '' : '';
-@endphp
-
 <div
-    {{ $attributes->except(['shortcut'])->class(['datetime-picker relative min-w-0', 'w-full' => ! filled($attributes->get('class'))]) }}
+    {{ $attributes->class(['datetime-picker relative min-w-0', 'w-full' => ! filled($attributes->get('class'))]) }}
     data-datetime-picker
     data-datetime-picker-timezone="{{ $resolvedTimezone }}"
     data-datetime-picker-locale="{{ $resolvedLocale }}"
+    data-datetime-picker-step="{{ $timeStep }}"
     @if ($withSeconds) data-datetime-picker-seconds @endif
 >
     @if (filled($name))
@@ -44,7 +13,7 @@
     @endif
 
     @if ($shortcut)
-        <x-stencil::date-picker.button
+        <x-ui::date-picker.button
             :placeholder="$resolvedPlaceholder"
             :$invalid
             :$disabled
@@ -53,11 +22,11 @@
             data-datetime-picker-trigger
         />
 
-        <x-stencil::datetime-picker.panel>
+        <x-ui::datetime-picker.panel>
             {{-- Absolute time column on md+ so list height tracks the calendar (no dead space). --}}
             <div class="relative flex flex-col md:flex-row">
                 <div class="shrink-0 p-4">
-                    <x-stencil::calendar
+                    <x-ui::calendar
                         :value="$datePart"
                         :timezone="$resolvedTimezone"
                         :locale="$resolvedLocale"
@@ -69,11 +38,11 @@
 
                 <div class="hidden w-40 shrink-0 md:block" aria-hidden="true"></div>
 
-                <x-stencil::datetime-picker.time-list />
+                <x-ui::datetime-picker.time-list />
             </div>
 
-            <x-stencil::datetime-picker.footer />
-        </x-stencil::datetime-picker.panel>
+            <x-ui::datetime-picker.footer />
+        </x-ui::datetime-picker.panel>
     @else
         {{ $slot }}
     @endif

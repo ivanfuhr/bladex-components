@@ -1,8 +1,4 @@
-@php
-    $titleId = $attributes->get('id') ?? 'dialog-title-'.str_replace('.', '', uniqid('', true));
-@endphp
-
-<x-stencil::heading
+<x-ui::heading
     level="2"
     {{
         $attributes->except(['id'])->merge([
@@ -12,4 +8,4 @@
     }}
 >
     {{ $slot }}
-</x-stencil::heading>
+</x-ui::heading>

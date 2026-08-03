@@ -4,40 +4,50 @@ declare(strict_types=1);
 
 namespace Ivanfuhr\Stencil\View\Components;
 
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\View as ViewFactory;
-use Illuminate\Support\ViewErrorBag;
-use Illuminate\View\Component;
-
-final class Field extends Component
+final class Field extends StencilComponent
 {
-    public bool $fieldInvalid;
-
     public function __construct(
-        public ?string $name = null,
+        public mixed $name = null,
+        public mixed $controlId = null,
         public bool $invalid = false,
-        public string $orientation = 'block',
-        public ?string $controlId = null,
-    ) {
-        if (! filled($this->controlId) && filled($this->name)) {
-            $this->controlId = $this->name;
-        }
+        public mixed $orientation = 'block',
+    ) {}
 
-        $this->fieldInvalid = $invalid;
-
-        if ($this->fieldInvalid || ! filled($name)) {
-            return;
-        }
-
-        $errors = ViewFactory::shared('errors');
-
-        if ($errors instanceof ViewErrorBag && $errors->has($name)) {
-            $this->fieldInvalid = true;
-        }
+    protected function stencilView(): string
+    {
+        return 'stencil::components.field.index';
     }
 
-    public function render(): View
+    /**
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
+    protected function resolveViewData(array $data = []): array
     {
-        return view('stencil::components.field.wrapper');
+        $name = $this->attributes->get('name') ?? $this->name;
+        $controlId = $this->attributes->get('controlId')
+            ?? $this->attributes->get('control-id')
+            ?? $this->controlId;
+
+        if (! filled($controlId) && filled($name)) {
+            $controlId = $name;
+        }
+
+        $resolvedFieldInvalid = $this->invalid || stencil_field_has_errors($name);
+        $isInline = $this->orientation === 'inline';
+
+        $rootClasses = collect([
+            'field',
+            'flex min-w-0',
+            $isInline ? 'flex-row items-center gap-3' : 'flex-col gap-1.5',
+        ])->implode(' ');
+
+        return [
+            'resolvedFieldInvalid' => $resolvedFieldInvalid,
+            'resolvedControlId' => $controlId,
+            'resolvedName' => $name,
+            'resolvedIsInline' => $isInline,
+            'resolvedRootClasses' => $rootClasses,
+        ];
     }
 }

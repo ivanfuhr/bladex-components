@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Ivanfuhr\Stencil\Support\ProjectConfig;
 use Ivanfuhr\Stencil\Support\Typography\TypographyConfig;
 
 it('falls back heading role to sans when display font is missing', function (): void {
@@ -12,13 +11,9 @@ it('falls back heading role to sans when display font is missing', function (): 
         ->and($roles['heading'])->toBe('sans');
 });
 
-it('merges typography roles from project config', function (): void {
-    $configPath = app(ProjectConfig::class)->path();
-
-    file_put_contents($configPath, json_encode([
-        'registry' => 'package://registry.json',
-        'paths' => ['ui' => 'resources/views/ui'],
-        'typography' => [
+it('reads typography roles from package config', function (): void {
+    config([
+        'stencil.typography' => [
             'fonts' => [
                 'sans' => [
                     'provider' => 'google',
@@ -38,15 +33,11 @@ it('merges typography roles from project config', function (): void {
                 'heading' => 'display',
             ],
         ],
-    ], JSON_THROW_ON_ERROR)."\n");
-
-    $this->app->forgetInstance(TypographyConfig::class);
+    ]);
 
     $roles = app(TypographyConfig::class)->roles();
 
     expect($roles)->toBe(['body' => 'sans', 'heading' => 'display']);
-
-    @unlink($configPath);
 });
 
 it('builds css font variables from configured families', function (): void {

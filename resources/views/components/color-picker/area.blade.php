@@ -2,7 +2,7 @@
     class="color-picker__area relative h-36 w-full cursor-crosshair overflow-hidden rounded-md"
     data-color-picker-area
     role="group"
-    aria-label="{{ __('stencil::messages.color_picker_saturation_value') }}"
+    aria-label="{{ __('Saturation and brightness') }}"
 >
     <div class="pointer-events-none absolute inset-0" data-color-picker-area-base></div>
     <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-white to-transparent"></div>

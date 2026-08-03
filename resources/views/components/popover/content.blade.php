@@ -1,12 +1,3 @@
-@aware([
-    'align' => 'start',
-    'side' => 'bottom',
-])
-
-@props([
-    'open' => false,
-])
-
 <div {{
     $attributes->class([
         'popover__content',

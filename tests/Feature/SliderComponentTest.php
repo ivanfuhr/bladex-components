@@ -8,7 +8,7 @@ use Illuminate\Support\ViewErrorBag;
 
 it('renders a slider root with hidden input and accessible thumb', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::slider name="volume" :value="40" />
+        <x-ui::slider name="volume" :value="40" />
     BLADE);
 
     expect($html)
@@ -34,7 +34,7 @@ it('renders a slider root with hidden input and accessible thumb', function () {
 
 it('supports min max step and size', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::slider name="level" :min="10" :max="50" :step="5" :value="25" size="sm" />
+        <x-ui::slider name="level" :min="10" :max="50" :step="5" :value="25" size="sm" />
     BLADE);
 
     expect($html)
@@ -49,7 +49,7 @@ it('supports min max step and size', function () {
 
 it('renders dual thumbs for range values', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::slider name="price" :value="[20, 80]" />
+        <x-ui::slider name="price" :value="[20, 80]" />
     BLADE);
 
     expect($html)
@@ -68,7 +68,7 @@ it('renders dual thumbs for range values', function () {
 
 it('enables range mode with the range prop', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::slider name="span" :range="true" :min="0" :max="100" />
+        <x-ui::slider name="span" :range="true" :min="0" :max="100" />
     BLADE);
 
     expect($html)
@@ -83,7 +83,7 @@ it('enables range mode with the range prop', function () {
 
 it('marks the control invalid when the invalid prop is true', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::slider name="volume" :invalid="true" />
+        <x-ui::slider name="volume" :invalid="true" />
     BLADE);
 
     expect($html)
@@ -93,7 +93,7 @@ it('marks the control invalid when the invalid prop is true', function () {
 
 it('disables thumbs when the disabled prop is true', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::slider name="volume" :disabled="true" />
+        <x-ui::slider name="volume" :disabled="true" />
     BLADE);
 
     expect($html)
@@ -109,9 +109,9 @@ it('inherits field invalid state from the Field shell', function () {
     view()->share('errors', $errors);
 
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::field name="volume">
-            <x-stencil::slider name="volume" />
-        </x-stencil::field>
+        <x-ui::field name="volume">
+            <x-ui::slider name="volume" />
+        </x-ui::field>
     BLADE);
 
     expect($html)
@@ -121,12 +121,12 @@ it('inherits field invalid state from the Field shell', function () {
 
 it('renders full compound structure without shortcut', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::slider name="volume" :value="30" :shortcut="false">
-            <x-stencil::slider.track>
-                <x-stencil::slider.range />
-            </x-stencil::slider.track>
-            <x-stencil::slider.thumb :index="0" :value="30" />
-        </x-stencil::slider>
+        <x-ui::slider name="volume" :value="30" :shortcut="false">
+            <x-ui::slider.track>
+                <x-ui::slider.range />
+            </x-ui::slider.track>
+            <x-ui::slider.thumb :index="0" :value="30" />
+        </x-ui::slider>
     BLADE);
 
     expect($html)
@@ -139,7 +139,7 @@ it('renders full compound structure without shortcut', function () {
 
 it('defaults to full width when no custom class is provided', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::slider name="volume" />
+        <x-ui::slider name="volume" />
     BLADE);
 
     expect($html)->toContain('slider relative flex w-full touch-none select-none items-center h-9 w-full');
@@ -147,7 +147,7 @@ it('defaults to full width when no custom class is provided', function () {
 
 it('allows width utilities on the root to override the default w-full', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::slider name="volume" class="w-auto" />
+        <x-ui::slider name="volume" class="w-auto" />
     BLADE);
 
     expect($html)->toContain('slider relative flex w-full touch-none select-none items-center h-9 w-auto');
@@ -155,7 +155,7 @@ it('allows width utilities on the root to override the default w-full', function
 
 it('wires the control id onto the first thumb', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::slider name="volume" slider-id="volume-control" :value="[10, 90]" />
+        <x-ui::slider name="volume" slider-id="volume-control" :value="[10, 90]" />
     BLADE);
 
     expect($html)
@@ -166,7 +166,7 @@ it('wires the control id onto the first thumb', function () {
 
 it('clamps the initial value within min and max', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::slider name="volume" :min="0" :max="100" :value="150" />
+        <x-ui::slider name="volume" :min="0" :max="100" :value="150" />
     BLADE);
 
     expect($html)

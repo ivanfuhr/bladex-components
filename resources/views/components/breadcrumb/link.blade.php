@@ -1,7 +1,3 @@
-@props([
-    'href' => '#',
-])
-
 <a {{
     $attributes->class([
         'breadcrumb__link',

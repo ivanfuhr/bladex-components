@@ -1,32 +1,3 @@
-@props([
-    'value',
-    'step' => null,
-    'completed' => null,
-    'disabled' => false,
-])
-
-@aware([
-    'defaultValue' => null,
-    'orientation' => 'horizontal',
-    'stepperId' => null,
-])
-
-@php
-    $isVertical = $orientation === 'vertical';
-    $isDisabled = (bool) $disabled;
-    $isCurrent = filled($defaultValue) && (string) $value === (string) $defaultValue;
-
-    $state = match (true) {
-        $isCurrent => 'active',
-        $completed === true => 'completed',
-        default => 'inactive',
-    };
-
-    $triggerId = $attributes->get('id')
-        ?? (filled($stepperId) ? $stepperId.'-trigger-'.$value : null);
-    $panelId = filled($stepperId) ? $stepperId.'-panel-'.$value : null;
-@endphp
-
 <li {{
     $attributes->except(['id'])->class([
         'stepper__item',

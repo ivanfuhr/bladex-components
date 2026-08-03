@@ -2,6 +2,8 @@
  * Stencil — accessible popover overlay (vanilla JS, no Alpine).
  */
 
+import { createBindSignal } from './shared/lifecycle.js';
+
 const ROOT_SELECTOR = '[data-popover]';
 const TRIGGER_SELECTOR = '[data-popover-trigger]';
 const CONTENT_SELECTOR = '[data-popover-content]';
@@ -51,6 +53,7 @@ function bindPopover(root) {
         return;
     }
 
+    const signal = createBindSignal(root);
     let open = content.dataset.state === 'open' && !content.hidden;
 
     trigger.setAttribute('aria-haspopup', 'dialog');
@@ -92,85 +95,105 @@ function bindPopover(root) {
         );
     };
 
-    trigger.addEventListener('click', (event) => {
-        event.preventDefault();
-        setOpen(!open);
-    });
-
-    trigger.addEventListener('keydown', (event) => {
-        if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+    trigger.addEventListener(
+        'click',
+        (event) => {
             event.preventDefault();
-            setOpen(true);
-        }
-    });
+            setOpen(!open);
+        },
+        { signal },
+    );
 
-    content.addEventListener('click', (event) => {
-        const closer =
-            event.target instanceof Element ? event.target.closest('[data-popover-close]') : null;
+    trigger.addEventListener(
+        'keydown',
+        (event) => {
+            if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                setOpen(true);
+            }
+        },
+        { signal },
+    );
 
-        if (closer instanceof HTMLElement && content.contains(closer)) {
-            setOpen(false);
-        }
-    });
+    content.addEventListener(
+        'click',
+        (event) => {
+            const closer =
+                event.target instanceof Element ? event.target.closest('[data-popover-close]') : null;
 
-    document.addEventListener('keydown', (event) => {
-        if (!open) {
-            return;
-        }
+            if (closer instanceof HTMLElement && content.contains(closer)) {
+                setOpen(false);
+            }
+        },
+        { signal },
+    );
 
-        if (event.key === 'Escape') {
-            event.preventDefault();
-            setOpen(false);
+    document.addEventListener(
+        'keydown',
+        (event) => {
+            if (!open) {
+                return;
+            }
 
-            return;
-        }
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                setOpen(false);
 
-        if (event.key === 'Tab') {
-            // Non-modal: allow Tab to leave; close when focus exits the popover.
-            window.requestAnimationFrame(() => {
-                if (!open) {
-                    return;
-                }
+                return;
+            }
 
-                const active = document.activeElement;
+            if (event.key === 'Tab') {
+                // Non-modal: allow Tab to leave; close when focus exits the popover.
+                window.requestAnimationFrame(() => {
+                    if (!open) {
+                        return;
+                    }
 
-                if (
-                    !(active instanceof Node) ||
-                    (!root.contains(active) && !content.contains(active))
-                ) {
-                    setOpen(false, { restoreFocus: false });
-                }
-            });
-        }
-    });
+                    const active = document.activeElement;
 
-    document.addEventListener('pointerdown', (event) => {
-        if (!open) {
-            return;
-        }
+                    if (
+                        !(active instanceof Node) ||
+                        (!root.contains(active) && !content.contains(active))
+                    ) {
+                        setOpen(false, { restoreFocus: false });
+                    }
+                });
+            }
+        },
+        { signal },
+    );
 
-        const target = event.target;
+    document.addEventListener(
+        'pointerdown',
+        (event) => {
+            if (!open) {
+                return;
+            }
 
-        if (!(target instanceof Node)) {
-            return;
-        }
+            const target = event.target;
 
-        if (root.contains(target) || content.contains(target)) {
-            return;
-        }
+            if (!(target instanceof Node)) {
+                return;
+            }
 
-        // Nested overlays portal to body while owned by the popover.
-        if (
-            target instanceof Element &&
-            target.closest(
-                '[data-select-portaled], [data-combobox-portaled], [data-color-picker-portaled], [data-dropdown-menu-portaled]',
-            )
-        ) {
-            return;
-        }
+            if (root.contains(target) || content.contains(target)) {
+                return;
+            }
 
-        setOpen(false, { restoreFocus: false });
-    });
+            // Nested overlays portal to body while owned by the popover.
+            if (
+                target instanceof Element &&
+                target.closest(
+                    '[data-select-portaled], [data-combobox-portaled], [data-color-picker-portaled], [data-dropdown-menu-portaled]',
+                )
+            ) {
+                return;
+            }
+
+            setOpen(false, { restoreFocus: false });
+        },
+        { signal },
+    );
 
     if (open) {
         positionContent(content, trigger, root);

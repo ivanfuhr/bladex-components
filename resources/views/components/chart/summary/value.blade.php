@@ -1,13 +1,3 @@
-@props([
-    'field' => null,
-    'format' => null,
-    'fallback' => null,
-])
-
-@php
-    $encodedFormat = is_array($format) ? \Illuminate\Support\Js::encode($format) : $format;
-@endphp
-
 <span {{ $attributes }}>
     <span
         data-chart-slot

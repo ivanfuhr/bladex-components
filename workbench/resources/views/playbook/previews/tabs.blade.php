@@ -3,16 +3,14 @@
 @endphp
 
 <div class="max-w-lg">
-    <x-stencil::tabs default-value="account" :variant="$variant">
-        <x-stencil::tabs.list>
-            <x-stencil::tabs.trigger value="account">Account</x-stencil::tabs.trigger>
-            <x-stencil::tabs.trigger value="password">Password</x-stencil::tabs.trigger>
-            <x-stencil::tabs.trigger value="notifications">Notifications</x-stencil::tabs.trigger>
-        </x-stencil::tabs.list>
-        <x-stencil::tabs.content value="account">
-            Manage your account settings and preferences.
-        </x-stencil::tabs.content>
-        <x-stencil::tabs.content value="password"> Update your password and security options. </x-stencil::tabs.content>
-        <x-stencil::tabs.content value="notifications"> Choose which emails you receive. </x-stencil::tabs.content>
-    </x-stencil::tabs>
+    <x-ui::tabs default-value="account" :variant="$variant">
+        <x-ui::tabs.list>
+            <x-ui::tabs.trigger value="account">Account</x-ui::tabs.trigger>
+            <x-ui::tabs.trigger value="password">Password</x-ui::tabs.trigger>
+            <x-ui::tabs.trigger value="notifications">Notifications</x-ui::tabs.trigger>
+        </x-ui::tabs.list>
+        <x-ui::tabs.content value="account"> Manage your account settings and preferences. </x-ui::tabs.content>
+        <x-ui::tabs.content value="password"> Update your password and security options. </x-ui::tabs.content>
+        <x-ui::tabs.content value="notifications"> Choose which emails you receive. </x-ui::tabs.content>
+    </x-ui::tabs>
 </div>

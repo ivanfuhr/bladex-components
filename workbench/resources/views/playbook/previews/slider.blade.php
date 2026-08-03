@@ -7,7 +7,7 @@
     $value = $range ? [25, 75] : 40;
 @endphp
 
-<x-stencil::slider
+<x-ui::slider
     name="volume"
     :value="$value"
     :range="$range"

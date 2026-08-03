@@ -1,9 +1,3 @@
-@props([
-    'sortable' => false,
-    'sorted' => false,
-    'direction' => 'asc',
-])
-
 <th {{
     $attributes->class([
         'table__head',

@@ -1,16 +1,12 @@
-@props([
-    'text' => null,
-])
-
-<x-stencil::button
+<x-ui::button
     type="button"
     variant="outline"
     {{
         $attributes->merge([
             'data-stepper-previous' => true,
-            'aria-label' => __('stencil::messages.stepper_previous'),
+            'aria-label' => __('Previous'),
         ])
     }}
 >
-    {{ $text ?? __('stencil::messages.stepper_previous') }}
-</x-stencil::button>
+    {{ $text ?? __('Previous') }}
+</x-ui::button>

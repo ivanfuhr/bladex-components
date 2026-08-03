@@ -6,28 +6,26 @@
     <div class="space-y-10">
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::card /&gt;</p>
-            <x-stencil::heading :level="2">Card</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle"
-                >Content container with header, body, and footer.</x-stencil::text>
+            <x-ui::heading :level="2">Card</x-ui::heading>
+            <x-ui::text size="sm" variant="subtle">Content container with header, body, and footer.</x-ui::text>
         </div>
 
         <div class="max-w-md">
-            <x-stencil::card>
-                <x-stencil::card.header>
-                    <x-stencil::card.title>Account</x-stencil::card.title>
-                    <x-stencil::card.description>
-                        Manage your profile and billing preferences.</x-stencil::card.description>
-                </x-stencil::card.header>
-                <x-stencil::card.content>
-                    <x-stencil::text size="sm">
+            <x-ui::card>
+                <x-ui::card.header>
+                    <x-ui::card.title>Account</x-ui::card.title>
+                    <x-ui::card.description> Manage your profile and billing preferences.</x-ui::card.description>
+                </x-ui::card.header>
+                <x-ui::card.content>
+                    <x-ui::text size="sm">
                         Update your display name, email, and notification settings. Changes apply across all workspaces.
-                    </x-stencil::text>
-                </x-stencil::card.content>
-                <x-stencil::card.footer class="flex justify-end gap-2">
-                    <x-stencil::button variant="outline">Cancel</x-stencil::button>
-                    <x-stencil::button variant="primary">Save</x-stencil::button>
-                </x-stencil::card.footer>
-            </x-stencil::card>
+                    </x-ui::text>
+                </x-ui::card.content>
+                <x-ui::card.footer class="flex justify-end gap-2">
+                    <x-ui::button variant="outline">Cancel</x-ui::button>
+                    <x-ui::button variant="primary">Save</x-ui::button>
+                </x-ui::card.footer>
+            </x-ui::card>
         </div>
     </div>
 @endsection

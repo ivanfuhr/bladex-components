@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a command root with input, list, empty, and items', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::command placeholder="Search…">
-            <x-stencil::command.item value="calendar">Calendar</x-stencil::command.item>
-        </x-stencil::command>
+        <x-ui::command placeholder="Search…">
+            <x-ui::command.item value="calendar">Calendar</x-ui::command.item>
+        </x-ui::command>
     BLADE);
 
     expect($html)
@@ -28,13 +28,13 @@ it('renders a command root with input, list, empty, and items', function () {
 
 it('renders full compound structure without duplicating the input', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::command :shortcut="false">
-            <x-stencil::command.input placeholder="Type a command…" />
-            <x-stencil::command.list>
-                <x-stencil::command.empty>Nothing here</x-stencil::command.empty>
-                <x-stencil::command.item value="settings">Settings</x-stencil::command.item>
-            </x-stencil::command.list>
-        </x-stencil::command>
+        <x-ui::command :shortcut="false">
+            <x-ui::command.input placeholder="Type a command…" />
+            <x-ui::command.list>
+                <x-ui::command.empty>Nothing here</x-ui::command.empty>
+                <x-ui::command.item value="settings">Settings</x-ui::command.item>
+            </x-ui::command.list>
+        </x-ui::command>
     BLADE);
 
     expect($html)
@@ -49,18 +49,18 @@ it('renders full compound structure without duplicating the input', function () 
 
 it('renders groups, separators, and keyboard shortcuts', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::command :shortcut="false">
-            <x-stencil::command.input />
-            <x-stencil::command.list>
-                <x-stencil::command.group heading="Suggestions">
-                    <x-stencil::command.item value="calendar" kbd="⌘C">Calendar</x-stencil::command.item>
-                </x-stencil::command.group>
-                <x-stencil::command.separator />
-                <x-stencil::command.group heading="Settings">
-                    <x-stencil::command.item value="profile" kbd="⌘P">Profile</x-stencil::command.item>
-                </x-stencil::command.group>
-            </x-stencil::command.list>
-        </x-stencil::command>
+        <x-ui::command :shortcut="false">
+            <x-ui::command.input />
+            <x-ui::command.list>
+                <x-ui::command.group heading="Suggestions">
+                    <x-ui::command.item value="calendar" kbd="⌘C">Calendar</x-ui::command.item>
+                </x-ui::command.group>
+                <x-ui::command.separator />
+                <x-ui::command.group heading="Settings">
+                    <x-ui::command.item value="profile" kbd="⌘P">Profile</x-ui::command.item>
+                </x-ui::command.group>
+            </x-ui::command.list>
+        </x-ui::command>
     BLADE);
 
     expect($html)
@@ -76,11 +76,11 @@ it('renders groups, separators, and keyboard shortcuts', function () {
 
 it('renders command dialog with palette semantics and shortcut attribute', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::command.dialog name="palette" shortcut="meta.k" title="Run a command">
-            <x-stencil::command>
-                <x-stencil::command.item value="docs">Documentation</x-stencil::command.item>
-            </x-stencil::command>
-        </x-stencil::command.dialog>
+        <x-ui::command.dialog name="palette" shortcut="meta.k" title="Run a command">
+            <x-ui::command>
+                <x-ui::command.item value="docs">Documentation</x-ui::command.item>
+            </x-ui::command>
+        </x-ui::command.dialog>
     BLADE);
 
     expect($html)
@@ -97,17 +97,17 @@ it('renders command dialog with palette semantics and shortcut attribute', funct
 });
 
 it('normalizes cmd shortcut aliases to meta', function () {
-    $html = Blade::render('<x-stencil::command.dialog name="go" shortcut="cmd.k">Hi</x-stencil::command.dialog>');
+    $html = Blade::render('<x-ui::command.dialog name="go" shortcut="cmd.k">Hi</x-ui::command.dialog>');
 
     expect($html)->toContain('data-command-shortcut="meta.k"');
 });
 
 it('marks disabled items and supports link items', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::command>
-            <x-stencil::command.item value="off" disabled>Disabled</x-stencil::command.item>
-            <x-stencil::command.item value="docs" href="/docs">Docs</x-stencil::command.item>
-        </x-stencil::command>
+        <x-ui::command>
+            <x-ui::command.item value="off" disabled>Disabled</x-ui::command.item>
+            <x-ui::command.item value="docs" href="/docs">Docs</x-ui::command.item>
+        </x-ui::command>
     BLADE);
 
     expect($html)

@@ -4,6 +4,7 @@
 
 const DIALOG_CONTENT_SELECTOR = '[data-dialog-content]';
 const initialized = new WeakSet();
+const boundTriggers = new WeakSet();
 
 /** @type {Map<string, HTMLDialogElement>} */
 const namedDialogs = new Map();
@@ -30,11 +31,11 @@ export function initDialogs(root = document) {
             return;
         }
 
-        if (trigger.dataset.dialogTriggerBound === 'true') {
+        if (boundTriggers.has(trigger)) {
             return;
         }
 
-        trigger.dataset.dialogTriggerBound = 'true';
+        boundTriggers.add(trigger);
         bindTrigger(trigger);
     });
 }
@@ -233,8 +234,10 @@ function resolveDialogForTrigger(trigger) {
  * @param {HTMLDialogElement} dialog
  */
 function focusInitialElement(dialog) {
+    const isAlert = dialog.getAttribute('role') === 'alertdialog';
     const focusTarget =
         dialog.querySelector('[data-dialog-initial-focus]') ??
+        (isAlert ? dialog.querySelector('[data-dialog-cancel]') : null) ??
         dialog.querySelector(
             'button:not([data-dialog-close]):not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
         );

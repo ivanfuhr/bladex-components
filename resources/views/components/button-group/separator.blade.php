@@ -1,19 +1,3 @@
-@aware([
-    'orientation' => 'horizontal',
-])
-
-@php
-    $explicit = $attributes->get('orientation');
-
-    if (filled($explicit)) {
-        $separatorOrientation = $explicit === 'horizontal' ? 'horizontal' : 'vertical';
-        $attributes = $attributes->except('orientation');
-    } else {
-        $parentOrientation = $orientation === 'vertical' ? 'vertical' : 'horizontal';
-        $separatorOrientation = $parentOrientation === 'vertical' ? 'horizontal' : 'vertical';
-    }
-@endphp
-
 <div
     {{
         $attributes->class([

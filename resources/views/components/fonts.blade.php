@@ -1,12 +1,3 @@
-@php
-    use Ivanfuhr\Stencil\Support\Typography\GoogleFontsStylesheetBuilder;
-    use Ivanfuhr\Stencil\Support\Typography\TypographyConfig;
-
-    $typographyConfig = app(TypographyConfig::class);
-    $stylesheetUrl = app(GoogleFontsStylesheetBuilder::class)->buildUrl();
-    $cssVariables = $typographyConfig->cssFontVariables();
-@endphp
-
 @if ($stylesheetUrl !== null)
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

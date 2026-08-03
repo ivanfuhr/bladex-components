@@ -1,11 +1,3 @@
-@aware([
-    'orientation' => 'horizontal',
-])
-
-@php
-    $isVertical = $orientation === 'vertical';
-@endphp
-
 <div
     {{
         $attributes->class([

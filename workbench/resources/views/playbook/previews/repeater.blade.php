@@ -10,7 +10,7 @@
     ];
 @endphp
 
-<x-stencil::repeater
+<x-ui::repeater
     name="members"
     :value="$value"
     :min="$min"
@@ -19,13 +19,13 @@
     :disabled="$disabled"
     class="w-full max-w-xl"
 >
-    <x-stencil::repeater.item>
+    <x-ui::repeater.item>
         <div class="grid gap-3 sm:grid-cols-2">
-            <x-stencil::input data-repeater-field="name" placeholder="Name" />
-            <x-stencil::input data-repeater-field="role" placeholder="Role" />
+            <x-ui::input data-repeater-field="name" placeholder="Name" />
+            <x-ui::input data-repeater-field="role" placeholder="Role" />
         </div>
-        <x-stencil::repeater.remove />
-    </x-stencil::repeater.item>
+        <x-ui::repeater.remove />
+    </x-ui::repeater.item>
 
-    <x-stencil::repeater.add>Add member</x-stencil::repeater.add>
-</x-stencil::repeater>
+    <x-ui::repeater.add>Add member</x-ui::repeater.add>
+</x-ui::repeater>

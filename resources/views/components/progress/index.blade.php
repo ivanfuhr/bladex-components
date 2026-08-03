@@ -1,17 +1,3 @@
-@props([
-    'value' => 0,
-    'max' => 100,
-    'indeterminate' => false,
-    'size' => null,
-])
-
-@php
-    $max = max(1, (float) $max);
-    $value = max(0, min($max, (float) $value));
-    $percent = $indeterminate ? null : round(($value / $max) * 100, 2);
-    $height = $size === 'sm' ? 'h-1.5' : ($size === 'lg' ? 'h-3' : 'h-2');
-@endphp
-
 <div {{
     $attributes->class([
         'progress',
@@ -20,8 +6,8 @@
     ])->merge([
         'role' => 'progressbar',
         'aria-valuemin' => '0',
-        'aria-valuemax' => (string) $max,
-        'aria-valuenow' => $indeterminate ? null : (string) $value,
+        'aria-valuemax' => (string) $resolvedMax,
+        'aria-valuenow' => $indeterminate ? null : (string) $resolvedValue,
         'data-progress' => true,
         'data-indeterminate' => $indeterminate ? 'true' : null,
     ])

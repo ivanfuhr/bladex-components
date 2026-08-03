@@ -3,6 +3,8 @@
  * Desktop collapse/expand + mobile overlay; persists open state in localStorage.
  */
 
+import { createBindSignal } from './shared/lifecycle.js';
+
 const PROVIDER_SELECTOR = '[data-sidebar-provider]';
 const TRIGGER_SELECTOR = '[data-sidebar-trigger]';
 const RAIL_SELECTOR = '[data-sidebar-rail]';
@@ -37,6 +39,7 @@ function bindSidebarProvider(provider) {
     const storageKey = provider.dataset.storageKey || 'stencil-sidebar-state';
     const defaultOpen = provider.dataset.defaultOpen !== 'false';
     const media = window.matchMedia(MOBILE_QUERY);
+    const signal = createBindSignal(provider);
 
     let open = readStoredOpen(storageKey, defaultOpen);
     let openMobile = false;
@@ -113,31 +116,35 @@ function bindSidebarProvider(provider) {
         }
     };
 
-    provider.addEventListener('click', (event) => {
-        const target = event.target;
+    provider.addEventListener(
+        'click',
+        (event) => {
+            const target = event.target;
 
-        if (!(target instanceof Element)) {
-            return;
-        }
+            if (!(target instanceof Element)) {
+                return;
+            }
 
-        const control = target.closest(
-            `${TRIGGER_SELECTOR}, ${RAIL_SELECTOR}, ${BACKDROP_SELECTOR}`,
-        );
+            const control = target.closest(
+                `${TRIGGER_SELECTOR}, ${RAIL_SELECTOR}, ${BACKDROP_SELECTOR}`,
+            );
 
-        if (!(control instanceof HTMLElement) || !provider.contains(control)) {
-            return;
-        }
+            if (!(control instanceof HTMLElement) || !provider.contains(control)) {
+                return;
+            }
 
-        if (control.matches(BACKDROP_SELECTOR)) {
+            if (control.matches(BACKDROP_SELECTOR)) {
+                event.preventDefault();
+                setOpenMobile(false);
+
+                return;
+            }
+
             event.preventDefault();
-            setOpenMobile(false);
-
-            return;
-        }
-
-        event.preventDefault();
-        toggle();
-    });
+            toggle();
+        },
+        { signal },
+    );
 
     const onKeydown = (event) => {
         if (event.key === 'Escape' && isMobile && openMobile) {
@@ -169,7 +176,7 @@ function bindSidebarProvider(provider) {
         }
     };
 
-    document.addEventListener('keydown', onKeydown);
+    document.addEventListener('keydown', onKeydown, { signal });
 
     const onMediaChange = () => {
         if (!media.matches) {
@@ -180,9 +187,10 @@ function bindSidebarProvider(provider) {
     };
 
     if (typeof media.addEventListener === 'function') {
-        media.addEventListener('change', onMediaChange);
+        media.addEventListener('change', onMediaChange, { signal });
     } else {
         media.addListener(onMediaChange);
+        signal.addEventListener('abort', () => media.removeListener(onMediaChange), { once: true });
     }
 
     sync();

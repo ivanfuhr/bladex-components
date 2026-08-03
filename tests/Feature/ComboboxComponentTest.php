@@ -8,9 +8,9 @@ use Illuminate\Support\ViewErrorBag;
 
 it('renders a combobox root with hidden input and data attributes', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::combobox name="framework" placeholder="Search…">
-            <x-stencil::combobox.item value="laravel">Laravel</x-stencil::combobox.item>
-        </x-stencil::combobox>
+        <x-ui::combobox name="framework" placeholder="Search…">
+            <x-ui::combobox.item value="laravel">Laravel</x-ui::combobox.item>
+        </x-ui::combobox>
     BLADE);
 
     expect($html)
@@ -30,9 +30,9 @@ it('renders a combobox root with hidden input and data attributes', function () 
 
 it('renders shortcut mode with placeholder on the input', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::combobox name="framework" placeholder="Search frameworks…">
-            <x-stencil::combobox.item value="laravel">Laravel</x-stencil::combobox.item>
-        </x-stencil::combobox>
+        <x-ui::combobox name="framework" placeholder="Search frameworks…">
+            <x-ui::combobox.item value="laravel">Laravel</x-ui::combobox.item>
+        </x-ui::combobox>
     BLADE);
 
     expect($html)
@@ -42,13 +42,13 @@ it('renders shortcut mode with placeholder on the input', function () {
 
 it('renders full compound structure without duplicating the input', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::combobox name="framework" :shortcut="false">
-            <x-stencil::combobox.input placeholder="Search…" />
-            <x-stencil::combobox.content>
-                <x-stencil::combobox.empty>Nothing here</x-stencil::combobox.empty>
-                <x-stencil::combobox.item value="laravel">Laravel</x-stencil::combobox.item>
-            </x-stencil::combobox.content>
-        </x-stencil::combobox>
+        <x-ui::combobox name="framework" :shortcut="false">
+            <x-ui::combobox.input placeholder="Search…" />
+            <x-ui::combobox.content>
+                <x-ui::combobox.empty>Nothing here</x-ui::combobox.empty>
+                <x-ui::combobox.item value="laravel">Laravel</x-ui::combobox.item>
+            </x-ui::combobox.content>
+        </x-ui::combobox>
     BLADE);
 
     expect($html)
@@ -68,9 +68,9 @@ it('renders full compound structure without duplicating the input', function () 
 
 it('marks the input invalid when the invalid prop is true', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::combobox name="framework" :invalid="true" placeholder="Search…">
-            <x-stencil::combobox.item value="a">A</x-stencil::combobox.item>
-        </x-stencil::combobox>
+        <x-ui::combobox name="framework" :invalid="true" placeholder="Search…">
+            <x-ui::combobox.item value="a">A</x-ui::combobox.item>
+        </x-ui::combobox>
     BLADE);
 
     expect($html)->toContain('aria-invalid="true"');
@@ -78,9 +78,9 @@ it('marks the input invalid when the invalid prop is true', function () {
 
 it('disables the input when the disabled prop is true', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::combobox name="framework" :disabled="true" placeholder="Search…">
-            <x-stencil::combobox.item value="a">A</x-stencil::combobox.item>
-        </x-stencil::combobox>
+        <x-ui::combobox name="framework" :disabled="true" placeholder="Search…">
+            <x-ui::combobox.item value="a">A</x-ui::combobox.item>
+        </x-ui::combobox>
     BLADE);
 
     expect($html)->toContain('disabled');
@@ -93,11 +93,11 @@ it('inherits field invalid state from the Field shell', function () {
     view()->share('errors', $errors);
 
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::field name="framework">
-            <x-stencil::combobox name="framework" placeholder="Search…">
-                <x-stencil::combobox.item value="laravel">Laravel</x-stencil::combobox.item>
-            </x-stencil::combobox>
-        </x-stencil::field>
+        <x-ui::field name="framework">
+            <x-ui::combobox name="framework" placeholder="Search…">
+                <x-ui::combobox.item value="laravel">Laravel</x-ui::combobox.item>
+            </x-ui::combobox>
+        </x-ui::field>
     BLADE);
 
     expect($html)
@@ -107,17 +107,17 @@ it('inherits field invalid state from the Field shell', function () {
 
 it('renders group label and separator markup', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::combobox name="fruit" placeholder="Fruit" :shortcut="false">
-            <x-stencil::combobox.input />
-            <x-stencil::combobox.content>
-                <x-stencil::combobox.group>
-                    <x-stencil::combobox.label>Citrus</x-stencil::combobox.label>
-                    <x-stencil::combobox.item value="orange">Orange</x-stencil::combobox.item>
-                </x-stencil::combobox.group>
-                <x-stencil::combobox.separator />
-                <x-stencil::combobox.item value="apple">Apple</x-stencil::combobox.item>
-            </x-stencil::combobox.content>
-        </x-stencil::combobox>
+        <x-ui::combobox name="fruit" placeholder="Fruit" :shortcut="false">
+            <x-ui::combobox.input />
+            <x-ui::combobox.content>
+                <x-ui::combobox.group>
+                    <x-ui::combobox.label>Citrus</x-ui::combobox.label>
+                    <x-ui::combobox.item value="orange">Orange</x-ui::combobox.item>
+                </x-ui::combobox.group>
+                <x-ui::combobox.separator />
+                <x-ui::combobox.item value="apple">Apple</x-ui::combobox.item>
+            </x-ui::combobox.content>
+        </x-ui::combobox>
     BLADE);
 
     expect($html)
@@ -129,9 +129,9 @@ it('renders group label and separator markup', function () {
 
 it('defaults to full width when no custom class is provided', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::combobox name="framework" placeholder="Search…">
-            <x-stencil::combobox.item value="a">A</x-stencil::combobox.item>
-        </x-stencil::combobox>
+        <x-ui::combobox name="framework" placeholder="Search…">
+            <x-ui::combobox.item value="a">A</x-ui::combobox.item>
+        </x-ui::combobox>
     BLADE);
 
     expect($html)->toContain('class="combobox relative min-w-0 w-full"');
@@ -139,9 +139,9 @@ it('defaults to full width when no custom class is provided', function () {
 
 it('allows width utilities on the root to override the default w-full', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::combobox name="framework" class="w-36" placeholder="Search…">
-            <x-stencil::combobox.item value="a">A</x-stencil::combobox.item>
-        </x-stencil::combobox>
+        <x-ui::combobox name="framework" class="w-36" placeholder="Search…">
+            <x-ui::combobox.item value="a">A</x-ui::combobox.item>
+        </x-ui::combobox>
     BLADE);
 
     expect($html)->toContain('class="combobox relative min-w-0 w-36"');
@@ -149,9 +149,9 @@ it('allows width utilities on the root to override the default w-full', function
 
 it('styles combobox options with hover feedback', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::combobox name="x" placeholder="X">
-            <x-stencil::combobox.item value="a">A</x-stencil::combobox.item>
-        </x-stencil::combobox>
+        <x-ui::combobox name="x" placeholder="X">
+            <x-ui::combobox.item value="a">A</x-ui::combobox.item>
+        </x-ui::combobox>
     BLADE);
 
     expect($html)
@@ -161,9 +161,9 @@ it('styles combobox options with hover feedback', function () {
 
 it('marks disabled items with data-disabled', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::combobox name="x" placeholder="X">
-            <x-stencil::combobox.item value="a" :disabled="true">Locked</x-stencil::combobox.item>
-        </x-stencil::combobox>
+        <x-ui::combobox name="x" placeholder="X">
+            <x-ui::combobox.item value="a" :disabled="true">Locked</x-ui::combobox.item>
+        </x-ui::combobox>
     BLADE);
 
     expect($html)
@@ -173,9 +173,9 @@ it('marks disabled items with data-disabled', function () {
 
 it('wires aria-controls between the input and listbox', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::combobox name="framework" combobox-id="fw" placeholder="Search…">
-            <x-stencil::combobox.item value="laravel">Laravel</x-stencil::combobox.item>
-        </x-stencil::combobox>
+        <x-ui::combobox name="framework" combobox-id="fw" placeholder="Search…">
+            <x-ui::combobox.item value="laravel">Laravel</x-ui::combobox.item>
+        </x-ui::combobox>
     BLADE);
 
     expect($html)
@@ -186,9 +186,9 @@ it('wires aria-controls between the input and listbox', function () {
 
 it('pre-fills the hidden input when a value is provided', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::combobox name="framework" value="laravel" placeholder="Search…">
-            <x-stencil::combobox.item value="laravel">Laravel</x-stencil::combobox.item>
-        </x-stencil::combobox>
+        <x-ui::combobox name="framework" value="laravel" placeholder="Search…">
+            <x-ui::combobox.item value="laravel">Laravel</x-ui::combobox.item>
+        </x-ui::combobox>
     BLADE);
 
     expect($html)->toContain('value="laravel"');
@@ -197,10 +197,10 @@ it('pre-fills the hidden input when a value is provided', function () {
 
 it('renders multiple combobox with hidden inputs and chips display', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::combobox name="frameworks" multiple display="chips" :value="['laravel', 'vue']">
-            <x-stencil::combobox.item value="laravel">Laravel</x-stencil::combobox.item>
-            <x-stencil::combobox.item value="vue">Vue</x-stencil::combobox.item>
-        </x-stencil::combobox>
+        <x-ui::combobox name="frameworks" multiple display="chips" :value="['laravel', 'vue']">
+            <x-ui::combobox.item value="laravel">Laravel</x-ui::combobox.item>
+            <x-ui::combobox.item value="vue">Vue</x-ui::combobox.item>
+        </x-ui::combobox>
     BLADE);
 
     expect($html)
@@ -212,4 +212,15 @@ it('renders multiple combobox with hidden inputs and chips display', function ()
         ->toContain('value="vue"')
         ->toContain('data-combobox-chips')
         ->toContain('data-combobox-filter-input');
+});
+
+it('combobox script removes orphaned portaled content on remount', function () {
+    $source = (string) file_get_contents(dirname(__DIR__, 2).'/resources/assets/js/combobox.js');
+
+    expect($source)
+        ->toContain('[data-combobox-content][data-combobox-portaled]')
+        ->toContain("content.closest('[data-combobox]')")
+        ->toContain('content.remove()')
+        ->toContain('createBindSignal')
+        ->toContain('stencil:mount');
 });

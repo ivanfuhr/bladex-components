@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Blade;
 
 it('renders a determinate progress bar', function () {
-    $html = Blade::render('<x-stencil::progress :value="40" :max="100" />');
+    $html = Blade::render('<x-ui::progress :value="40" :max="100" />');
 
     expect($html)
         ->toContain('role="progressbar"')
@@ -16,7 +16,7 @@ it('renders a determinate progress bar', function () {
 });
 
 it('renders an indeterminate progress bar', function () {
-    $html = Blade::render('<x-stencil::progress indeterminate />');
+    $html = Blade::render('<x-ui::progress indeterminate />');
 
     expect($html)
         ->toContain('data-indeterminate="true"')

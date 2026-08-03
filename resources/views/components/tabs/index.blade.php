@@ -1,15 +1,4 @@
-@props([
-    'defaultValue' => null,
-    'orientation' => 'horizontal',
-    'variant' => 'default',
-    'tabsId' => null,
-])
-
-@php
-    $tabsId = filled($tabsId) ? $tabsId : 'tabs-'.str_replace('.', '', uniqid('', true));
-@endphp
-
-<x-stencil::tabs.provider :tabs-id="$tabsId">
+<x-ui::tabs.provider :tabs-id="$tabsId" :default-value="$defaultValue" :variant="$variant" :orientation="$orientation">
     <div {{
         $attributes->class([
             'tabs',
@@ -24,4 +13,4 @@
     }}>
         {{ $slot }}
     </div>
-</x-stencil::tabs.provider>
+</x-ui::tabs.provider>

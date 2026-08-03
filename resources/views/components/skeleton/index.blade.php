@@ -1,17 +1,3 @@
-@props([
-    'rounded' => null,
-])
-
-@php
-    $radius = match ($rounded) {
-        'full', 'circle' => 'rounded-full',
-        'none' => 'rounded-none',
-        'sm' => 'rounded-sm',
-        'lg' => 'rounded-lg',
-        default => 'rounded-md',
-    };
-@endphp
-
 <div
     {{
         $attributes->class([

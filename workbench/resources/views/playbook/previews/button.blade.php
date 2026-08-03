@@ -8,21 +8,14 @@
     $showAffixes = (bool) ($state['show_affixes'] ?? false);
 @endphp
 
-<x-stencil::button
-    :variant="$variant"
-    :size="$size"
-    :type="$type"
-    :href="$href"
-    :square="$square"
-    :disabled="$disabled"
->
+<x-ui::button :variant="$variant" :size="$size" :type="$type" :href="$href" :square="$square" :disabled="$disabled">
     @if ($showAffixes)
         <x-slot:leading>
-            <x-stencil::icon.loading class="animate-spin" />
+            <x-ui::icon.loading class="animate-spin" />
         </x-slot:leading>
     @endif
     @if ($square && ! $showAffixes)
-        <x-stencil::icon.loading />
+        <x-ui::icon.loading />
     @else
         Save changes
     @endif
@@ -31,4 +24,4 @@
             <span aria-hidden="true">→</span>
         </x-slot:trailing>
     @endif
-</x-stencil::button>
+</x-ui::button>

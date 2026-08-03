@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Blade;
 
 it('renders an avatar image with fallback initials from name', function () {
-    $html = Blade::render('<x-stencil::avatar src="https://example.com/a.jpg" name="Caleb Porzio" circle size="lg" />');
+    $html = Blade::render('<x-ui::avatar src="https://example.com/a.jpg" name="Caleb Porzio" circle size="lg" />');
 
     expect($html)
         ->toContain('data-avatar')
@@ -19,7 +19,7 @@ it('renders an avatar image with fallback initials from name', function () {
 });
 
 it('renders initials-only avatar with color', function () {
-    $html = Blade::render('<x-stencil::avatar name="Ada Lovelace" color="violet" initials="AL" />');
+    $html = Blade::render('<x-ui::avatar name="Ada Lovelace" color="violet" initials="AL" />');
 
     expect($html)
         ->toContain('AL')
@@ -29,10 +29,10 @@ it('renders initials-only avatar with color', function () {
 
 it('supports compound image and fallback composition', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::avatar size="sm">
-            <x-stencil::avatar.image src="/me.jpg" alt="Me" />
-            <x-stencil::avatar.fallback>ME</x-stencil::avatar.fallback>
-        </x-stencil::avatar>
+        <x-ui::avatar size="sm">
+            <x-ui::avatar.image src="/me.jpg" alt="Me" />
+            <x-ui::avatar.fallback>ME</x-ui::avatar.fallback>
+        </x-ui::avatar>
     BLADE);
 
     expect($html)
@@ -44,10 +44,10 @@ it('supports compound image and fallback composition', function () {
 
 it('renders avatar groups with overlapping rings', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::avatar.group>
-            <x-stencil::avatar name="One" />
-            <x-stencil::avatar name="Two" />
-        </x-stencil::avatar.group>
+        <x-ui::avatar.group>
+            <x-ui::avatar name="One" />
+            <x-ui::avatar name="Two" />
+        </x-ui::avatar.group>
     BLADE);
 
     expect($html)

@@ -1,12 +1,3 @@
-@props([
-    'keepOpen' => false,
-])
-
-@aware([
-    'align' => 'start',
-    'side' => 'bottom',
-])
-
 <div {{
     $attributes->class([
         'dropdown-menu__content',

@@ -7,7 +7,7 @@
 @endphp
 
 <div class="w-full max-w-xs">
-    <x-stencil::time-picker
+    <x-ui::time-picker
         name="playbook_time"
         :value="$value"
         :with-seconds="$withSeconds"

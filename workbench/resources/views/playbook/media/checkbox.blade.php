@@ -6,32 +6,32 @@
     <div class="space-y-10">
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::checkbox /&gt;</p>
-            <x-stencil::heading :level="2">Checkbox</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle">Native checkbox for forms and multi-select.</x-stencil::text>
+            <x-ui::heading :level="2">Checkbox</x-ui::heading>
+            <x-ui::text size="sm" variant="subtle">Native checkbox for forms and multi-select.</x-ui::text>
         </div>
 
         <div class="flex max-w-md flex-col gap-8">
             <div class="space-y-3">
-                <x-stencil::text size="sm" variant="subtle">Default &amp; small, checked</x-stencil::text>
-                <x-stencil::field name="a" orientation="inline">
-                    <x-stencil::checkbox name="a" :checked="true" />
-                    <x-stencil::field.label>Default size</x-stencil::field.label>
-                </x-stencil::field>
-                <x-stencil::field name="b" orientation="inline">
-                    <x-stencil::checkbox name="b" size="sm" :checked="true" />
-                    <x-stencil::field.label>Small</x-stencil::field.label>
-                </x-stencil::field>
+                <x-ui::text size="sm" variant="subtle">Default &amp; small, checked</x-ui::text>
+                <x-ui::field name="a" orientation="inline">
+                    <x-ui::checkbox name="a" :checked="true" />
+                    <x-ui::field.label>Default size</x-ui::field.label>
+                </x-ui::field>
+                <x-ui::field name="b" orientation="inline">
+                    <x-ui::checkbox name="b" size="sm" :checked="true" />
+                    <x-ui::field.label>Small</x-ui::field.label>
+                </x-ui::field>
             </div>
             <div class="space-y-3">
-                <x-stencil::text size="sm" variant="subtle">Invalid &amp; disabled</x-stencil::text>
-                <x-stencil::field orientation="inline">
-                    <x-stencil::checkbox name="c" :invalid="true" />
-                    <x-stencil::field.label>Invalid</x-stencil::field.label>
-                </x-stencil::field>
-                <x-stencil::field orientation="inline">
-                    <x-stencil::checkbox name="d" disabled />
-                    <x-stencil::field.label>Disabled</x-stencil::field.label>
-                </x-stencil::field>
+                <x-ui::text size="sm" variant="subtle">Invalid &amp; disabled</x-ui::text>
+                <x-ui::field orientation="inline">
+                    <x-ui::checkbox name="c" :invalid="true" />
+                    <x-ui::field.label>Invalid</x-ui::field.label>
+                </x-ui::field>
+                <x-ui::field orientation="inline">
+                    <x-ui::checkbox name="d" disabled />
+                    <x-ui::field.label>Disabled</x-ui::field.label>
+                </x-ui::field>
             </div>
         </div>
     </div>

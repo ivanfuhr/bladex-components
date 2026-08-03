@@ -1,14 +1,8 @@
-@props([
-    'href' => '#',
-    'disabled' => false,
-    'text' => null,
-])
-
-<x-stencil::pagination.link
+<x-ui::pagination.link
     :href="$href"
     :disabled="$disabled"
-    {{ $attributes->class(['gap-1 px-2.5 w-auto min-w-9'])->merge(['aria-label' => __('stencil::messages.pagination_previous')]) }}
+    {{ $attributes->class(['gap-1 px-2.5 w-auto min-w-9'])->merge(['aria-label' => __('Previous')]) }}
 >
-    <x-stencil::icon name="chevron-left" class="size-4" />
-    <span class="hidden sm:inline">{{ $text ?? __('stencil::messages.pagination_previous') }}</span>
-</x-stencil::pagination.link>
+    <x-ui::icon name="chevron-left" class="size-4" />
+    <span class="hidden sm:inline">{{ $text ?? __('Previous') }}</span>
+</x-ui::pagination.link>

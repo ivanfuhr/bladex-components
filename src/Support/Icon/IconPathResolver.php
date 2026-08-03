@@ -6,13 +6,11 @@ namespace Ivanfuhr\Stencil\Support\Icon;
 
 use Illuminate\Contracts\Foundation\Application;
 use InvalidArgumentException;
-use Ivanfuhr\Stencil\Support\ProjectConfig;
 
 final class IconPathResolver
 {
     public function __construct(
         private readonly Application $app,
-        private readonly ProjectConfig $projectConfig,
     ) {}
 
     public function resolveWritePath(?string $override = null): string
@@ -21,7 +19,9 @@ final class IconPathResolver
             return $this->app->basePath($override);
         }
 
-        return $this->projectConfig->resolvedIconsPath();
+        return $this->app->resourcePath(
+            str_replace('resources/', '', (string) config('stencil.icons_path', 'views/vendor/stencil/icons')),
+        );
     }
 
     public function iconFilePath(string $name, ?string $directory = null): string

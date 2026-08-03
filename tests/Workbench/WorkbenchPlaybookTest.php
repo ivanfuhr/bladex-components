@@ -76,6 +76,32 @@ it('bridges playground pages to media when a media view exists', function () {
     $response->assertSee('Media page');
 });
 
+it('loads a single widget runtime on playbook chrome pages', function () {
+    $response = $this->get('/playbook/accordion');
+
+    $response->assertOk();
+    $html = $response->getContent();
+
+    expect($html)
+        ->toContain('id="playbook-canvas"')
+        ->toContain('x-html="html"')
+        ->toContain('playbookPreview(')
+        ->and($html)->not->toContain('/stencil/stencil.js');
+});
+
+it('returns interactive accordion and collapsible markup from the preview endpoint', function (string $slug, string $marker) {
+    $response = $this->postJson('/playbook/preview', [
+        'component' => $slug,
+        'state' => [],
+    ]);
+
+    $response->assertOk();
+    expect($response->json('html'))->toContain($marker);
+})->with([
+    ['accordion', 'data-accordion-trigger'],
+    ['collapsible', 'data-collapsible-trigger'],
+]);
+
 it('links sibling components within the same catalog category', function () {
     $response = $this->get('/playbook/input');
 
@@ -300,4 +326,14 @@ it('emits well-formed blade snippets for every playbook component', function () 
             ->not->toContain('>>')
             ->not->toMatch('/<[a-z][^>]*>\s*\/>/');
     }
+});
+
+it('playbook preview remount cleans portaled overlay orphans including dropdown menus', function () {
+    $source = (string) file_get_contents(dirname(__DIR__, 2).'/workbench/resources/js/playbook-preview.js');
+
+    expect($source)
+        ->toContain('[data-select-portaled]')
+        ->toContain('[data-combobox-portaled]')
+        ->toContain('[data-color-picker-portaled]')
+        ->toContain('[data-dropdown-menu-portaled]');
 });

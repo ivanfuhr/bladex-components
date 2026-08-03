@@ -8,7 +8,6 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Ivanfuhr\Stencil\Support\Icon\IconPathResolver;
 use Ivanfuhr\Stencil\Support\Icon\LucideIconInstaller;
-use Ivanfuhr\Stencil\Support\ProjectConfig;
 use Throwable;
 
 use function Laravel\Prompts\text;
@@ -20,10 +19,9 @@ class IconCommand extends Command
                             {--force : Overwrite existing icon stubs}
                             {--path= : Destination directory relative to the application base path}';
 
-    protected $description = 'Import Lucide icons as Blade components under resources/views/ui/icons.';
+    protected $description = 'Import Lucide icons as Blade components.';
 
     public function handle(
-        ProjectConfig $projectConfig,
         IconPathResolver $pathResolver,
         LucideIconInstaller $installer,
     ): int {
@@ -33,11 +31,6 @@ class IconCommand extends Command
             $this->components->error('Provide at least one icon name.');
 
             return self::FAILURE;
-        }
-
-        if (! $projectConfig->exists()) {
-            $this->components->warn('stencil.json was not found. Using default icon path from config.');
-            $this->line('Run stencil:init to align paths.icons with your project.');
         }
 
         $pathOption = $this->option('path');

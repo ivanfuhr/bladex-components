@@ -11,24 +11,24 @@ it('renders a composable chart with data templates and slots', function () {
     ];
 
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::chart :value="$data" class="aspect-[3/1]">
-            <x-stencil::chart.svg>
-                <x-stencil::chart.line field="visitors" class="text-[var(--chart-3)]" />
-                <x-stencil::chart.axis axis="x" field="date">
-                    <x-stencil::chart.axis.line />
-                    <x-stencil::chart.axis.tick />
-                </x-stencil::chart.axis>
-                <x-stencil::chart.axis axis="y">
-                    <x-stencil::chart.axis.grid />
-                    <x-stencil::chart.axis.tick />
-                </x-stencil::chart.axis>
-                <x-stencil::chart.cursor />
-            </x-stencil::chart.svg>
-            <x-stencil::chart.tooltip>
-                <x-stencil::chart.tooltip.heading field="date" />
-                <x-stencil::chart.tooltip.value field="visitors" label="Visitors" />
-            </x-stencil::chart.tooltip>
-        </x-stencil::chart>
+        <x-ui::chart :value="$data" class="aspect-[3/1]">
+            <x-ui::chart.svg>
+                <x-ui::chart.line field="visitors" class="text-[var(--chart-3)]" />
+                <x-ui::chart.axis axis="x" field="date">
+                    <x-ui::chart.axis.line />
+                    <x-ui::chart.axis.tick />
+                </x-ui::chart.axis>
+                <x-ui::chart.axis axis="y">
+                    <x-ui::chart.axis.grid />
+                    <x-ui::chart.axis.tick />
+                </x-ui::chart.axis>
+                <x-ui::chart.cursor />
+            </x-ui::chart.svg>
+            <x-ui::chart.tooltip>
+                <x-ui::chart.tooltip.heading field="date" />
+                <x-ui::chart.tooltip.value field="visitors" label="Visitors" />
+            </x-ui::chart.tooltip>
+        </x-ui::chart>
     BLADE, ['data' => $data]);
 
     expect($html)
@@ -51,11 +51,11 @@ it('renders a composable chart with data templates and slots', function () {
 
 it('renders a sparkline shortcut with flat numeric data', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::chart :value="[15, 18, 16, 19]" class="w-32 aspect-[3/1]">
-            <x-stencil::chart.svg gutter="0">
-                <x-stencil::chart.line class="text-[var(--chart-4)]" />
-            </x-stencil::chart.svg>
-        </x-stencil::chart>
+        <x-ui::chart :value="[15, 18, 16, 19]" class="w-32 aspect-[3/1]">
+            <x-ui::chart.svg gutter="0">
+                <x-ui::chart.line class="text-[var(--chart-4)]" />
+            </x-ui::chart.svg>
+        </x-ui::chart>
     BLADE);
 
     expect($html)
@@ -75,24 +75,34 @@ it('exports chart runtime helpers from chart.js', function () {
         ->toContain('export function initCharts');
 });
 
+it('defaults chart svg gutters so edge tick labels stay inside the paint box', function () {
+    $source = (string) file_get_contents(dirname(__DIR__, 2).'/resources/assets/js/chart.js');
+
+    expect($source)
+        ->toContain("gutter ?? '28 36 32 40'")
+        ->toContain('top: parts[0] ?? 28')
+        ->toContain('right: parts[1] ?? 36')
+        ->not->toContain("gutter ?? '24 16 32 40'");
+});
+
 it('renders accessible chart landmarks and live region support', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::chart :value="[['month' => 'Jan', 'revenue' => 4200], ['month' => 'Feb', 'revenue' => 3800]]" label="Monthly revenue">
-            <x-stencil::chart.svg>
-                <x-stencil::chart.bar field="revenue" />
-                <x-stencil::chart.axis axis="x" field="month">
-                    <x-stencil::chart.axis.tick />
-                </x-stencil::chart.axis>
-                <x-stencil::chart.axis axis="y" tick-prefix="$">
-                    <x-stencil::chart.axis.grid />
-                    <x-stencil::chart.axis.tick />
-                </x-stencil::chart.axis>
-            </x-stencil::chart.svg>
-            <x-stencil::chart.tooltip>
-                <x-stencil::chart.tooltip.heading field="month" />
-                <x-stencil::chart.tooltip.value field="revenue" label="Revenue" prefix="$" />
-            </x-stencil::chart.tooltip>
-        </x-stencil::chart>
+        <x-ui::chart :value="[['month' => 'Jan', 'revenue' => 4200], ['month' => 'Feb', 'revenue' => 3800]]" label="Monthly revenue">
+            <x-ui::chart.svg>
+                <x-ui::chart.bar field="revenue" />
+                <x-ui::chart.axis axis="x" field="month">
+                    <x-ui::chart.axis.tick />
+                </x-ui::chart.axis>
+                <x-ui::chart.axis axis="y" tick-prefix="$">
+                    <x-ui::chart.axis.grid />
+                    <x-ui::chart.axis.tick />
+                </x-ui::chart.axis>
+            </x-ui::chart.svg>
+            <x-ui::chart.tooltip>
+                <x-ui::chart.tooltip.heading field="month" />
+                <x-ui::chart.tooltip.value field="revenue" label="Revenue" prefix="$" />
+            </x-ui::chart.tooltip>
+        </x-ui::chart>
     BLADE);
 
     expect($html)
@@ -108,11 +118,11 @@ it('renders accessible chart landmarks and live region support', function () {
 
 it('renders bar series templates with owned svg primitives', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::chart :value="[['month' => 'Jan', 'revenue' => 4200], ['month' => 'Feb', 'revenue' => 3800]]">
-            <x-stencil::chart.svg>
-                <x-stencil::chart.bar field="revenue" width="70%" />
-            </x-stencil::chart.svg>
-        </x-stencil::chart>
+        <x-ui::chart :value="[['month' => 'Jan', 'revenue' => 4200], ['month' => 'Feb', 'revenue' => 3800]]">
+            <x-ui::chart.svg>
+                <x-ui::chart.bar field="revenue" width="70%" />
+            </x-ui::chart.svg>
+        </x-ui::chart>
     BLADE);
 
     expect($html)

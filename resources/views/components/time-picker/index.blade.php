@@ -1,40 +1,5 @@
-@props([
-    'name' => null,
-    'value' => null,
-    'placeholder' => null,
-    'type' => 'button',
-    'invalid' => false,
-    'disabled' => false,
-    'clearable' => false,
-    'size' => null,
-    'withSeconds' => false,
-    'step' => 30,
-    'unavailable' => null,
-    'timezone' => null,
-    'locale' => null,
-    'shortcut' => true,
-])
-
-@aware([
-    'fieldInvalid' => false,
-])
-
-@php
-    use Ivanfuhr\Stencil\Support\Date\DateFormatter;
-
-    $invalid = $invalid || $fieldInvalid;
-    $resolvedTimezone = DateFormatter::resolveTimezone($timezone);
-    $resolvedLocale = $locale ?? app()->getLocale();
-    $resolvedValue = DateFormatter::normalizeTimeValue($value, $withSeconds);
-    $resolvedPlaceholder = $placeholder ?? __('stencil::messages.time_picker_placeholder');
-
-    if (is_array($unavailable)) {
-        $unavailable = collect($unavailable)->implode(',');
-    }
-@endphp
-
 <div
-    {{ $attributes->except(['shortcut'])->class(['time-picker relative min-w-0', 'w-full' => ! filled($attributes->get('class'))]) }}
+    {{ $attributes->class(['time-picker relative min-w-0', 'w-full' => ! filled($attributes->get('class'))]) }}
     data-time-picker
     data-time-picker-step="{{ $step }}"
     @if ($withSeconds) data-time-picker-seconds @endif
@@ -50,9 +15,9 @@
 
     @if ($shortcut)
         @if ($type === 'input')
-            <x-stencil::time-picker.input :$placeholder :$invalid :$disabled :$clearable :$size />
+            <x-ui::time-picker.input :$placeholder :$invalid :$disabled :$clearable :$size />
         @else
-            <x-stencil::time-picker.button :$placeholder :$invalid :$disabled :$clearable :$size />
+            <x-ui::time-picker.button :$placeholder :$invalid :$disabled :$clearable :$size />
         @endif
     @else
         {{ $slot }}

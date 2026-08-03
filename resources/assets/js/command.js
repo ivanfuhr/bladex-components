@@ -2,6 +2,8 @@
  * Stencil — command palette / cmdk (vanilla JS, no Alpine).
  */
 
+import { createBindSignal } from './shared/lifecycle.js';
+
 const COMMAND_SELECTOR = '[data-command]';
 const DIALOG_SHORTCUT_SELECTOR = '[data-command-dialog][data-command-shortcut]';
 const initialized = new WeakSet();
@@ -63,43 +65,49 @@ function bindDialogShortcut(dialog) {
         return;
     }
 
-    document.addEventListener('keydown', (event) => {
-        if (!document.contains(dialog)) {
-            return;
-        }
+    const signal = createBindSignal(dialog);
 
-        if (!matchesShortcut(event, parsed)) {
-            return;
-        }
-
-        const target = event.target;
-
-        if (
-            target instanceof HTMLElement &&
-            (target.isContentEditable ||
-                ((target instanceof HTMLInputElement ||
-                    target instanceof HTMLTextAreaElement ||
-                    target instanceof HTMLSelectElement) &&
-                    !dialog.contains(target) &&
-                    !event.metaKey &&
-                    !event.ctrlKey))
-        ) {
-            // Allow ⌘K / Ctrl+K from inputs; block bare letter shortcuts while typing.
-            if (!parsed.meta && !parsed.ctrl) {
+    document.addEventListener(
+        'keydown',
+        (event) => {
+            if (!document.contains(dialog)) {
                 return;
             }
-        }
 
-        event.preventDefault();
+            if (!matchesShortcut(event, parsed)) {
+                return;
+            }
 
-        if (dialog.open) {
-            dialog.close();
+            const target = event.target;
 
-            return;
-        }
+            if (
+                target instanceof HTMLElement &&
+                (target.isContentEditable ||
+                    ((target instanceof HTMLInputElement ||
+                        target instanceof HTMLTextAreaElement ||
+                        target instanceof HTMLSelectElement) &&
+                        !dialog.contains(target) &&
+                        !event.metaKey &&
+                        !event.ctrlKey))
+            ) {
+                // Allow ⌘K / Ctrl+K from inputs; block bare letter shortcuts while typing.
+                if (!parsed.meta && !parsed.ctrl) {
+                    return;
+                }
+            }
 
-        openCommandDialog(dialog);
-    });
+            event.preventDefault();
+
+            if (dialog.open) {
+                dialog.close();
+
+                return;
+            }
+
+            openCommandDialog(dialog);
+        },
+        { signal },
+    );
 }
 
 /**

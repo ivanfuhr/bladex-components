@@ -5,76 +5,75 @@
 @endphp
 
 <div class="h-[28rem] overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800">
-    <x-stencil::sidebar.provider :default-open="$defaultOpen" storage-key="stencil-playbook-sidebar" class="min-h-full">
-        <x-stencil::sidebar :collapsible="$collapsible" :variant="$variant">
-            <x-stencil::sidebar.header>
-                <x-stencil::sidebar.menu>
-                    <x-stencil::sidebar.menu-item>
-                        <x-stencil::sidebar.menu-button href="#" class="font-semibold">
+    <x-ui::sidebar.provider :default-open="$defaultOpen" storage-key="stencil-playbook-sidebar" class="min-h-full">
+        <x-ui::sidebar :collapsible="$collapsible" :variant="$variant">
+            <x-ui::sidebar.header>
+                <x-ui::sidebar.menu>
+                    <x-ui::sidebar.menu-item>
+                        <x-ui::sidebar.menu-button href="#" class="font-semibold">
                             <span class="flex size-4 items-center justify-center rounded bg-zinc-900 text-[10px] text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900">S</span>
                             <span>Stencil</span>
-                        </x-stencil::sidebar.menu-button>
-                    </x-stencil::sidebar.menu-item>
-                </x-stencil::sidebar.menu>
-            </x-stencil::sidebar.header>
+                        </x-ui::sidebar.menu-button>
+                    </x-ui::sidebar.menu-item>
+                </x-ui::sidebar.menu>
+            </x-ui::sidebar.header>
 
-            <x-stencil::sidebar.content>
-                <x-stencil::sidebar.group>
-                    <x-stencil::sidebar.group-label>Platform</x-stencil::sidebar.group-label>
-                    <x-stencil::sidebar.group-content>
-                        <x-stencil::sidebar.menu>
-                            <x-stencil::sidebar.menu-item>
-                                <x-stencil::sidebar.menu-button href="#" active> Home </x-stencil::sidebar.menu-button>
-                            </x-stencil::sidebar.menu-item>
-                            <x-stencil::sidebar.menu-item>
-                                <x-stencil::sidebar.menu-button href="#">Projects</x-stencil::sidebar.menu-button>
-                                <x-stencil::sidebar.menu-badge>12</x-stencil::sidebar.menu-badge>
-                            </x-stencil::sidebar.menu-item>
-                            <x-stencil::sidebar.menu-item>
-                                <x-stencil::sidebar.menu-button href="#">Settings</x-stencil::sidebar.menu-button>
-                                <x-stencil::sidebar.menu-sub>
-                                    <x-stencil::sidebar.menu-sub-item>
-                                        <x-stencil::sidebar.menu-sub-button href="#">
-                                            General</x-stencil::sidebar.menu-sub-button>
-                                    </x-stencil::sidebar.menu-sub-item>
-                                    <x-stencil::sidebar.menu-sub-item>
-                                        <x-stencil::sidebar.menu-sub-button href="#" active>
-                                            Team</x-stencil::sidebar.menu-sub-button>
-                                    </x-stencil::sidebar.menu-sub-item>
-                                </x-stencil::sidebar.menu-sub>
-                            </x-stencil::sidebar.menu-item>
-                        </x-stencil::sidebar.menu>
-                    </x-stencil::sidebar.group-content>
-                </x-stencil::sidebar.group>
+            <x-ui::sidebar.content>
+                <x-ui::sidebar.group>
+                    <x-ui::sidebar.group-label>Platform</x-ui::sidebar.group-label>
+                    <x-ui::sidebar.group-content>
+                        <x-ui::sidebar.menu>
+                            <x-ui::sidebar.menu-item>
+                                <x-ui::sidebar.menu-button href="#" active> Home </x-ui::sidebar.menu-button>
+                            </x-ui::sidebar.menu-item>
+                            <x-ui::sidebar.menu-item>
+                                <x-ui::sidebar.menu-button href="#">Projects</x-ui::sidebar.menu-button>
+                                <x-ui::sidebar.menu-badge>12</x-ui::sidebar.menu-badge>
+                            </x-ui::sidebar.menu-item>
+                            <x-ui::sidebar.menu-item>
+                                <x-ui::sidebar.menu-button href="#">Settings</x-ui::sidebar.menu-button>
+                                <x-ui::sidebar.menu-sub>
+                                    <x-ui::sidebar.menu-sub-item>
+                                        <x-ui::sidebar.menu-sub-button href="#"> General</x-ui::sidebar.menu-sub-button>
+                                    </x-ui::sidebar.menu-sub-item>
+                                    <x-ui::sidebar.menu-sub-item>
+                                        <x-ui::sidebar.menu-sub-button href="#" active>
+                                            Team</x-ui::sidebar.menu-sub-button>
+                                    </x-ui::sidebar.menu-sub-item>
+                                </x-ui::sidebar.menu-sub>
+                            </x-ui::sidebar.menu-item>
+                        </x-ui::sidebar.menu>
+                    </x-ui::sidebar.group-content>
+                </x-ui::sidebar.group>
 
-                <x-stencil::sidebar.separator />
+                <x-ui::sidebar.separator />
 
-                <x-stencil::sidebar.group>
-                    <x-stencil::sidebar.group-label>Support</x-stencil::sidebar.group-label>
-                    <x-stencil::sidebar.group-content>
-                        <x-stencil::sidebar.menu>
-                            <x-stencil::sidebar.menu-item>
-                                <x-stencil::sidebar.menu-button href="#">Documentation</x-stencil::sidebar.menu-button>
-                            </x-stencil::sidebar.menu-item>
-                        </x-stencil::sidebar.menu>
-                    </x-stencil::sidebar.group-content>
-                </x-stencil::sidebar.group>
-            </x-stencil::sidebar.content>
+                <x-ui::sidebar.group>
+                    <x-ui::sidebar.group-label>Support</x-ui::sidebar.group-label>
+                    <x-ui::sidebar.group-content>
+                        <x-ui::sidebar.menu>
+                            <x-ui::sidebar.menu-item>
+                                <x-ui::sidebar.menu-button href="#">Documentation</x-ui::sidebar.menu-button>
+                            </x-ui::sidebar.menu-item>
+                        </x-ui::sidebar.menu>
+                    </x-ui::sidebar.group-content>
+                </x-ui::sidebar.group>
+            </x-ui::sidebar.content>
 
-            <x-stencil::sidebar.footer>
-                <x-stencil::sidebar.menu>
-                    <x-stencil::sidebar.menu-item>
-                        <x-stencil::sidebar.menu-button href="#">Account</x-stencil::sidebar.menu-button>
-                    </x-stencil::sidebar.menu-item>
-                </x-stencil::sidebar.menu>
-            </x-stencil::sidebar.footer>
+            <x-ui::sidebar.footer>
+                <x-ui::sidebar.menu>
+                    <x-ui::sidebar.menu-item>
+                        <x-ui::sidebar.menu-button href="#">Account</x-ui::sidebar.menu-button>
+                    </x-ui::sidebar.menu-item>
+                </x-ui::sidebar.menu>
+            </x-ui::sidebar.footer>
 
-            <x-stencil::sidebar.rail />
-        </x-stencil::sidebar>
+            <x-ui::sidebar.rail />
+        </x-ui::sidebar>
 
-        <x-stencil::sidebar.inset>
+        <x-ui::sidebar.inset>
             <header class="flex h-12 items-center gap-2 border-b border-zinc-200 px-3 dark:border-zinc-800">
-                <x-stencil::sidebar.trigger />
+                <x-ui::sidebar.trigger />
                 <span class="text-sm font-medium text-zinc-950 dark:text-zinc-50">Dashboard</span>
             </header>
             <div class="p-4">
@@ -85,6 +84,6 @@
                     >.
                 </p>
             </div>
-        </x-stencil::sidebar.inset>
-    </x-stencil::sidebar.provider>
+        </x-ui::sidebar.inset>
+    </x-ui::sidebar.provider>
 </div>

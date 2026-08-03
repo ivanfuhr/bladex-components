@@ -4,43 +4,43 @@
 @endphp
 
 <div class="w-full rounded-xl border border-zinc-200 dark:border-zinc-800">
-    <x-stencil::table>
+    <x-ui::table>
         @if ($showCaption)
-            <x-stencil::table.caption>Recent invoices</x-stencil::table.caption>
+            <x-ui::table.caption>Recent invoices</x-ui::table.caption>
         @endif
-        <x-stencil::table.header>
-            <x-stencil::table.row>
-                <x-stencil::table.head>Invoice</x-stencil::table.head>
-                <x-stencil::table.head>Status</x-stencil::table.head>
-                <x-stencil::table.head>Method</x-stencil::table.head>
-                <x-stencil::table.head class="text-right">Amount</x-stencil::table.head>
-            </x-stencil::table.row>
-        </x-stencil::table.header>
-        <x-stencil::table.body>
-            <x-stencil::table.row>
-                <x-stencil::table.cell variant="strong">INV001</x-stencil::table.cell>
-                <x-stencil::table.cell>
+        <x-ui::table.header>
+            <x-ui::table.row>
+                <x-ui::table.head>Invoice</x-ui::table.head>
+                <x-ui::table.head>Status</x-ui::table.head>
+                <x-ui::table.head>Method</x-ui::table.head>
+                <x-ui::table.head class="text-right">Amount</x-ui::table.head>
+            </x-ui::table.row>
+        </x-ui::table.header>
+        <x-ui::table.body>
+            <x-ui::table.row>
+                <x-ui::table.cell variant="strong">INV001</x-ui::table.cell>
+                <x-ui::table.cell>
                     @if ($showBadges)
-                        <x-stencil::badge color="green" rounded>Paid</x-stencil::badge>
+                        <x-ui::badge color="green" rounded>Paid</x-ui::badge>
                     @else
                         Paid
                     @endif
-                </x-stencil::table.cell>
-                <x-stencil::table.cell>Credit card</x-stencil::table.cell>
-                <x-stencil::table.cell class="text-right">$250.00</x-stencil::table.cell>
-            </x-stencil::table.row>
-            <x-stencil::table.row>
-                <x-stencil::table.cell variant="strong">INV002</x-stencil::table.cell>
-                <x-stencil::table.cell>
+                </x-ui::table.cell>
+                <x-ui::table.cell>Credit card</x-ui::table.cell>
+                <x-ui::table.cell class="text-right">$250.00</x-ui::table.cell>
+            </x-ui::table.row>
+            <x-ui::table.row>
+                <x-ui::table.cell variant="strong">INV002</x-ui::table.cell>
+                <x-ui::table.cell>
                     @if ($showBadges)
-                        <x-stencil::badge color="amber" rounded>Pending</x-stencil::badge>
+                        <x-ui::badge color="amber" rounded>Pending</x-ui::badge>
                     @else
                         Pending
                     @endif
-                </x-stencil::table.cell>
-                <x-stencil::table.cell>PayPal</x-stencil::table.cell>
-                <x-stencil::table.cell class="text-right">$150.00</x-stencil::table.cell>
-            </x-stencil::table.row>
-        </x-stencil::table.body>
-    </x-stencil::table>
+                </x-ui::table.cell>
+                <x-ui::table.cell>PayPal</x-ui::table.cell>
+                <x-ui::table.cell class="text-right">$150.00</x-ui::table.cell>
+            </x-ui::table.row>
+        </x-ui::table.body>
+    </x-ui::table>
 </div>

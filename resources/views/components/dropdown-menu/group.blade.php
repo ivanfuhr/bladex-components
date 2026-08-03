@@ -1,7 +1,3 @@
-@props([
-    'heading' => null,
-])
-
 <div {{
     $attributes->class([
         'dropdown-menu__group',
@@ -11,7 +7,7 @@
     ])
 }}>
     @if (filled($heading))
-        <x-stencil::dropdown-menu.label>{{ $heading }}</x-stencil::dropdown-menu.label>
+        <x-ui::dropdown-menu.label>{{ $heading }}</x-ui::dropdown-menu.label>
     @endif
     {{ $slot }}
 </div>

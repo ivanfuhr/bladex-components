@@ -1,34 +1,47 @@
-import { initSelects } from '../views/ui/select/select.js';
-import { initComboboxes } from '../views/ui/combobox/combobox.js';
-import { initFileUploads } from '../views/ui/file-upload/file-upload.js';
-import { initRepeaters } from '../views/ui/repeater/repeater.js';
-import { initInputOtps } from '../views/ui/input-otp/input-otp.js';
-import { initSliders } from '../views/ui/slider/slider.js';
-import { initDialogs } from '../views/ui/dialog/dialog.js';
-import { initCommands } from '../../../resources/assets/js/command.js';
-import { initDatePickers } from '../views/ui/date-picker/date-picker.js';
-import { initCalendars } from '../views/ui/calendar/calendar.js';
-import { initTimePickers } from '../views/ui/time-picker/time-picker.js';
-import { initDatetimePickers } from '../views/ui/datetime-picker/datetime-picker.js';
-import { initInputCurrencies } from '../views/ui/input/input-currency.js';
-import { initPillboxes } from '../views/ui/pillbox/pillbox.js';
-import { initRatings } from '../views/ui/rating/rating.js';
-import { initColorPickers } from '../views/ui/color-picker/color-picker.js';
-import { initInputEnhancements } from '../views/ui/input/input-enhancements.js';
-import { initTextareas } from '../views/ui/textarea/textarea.js';
-import { initAccordions } from '../../../resources/assets/js/accordion.js';
-import { initCollapsibles } from '../../../resources/assets/js/collapsible.js';
-import { initSidebars } from '../../../resources/assets/js/sidebar.js';
-import { initAvatars } from '../../../resources/assets/js/avatar.js';
-import { initDropdownMenus } from '../../../resources/assets/js/dropdown-menu.js';
-import { initPopovers } from '../../../resources/assets/js/popover.js';
-import { initTabs } from '../../../resources/assets/js/tabs.js';
-import { initToggles } from '../../../resources/assets/js/toggle.js';
-import { initToggleGroups } from '../../../resources/assets/js/toggle-group.js';
-import { initSteppers } from '../../../resources/assets/js/stepper.js';
-import { initTooltips } from '../../../resources/assets/js/tooltip.js';
-import { initCharts } from '../../../resources/assets/js/chart.js';
-import { initToasts } from '../../../resources/assets/js/toast.js';
+/**
+ * Live preview Alpine controller for /playbook/{component}.
+ *
+ * Widget modules are imported for side effects so each registers its
+ * DOMContentLoaded + stencil:mount handlers (same contract as the CDN bundle).
+ * After Alpine x-html injects preview markup, we re-dispatch stencil:mount
+ * instead of calling every init* by hand — new widgets that listen for the
+ * event are covered automatically.
+ *
+ * Playbook chrome must not also load @stencilScripts: a second copy of each
+ * widget would bind again (separate WeakSet) and toggles would fire twice.
+ */
+
+import '../views/ui/select/select.js';
+import '../views/ui/combobox/combobox.js';
+import '../views/ui/file-upload/file-upload.js';
+import '../views/ui/repeater/repeater.js';
+import '../views/ui/input-otp/input-otp.js';
+import '../views/ui/slider/slider.js';
+import '../views/ui/dialog/dialog.js';
+import '../../../resources/assets/js/command.js';
+import '../views/ui/date-picker/date-picker.js';
+import '../views/ui/calendar/calendar.js';
+import '../views/ui/time-picker/time-picker.js';
+import '../views/ui/datetime-picker/datetime-picker.js';
+import '../views/ui/input/input-currency.js';
+import '../views/ui/pillbox/pillbox.js';
+import '../views/ui/rating/rating.js';
+import '../views/ui/color-picker/color-picker.js';
+import '../views/ui/input/input-enhancements.js';
+import '../views/ui/textarea/textarea.js';
+import '../../../resources/assets/js/accordion.js';
+import '../../../resources/assets/js/collapsible.js';
+import '../../../resources/assets/js/sidebar.js';
+import '../../../resources/assets/js/avatar.js';
+import '../../../resources/assets/js/dropdown-menu.js';
+import '../../../resources/assets/js/popover.js';
+import '../../../resources/assets/js/tabs.js';
+import '../../../resources/assets/js/toggle.js';
+import '../../../resources/assets/js/toggle-group.js';
+import '../../../resources/assets/js/stepper.js';
+import '../../../resources/assets/js/tooltip.js';
+import '../../../resources/assets/js/chart.js';
+import '../../../resources/assets/js/toast.js';
 
 document.addEventListener('alpine:init', () => {
     window.Alpine.data('playbookPreview', (config) => ({
@@ -81,37 +94,15 @@ document.addEventListener('alpine:init', () => {
                 element.remove();
             });
 
-            initSelects(canvas);
-            initComboboxes(canvas);
-            initFileUploads(canvas);
-            initRepeaters(canvas);
-            initInputOtps(canvas);
-            initSliders(canvas);
-            initDialogs(canvas);
-            initCommands(canvas);
-            initCalendars(canvas);
-            initDatePickers(canvas);
-            initTimePickers(canvas);
-            initDatetimePickers(canvas);
-            initInputCurrencies(canvas);
-            initPillboxes(canvas);
-            initRatings(canvas);
-            initColorPickers(canvas);
-            initInputEnhancements(canvas);
-            initTextareas(canvas);
-            initAccordions(canvas);
-            initCollapsibles(canvas);
-            initSidebars(canvas);
-            initAvatars(canvas);
-            initDropdownMenus(canvas);
-            initPopovers(canvas);
-            initTabs(canvas);
-            initToggles(canvas);
-            initToggleGroups(canvas);
-            initSteppers(canvas);
-            initTooltips(canvas);
-            initCharts(canvas);
-            initToasts(canvas);
+            document.querySelectorAll('[data-dropdown-menu-portaled]').forEach((element) => {
+                element.remove();
+            });
+
+            document.dispatchEvent(
+                new CustomEvent('stencil:mount', {
+                    detail: { root: canvas },
+                }),
+            );
         },
 
         queuePreview() {

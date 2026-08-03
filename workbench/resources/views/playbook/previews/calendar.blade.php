@@ -5,7 +5,7 @@
     $value = $mode === 'range' ? '2026-09-14/2026-09-18' : '2026-09-18';
 @endphp
 
-<x-stencil::calendar
+<x-ui::calendar
     name="playbook_calendar"
     :value="$value"
     :mode="$mode"

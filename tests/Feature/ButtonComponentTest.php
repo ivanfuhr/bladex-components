@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Blade;
 
 it('renders a default outline button with data attributes', function () {
-    $html = Blade::render('<x-stencil::button>Save</x-stencil::button>');
+    $html = Blade::render('<x-ui::button>Save</x-ui::button>');
 
     expect($html)
         ->toContain('data-button')
@@ -17,7 +17,7 @@ it('renders a default outline button with data attributes', function () {
 });
 
 it('renders a primary submit button', function () {
-    $html = Blade::render('<x-stencil::button variant="primary" type="submit">Send</x-stencil::button>');
+    $html = Blade::render('<x-ui::button variant="primary" type="submit">Send</x-ui::button>');
 
     expect($html)
         ->toContain('type="submit"')
@@ -26,7 +26,7 @@ it('renders a primary submit button', function () {
 });
 
 it('renders as a link when href is provided', function () {
-    $html = Blade::render('<x-stencil::button href="https://example.com">Visit</x-stencil::button>');
+    $html = Blade::render('<x-ui::button href="https://example.com">Visit</x-ui::button>');
 
     expect($html)
         ->toContain('<a ')
@@ -36,7 +36,7 @@ it('renders as a link when href is provided', function () {
 
 it('renders leading and trailing slots', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::button>
+        <x-ui::button>
             <x-slot:leading>
                 <span data-test="leading">L</span>
             </x-slot:leading>
@@ -44,7 +44,7 @@ it('renders leading and trailing slots', function () {
             <x-slot:trailing>
                 <span data-test="trailing">T</span>
             </x-slot:trailing>
-        </x-stencil::button>
+        </x-ui::button>
     BLADE);
 
     expect($html)
@@ -57,11 +57,11 @@ it('renders leading and trailing slots', function () {
 
 it('renders an icon-only square control', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::button square>
+        <x-ui::button square>
             <x-slot:leading>
                 <span data-test="icon">×</span>
             </x-slot:leading>
-        </x-stencil::button>
+        </x-ui::button>
     BLADE);
 
     expect($html)
@@ -72,10 +72,10 @@ it('renders an icon-only square control', function () {
 
 it('renders a grouped set of buttons', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::button.group>
-            <x-stencil::button>One</x-stencil::button>
-            <x-stencil::button>Two</x-stencil::button>
-        </x-stencil::button.group>
+        <x-ui::button.group>
+            <x-ui::button>One</x-ui::button>
+            <x-ui::button>Two</x-ui::button>
+        </x-ui::button.group>
     BLADE);
 
     expect($html)
@@ -86,13 +86,13 @@ it('renders a grouped set of buttons', function () {
 });
 
 it('accepts destructive as an alias for danger styling', function () {
-    $html = Blade::render('<x-stencil::button variant="destructive">Delete</x-stencil::button>');
+    $html = Blade::render('<x-ui::button variant="destructive">Delete</x-ui::button>');
 
     expect($html)->toContain('bg-red-600');
 });
 
 it('forwards disabled and reflects loading with aria-busy and a spinner', function () {
-    $html = Blade::render('<x-stencil::button disabled data-loading>Save</x-stencil::button>');
+    $html = Blade::render('<x-ui::button disabled data-loading>Save</x-ui::button>');
 
     expect($html)
         ->toContain('disabled')
@@ -105,7 +105,7 @@ it('forwards disabled and reflects loading with aria-busy and a spinner', functi
 });
 
 it('maps disabled links to aria-disabled', function () {
-    $html = Blade::render('<x-stencil::button href="/docs" disabled>Docs</x-stencil::button>');
+    $html = Blade::render('<x-ui::button href="/docs" disabled>Docs</x-ui::button>');
 
     expect($html)
         ->toContain('aria-disabled="true"')
@@ -114,7 +114,7 @@ it('maps disabled links to aria-disabled', function () {
 });
 
 it('supports the loading prop as an alias for data-loading', function () {
-    $html = Blade::render('<x-stencil::button :loading="true">Wait</x-stencil::button>');
+    $html = Blade::render('<x-ui::button :loading="true">Wait</x-ui::button>');
 
     expect($html)
         ->toContain('data-loading')

@@ -1,15 +1,3 @@
-@props([
-    'defaultValue' => null,
-    'orientation' => 'horizontal',
-    'linear' => true,
-    'stepperId' => null,
-])
-
-@php
-    $stepperId = filled($stepperId) ? $stepperId : 'stepper-'.str_replace('.', '', uniqid('', true));
-    $isVertical = $orientation === 'vertical';
-@endphp
-
 <div {{
     $attributes->class([
         'stepper',

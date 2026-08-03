@@ -1,14 +1,3 @@
-@props([
-    'href' => '#',
-    'isActive' => false,
-    'disabled' => false,
-])
-
-@php
-    $isDisabled = (bool) $disabled;
-    $tag = $isDisabled ? 'span' : 'a';
-@endphp
-
 <{{ $tag }}
     {{
         $attributes->class([

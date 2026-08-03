@@ -2,8 +2,9 @@
  * Stencil — time picker (vanilla JS).
  */
 
-import { ensurePanelPortaled, positionAnchoredPanel } from '../../../js/ui/anchored-panel.js';
-import { formatTimeLabel } from '../../../js/ui/date-timezone.js';
+import { ensurePanelPortaled, positionAnchoredPanel, restorePanelFromPortal } from './shared/anchored-panel.js';
+import { formatTimeLabel } from './shared/date-timezone.js';
+import { createBindSignal } from './shared/lifecycle.js';
 
 const SELECTOR = '[data-time-picker]';
 const initialized = new WeakSet();
@@ -12,6 +13,16 @@ const initialized = new WeakSet();
  * @param {ParentNode} root
  */
 export function initTimePickers(root = document) {
+    document
+        .querySelectorAll('[data-time-picker-panel][data-stencil-portaled]')
+        .forEach((panel) => {
+            if (!(panel instanceof HTMLElement) || panel.closest('[data-time-picker]')) {
+                return;
+            }
+
+            panel.remove();
+        });
+
     root.querySelectorAll(SELECTOR).forEach((element) => {
         if (!(element instanceof HTMLElement) || initialized.has(element)) {
             return;
@@ -46,6 +57,7 @@ function bindTimePicker(root) {
         .filter(Boolean);
 
     const portalMarker = document.createComment('stencil-time-picker-portal');
+    const signal = createBindSignal(root);
     let open = false;
     /** @type {number} */
     let activeIndex = 0;
@@ -107,8 +119,12 @@ function bindTimePicker(root) {
             const list = optionElements();
             const selectedIdx = list.findIndex((el) => el.getAttribute('aria-selected') === 'true');
             focusOption(selectedIdx >= 0 ? selectedIdx : 0);
-        } else if (wasOpen && !next && trigger instanceof HTMLElement) {
-            trigger.focus();
+        } else if (wasOpen && !next) {
+            restorePanelFromPortal(panel, root, portalMarker);
+
+            if (trigger instanceof HTMLElement) {
+                trigger.focus();
+            }
         }
     }
 
@@ -258,26 +274,34 @@ function bindTimePicker(root) {
         }
     });
 
-    document.addEventListener('pointerdown', (event) => {
-        if (!open) {
-            return;
-        }
+    document.addEventListener(
+        'pointerdown',
+        (event) => {
+            if (!open) {
+                return;
+            }
 
-        const target = event.target;
+            const target = event.target;
 
-        if (target instanceof Node && !root.contains(target) && !panel.contains(target)) {
+            if (target instanceof Node && !root.contains(target) && !panel.contains(target)) {
+                setOpen(false);
+            }
+        },
+        { signal },
+    );
+
+    document.addEventListener(
+        'keydown',
+        (event) => {
+            if (!open || event.key !== 'Escape') {
+                return;
+            }
+
+            event.preventDefault();
             setOpen(false);
-        }
-    });
-
-    document.addEventListener('keydown', (event) => {
-        if (!open || event.key !== 'Escape') {
-            return;
-        }
-
-        event.preventDefault();
-        setOpen(false);
-    });
+        },
+        { signal },
+    );
 
     if (hidden.value) {
         apply(hidden.value);

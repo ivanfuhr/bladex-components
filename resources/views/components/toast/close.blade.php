@@ -7,9 +7,9 @@
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:focus-visible:ring-zinc-300/20',
         ])->merge([
             'data-toast-close' => true,
-            'aria-label' => __('stencil::messages.toast_close'),
+            'aria-label' => __('Dismiss'),
         ])
     }}
 >
-    <x-stencil::icon name="x" class="size-3.5" />
+    <x-ui::icon name="x" class="size-3.5" />
 </button>

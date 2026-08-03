@@ -2,14 +2,15 @@
  * Stencil — date picker (vanilla JS).
  */
 
-import { bindCalendar } from '../calendar/calendar.js';
+import { bindCalendar } from './calendar.js';
 import {
     ensurePanelPortaled,
     positionAnchoredPanel,
     restorePanelFromPortal,
-} from '../../../js/ui/anchored-panel.js';
-import { formatRangeValue } from '../../../js/ui/date-parse.js';
-import { formatDateLabel } from '../../../js/ui/date-timezone.js';
+} from './shared/anchored-panel.js';
+import { formatRangeValue } from './shared/date-parse.js';
+import { formatDateLabel } from './shared/date-timezone.js';
+import { createBindSignal } from './shared/lifecycle.js';
 
 const SELECTOR = '[data-date-picker]';
 const initialized = new WeakSet();
@@ -62,18 +63,8 @@ function bindDatePicker(root) {
     const locale = root.dataset.datePickerLocale ?? 'en';
     const withConfirmation = root.hasAttribute('data-date-picker-with-confirmation');
     const portalMarker = document.createComment('stencil-date-picker-portal');
-    const controller = new AbortController();
-    const { signal } = controller;
+    const signal = createBindSignal(root);
     let isOpen = false;
-
-    const disconnectObserver = new MutationObserver(() => {
-        if (!root.isConnected) {
-            controller.abort();
-            disconnectObserver.disconnect();
-        }
-    });
-
-    disconnectObserver.observe(document.documentElement, { childList: true, subtree: true });
 
     /** @type {ReturnType<typeof bindCalendar> | null} */
     let calendarApi = null;

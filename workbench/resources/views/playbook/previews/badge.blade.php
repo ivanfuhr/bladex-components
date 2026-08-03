@@ -5,11 +5,11 @@
     $dismissible = (bool) ($state['dismissible'] ?? false);
 @endphp
 
-<x-stencil::badge :variant="$variant" :color="$color" :rounded="$rounded">
+<x-ui::badge :variant="$variant" :color="$color" :rounded="$rounded">
     @if ($dismissible)
         Admin
-        <x-stencil::badge.close />
+        <x-ui::badge.close />
     @else
         {{ $color === 'lime' ? 'New' : ($variant === 'destructive' ? 'Failed' : 'Badge') }}
     @endif
-</x-stencil::badge>
+</x-ui::badge>

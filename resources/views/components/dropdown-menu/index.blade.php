@@ -1,8 +1,3 @@
-@props([
-    'align' => 'start',
-    'side' => 'bottom',
-])
-
 <div {{
     $attributes->class([
         'dropdown-menu',

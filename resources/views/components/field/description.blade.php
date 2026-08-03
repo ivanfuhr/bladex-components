@@ -1,1 +1,1 @@
-<x-stencil::field.message {{ $attributes }}> {{ $slot }} </x-stencil::field.message>
+<x-ui::field.message {{ $attributes }}> {{ $slot }} </x-ui::field.message>

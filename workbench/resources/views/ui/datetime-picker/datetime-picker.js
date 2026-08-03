@@ -10,6 +10,7 @@ import {
 } from '../../../js/ui/anchored-panel.js';
 import { toIsoDateTimeString } from '../../../js/ui/date-parse.js';
 import { formatDateTimeLabel, formatTimeLabel } from '../../../js/ui/date-timezone.js';
+import { createBindSignal } from '../../../js/ui/lifecycle.js';
 
 const SELECTOR = '[data-datetime-picker]';
 const initialized = new WeakSet();
@@ -58,8 +59,9 @@ function bindDatetimePicker(root) {
     const locale = root.dataset.datetimePickerLocale ?? 'en';
     const timeZone = root.dataset.datetimePickerTimezone ?? 'UTC';
     const withSeconds = root.hasAttribute('data-datetime-picker-seconds');
-    const step = 30;
+    const step = parseInt(root.dataset.datetimePickerStep ?? '30', 10) || 30;
     const portalMarker = document.createComment('stencil-datetime-picker-portal');
+    const signal = createBindSignal(root);
     let isOpen = false;
     /** @type {number} */
     let activeTimeIndex = 0;
@@ -333,28 +335,36 @@ function bindDatetimePicker(root) {
         close();
     });
 
-    document.addEventListener('pointerdown', (event) => {
-        if (!isOpen) {
-            return;
-        }
+    document.addEventListener(
+        'pointerdown',
+        (event) => {
+            if (!isOpen) {
+                return;
+            }
 
-        const target = event.target;
+            const target = event.target;
 
-        if (target instanceof Node && !root.contains(target) && !panel.contains(target)) {
+            if (target instanceof Node && !root.contains(target) && !panel.contains(target)) {
+                loadFromHidden();
+                close();
+            }
+        },
+        { signal },
+    );
+
+    document.addEventListener(
+        'keydown',
+        (event) => {
+            if (!isOpen || event.key !== 'Escape') {
+                return;
+            }
+
+            event.preventDefault();
             loadFromHidden();
             close();
-        }
-    });
-
-    document.addEventListener('keydown', (event) => {
-        if (!isOpen || event.key !== 'Escape') {
-            return;
-        }
-
-        event.preventDefault();
-        loadFromHidden();
-        close();
-    });
+        },
+        { signal },
+    );
 
     window.addEventListener(
         'scroll',
@@ -365,7 +375,7 @@ function bindDatetimePicker(root) {
 
             positionAnchoredPanel(panel, trigger, { fitContent: true });
         },
-        true,
+        { capture: true, signal },
     );
 
     if (hidden.value) {

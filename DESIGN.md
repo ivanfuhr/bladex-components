@@ -125,7 +125,7 @@ A cool zinc scale carries almost all UI; semantic red is reserved for danger and
 **Character:** Technical, dense, Laravel-native. One sans family for hierarchy via size and weight, not a display/body pairing.
 
 ### Hierarchy
-- **Title** (600, ~1.25rem+): Page and section headings via `x-stencil::heading`.
+- **Title** (600, ~1.25rem+): Page and section headings via `x-ui::heading`.
 - **Body** (400, 1rem / leading-6): Descriptions and control labels.
 - **Label** (600, 0.75rem, tracked uppercase sparingly): Properties panel eyebrow, Workbench badge.
 - **Mono** (400, 0.75rem): Component API crumbs and snippet panes.

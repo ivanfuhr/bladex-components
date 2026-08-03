@@ -8,5 +8,5 @@
     }}
     data-input-group-suffix
 >
-    <x-stencil::text inline size="sm" variant="subtle">{{ $slot }}</x-stencil::text>
+    <x-ui::text inline size="sm" variant="subtle">{{ $slot }}</x-ui::text>
 </div>

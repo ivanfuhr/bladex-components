@@ -1,12 +1,4 @@
-@aware([
-    'placeholder' => null,
-    'invalid' => false,
-    'disabled' => false,
-    'clearable' => false,
-    'size' => null,
-])
-
-<x-stencil::input {{
+<x-ui::input {{
     $attributes->merge([
         'type' => 'text',
         'placeholder' => $placeholder,

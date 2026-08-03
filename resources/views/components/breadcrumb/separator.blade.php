@@ -1,7 +1,3 @@
-@props([
-    'type' => 'chevron',
-])
-
 <li {{
     $attributes->class([
         'breadcrumb__separator',
@@ -17,6 +13,6 @@
     @elseif ($type === 'slash')
         <span class="text-zinc-400 dark:text-zinc-500">/</span>
     @else
-        <x-stencil::icon name="chevron-right" class="size-3.5 text-zinc-400 dark:text-zinc-500" />
+        <x-ui::icon name="chevron-right" class="size-3.5 text-zinc-400 dark:text-zinc-500" />
     @endif
 </li>

@@ -11,7 +11,7 @@
 @endphp
 
 <div class="grid w-full max-w-3xl gap-4 sm:grid-cols-3">
-    <x-stencil::stat
+    <x-ui::stat
         :variant="$variant"
         label="Open tickets"
         value="128"
@@ -20,7 +20,7 @@
         description="vs last 7 days"
         :icon="$showIcon ? 'file' : null"
     />
-    <x-stencil::stat
+    <x-ui::stat
         :variant="$variant"
         label="Avg. response"
         value="2.4h"
@@ -29,7 +29,7 @@
         description="First reply time"
         :icon="$showIcon ? 'clock' : null"
     />
-    <x-stencil::stat
+    <x-ui::stat
         :variant="$variant"
         label="Resolved"
         value="86%"

@@ -1,17 +1,3 @@
-@aware([
-    'range' => false,
-])
-
-@props([
-    'range' => false,
-])
-
-@php
-    $panelLabel = $range
-        ? __('stencil::messages.date_picker_range_placeholder')
-        : __('stencil::messages.date_picker_placeholder');
-@endphp
-
 <div
     {{
         $attributes->class([

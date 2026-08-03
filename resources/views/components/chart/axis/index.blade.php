@@ -1,22 +1,3 @@
-@props([
-    'axis' => 'x',
-    'field' => null,
-    'format' => null,
-    'position' => null,
-    'tickValues' => null,
-    'tickPrefix' => null,
-    'tickSuffix' => null,
-    'tickCount' => null,
-    'tickStart' => null,
-    'tickEnd' => null,
-])
-
-@php
-    $encodedFormat = is_array($format) ? \Illuminate\Support\Js::encode($format) : $format;
-    $resolvedField = $field ?? ($axis === 'x' ? 'date' : 'value');
-    $encodedTickValues = is_array($tickValues) ? json_encode($tickValues) : $tickValues;
-@endphp
-
 <template
     data-chart-template="axis"
     data-axis="{{ $axis }}"

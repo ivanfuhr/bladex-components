@@ -5,12 +5,6 @@
     $disabled = (bool) ($state['disabled'] ?? false);
 @endphp
 
-<x-stencil::toggle
-    :variant="$variant"
-    :size="$size"
-    :pressed="$pressed"
-    :disabled="$disabled"
-    aria-label="Toggle italic"
->
+<x-ui::toggle :variant="$variant" :size="$size" :pressed="$pressed" :disabled="$disabled" aria-label="Toggle italic">
     Italic
-</x-stencil::toggle>
+</x-ui::toggle>

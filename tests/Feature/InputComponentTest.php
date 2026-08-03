@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Blade;
 
-it('registers the input anonymous component', function () {
-    $paths = collect(Blade::getAnonymousComponentPaths())
-        ->pluck('prefix')
-        ->all();
+it('registers ui class components', function () {
+    $namespaces = Blade::getClassComponentNamespaces();
 
-    expect($paths)->toContain('stencil');
+    expect($namespaces)->toHaveKey('ui')
+        ->and($namespaces['ui'])->toBe('Ivanfuhr\\Stencil\\View\\Components');
 });
 
 it('renders a text input with the control name on the native element', function () {
-    $html = Blade::render('<x-stencil::input name="email" type="email" placeholder="you@example.com" />');
+    $html = Blade::render('<x-ui::input name="email" type="email" placeholder="you@example.com" />');
 
     expect($html)
         ->toContain('data-input')
@@ -25,7 +24,7 @@ it('renders a text input with the control name on the native element', function 
 
 it('merges wrapper class and forwards input:class to the control', function () {
     $html = Blade::render(
-        '<x-stencil::input name="q" class="max-w-xs" input:class="font-mono" />',
+        '<x-ui::input name="q" class="max-w-xs" input:class="font-mono" />',
     );
 
     expect($html)
@@ -35,21 +34,21 @@ it('merges wrapper class and forwards input:class to the control', function () {
 });
 
 it('marks the control invalid when the invalid prop is true', function () {
-    $html = Blade::render('<x-stencil::input name="title" :invalid="true" />');
+    $html = Blade::render('<x-ui::input name="title" :invalid="true" />');
 
     expect($html)->toContain('aria-invalid="true"');
 });
 
 it('renders leading and trailing slots', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::input name="search">
+        <x-ui::input name="search">
             <x-slot:leading>
                 <span data-test="leading-icon">⌕</span>
             </x-slot:leading>
             <x-slot:trailing>
                 <span data-test="trailing-action">Clear</span>
             </x-slot:trailing>
-        </x-stencil::input>
+        </x-ui::input>
     BLADE);
 
     expect($html)
@@ -66,11 +65,11 @@ it('renders leading and trailing slots', function () {
 
 it('sizes icons in leading and trailing affixes to match the control', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::input name="search">
+        <x-ui::input name="search">
             <x-slot:leading>
-                <x-stencil::icon.loading />
+                <x-ui::icon.loading />
             </x-slot:leading>
-        </x-stencil::input>
+        </x-ui::input>
     BLADE);
 
     expect($html)
@@ -81,7 +80,7 @@ it('sizes icons in leading and trailing affixes to match the control', function 
 
 it('renders prefix and suffix from attributes', function () {
     $html = Blade::render(
-        '<x-stencil::input name="website" prefix="https://" suffix=".test" class="max-w-md" placeholder="example.com" />',
+        '<x-ui::input name="website" prefix="https://" suffix=".test" class="max-w-md" placeholder="example.com" />',
     );
 
     expect($html)
@@ -97,7 +96,7 @@ it('renders prefix and suffix from attributes', function () {
 
 it('renders leading and trailing from attributes', function () {
     $html = Blade::render(
-        '<x-stencil::input name="q" leading="⌕" trailing="⌘K" placeholder="Search" />',
+        '<x-ui::input name="q" leading="⌕" trailing="⌘K" placeholder="Search" />',
     );
 
     expect($html)
@@ -110,11 +109,11 @@ it('renders leading and trailing from attributes', function () {
 
 it('prefers leading and trailing slots over attribute shorthands', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::input name="q" leading="ignored">
+        <x-ui::input name="q" leading="ignored">
             <x-slot:leading>
                 <span data-test="slot-leading">from-slot</span>
             </x-slot:leading>
-        </x-stencil::input>
+        </x-ui::input>
     BLADE);
 
     expect($html)
@@ -124,11 +123,11 @@ it('prefers leading and trailing slots over attribute shorthands', function () {
 
 it('renders an input group with prefix and suffix', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::input.group>
-            <x-stencil::input.group.prefix>https://</x-stencil::input.group.prefix>
-            <x-stencil::input name="website" in-group placeholder="example.com" />
-            <x-stencil::input.group.suffix>.test</x-stencil::input.group.suffix>
-        </x-stencil::input.group>
+        <x-ui::input.group>
+            <x-ui::input.group.prefix>https://</x-ui::input.group.prefix>
+            <x-ui::input name="website" in-group placeholder="example.com" />
+            <x-ui::input.group.suffix>.test</x-ui::input.group.suffix>
+        </x-ui::input.group>
     BLADE);
 
     expect($html)
@@ -140,7 +139,7 @@ it('renders an input group with prefix and suffix', function () {
 
 it('forwards disabled, readonly, and loading attributes to the native control', function () {
     $html = Blade::render(
-        '<x-stencil::input name="email" disabled readonly data-loading />',
+        '<x-ui::input name="email" disabled readonly data-loading />',
     );
 
     expect($html)
@@ -156,10 +155,10 @@ it('forwards disabled, readonly, and loading attributes to the native control', 
 
 it('renders input enhancement markers for mask, viewable, copyable, and counter', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::input name="phone" mask="(##) #####-####" counter maxlength="20" />
-        <x-stencil::input name="plate" mask="AAA-#A##" />
-        <x-stencil::input name="password" type="password" viewable />
-        <x-stencil::input name="token" copyable />
+        <x-ui::input name="phone" mask="(##) #####-####" counter maxlength="20" />
+        <x-ui::input name="plate" mask="AAA-#A##" />
+        <x-ui::input name="password" type="password" viewable />
+        <x-ui::input name="token" copyable />
     BLADE);
 
     expect($html)
@@ -172,4 +171,29 @@ it('renders input enhancement markers for mask, viewable, copyable, and counter'
         ->toContain('data-input-view-toggle')
         ->toContain('data-input-copyable')
         ->toContain('data-input-copy');
+});
+
+it('nests the character counter display inside the enhanced input root', function () {
+    $html = Blade::render('<x-ui::input name="title" counter maxlength="20" />');
+
+    $document = new DOMDocument;
+    @$document->loadHTML($html);
+
+    $root = $document->getElementById('title')?->parentNode;
+
+    expect($root)->toBeInstanceOf(DOMElement::class)
+        ->and($root->hasAttribute('data-input-counter'))->toBeTrue()
+        ->and($root->getElementsByTagName('div')->length)->toBeGreaterThan(0);
+
+    $counter = null;
+
+    foreach ($root->getElementsByTagName('div') as $div) {
+        if ($div->hasAttribute('data-input-counter-display')) {
+            $counter = $div;
+            break;
+        }
+    }
+
+    expect($counter)->toBeInstanceOf(DOMElement::class)
+        ->and($counter->parentNode)->toBe($root);
 });

@@ -1,7 +1,3 @@
-@props([
-    'type' => 'line',
-])
-
 <template data-chart-template="cursor">
     <path
         {{

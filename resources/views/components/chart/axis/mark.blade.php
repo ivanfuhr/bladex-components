@@ -1,5 +1,3 @@
-@aware(['axis' => 'x', 'position' => null])
-
 @if ($axis === 'x')
     <template data-chart-template="tick-mark" data-tick-orientation="{{ $position === 'top' ? 'top' : 'bottom' }}">
         <g>

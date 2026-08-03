@@ -2,6 +2,8 @@
  * Stencil — color picker with SV canvas, hue slider, and swatch palette (vanilla JS).
  */
 
+import { createBindSignal } from '../../../js/ui/lifecycle.js';
+
 const COLOR_PICKER_SELECTOR = '[data-color-picker]';
 const initialized = new WeakSet();
 const HEX_PATTERN = /^#[0-9a-fA-F]{6}$/;
@@ -10,6 +12,16 @@ const HEX_PATTERN = /^#[0-9a-fA-F]{6}$/;
  * @param {ParentNode} root
  */
 export function initColorPickers(root = document) {
+    document
+        .querySelectorAll('[data-color-picker-popover][data-color-picker-portaled]')
+        .forEach((popover) => {
+            if (!(popover instanceof HTMLElement) || popover.closest('[data-color-picker]')) {
+                return;
+            }
+
+            popover.remove();
+        });
+
     root.querySelectorAll(COLOR_PICKER_SELECTOR).forEach((element) => {
         if (!(element instanceof HTMLElement)) {
             return;
@@ -211,6 +223,7 @@ function bindColorPicker(root) {
 
     const portalMarker = document.createComment('stencil-color-picker-portal');
     let portalInserted = false;
+    const signal = createBindSignal(root);
     let open = false;
     let draggingArea = false;
 
@@ -510,38 +523,50 @@ function bindColorPicker(root) {
         });
     }
 
-    document.addEventListener('pointerdown', (event) => {
-        if (!open || disabled) {
-            return;
-        }
+    document.addEventListener(
+        'pointerdown',
+        (event) => {
+            if (!open || disabled) {
+                return;
+            }
 
-        const target = event.target;
+            const target = event.target;
 
-        if (!(target instanceof Node)) {
-            return;
-        }
+            if (!(target instanceof Node)) {
+                return;
+            }
 
-        if (root.contains(target) || popover.contains(target)) {
-            return;
-        }
+            if (root.contains(target) || popover.contains(target)) {
+                return;
+            }
 
-        setOpen(false);
-    });
+            setOpen(false);
+        },
+        { signal },
+    );
 
-    document.addEventListener('keydown', (event) => {
-        if (!open || disabled || event.key !== 'Escape') {
-            return;
-        }
+    document.addEventListener(
+        'keydown',
+        (event) => {
+            if (!open || disabled || event.key !== 'Escape') {
+                return;
+            }
 
-        setOpen(false);
-        swatchTrigger.focus();
-    });
+            setOpen(false);
+            swatchTrigger.focus();
+        },
+        { signal },
+    );
 
-    window.addEventListener('resize', () => {
-        if (open) {
-            positionPopover();
-        }
-    });
+    window.addEventListener(
+        'resize',
+        () => {
+            if (open) {
+                positionPopover();
+            }
+        },
+        { signal },
+    );
 
     window.addEventListener(
         'scroll',
@@ -550,7 +575,7 @@ function bindColorPicker(root) {
                 positionPopover();
             }
         },
-        true,
+        { capture: true, signal },
     );
 
     const initial = hiddenInput.value || '#000000';

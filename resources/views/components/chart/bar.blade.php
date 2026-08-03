@@ -1,10 +1,3 @@
-@props([
-    'field' => 'value',
-    'minHeight' => null,
-    'radius' => null,
-    'width' => null,
-])
-
 <template
     data-chart-template="bar"
     data-field="{{ $field }}"

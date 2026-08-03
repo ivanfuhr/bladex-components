@@ -5,11 +5,11 @@
     $showDescription = (bool) ($state['show_description'] ?? true);
 @endphp
 
-<x-stencil::field name="email" :orientation="$orientation" :invalid="$invalid" class="max-w-md">
-    <x-stencil::field.label>Email</x-stencil::field.label>
-    <x-stencil::input name="email" type="email" placeholder="you@example.com" :size="$size" />
+<x-ui::field name="email" :orientation="$orientation" :invalid="$invalid" class="max-w-md">
+    <x-ui::field.label>Email</x-ui::field.label>
+    <x-ui::input name="email" type="email" placeholder="you@example.com" :size="$size" />
     @if ($showDescription)
-        <x-stencil::field.description>We will never share your email.</x-stencil::field.description>
+        <x-ui::field.description>We will never share your email.</x-ui::field.description>
     @endif
-    <x-stencil::field.errors name="email" />
-</x-stencil::field>
+    <x-ui::field.errors name="email" />
+</x-ui::field>

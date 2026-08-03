@@ -15,7 +15,7 @@ it('renders a currency input with hidden float value and formatted display', fun
     $expectedDisplay = Number::currency(12.34, 'BRL', 'pt_BR', 2);
 
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::input.currency
+        <x-ui::input.currency
             name="amount"
             :value="12.34"
             currency="BRL"
@@ -38,7 +38,7 @@ it('renders a currency input with hidden float value and formatted display', fun
 });
 
 it('does not put name on the visible control', function () {
-    $html = Blade::render('<x-stencil::input.currency name="amount" :value="1" currency="USD" locale="en" :precision="2" />');
+    $html = Blade::render('<x-ui::input.currency name="amount" :value="1" currency="USD" locale="en" :precision="2" />');
 
     preg_match_all('/<input[^>]*name="amount"[^>]*>/', $html, $matches);
 
@@ -47,13 +47,13 @@ it('does not put name on the visible control', function () {
 });
 
 it('marks the visible control invalid when the invalid prop is true', function () {
-    $html = Blade::render('<x-stencil::input.currency name="amount" :invalid="true" currency="USD" locale="en" :precision="2" />');
+    $html = Blade::render('<x-ui::input.currency name="amount" :invalid="true" currency="USD" locale="en" :precision="2" />');
 
     expect($html)->toContain('aria-invalid="true"');
 });
 
 it('renders empty hidden value when value is not provided', function () {
-    $html = Blade::render('<x-stencil::input.currency name="amount" currency="USD" locale="en" :precision="2" />');
+    $html = Blade::render('<x-ui::input.currency name="amount" currency="USD" locale="en" :precision="2" />');
 
     expect($html)
         ->toContain('data-input-currency-value')

@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders an alert with title and description', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::alert variant="warning" title="Heads up">
-            <x-stencil::alert.description>Check your billing details.</x-stencil::alert.description>
-        </x-stencil::alert>
+        <x-ui::alert variant="warning" title="Heads up">
+            <x-ui::alert.description>Check your billing details.</x-ui::alert.description>
+        </x-ui::alert>
     BLADE);
 
     expect($html)

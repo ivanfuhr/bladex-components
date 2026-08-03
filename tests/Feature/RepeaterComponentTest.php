@@ -9,14 +9,14 @@ use Illuminate\View\ViewException;
 
 it('renders a repeater root with list host and item template', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::repeater name="members" :value="[['name' => 'Ada', 'role' => 'owner']]">
-            <x-stencil::repeater.item>
-                <x-stencil::input data-repeater-field="name" />
-                <x-stencil::input data-repeater-field="role" />
-                <x-stencil::repeater.remove />
-            </x-stencil::repeater.item>
-            <x-stencil::repeater.add>Add member</x-stencil::repeater.add>
-        </x-stencil::repeater>
+        <x-ui::repeater name="members" :value="[['name' => 'Ada', 'role' => 'owner']]">
+            <x-ui::repeater.item>
+                <x-ui::input data-repeater-field="name" />
+                <x-ui::input data-repeater-field="role" />
+                <x-ui::repeater.remove />
+            </x-ui::repeater.item>
+            <x-ui::repeater.add>Add member</x-ui::repeater.add>
+        </x-ui::repeater>
     BLADE);
 
     expect($html)
@@ -34,11 +34,11 @@ it('renders a repeater root with list host and item template', function () {
 
 it('renders min and max data attributes', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::repeater name="members" :min="1" :max="5">
-            <x-stencil::repeater.item>
-                <x-stencil::input data-repeater-field="name" />
-            </x-stencil::repeater.item>
-        </x-stencil::repeater>
+        <x-ui::repeater name="members" :min="1" :max="5">
+            <x-ui::repeater.item>
+                <x-ui::input data-repeater-field="name" />
+            </x-ui::repeater.item>
+        </x-ui::repeater>
     BLADE);
 
     expect($html)
@@ -48,11 +48,11 @@ it('renders min and max data attributes', function () {
 
 it('marks the repeater invalid when the invalid prop is true', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::repeater name="members" :invalid="true">
-            <x-stencil::repeater.item>
-                <x-stencil::input data-repeater-field="name" />
-            </x-stencil::repeater.item>
-        </x-stencil::repeater>
+        <x-ui::repeater name="members" :invalid="true">
+            <x-ui::repeater.item>
+                <x-ui::input data-repeater-field="name" />
+            </x-ui::repeater.item>
+        </x-ui::repeater>
     BLADE);
 
     expect($html)
@@ -62,12 +62,12 @@ it('marks the repeater invalid when the invalid prop is true', function () {
 
 it('marks the repeater disabled when the disabled prop is true', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::repeater name="members" :disabled="true">
-            <x-stencil::repeater.item>
-                <x-stencil::input data-repeater-field="name" />
-            </x-stencil::repeater.item>
-            <x-stencil::repeater.add />
-        </x-stencil::repeater>
+        <x-ui::repeater name="members" :disabled="true">
+            <x-ui::repeater.item>
+                <x-ui::input data-repeater-field="name" />
+            </x-ui::repeater.item>
+            <x-ui::repeater.add />
+        </x-ui::repeater>
     BLADE);
 
     expect($html)->toContain('data-disabled="true"');
@@ -80,13 +80,13 @@ it('inherits field invalid state from the field wrapper', function () {
     view()->share('errors', $errors);
 
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::field name="members">
-            <x-stencil::repeater name="members">
-                <x-stencil::repeater.item>
-                    <x-stencil::input data-repeater-field="name" />
-                </x-stencil::repeater.item>
-            </x-stencil::repeater>
-        </x-stencil::field>
+        <x-ui::field name="members">
+            <x-ui::repeater name="members">
+                <x-ui::repeater.item>
+                    <x-ui::input data-repeater-field="name" />
+                </x-ui::repeater.item>
+            </x-ui::repeater>
+        </x-ui::field>
     BLADE);
 
     expect($html)->toContain('data-invalid="true"');
@@ -94,23 +94,23 @@ it('inherits field invalid state from the field wrapper', function () {
 
 it('requires a name attribute', function () {
     Blade::render(<<<'BLADE'
-        <x-stencil::repeater>
-            <x-stencil::repeater.item>
-                <x-stencil::input data-repeater-field="name" />
-            </x-stencil::repeater.item>
-        </x-stencil::repeater>
+        <x-ui::repeater>
+            <x-ui::repeater.item>
+                <x-ui::input data-repeater-field="name" />
+            </x-ui::repeater.item>
+        </x-ui::repeater>
     BLADE);
 })->throws(ViewException::class);
 
 it('uses translated labels for add and remove actions', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::repeater name="members">
-            <x-stencil::repeater.item>
-                <x-stencil::input data-repeater-field="name" />
-                <x-stencil::repeater.remove />
-            </x-stencil::repeater.item>
-            <x-stencil::repeater.add />
-        </x-stencil::repeater>
+        <x-ui::repeater name="members">
+            <x-ui::repeater.item>
+                <x-ui::input data-repeater-field="name" />
+                <x-ui::repeater.remove />
+            </x-ui::repeater.item>
+            <x-ui::repeater.add />
+        </x-ui::repeater>
     BLADE);
 
     expect($html)
@@ -120,14 +120,14 @@ it('uses translated labels for add and remove actions', function () {
 
 it('renders duplicate and sortable markers', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::repeater name="members" sortable>
-            <x-stencil::repeater.item>
-                <x-stencil::repeater.handle />
-                <x-stencil::input data-repeater-field="name" />
-                <x-stencil::repeater.duplicate />
-                <x-stencil::repeater.remove />
-            </x-stencil::repeater.item>
-        </x-stencil::repeater>
+        <x-ui::repeater name="members" sortable>
+            <x-ui::repeater.item>
+                <x-ui::repeater.handle />
+                <x-ui::input data-repeater-field="name" />
+                <x-ui::repeater.duplicate />
+                <x-ui::repeater.remove />
+            </x-ui::repeater.item>
+        </x-ui::repeater>
     BLADE);
 
     expect($html)

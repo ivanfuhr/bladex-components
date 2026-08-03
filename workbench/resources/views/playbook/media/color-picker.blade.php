@@ -6,13 +6,13 @@
     <div class="space-y-10">
         <div class="space-y-1">
             <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::color-picker /&gt;</p>
-            <x-stencil::heading :level="2">Color Picker</x-stencil::heading>
-            <x-stencil::text size="sm" variant="subtle"
-                >Popover with saturation canvas, hue slider, and Tailwind swatches.</x-stencil::text>
+            <x-ui::heading :level="2">Color Picker</x-ui::heading>
+            <x-ui::text size="sm" variant="subtle"
+                >Popover with saturation canvas, hue slider, and Tailwind swatches.</x-ui::text>
         </div>
 
         <div class="relative mx-auto min-h-[28rem] w-full max-w-xs">
-            <x-stencil::color-picker name="brand_color" value="#3366cc" class="w-full" />
+            <x-ui::color-picker name="brand_color" value="#3366cc" class="w-full" />
         </div>
     </div>
 @endsection

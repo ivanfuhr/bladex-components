@@ -4,4 +4,4 @@
     $max = max(1, min(10, (int) ($state['max'] ?? 5)));
 @endphp
 
-<x-stencil::rating name="score" :value="3" :max="$max" :invalid="$invalid" :disabled="$disabled" />
+<x-ui::rating name="score" :value="3" :max="$max" :invalid="$invalid" :disabled="$disabled" />

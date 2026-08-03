@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a shortcut stat with label value trend and icon', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::stat
+        <x-ui::stat
             label="Open tickets"
             value="128"
             trend="+12.4%"
@@ -33,12 +33,12 @@ it('renders a shortcut stat with label value trend and icon', function () {
 
 it('renders composable stat parts and variants', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::stat variant="muted">
-            <x-stencil::stat.label>Resolved</x-stencil::stat.label>
-            <x-stencil::stat.value>86%</x-stencil::stat.value>
-            <x-stencil::stat.trend direction="down">−2.1%</x-stencil::stat.trend>
-            <x-stencil::stat.description>This week</x-stencil::stat.description>
-        </x-stencil::stat>
+        <x-ui::stat variant="muted">
+            <x-ui::stat.label>Resolved</x-ui::stat.label>
+            <x-ui::stat.value>86%</x-ui::stat.value>
+            <x-ui::stat.trend direction="down">−2.1%</x-ui::stat.trend>
+            <x-ui::stat.description>This week</x-ui::stat.description>
+        </x-ui::stat>
     BLADE);
 
     expect($html)
@@ -51,7 +51,7 @@ it('renders composable stat parts and variants', function () {
 });
 
 it('supports outline variant', function () {
-    $html = Blade::render('<x-stencil::stat variant="outline" label="Queue" value="12" />');
+    $html = Blade::render('<x-ui::stat variant="outline" label="Queue" value="12" />');
 
     expect($html)
         ->toContain('data-variant="outline"')

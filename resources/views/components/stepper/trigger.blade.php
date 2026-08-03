@@ -1,21 +1,3 @@
-@aware([
-    'defaultValue' => null,
-    'orientation' => 'horizontal',
-    'stepperId' => null,
-    'value' => null,
-    'disabled' => false,
-])
-
-@php
-    $isVertical = $orientation === 'vertical';
-    $isDisabled = (bool) $disabled;
-    $isCurrent = filled($defaultValue) && filled($value) && (string) $value === (string) $defaultValue;
-
-    $triggerId = $attributes->get('id')
-        ?? (filled($stepperId) && filled($value) ? $stepperId.'-trigger-'.$value : null);
-    $panelId = filled($stepperId) && filled($value) ? $stepperId.'-panel-'.$value : null;
-@endphp
-
 <button
     type="button"
     {{

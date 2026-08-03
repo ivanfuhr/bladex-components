@@ -1,15 +1,3 @@
-@aware([
-    'transition' => false,
-    'expanded' => false,
-    'triggerId' => null,
-    'contentId' => null,
-])
-
-@php
-    $isExpanded = (bool) $expanded;
-    $resolvedContentId = $contentId ?? 'accordion-content-'.str_replace('.', '', uniqid('', true));
-@endphp
-
 <div {{
     $attributes->class([
         'accordion__content',

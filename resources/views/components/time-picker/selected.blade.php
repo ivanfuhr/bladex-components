@@ -1,7 +1,3 @@
-@props([
-    'placeholder' => null,
-])
-
 <span
     {{
         $attributes->class([

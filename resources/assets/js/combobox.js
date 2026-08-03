@@ -2,6 +2,8 @@
  * Stencil — filterable combobox / autocomplete (vanilla JS, no Alpine).
  */
 
+import { createBindSignal } from './shared/lifecycle.js';
+
 const COMBOBOX_SELECTOR = '[data-combobox]';
 const initialized = new WeakSet();
 
@@ -9,6 +11,16 @@ const initialized = new WeakSet();
  * @param {ParentNode} root
  */
 export function initComboboxes(root = document) {
+    document
+        .querySelectorAll('[data-combobox-content][data-combobox-portaled]')
+        .forEach((content) => {
+            if (!(content instanceof HTMLElement) || content.closest('[data-combobox]')) {
+                return;
+            }
+
+            content.remove();
+        });
+
     root.querySelectorAll(COMBOBOX_SELECTOR).forEach((element) => {
         if (!(element instanceof HTMLElement)) {
             return;
@@ -71,6 +83,7 @@ function bindCombobox(root) {
 
     const portalMarker = document.createComment('stencil-combobox-portal');
     let portalInserted = false;
+    const signal = createBindSignal(root);
 
     const options = () =>
         Array.from(content.querySelectorAll('[data-combobox-item]')).filter(
@@ -639,27 +652,35 @@ function bindCombobox(root) {
         }
     });
 
-    document.addEventListener('pointerdown', (event) => {
-        if (!open) {
-            return;
-        }
+    document.addEventListener(
+        'pointerdown',
+        (event) => {
+            if (!open) {
+                return;
+            }
 
-        if (!containsTarget(event.target)) {
-            setOpen(false);
+            if (!containsTarget(event.target)) {
+                setOpen(false);
 
-            if (!isMultiple && singleHiddenInput instanceof HTMLInputElement) {
-                if (singleHiddenInput.value !== '' && committedLabel !== '') {
-                    input.value = committedLabel;
+                if (!isMultiple && singleHiddenInput instanceof HTMLInputElement) {
+                    if (singleHiddenInput.value !== '' && committedLabel !== '') {
+                        input.value = committedLabel;
+                    }
                 }
             }
-        }
-    });
+        },
+        { signal },
+    );
 
-    window.addEventListener('resize', () => {
-        if (open) {
-            positionContent();
-        }
-    });
+    window.addEventListener(
+        'resize',
+        () => {
+            if (open) {
+                positionContent();
+            }
+        },
+        { signal },
+    );
 
     window.addEventListener(
         'scroll',
@@ -668,7 +689,7 @@ function bindCombobox(root) {
                 positionContent();
             }
         },
-        true,
+        { capture: true, signal },
     );
 
     input.addEventListener('keydown', (event) => {

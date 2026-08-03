@@ -1,11 +1,3 @@
-@props([
-    'size' => 'default',
-])
-
-@php
-    $padding = $size === 'sm' ? 'p-4' : 'p-6';
-@endphp
-
 <div {{
     $attributes->class([
         'card',

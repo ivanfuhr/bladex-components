@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Ivanfuhr\Stencil\Support\Icon\IconPathResolver;
 use Ivanfuhr\Stencil\Support\Icon\LucideIconStubGenerator;
-use Ivanfuhr\Stencil\Support\ProjectConfig;
 
 /**
  * @return list<string>
@@ -35,56 +33,10 @@ function defaultStencilTestIconNames(): array
     ];
 }
 
-function stencilTestWorkerUiRelativePath(): string
-{
-    $token = getenv('TEST_TOKEN');
-
-    if ($token !== false && $token !== '') {
-        return 'storage/framework/testing/stencil-ui-'.$token;
-    }
-
-    return 'storage/framework/testing/stencil-ui-'.getmypid();
-}
-
-function stencilTestConfigRelativePath(): string
-{
-    $token = getenv('TEST_TOKEN');
-
-    if ($token !== false && $token !== '') {
-        return 'storage/framework/testing/stencil-'.$token.'.json';
-    }
-
-    return 'storage/framework/testing/stencil-'.getmypid().'.json';
-}
-
-function ensureStencilTestProjectConfig(): void
-{
-    $ui = stencilTestWorkerUiRelativePath();
-    $icons = $ui.'/icons';
-    $configPath = app(ProjectConfig::class)->path();
-
-    File::ensureDirectoryExists(dirname($configPath));
-
-    file_put_contents($configPath, json_encode([
-        'registry' => config('stencil.default_registry_url'),
-        'paths' => [
-            'ui' => $ui,
-            'icons' => $icons,
-        ],
-    ], JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES)."\n");
-
-    app()->forgetInstance(ProjectConfig::class);
-}
-
 function seedStencilTestIcons(?array $names = null): void
 {
     $names = $names ?? defaultStencilTestIconNames();
-
-    ensureStencilTestProjectConfig();
-
-    $projectConfig = app(ProjectConfig::class);
-    $uiPath = $projectConfig->resolvedUiPath();
-    $iconsPath = $projectConfig->resolvedIconsPath();
+    $iconsPath = dirname(__DIR__, 2).'/resources/views/icons';
 
     File::ensureDirectoryExists($iconsPath);
 
@@ -94,10 +46,13 @@ function seedStencilTestIcons(?array $names = null): void
     foreach ($names as $name) {
         $normalized = IconPathResolver::normalizeName($name);
         $target = $iconsPath.'/'.$normalized.'.blade.php';
+
+        if (is_file($target)) {
+            continue;
+        }
+
         file_put_contents($target, $generator->generate($normalized, $minimalSvg));
     }
-
-    Blade::anonymousComponentPath($uiPath, 'ui');
 }
 
 function fakeLucideIconHttp(): void

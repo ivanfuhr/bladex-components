@@ -2,6 +2,8 @@
  * Stencil — accessible dropdown menu (vanilla JS, no Alpine).
  */
 
+import { createBindSignal } from './shared/lifecycle.js';
+
 const ROOT_SELECTOR = '[data-dropdown-menu]';
 const TRIGGER_SELECTOR = '[data-dropdown-menu-trigger]';
 const CONTENT_SELECTOR = '[data-dropdown-menu-content]';
@@ -12,6 +14,16 @@ const initialized = new WeakSet();
  * @param {ParentNode} root
  */
 export function initDropdownMenus(root = document) {
+    document
+        .querySelectorAll('[data-dropdown-menu-content][data-dropdown-menu-portaled]')
+        .forEach((content) => {
+            if (!(content instanceof HTMLElement) || content.closest('[data-dropdown-menu]')) {
+                return;
+            }
+
+            content.remove();
+        });
+
     root.querySelectorAll(ROOT_SELECTOR).forEach((element) => {
         if (!(element instanceof HTMLElement)) {
             return;
@@ -46,6 +58,7 @@ function bindDropdownMenu(root) {
     let open = false;
     let activeIndex = -1;
     const portalMarker = document.createComment('stencil-dropdown-menu-portal');
+    const signal = createBindSignal(root);
 
     trigger.setAttribute('aria-haspopup', 'menu');
     trigger.setAttribute('aria-expanded', 'false');
@@ -215,45 +228,53 @@ function bindDropdownMenu(root) {
         highlight(enabled, activeIndex);
     });
 
-    document.addEventListener('keydown', (event) => {
-        if (!open) {
-            return;
-        }
+    document.addEventListener(
+        'keydown',
+        (event) => {
+            if (!open) {
+                return;
+            }
 
-        if (event.key === 'Escape') {
-            event.preventDefault();
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                setOpen(false);
+                trigger.focus();
+
+                return;
+            }
+
+            if (event.key === 'Tab') {
+                // APG: Tab closes the menu and continues native tab navigation.
+                setOpen(false);
+            }
+        },
+        { signal },
+    );
+
+    document.addEventListener(
+        'pointerdown',
+        (event) => {
+            if (!open) {
+                return;
+            }
+
+            const target = event.target;
+
+            if (!(target instanceof Node)) {
+                return;
+            }
+
+            if (root.contains(target) || content.contains(target)) {
+                return;
+            }
+
             setOpen(false);
-            trigger.focus();
+        },
+        { signal },
+    );
 
-            return;
-        }
-
-        if (event.key === 'Tab') {
-            // APG: Tab closes the menu and continues native tab navigation.
-            setOpen(false);
-        }
-    });
-
-    document.addEventListener('pointerdown', (event) => {
-        if (!open) {
-            return;
-        }
-
-        const target = event.target;
-
-        if (!(target instanceof Node)) {
-            return;
-        }
-
-        if (root.contains(target) || content.contains(target)) {
-            return;
-        }
-
-        setOpen(false);
-    });
-
-    window.addEventListener('resize', reposition);
-    window.addEventListener('scroll', reposition, true);
+    window.addEventListener('resize', reposition, { signal });
+    window.addEventListener('scroll', reposition, { capture: true, signal });
 }
 
 /**

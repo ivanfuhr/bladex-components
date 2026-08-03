@@ -1,15 +1,3 @@
-@props([
-    'defaultOpen' => true,
-    'storageKey' => 'stencil-sidebar-state',
-    'width' => '16rem',
-    'widthIcon' => '3rem',
-    'widthMobile' => '18rem',
-])
-
-@php
-    $isDefaultOpen = (bool) $defaultOpen;
-@endphp
-
 <div {{
     $attributes->class([
         'sidebar-provider',
@@ -22,7 +10,7 @@
         'data-open' => $isDefaultOpen ? 'true' : 'false',
         'data-mobile' => 'false',
         'data-mobile-open' => 'false',
-        'style' => '--stencil-sidebar-width: '.e($width).'; --stencil-sidebar-width-icon: '.e($widthIcon).'; --stencil-sidebar-width-mobile: '.e($widthMobile).';',
+        'style' => $style,
     ])
 }}>
     {{ $slot }}

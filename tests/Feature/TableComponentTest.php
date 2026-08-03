@@ -6,21 +6,21 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a table with caption header body and cells', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::table>
-            <x-stencil::table.caption>Invoices</x-stencil::table.caption>
-            <x-stencil::table.header>
-                <x-stencil::table.row>
-                    <x-stencil::table.head>Invoice</x-stencil::table.head>
-                    <x-stencil::table.head sortable sorted direction="desc">Amount</x-stencil::table.head>
-                </x-stencil::table.row>
-            </x-stencil::table.header>
-            <x-stencil::table.body>
-                <x-stencil::table.row>
-                    <x-stencil::table.cell variant="strong">INV001</x-stencil::table.cell>
-                    <x-stencil::table.cell>$250.00</x-stencil::table.cell>
-                </x-stencil::table.row>
-            </x-stencil::table.body>
-        </x-stencil::table>
+        <x-ui::table>
+            <x-ui::table.caption>Invoices</x-ui::table.caption>
+            <x-ui::table.header>
+                <x-ui::table.row>
+                    <x-ui::table.head>Invoice</x-ui::table.head>
+                    <x-ui::table.head sortable sorted direction="desc">Amount</x-ui::table.head>
+                </x-ui::table.row>
+            </x-ui::table.header>
+            <x-ui::table.body>
+                <x-ui::table.row>
+                    <x-ui::table.cell variant="strong">INV001</x-ui::table.cell>
+                    <x-ui::table.cell>$250.00</x-ui::table.cell>
+                </x-ui::table.row>
+            </x-ui::table.body>
+        </x-ui::table>
     BLADE);
 
     expect($html)

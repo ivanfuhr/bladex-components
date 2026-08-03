@@ -7,22 +7,22 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders compound pagination controls', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::pagination>
-            <x-stencil::pagination.content>
-                <x-stencil::pagination.item>
-                    <x-stencil::pagination.previous href="?page=1" />
-                </x-stencil::pagination.item>
-                <x-stencil::pagination.item>
-                    <x-stencil::pagination.link href="?page=2" :is-active="true">2</x-stencil::pagination.link>
-                </x-stencil::pagination.item>
-                <x-stencil::pagination.item>
-                    <x-stencil::pagination.ellipsis />
-                </x-stencil::pagination.item>
-                <x-stencil::pagination.item>
-                    <x-stencil::pagination.next href="?page=3" />
-                </x-stencil::pagination.item>
-            </x-stencil::pagination.content>
-        </x-stencil::pagination>
+        <x-ui::pagination>
+            <x-ui::pagination.content>
+                <x-ui::pagination.item>
+                    <x-ui::pagination.previous href="?page=1" />
+                </x-ui::pagination.item>
+                <x-ui::pagination.item>
+                    <x-ui::pagination.link href="?page=2" :is-active="true">2</x-ui::pagination.link>
+                </x-ui::pagination.item>
+                <x-ui::pagination.item>
+                    <x-ui::pagination.ellipsis />
+                </x-ui::pagination.item>
+                <x-ui::pagination.item>
+                    <x-ui::pagination.next href="?page=3" />
+                </x-ui::pagination.item>
+            </x-ui::pagination.content>
+        </x-ui::pagination>
     BLADE);
 
     expect($html)
@@ -42,7 +42,7 @@ it('renders pagination from a laravel paginator', function () {
         options: ['path' => '/orders'],
     );
 
-    $html = Blade::render('<x-stencil::pagination :paginator="$paginator" />', [
+    $html = Blade::render('<x-ui::pagination :paginator="$paginator" />', [
         'paginator' => $paginator,
     ]);
 

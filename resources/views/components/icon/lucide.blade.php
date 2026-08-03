@@ -3,11 +3,9 @@
 ])
 
 @php
-    use Ivanfuhr\Stencil\Support\Icon\IconVariant;
-
-    $normalizedVariant = IconVariant::normalize($variant);
-    $strokeWidth = IconVariant::strokeWidth($normalizedVariant);
-    $pixelSize = IconVariant::pixelSize($normalizedVariant);
+    $normalizedVariant = stencil_normalize_icon_variant($variant);
+    $strokeWidth = stencil_icon_variant_resolve($normalizedVariant)[1];
+    $pixelSize = stencil_icon_variant_resolve($normalizedVariant)[2];
 
     // Consumer size utilities (e.g. size-6) must win over the variant default.
     // Mixing size-4 + size-6 makes stroke weight look broken at the resolved box.
@@ -16,7 +14,7 @@
 
     $iconClasses = $hasExplicitSize
         ? 'block shrink-0'
-        : IconVariant::classString($normalizedVariant);
+        : stencil_icon_variant_class_string($normalizedVariant);
 @endphp
 
 <svg

@@ -317,7 +317,7 @@ function normalizeData(value) {
  * @param {string | undefined} gutter
  */
 function parseGutter(gutter) {
-    const parts = (gutter ?? '24 16 32 40')
+    const parts = (gutter ?? '28 36 32 40')
         .trim()
         .split(/\s+/)
         .map((part) => Number.parseFloat(part))
@@ -336,8 +336,8 @@ function parseGutter(gutter) {
     }
 
     return {
-        top: parts[0] ?? 24,
-        right: parts[1] ?? 16,
+        top: parts[0] ?? 28,
+        right: parts[1] ?? 36,
         bottom: parts[2] ?? 32,
         left: parts[3] ?? 40,
     };

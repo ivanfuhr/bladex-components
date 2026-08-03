@@ -1,12 +1,3 @@
-@props([
-    'value' => null,
-    'label' => null,
-])
-
-@php
-    $encodedValue = is_array($value) ? \Illuminate\Support\Js::encode($value) : $value;
-@endphp
-
 <div
     {{
         $attributes->class([

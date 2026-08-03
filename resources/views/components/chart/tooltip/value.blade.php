@@ -1,15 +1,3 @@
-@props([
-    'label' => null,
-    'field' => null,
-    'format' => null,
-    'prefix' => null,
-    'suffix' => null,
-])
-
-@php
-    $encodedFormat = is_array($format) ? \Illuminate\Support\Js::encode($format) : $format;
-@endphp
-
 <div {{ $attributes->class(['flex items-center gap-2 p-2 text-xs text-zinc-500 dark:text-zinc-300']) }}>
     {{ $slot }}
 

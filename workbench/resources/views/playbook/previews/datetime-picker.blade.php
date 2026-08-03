@@ -6,7 +6,7 @@
 @endphp
 
 <div class="w-full max-w-sm">
-    <x-stencil::datetime-picker
+    <x-ui::datetime-picker
         name="playbook_datetime"
         value="2026-09-18T09:15"
         :with-today="$withToday"

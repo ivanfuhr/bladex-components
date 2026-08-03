@@ -6,30 +6,30 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a stepper with list, indicators, and active panel', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::stepper default-value="account" stepper-id="setup">
-            <x-stencil::stepper.list>
-                <x-stencil::stepper.item value="account" :step="1">
-                    <x-stencil::stepper.trigger>
-                        <x-stencil::stepper.indicator />
-                        <x-stencil::stepper.title>Account</x-stencil::stepper.title>
-                        <x-stencil::stepper.description>Profile</x-stencil::stepper.description>
-                    </x-stencil::stepper.trigger>
-                    <x-stencil::stepper.separator />
-                </x-stencil::stepper.item>
-                <x-stencil::stepper.item value="workspace" :step="2">
-                    <x-stencil::stepper.trigger>
-                        <x-stencil::stepper.indicator />
-                        <x-stencil::stepper.title>Workspace</x-stencil::stepper.title>
-                    </x-stencil::stepper.trigger>
-                </x-stencil::stepper.item>
-            </x-stencil::stepper.list>
-            <x-stencil::stepper.content value="account">Account panel</x-stencil::stepper.content>
-            <x-stencil::stepper.content value="workspace">Workspace panel</x-stencil::stepper.content>
-            <x-stencil::stepper.navigation>
-                <x-stencil::stepper.previous />
-                <x-stencil::stepper.next />
-            </x-stencil::stepper.navigation>
-        </x-stencil::stepper>
+        <x-ui::stepper default-value="account" stepper-id="setup">
+            <x-ui::stepper.list>
+                <x-ui::stepper.item value="account" :step="1">
+                    <x-ui::stepper.trigger>
+                        <x-ui::stepper.indicator />
+                        <x-ui::stepper.title>Account</x-ui::stepper.title>
+                        <x-ui::stepper.description>Profile</x-ui::stepper.description>
+                    </x-ui::stepper.trigger>
+                    <x-ui::stepper.separator />
+                </x-ui::stepper.item>
+                <x-ui::stepper.item value="workspace" :step="2">
+                    <x-ui::stepper.trigger>
+                        <x-ui::stepper.indicator />
+                        <x-ui::stepper.title>Workspace</x-ui::stepper.title>
+                    </x-ui::stepper.trigger>
+                </x-ui::stepper.item>
+            </x-ui::stepper.list>
+            <x-ui::stepper.content value="account">Account panel</x-ui::stepper.content>
+            <x-ui::stepper.content value="workspace">Workspace panel</x-ui::stepper.content>
+            <x-ui::stepper.navigation>
+                <x-ui::stepper.previous />
+                <x-ui::stepper.next />
+            </x-ui::stepper.navigation>
+        </x-ui::stepper>
     BLADE);
 
     expect($html)
@@ -57,13 +57,13 @@ it('renders a stepper with list, indicators, and active panel', function () {
 
 it('supports vertical orientation and non-linear mode', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::stepper default-value="a" orientation="vertical" :linear="false">
-            <x-stencil::stepper.list>
-                <x-stencil::stepper.item value="a" :step="1">
-                    <x-stencil::stepper.trigger>A</x-stencil::stepper.trigger>
-                </x-stencil::stepper.item>
-            </x-stencil::stepper.list>
-        </x-stencil::stepper>
+        <x-ui::stepper default-value="a" orientation="vertical" :linear="false">
+            <x-ui::stepper.list>
+                <x-ui::stepper.item value="a" :step="1">
+                    <x-ui::stepper.trigger>A</x-ui::stepper.trigger>
+                </x-ui::stepper.item>
+            </x-ui::stepper.list>
+        </x-ui::stepper>
     BLADE);
 
     expect($html)
@@ -74,18 +74,18 @@ it('supports vertical orientation and non-linear mode', function () {
 
 it('marks completed steps and disables items', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::stepper default-value="b">
-            <x-stencil::stepper.list>
-                <x-stencil::stepper.item value="a" :step="1" :completed="true">
-                    <x-stencil::stepper.trigger>
-                        <x-stencil::stepper.indicator />
-                    </x-stencil::stepper.trigger>
-                </x-stencil::stepper.item>
-                <x-stencil::stepper.item value="b" :step="2" disabled>
-                    <x-stencil::stepper.trigger>B</x-stencil::stepper.trigger>
-                </x-stencil::stepper.item>
-            </x-stencil::stepper.list>
-        </x-stencil::stepper>
+        <x-ui::stepper default-value="b">
+            <x-ui::stepper.list>
+                <x-ui::stepper.item value="a" :step="1" :completed="true">
+                    <x-ui::stepper.trigger>
+                        <x-ui::stepper.indicator />
+                    </x-ui::stepper.trigger>
+                </x-ui::stepper.item>
+                <x-ui::stepper.item value="b" :step="2" disabled>
+                    <x-ui::stepper.trigger>B</x-ui::stepper.trigger>
+                </x-ui::stepper.item>
+            </x-ui::stepper.list>
+        </x-ui::stepper>
     BLADE);
 
     expect($html)

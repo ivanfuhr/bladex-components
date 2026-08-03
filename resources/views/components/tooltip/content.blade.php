@@ -1,15 +1,3 @@
-@aware([
-    'side' => 'top',
-])
-
-@props([
-    'side' => null,
-])
-
-@php
-    $resolvedSide = $side ?? 'top';
-@endphp
-
 <span {{
     $attributes->class([
         'tooltip__content',

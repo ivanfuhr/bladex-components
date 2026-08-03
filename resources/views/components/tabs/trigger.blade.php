@@ -1,29 +1,3 @@
-@props([
-    'value',
-    'disabled' => false,
-])
-
-@aware([
-    'defaultValue' => null,
-    'variant' => 'default',
-    'tabsId' => null,
-])
-
-@php
-    $isSelected = filled($defaultValue) && (string) $value === (string) $defaultValue;
-    $isDisabled = (bool) $disabled;
-
-    $triggerId = $attributes->get('id')
-        ?? (filled($tabsId) ? $tabsId.'-tab-'.$value : null);
-    $panelId = filled($tabsId) ? $tabsId.'-panel-'.$value : null;
-
-    $triggerClasses = match ($variant) {
-        'pills' => 'rounded-full px-3 py-1.5 text-sm font-medium data-[state=active]:bg-zinc-900 data-[state=active]:text-white dark:data-[state=active]:bg-zinc-100 dark:data-[state=active]:text-zinc-900',
-        'line' => 'border-b-2 border-transparent px-1 py-2 text-sm font-medium data-[state=active]:border-zinc-900 dark:data-[state=active]:border-zinc-100',
-        default => 'rounded-md px-3 py-1.5 text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-zinc-950 data-[state=active]:shadow-sm dark:data-[state=active]:bg-zinc-950 dark:data-[state=active]:text-zinc-50',
-    };
-@endphp
-
 <button
     type="button"
     {{

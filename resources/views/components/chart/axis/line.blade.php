@@ -1,5 +1,3 @@
-@aware(['axis' => 'x'])
-
 @if ($axis === 'x')
     <template data-chart-template="axis-line" data-axis-orientation="bottom">
         <line

@@ -1,16 +1,3 @@
-@aware([
-    'disabled' => false,
-])
-
-@props([
-    'value' => '#000000',
-    'label' => null,
-])
-
-@php
-    $swatchLabel = filled($label) ? (string) $label : (string) $value;
-@endphp
-
 <button
     type="button"
     {{
@@ -21,6 +8,6 @@
     data-color-picker-swatch="{{ $value }}"
     style="background-color: {{ $value }}"
     role="option"
-    aria-label="{{ __('stencil::messages.color_picker_swatch', ['color' => $swatchLabel]) }}"
+    aria-label="{{ __('Select :color', ['color' => $swatchLabel]) }}"
     @if ($disabled) disabled @endif
 ></button>

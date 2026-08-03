@@ -1,5 +1,3 @@
-@aware(['axis' => 'x'])
-
 @if ($axis === 'x')
     <template data-chart-template="grid-line" data-grid-type="horizontal">
         <line

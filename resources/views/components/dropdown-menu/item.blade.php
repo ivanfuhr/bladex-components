@@ -1,18 +1,3 @@
-@props([
-    'href' => null,
-    'variant' => 'default',
-    'disabled' => false,
-    'keepOpen' => false,
-    'kbd' => null,
-])
-
-@php
-    $isDisabled = (bool) $disabled;
-    $useLink = filled($href);
-    $tag = $useLink ? 'a' : 'button';
-    $isDanger = $variant === 'danger' || $variant === 'destructive';
-@endphp
-
 <{{ $tag }}
     {{
         $attributes->class([
@@ -37,6 +22,6 @@
 >
     <span class="min-w-0 flex-1 text-left">{{ $slot }}</span>
     @if (filled($kbd))
-        <x-stencil::dropdown-menu.shortcut>{{ $kbd }}</x-stencil::dropdown-menu.shortcut>
+        <x-ui::dropdown-menu.shortcut>{{ $kbd }}</x-ui::dropdown-menu.shortcut>
     @endif
 </{{ $tag }}>

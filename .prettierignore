@@ -5,6 +5,7 @@
 /workbench/node_modules
 /workbench/public/build
 /build
+/resources/dist
 /coverage
 /.phpunit.cache
 /.agents

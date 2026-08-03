@@ -1,0 +1,29 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Ivanfuhr\Stencil\View\Components\Chart;
+
+use Illuminate\Support\Js;
+use Ivanfuhr\Stencil\View\Components\StencilComponent;
+
+final class Legend extends StencilComponent
+{
+    public function __construct(
+        public mixed $label = null,
+        public mixed $field = null,
+        public mixed $format = null,
+    ) {}
+
+    protected function stencilView(): string
+    {
+        return 'stencil::components.chart.legend.index';
+    }
+
+    protected function resolveViewData(array $data = []): array
+    {
+        return [
+            'encodedFormat' => is_array($this->format) ? Js::encode($this->format) : $this->format,
+        ];
+    }
+}

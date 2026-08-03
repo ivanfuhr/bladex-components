@@ -5,10 +5,10 @@
     $disabled = (bool) ($state['disabled'] ?? false);
 @endphp
 
-<x-stencil::field name="terms" orientation="inline" class="max-w-md">
-    <x-stencil::checkbox name="terms" :size="$size" :checked="$checked" :invalid="$invalid" :disabled="$disabled" />
+<x-ui::field name="terms" orientation="inline" class="max-w-md">
+    <x-ui::checkbox name="terms" :size="$size" :checked="$checked" :invalid="$invalid" :disabled="$disabled" />
     <div class="flex flex-col gap-1">
-        <x-stencil::field.label>Accept terms</x-stencil::field.label>
-        <x-stencil::field.description>Required to continue.</x-stencil::field.description>
+        <x-ui::field.label>Accept terms</x-ui::field.label>
+        <x-ui::field.description>Required to continue.</x-ui::field.description>
     </div>
-</x-stencil::field>
+</x-ui::field>

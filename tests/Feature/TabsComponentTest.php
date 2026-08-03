@@ -6,14 +6,14 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders tabs with selected trigger and panel', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::tabs default-value="account" variant="segmented">
-            <x-stencil::tabs.list>
-                <x-stencil::tabs.trigger value="account">Account</x-stencil::tabs.trigger>
-                <x-stencil::tabs.trigger value="password">Password</x-stencil::tabs.trigger>
-            </x-stencil::tabs.list>
-            <x-stencil::tabs.content value="account">Account panel</x-stencil::tabs.content>
-            <x-stencil::tabs.content value="password">Password panel</x-stencil::tabs.content>
-        </x-stencil::tabs>
+        <x-ui::tabs default-value="account" variant="segmented">
+            <x-ui::tabs.list>
+                <x-ui::tabs.trigger value="account">Account</x-ui::tabs.trigger>
+                <x-ui::tabs.trigger value="password">Password</x-ui::tabs.trigger>
+            </x-ui::tabs.list>
+            <x-ui::tabs.content value="account">Account panel</x-ui::tabs.content>
+            <x-ui::tabs.content value="password">Password panel</x-ui::tabs.content>
+        </x-ui::tabs>
     BLADE);
 
     expect($html)
@@ -29,12 +29,12 @@ it('renders tabs with selected trigger and panel', function () {
 
 it('wires tab ids with aria-controls and aria-labelledby', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::tabs default-value="account" tabs-id="settings">
-            <x-stencil::tabs.list>
-                <x-stencil::tabs.trigger value="account">Account</x-stencil::tabs.trigger>
-            </x-stencil::tabs.list>
-            <x-stencil::tabs.content value="account">Account panel</x-stencil::tabs.content>
-        </x-stencil::tabs>
+        <x-ui::tabs default-value="account" tabs-id="settings">
+            <x-ui::tabs.list>
+                <x-ui::tabs.trigger value="account">Account</x-ui::tabs.trigger>
+            </x-ui::tabs.list>
+            <x-ui::tabs.content value="account">Account panel</x-ui::tabs.content>
+        </x-ui::tabs>
     BLADE);
 
     expect($html)
@@ -46,11 +46,11 @@ it('wires tab ids with aria-controls and aria-labelledby', function () {
 
 it('does not bleed the tab value into nested input-otp slots', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::tabs default-value="guests">
-            <x-stencil::tabs.content value="guests">
-                <x-stencil::input-otp name="door_pin" />
-            </x-stencil::tabs.content>
-        </x-stencil::tabs>
+        <x-ui::tabs default-value="guests">
+            <x-ui::tabs.content value="guests">
+                <x-ui::input-otp name="door_pin" />
+            </x-ui::tabs.content>
+        </x-ui::tabs>
     BLADE);
 
     expect($html)
@@ -63,12 +63,12 @@ it('does not bleed the tab value into nested input-otp slots', function () {
 
 it('marks disabled triggers', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::tabs default-value="a">
-            <x-stencil::tabs.list>
-                <x-stencil::tabs.trigger value="a">A</x-stencil::tabs.trigger>
-                <x-stencil::tabs.trigger value="b" disabled>B</x-stencil::tabs.trigger>
-            </x-stencil::tabs.list>
-        </x-stencil::tabs>
+        <x-ui::tabs default-value="a">
+            <x-ui::tabs.list>
+                <x-ui::tabs.trigger value="a">A</x-ui::tabs.trigger>
+                <x-ui::tabs.trigger value="b" disabled>B</x-ui::tabs.trigger>
+            </x-ui::tabs.list>
+        </x-ui::tabs>
     BLADE);
 
     expect($html)->toContain('disabled');

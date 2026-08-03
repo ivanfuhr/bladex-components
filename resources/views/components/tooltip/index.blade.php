@@ -1,8 +1,3 @@
-@props([
-    'side' => 'top',
-    'delay' => 200,
-])
-
 <span {{
     $attributes->class([
         'tooltip',

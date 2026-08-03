@@ -6,3 +6,5 @@
 @source "../../views/**/*.blade.php";
 @source "../../../resources/views/**/*.blade.php";
 @source "../../../src/Support/**/*.php";
+@source "../../../src/View/Components/Dialog/Content.php";
+@source "../../../src/View/Components/Command/Dialog.php";

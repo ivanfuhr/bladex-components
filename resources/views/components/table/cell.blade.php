@@ -1,7 +1,3 @@
-@props([
-    'variant' => 'default',
-])
-
 <td {{
     $attributes->class([
         'table__cell',

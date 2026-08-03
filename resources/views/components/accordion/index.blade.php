@@ -1,17 +1,3 @@
-@props([
-    'exclusive' => false,
-    'multiple' => null,
-    'transition' => false,
-    'variant' => null,
-    'bordered' => false,
-])
-
-@php
-    $isExclusive = $multiple === null
-        ? (bool) $exclusive
-        : ! (bool) $multiple;
-@endphp
-
 <div {{
     $attributes->class([
         'accordion',

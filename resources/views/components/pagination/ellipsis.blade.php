@@ -8,5 +8,5 @@
     ])
 }}>
     <span class="text-zinc-500">…</span>
-    <span class="sr-only">{{ __('stencil::messages.pagination_ellipsis') }}</span>
+    <span class="sr-only">{{ __('More pages') }}</span>
 </span>

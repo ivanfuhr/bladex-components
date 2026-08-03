@@ -27,7 +27,7 @@
 @endphp
 
 <div class="max-w-xl">
-    <x-stencil::alert :variant="$variant" :title="$titles[$key]" :icon="$showIcon ? $icons[$key] : null">
-        <x-stencil::alert.description>{{ $descriptions[$key] }}</x-stencil::alert.description>
-    </x-stencil::alert>
+    <x-ui::alert :variant="$variant" :title="$titles[$key]" :icon="$showIcon ? $icons[$key] : null">
+        <x-ui::alert.description>{{ $descriptions[$key] }}</x-ui::alert.description>
+    </x-ui::alert>
 </div>

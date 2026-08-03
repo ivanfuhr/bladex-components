@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Ivanfuhr\Stencil\Support\Icon;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
-use Ivanfuhr\Stencil\Support\ProjectConfig;
 use RuntimeException;
 
 final class LucideIconInstaller
 {
     public function __construct(
+        private readonly Application $app,
         private readonly IconPathResolver $pathResolver,
         private readonly LucideIconStubGenerator $generator,
-        private readonly ProjectConfig $projectConfig,
     ) {}
 
     /**
@@ -67,18 +67,9 @@ final class LucideIconInstaller
         return $written;
     }
 
-    /**
-     * @param  list<string>  $names
-     * @return list<string>
-     */
-    public function installForProject(array $names, bool $overwrite = false, bool $dryRun = false): array
-    {
-        return $this->install($names, $overwrite, $dryRun);
-    }
-
     private function appRelativePath(string $absolutePath): string
     {
-        $base = rtrim($this->projectConfig->basePath(), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;
+        $base = rtrim($this->app->basePath(), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;
 
         if (str_starts_with($absolutePath, $base)) {
             return str_replace('\\', '/', substr($absolutePath, strlen($base)));

@@ -8,7 +8,7 @@
     $fieldName = $multiple ? 'industries' : 'industry';
 @endphp
 
-<x-stencil::select
+<x-ui::select
     :name="$fieldName"
     :placeholder="$placeholder"
     :invalid="$invalid"
@@ -18,13 +18,13 @@
     :display="$display"
     class="w-full max-w-md"
 >
-    <x-stencil::select.group>
-        <x-stencil::select.label>Creative</x-stencil::select.label>
-        <x-stencil::select.item value="photo">Photography</x-stencil::select.item>
-        <x-stencil::select.item value="design">Design services</x-stencil::select.item>
-    </x-stencil::select.group>
-    <x-stencil::select.separator />
-    <x-stencil::select.item value="web">Web development</x-stencil::select.item>
-    <x-stencil::select.item value="accounting">Accounting</x-stencil::select.item>
-    <x-stencil::select.item value="other">Other</x-stencil::select.item>
-</x-stencil::select>
+    <x-ui::select.group>
+        <x-ui::select.label>Creative</x-ui::select.label>
+        <x-ui::select.item value="photo">Photography</x-ui::select.item>
+        <x-ui::select.item value="design">Design services</x-ui::select.item>
+    </x-ui::select.group>
+    <x-ui::select.separator />
+    <x-ui::select.item value="web">Web development</x-ui::select.item>
+    <x-ui::select.item value="accounting">Accounting</x-ui::select.item>
+    <x-ui::select.item value="other">Other</x-ui::select.item>
+</x-ui::select>

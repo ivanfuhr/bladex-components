@@ -8,7 +8,7 @@
     $suffix = $showPrefixSuffix ? '.com' : null;
 @endphp
 
-<x-stencil::input
+<x-ui::input
     name="email"
     type="email"
     placeholder="you@example.com"
@@ -20,10 +20,10 @@
 >
     @if ($showAffixes)
         <x-slot:leading>
-            <x-stencil::icon.loading />
+            <x-ui::icon.loading />
         </x-slot:leading>
         <x-slot:trailing>
-            <x-stencil::text inline size="sm" variant="subtle">Clear</x-stencil::text>
+            <x-ui::text inline size="sm" variant="subtle">Clear</x-ui::text>
         </x-slot:trailing>
     @endif
-</x-stencil::input>
+</x-ui::input>

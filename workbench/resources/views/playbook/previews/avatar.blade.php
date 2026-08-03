@@ -6,12 +6,12 @@
 @endphp
 
 @if ($showGroup)
-    <x-stencil::avatar.group>
-        <x-stencil::avatar name="Ada Lovelace" :size="$size" :circle="$circle" color="violet" />
-        <x-stencil::avatar name="Grace Hopper" :size="$size" :circle="$circle" color="blue" />
-        <x-stencil::avatar name="Alan Turing" :size="$size" :circle="$circle" color="green" />
-        <x-stencil::avatar name="Katherine Johnson" :size="$size" :circle="$circle" color="amber" />
-    </x-stencil::avatar.group>
+    <x-ui::avatar.group>
+        <x-ui::avatar name="Ada Lovelace" :size="$size" :circle="$circle" color="violet" />
+        <x-ui::avatar name="Grace Hopper" :size="$size" :circle="$circle" color="blue" />
+        <x-ui::avatar name="Alan Turing" :size="$size" :circle="$circle" color="green" />
+        <x-ui::avatar name="Katherine Johnson" :size="$size" :circle="$circle" color="amber" />
+    </x-ui::avatar.group>
 @else
-    <x-stencil::avatar name="Ada Lovelace" :size="$size" :circle="$circle" :color="$color" />
+    <x-ui::avatar name="Ada Lovelace" :size="$size" :circle="$circle" :color="$color" />
 @endif

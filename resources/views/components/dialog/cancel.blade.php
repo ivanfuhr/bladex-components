@@ -1,10 +1,3 @@
-@props([
-    'variant' => 'outline',
-])
-
-<x-stencil::button
-    :variant="$variant"
-    {{ $attributes->merge(['data-dialog-close' => true, 'data-dialog-cancel' => true]) }}
->
+<x-ui::button :variant="$variant" {{ $attributes->merge(['data-dialog-close' => true, 'data-dialog-cancel' => true]) }}>
     {{ $slot }}
-</x-stencil::button>
+</x-ui::button>

@@ -8,7 +8,7 @@ use Illuminate\Support\ViewErrorBag;
 
 it('renders an otp root with hidden input and labeled slots', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::input-otp name="code" />
+        <x-ui::input-otp name="code" />
     BLADE);
 
     expect($html)
@@ -27,7 +27,7 @@ it('renders an otp root with hidden input and labeled slots', function () {
 
 it('supports configurable length and alphanumeric mode', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::input-otp name="token" :length="4" mode="alphanumeric" :separated="false" />
+        <x-ui::input-otp name="token" :length="4" mode="alphanumeric" :separated="false" />
     BLADE);
 
     expect($html)
@@ -41,7 +41,7 @@ it('supports configurable length and alphanumeric mode', function () {
 
 it('renders a separator by default for even lengths', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::input-otp name="code" />
+        <x-ui::input-otp name="code" />
     BLADE);
 
     expect($html)
@@ -51,7 +51,7 @@ it('renders a separator by default for even lengths', function () {
 
 it('seeds slots from the value prop', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::input-otp name="code" value="123456" />
+        <x-ui::input-otp name="code" value="123456" />
     BLADE);
 
     expect($html)
@@ -63,7 +63,7 @@ it('seeds slots from the value prop', function () {
 
 it('marks the control invalid when the invalid prop is true', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::input-otp name="code" :invalid="true" />
+        <x-ui::input-otp name="code" :invalid="true" />
     BLADE);
 
     expect($html)
@@ -73,7 +73,7 @@ it('marks the control invalid when the invalid prop is true', function () {
 
 it('disables slots when the disabled prop is true', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::input-otp name="code" :disabled="true" />
+        <x-ui::input-otp name="code" :disabled="true" />
     BLADE);
 
     expect($html)
@@ -88,9 +88,9 @@ it('inherits field invalid state from the Field shell', function () {
     view()->share('errors', $errors);
 
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::field name="code">
-            <x-stencil::input-otp name="code" />
-        </x-stencil::field>
+        <x-ui::field name="code">
+            <x-ui::input-otp name="code" />
+        </x-ui::field>
     BLADE);
 
     expect($html)
@@ -100,17 +100,17 @@ it('inherits field invalid state from the Field shell', function () {
 
 it('renders full compound structure without shortcut', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::input-otp name="code" :length="4" :shortcut="false">
-            <x-stencil::input-otp.group>
-                <x-stencil::input-otp.slot :index="0" />
-                <x-stencil::input-otp.slot :index="1" />
-            </x-stencil::input-otp.group>
-            <x-stencil::input-otp.separator />
-            <x-stencil::input-otp.group>
-                <x-stencil::input-otp.slot :index="2" />
-                <x-stencil::input-otp.slot :index="3" />
-            </x-stencil::input-otp.group>
-        </x-stencil::input-otp>
+        <x-ui::input-otp name="code" :length="4" :shortcut="false">
+            <x-ui::input-otp.group>
+                <x-ui::input-otp.slot :index="0" />
+                <x-ui::input-otp.slot :index="1" />
+            </x-ui::input-otp.group>
+            <x-ui::input-otp.separator />
+            <x-ui::input-otp.group>
+                <x-ui::input-otp.slot :index="2" />
+                <x-ui::input-otp.slot :index="3" />
+            </x-ui::input-otp.group>
+        </x-ui::input-otp>
     BLADE);
 
     expect($html)
@@ -124,7 +124,7 @@ it('renders full compound structure without shortcut', function () {
 
 it('defaults to full width when no custom class is provided', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::input-otp name="code" />
+        <x-ui::input-otp name="code" />
     BLADE);
 
     expect($html)->toContain('input-otp flex min-w-0 items-center gap-2 w-full');
@@ -132,7 +132,7 @@ it('defaults to full width when no custom class is provided', function () {
 
 it('allows width utilities on the root to override the default w-full', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::input-otp name="code" class="w-auto" />
+        <x-ui::input-otp name="code" class="w-auto" />
     BLADE);
 
     expect($html)->toContain('input-otp flex min-w-0 items-center gap-2 w-auto');
@@ -140,7 +140,7 @@ it('allows width utilities on the root to override the default w-full', function
 
 it('wires the control id onto the first slot', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::input-otp name="code" input-otp-id="verify-code" />
+        <x-ui::input-otp name="code" input-otp-id="verify-code" />
     BLADE);
 
     expect($html)

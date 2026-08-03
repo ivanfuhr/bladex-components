@@ -8,7 +8,7 @@ use Illuminate\Support\ViewErrorBag;
 
 it('renders a file upload root with native file input and dropzone', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::file-upload name="avatar" accept="image/*" />
+        <x-ui::file-upload name="avatar" accept="image/*" />
     BLADE);
 
     expect($html)
@@ -25,9 +25,9 @@ it('renders a file upload root with native file input and dropzone', function ()
 
 it('renders custom dropzone content in shortcut mode', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::file-upload name="docs">
-            <x-stencil::file-upload.dropzone heading="Upload documents" text="PDF up to 10MB" />
-        </x-stencil::file-upload>
+        <x-ui::file-upload name="docs">
+            <x-ui::file-upload.dropzone heading="Upload documents" text="PDF up to 10MB" />
+        </x-ui::file-upload>
     BLADE);
 
     expect($html)
@@ -39,7 +39,7 @@ it('renders custom dropzone content in shortcut mode', function () {
 
 it('normalizes multiple field names to array syntax', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::file-upload name="attachments" :multiple="true" />
+        <x-ui::file-upload name="attachments" :multiple="true" />
     BLADE);
 
     expect($html)
@@ -50,7 +50,7 @@ it('normalizes multiple field names to array syntax', function () {
 
 it('marks the control invalid when the invalid prop is true', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::file-upload name="avatar" :invalid="true" />
+        <x-ui::file-upload name="avatar" :invalid="true" />
     BLADE);
 
     expect($html)
@@ -60,7 +60,7 @@ it('marks the control invalid when the invalid prop is true', function () {
 
 it('disables the input and dropzone when the disabled prop is true', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::file-upload name="avatar" :disabled="true" />
+        <x-ui::file-upload name="avatar" :disabled="true" />
     BLADE);
 
     expect($html)
@@ -75,9 +75,9 @@ it('inherits field invalid state from the Field shell', function () {
     view()->share('errors', $errors);
 
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::field name="avatar">
-            <x-stencil::file-upload name="avatar" />
-        </x-stencil::field>
+        <x-ui::field name="avatar">
+            <x-ui::file-upload name="avatar" />
+        </x-ui::field>
     BLADE);
 
     expect($html)
@@ -87,10 +87,10 @@ it('inherits field invalid state from the Field shell', function () {
 
 it('renders full compound structure without shortcut', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::file-upload name="docs" :shortcut="false" :multiple="true">
-            <x-stencil::file-upload.dropzone heading="Drop files" text="Any type" />
-            <x-stencil::file-upload.list />
-        </x-stencil::file-upload>
+        <x-ui::file-upload name="docs" :shortcut="false" :multiple="true">
+            <x-ui::file-upload.dropzone heading="Drop files" text="Any type" />
+            <x-ui::file-upload.list />
+        </x-ui::file-upload>
     BLADE);
 
     expect($html)
@@ -104,7 +104,7 @@ it('renders full compound structure without shortcut', function () {
 
 it('renders a static file item with formatted size', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::file-upload.item heading="report.pdf" :size="2048" />
+        <x-ui::file-upload.item heading="report.pdf" :size="2048" />
     BLADE);
 
     expect($html)
@@ -116,7 +116,7 @@ it('renders a static file item with formatted size', function () {
 
 it('defaults to full width when no custom class is provided', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::file-upload name="avatar" />
+        <x-ui::file-upload name="avatar" />
     BLADE);
 
     expect($html)->toContain('file-upload flex min-w-0 flex-col gap-3 w-full');
@@ -124,19 +124,18 @@ it('defaults to full width when no custom class is provided', function () {
 
 it('allows width utilities on the root to override the default w-full', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::file-upload name="avatar" class="w-80" />
+        <x-ui::file-upload name="avatar" class="w-80" />
     BLADE);
 
     expect($html)->toContain('file-upload flex min-w-0 flex-col gap-3 w-80');
 });
 
-it('wires the control id between the dropzone and native input', function () {
+it('wires the control id to the native input', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::file-upload name="avatar" file-upload-id="avatar-upload" />
+        <x-ui::file-upload name="avatar" file-upload-id="avatar-upload" />
     BLADE);
 
     expect($html)
         ->toContain('id="avatar-upload"')
-        ->toContain('aria-controls="avatar-upload"')
         ->toContain('data-file-upload-id="avatar-upload"');
 });

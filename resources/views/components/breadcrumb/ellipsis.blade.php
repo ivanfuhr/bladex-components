@@ -9,5 +9,5 @@
     ])
 }}>
     <span class="text-zinc-500 dark:text-zinc-400">…</span>
-    <span class="sr-only">{{ __('stencil::messages.breadcrumb_ellipsis') }}</span>
+    <span class="sr-only">{{ __('More') }}</span>
 </span>

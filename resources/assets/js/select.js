@@ -2,6 +2,8 @@
  * Stencil — custom listbox select (vanilla JS, no Alpine).
  */
 
+import { createBindSignal } from './shared/lifecycle.js';
+
 const SELECT_SELECTOR = '[data-select]';
 const initialized = new WeakSet();
 
@@ -9,6 +11,16 @@ const initialized = new WeakSet();
  * @param {ParentNode} root
  */
 export function initSelects(root = document) {
+    document
+        .querySelectorAll('[data-select-content][data-select-portaled]')
+        .forEach((content) => {
+            if (!(content instanceof HTMLElement) || content.closest('[data-select]')) {
+                return;
+            }
+
+            content.remove();
+        });
+
     root.querySelectorAll(SELECT_SELECTOR).forEach((element) => {
         if (!(element instanceof HTMLElement)) {
             return;
@@ -62,6 +74,7 @@ function bindSelect(root) {
 
     const portalMarker = document.createComment('stencil-select-portal');
     let portalInserted = false;
+    const signal = createBindSignal(root);
 
     const options = () =>
         Array.from(content.querySelectorAll('[data-select-item]')).filter(
@@ -514,20 +527,28 @@ function bindSelect(root) {
         }
     });
 
-    document.addEventListener('pointerdown', (event) => {
-        if (!open) {
-            return;
-        }
-        if (!containsTarget(event.target)) {
-            setOpen(false);
-        }
-    });
+    document.addEventListener(
+        'pointerdown',
+        (event) => {
+            if (!open) {
+                return;
+            }
+            if (!containsTarget(event.target)) {
+                setOpen(false);
+            }
+        },
+        { signal },
+    );
 
-    window.addEventListener('resize', () => {
-        if (open) {
-            positionContent();
-        }
-    });
+    window.addEventListener(
+        'resize',
+        () => {
+            if (open) {
+                positionContent();
+            }
+        },
+        { signal },
+    );
 
     window.addEventListener(
         'scroll',
@@ -536,7 +557,7 @@ function bindSelect(root) {
                 positionContent();
             }
         },
-        true,
+        { capture: true, signal },
     );
 
     trigger.addEventListener('keydown', (event) => {

@@ -1,13 +1,3 @@
-@props([
-    'paginator' => null,
-])
-
-@php
-    use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-
-    $hasPaginator = $paginator instanceof LengthAwarePaginator;
-@endphp
-
 <nav {{
     $attributes->class([
         'pagination',
@@ -19,29 +9,29 @@
     ])
 }}>
     @if ($hasPaginator)
-        <x-stencil::pagination.content>
-            <x-stencil::pagination.item>
-                <x-stencil::pagination.previous
+        <x-ui::pagination.content>
+            <x-ui::pagination.item>
+                <x-ui::pagination.previous
                     :href="$paginator->previousPageUrl() ?? '#'"
                     :disabled="$paginator->onFirstPage()"
                 />
-            </x-stencil::pagination.item>
+            </x-ui::pagination.item>
 
             @foreach ($paginator->getUrlRange(max(1, $paginator->currentPage() - 1), min($paginator->lastPage(), $paginator->currentPage() + 1)) as $page => $url)
-                <x-stencil::pagination.item>
-                    <x-stencil::pagination.link :href="$url" :is-active="$page === $paginator->currentPage()">
+                <x-ui::pagination.item>
+                    <x-ui::pagination.link :href="$url" :is-active="$page === $paginator->currentPage()">
                         {{ $page }}
-                    </x-stencil::pagination.link>
-                </x-stencil::pagination.item>
+                    </x-ui::pagination.link>
+                </x-ui::pagination.item>
             @endforeach
 
-            <x-stencil::pagination.item>
-                <x-stencil::pagination.next
+            <x-ui::pagination.item>
+                <x-ui::pagination.next
                     :href="$paginator->nextPageUrl() ?? '#'"
                     :disabled="! $paginator->hasMorePages()"
                 />
-            </x-stencil::pagination.item>
-        </x-stencil::pagination.content>
+            </x-ui::pagination.item>
+        </x-ui::pagination.content>
     @else
         {{ $slot }}
     @endif

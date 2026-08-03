@@ -1,7 +1,3 @@
-@props([
-    'field' => 'value',
-])
-
 <template data-chart-template="point" data-field="{{ $field }}">
     <circle
         {{

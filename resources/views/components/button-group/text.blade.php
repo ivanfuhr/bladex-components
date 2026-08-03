@@ -1,5 +1,3 @@
-@props([])
-
 <div {{
     $attributes->class([
         'button-group__text',

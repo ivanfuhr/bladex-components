@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Ivanfuhr\Stencil\Support\ProjectConfig;
 use Ivanfuhr\Stencil\Support\Typography\TypographyConfig;
 use Ivanfuhr\Stencil\Support\Typography\TypographyScale;
 
@@ -20,26 +19,16 @@ it('rejects unknown size tokens', function (): void {
     app(TypographyScale::class)->classes('huge');
 })->throws(InvalidArgumentException::class);
 
-it('merges partial scale overrides from project config', function (): void {
-    $configPath = app(ProjectConfig::class)->path();
-
-    file_put_contents($configPath, json_encode([
-        'registry' => 'package://registry.json',
-        'paths' => ['ui' => 'resources/views/ui'],
-        'typography' => [
-            'scale' => [
-                'sm' => ['text' => 'text-xs', 'leading' => 'leading-4'],
-            ],
-        ],
-    ], JSON_THROW_ON_ERROR)."\n");
+it('merges partial scale overrides from package config', function (): void {
+    config([
+        'stencil.typography.scale.sm' => ['text' => 'text-xs', 'leading' => 'leading-4'],
+    ]);
 
     $this->app->forgetInstance(TypographyConfig::class);
     $this->app->forgetInstance(TypographyScale::class);
 
     expect(app(TypographyScale::class)->classes('sm'))->toBe('text-xs leading-4')
         ->and(app(TypographyScale::class)->classes('lg'))->toBe('text-lg leading-7');
-
-    @unlink($configPath);
 });
 
 it('only exposes the four scale keys from config', function (): void {

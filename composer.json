@@ -86,9 +86,10 @@
             "@php -d memory_limit=512M vendor/bin/pest --type-coverage --min=100"
         ],
         "test:unit": [
-            "vendor/bin/pest --parallel --exclude-group=registry-isolated --exclude-group=config-isolated",
-            "vendor/bin/pest --group=registry-isolated",
-            "vendor/bin/pest --group=config-isolated"
+            "vendor/bin/pest --parallel"
+        ],
+        "assets:build": [
+            "npm run build"
         ],
         "test": [
             "@analyse",
@@ -98,10 +99,6 @@
         ],
         "clear": [
             "@php vendor/bin/testbench package:purge-skeleton --ansi"
-        ],
-        "registry:build": [
-            "@php scripts/build-stubs.php",
-            "@php scripts/build-registry.php"
         ]
     },
     "extra": {

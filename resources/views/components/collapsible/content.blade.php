@@ -1,14 +1,3 @@
-@props([])
-
-@aware([
-    'open' => false,
-    'transition' => false,
-])
-
-@php
-    $isOpen = (bool) $open;
-@endphp
-
 <div {{
     $attributes->class([
         'collapsible__content',
@@ -20,6 +9,9 @@
         $transition && ! $isOpen ? 'grid-rows-[0fr] opacity-0' : null,
         ! $transition && ! $isOpen ? 'hidden' : null,
     ])->merge([
+        'id' => $resolvedContentId,
+        'role' => 'region',
+        'aria-labelledby' => filled($triggerId) ? $triggerId : null,
         'data-collapsible-content' => true,
         'data-state' => $isOpen ? 'open' : 'closed',
         'hidden' => (! $transition && ! $isOpen) ? true : null,

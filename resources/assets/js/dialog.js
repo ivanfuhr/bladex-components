@@ -4,6 +4,7 @@
 
 const DIALOG_CONTENT_SELECTOR = '[data-dialog-content]';
 const initialized = new WeakSet();
+const boundTriggers = new WeakSet();
 
 /** @type {Map<string, HTMLDialogElement>} */
 const namedDialogs = new Map();
@@ -30,11 +31,11 @@ export function initDialogs(root = document) {
             return;
         }
 
-        if (trigger.dataset.dialogTriggerBound === 'true') {
+        if (boundTriggers.has(trigger)) {
             return;
         }
 
-        trigger.dataset.dialogTriggerBound = 'true';
+        boundTriggers.add(trigger);
         bindTrigger(trigger);
     });
 }

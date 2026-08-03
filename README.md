@@ -4,7 +4,7 @@
   <img src="docs/images/banner.png" alt="Stencil — the modern component system for Laravel Blade" />
 </a>
 
-**Composable Blade primitives for Laravel — registry CLI and owned `x-ui::*` components.**
+**Composable Blade primitives for Laravel — class components, `x-ui::*`, and Tailwind v4.**
 
 <p>
     <a href="https://packagist.org/packages/ivanfuhr/stencil"><img src="https://img.shields.io/packagist/v/ivanfuhr/stencil.svg?style=flat-square" alt="Packagist"></a>
@@ -22,23 +22,21 @@
 
 | 🧩 **Components** | 📖 **Guide** | 🛠 **Project** |
 | :--- | :--- | :--- |
-| [Button](#button) · [Button Group](#button-group) · [Toggle](#toggle) · [Toggle Group](#toggle-group) · [Input](#input) · [Label](#label) · [Field](#field) · [Textarea](#textarea) · [Checkbox](#checkbox) · [Radio](#radio) · [Switch](#switch) · [Select](#select) · [Dialog](#dialog) · [Command](#command) · [Accordion](#accordion) · [Sidebar](#sidebar) · [Collapsible](#collapsible) · [Avatar](#avatar) · [Badge](#badge) · [Breadcrumb](#breadcrumb) · [Card](#card) · [Stat](#stat) · [Chart](#chart) · [Dropdown Menu](#dropdown-menu) · [Separator](#separator) · [Skeleton](#skeleton) · [Empty](#empty) · [Tabs](#tabs) · [Stepper](#stepper) · [Tooltip](#tooltip) · [Toast](#toast) · [Progress](#progress) · [Alert](#alert) · [Table](#table) · [Typography](#typography) · [Icons](#icons) | [Installation](#installation) · [Usage](#usage) · [Registry CLI](#registry-cli) · [Tailwind](#tailwind-css) · [Playbook](#development) | [Changelog](CHANGELOG.md) · [Contributing](.github/CONTRIBUTING.md) · [Security](.github/SECURITY.md) · [License](LICENSE.md) |
+| [Button](#button) · [Button Group](#button-group) · [Toggle](#toggle) · [Toggle Group](#toggle-group) · [Input](#input) · [Label](#label) · [Field](#field) · [Textarea](#textarea) · [Checkbox](#checkbox) · [Radio](#radio) · [Switch](#switch) · [Select](#select) · [Dialog](#dialog) · [Command](#command) · [Accordion](#accordion) · [Sidebar](#sidebar) · [Collapsible](#collapsible) · [Avatar](#avatar) · [Badge](#badge) · [Breadcrumb](#breadcrumb) · [Card](#card) · [Stat](#stat) · [Chart](#chart) · [Dropdown Menu](#dropdown-menu) · [Separator](#separator) · [Skeleton](#skeleton) · [Empty](#empty) · [Tabs](#tabs) · [Stepper](#stepper) · [Tooltip](#tooltip) · [Toast](#toast) · [Progress](#progress) · [Alert](#alert) · [Table](#table) · [Typography](#typography) · [Icons](#icons) | [Installation](#installation) · [Usage](#usage) · [Assets](#assets) · [Tailwind](#tailwind-css) · [Playbook](#development) | [Changelog](CHANGELOG.md) · [Contributing](.github/CONTRIBUTING.md) · [Security](.github/SECURITY.md) · [License](LICENSE.md) |
 
 <br>
 
-Copy only what you need with `stencil:add`, use `x-ui::*` in your app, and keep Tailwind v4 + class-based dark mode aligned with the design system.
+Install the package, add the layout directives, import Tailwind entry CSS, and use `x-ui::*` components directly from the package.
 
-Follow [Installation](#installation) and [Usage](#usage), then use the component previews further down once items are installed.
+Follow [Installation](#installation) and [Usage](#usage), then browse the component previews below.
 
 ---
 
 ## Installation
 
 ```bash
-composer require --dev ivanfuhr/stencil
+composer require ivanfuhr/stencil
 ```
-
-The package is a **development dependency** (registry CLI). Run `stencil:init` and `stencil:add` to copy components into your app under `resources/views/ui` and `app/Support/Stencil`. Commit those files so production can run `composer install --no-dev` without the package.
 
 Optional config publish:
 
@@ -50,52 +48,53 @@ php artisan vendor:publish --tag=stencil-config
 
 ## Usage
 
-Initialize the project, browse the registry, then install only what you need. `stencil:add` resolves **`registryDependencies`** automatically (for example, `input` also installs `input-group`, `field`, and `text`) and installs declared **`iconDependencies`** as Lucide stubs (for example, `select` pulls in `chevron-down`, `check`, and `x`).
-
-```bash
-php artisan stencil:init
-php artisan stencil:list
-php artisan stencil:add input button select
-```
-
-`stencil:init` scaffolds `stencil.json`, `stencil.lock`, Tailwind integration (`resources/css/stencil.css` + import in `app.css`), support classes, `<x-ui::fonts />`, and registers `App\Providers\StencilUiServiceProvider` in `bootstrap/providers.php` when that file exists.
-
-Use the owned Blade namespace in your app:
+Add Stencil assets to your layout:
 
 ```blade
-<x-ui::input name="email" />
+<head>
+    @stencilStyles
+    <x-ui::fonts />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body>
+    <x-ui::input name="email" />
+    @stencilScripts
+</body>
 ```
 
-**Registry UI items:** `accordion`, `alert`, `avatar`, `badge`, `breadcrumb`, `button`, `button-group`, `calendar`, `card`, `chart`, `checkbox`, `collapsible`, `color-picker`, `combobox`, `command`, `date-picker`, `datetime-picker`, `dialog`, `dropdown-menu`, `empty`, `field`, `file-upload`, `heading`, `icon`, `input`, `input-currency`, `input-group`, `input-otp`, `label`, `pagination`, `pillbox`, `popover`, `progress`, `radio`, `rating`, `repeater`, `select`, `separator`, `sidebar`, `skeleton`, `slider`, `stat`, `stepper`, `switch`, `table`, `tabs`, `text`, `textarea`, `time-picker`, `toast`, `toggle`, `toggle-group`, `tooltip`. Lower-level pieces such as `field`, `input-group`, `label`, and `icon` are usually installed transitively. Components that use Lucide glyphs also install the required icon stubs during `stencil:add`; use `stencil:icon {name}` for any extra icons (see [Icons](#icons)).
+`@stencilScripts` and `@stencilStyles` serve the bundled runtime from `/stencil/stencil.js` and `/stencil/stencil.css` (no publish required). Override with `['url' => asset('vendor/stencil/stencil.js')]` when using published assets.
 
-### Registry CLI
+### Assets
 
-<h3 id="registry-cli"></h3>
+<h3 id="assets"></h3>
 
-| Command | Description |
+| Directive | Description |
 | --- | --- |
-| `stencil:init` | Create `stencil.json`, scaffold owned support/CSS, and `stencil.lock` |
-| `stencil:add {names}` | Install from the registry (includes dependencies) |
-| `stencil:update {name?}` | Refresh installed files |
-| `stencil:remove {names}` | Remove installed components |
-| `stencil:list` | List registry items (`--installed`, `--all`) |
-| `stencil:icon {names}` | Import Lucide icon stubs into `resources/views/ui/icons` |
+| `@stencilStyles` | Base Stencil CSS (tokens, component layers) |
+| `@stencilScripts` | Vanilla JS runtime for interactive components |
+
+Publish static assets (optional):
+
+```bash
+php artisan vendor:publish --tag=stencil-assets
+```
+
+Import extra Lucide icons:
+
+```bash
+php artisan stencil:icon search grip-vertical
+```
 
 ### Tailwind CSS
 
 <h3 id="tailwind-css"></h3>
 
-Owned UI is scanned from `resources/views` and `app/Support/Stencil` via `resources/css/stencil.css`, with class-based dark mode (`.dark` on `<html>`).
+Import the package Tailwind entry in your app CSS (class-based dark mode via `.dark` on `<html>`):
 
 ```css
 @import "tailwindcss";
-
-/* stencil-start */
-@import "./stencil.css";
-/* stencil-end */
+@import "../../vendor/ivanfuhr/stencil/resources/css/stencil.css";
 ```
-
-With `APP_DEBUG=true` and the package still installed, missing integration throws a clear exception (disable via `stencil.validate_tailwind_integration` in config). Default registry URL: `package://registry.json` (overridable in `stencil.json`).
 
 <br>
 
@@ -134,7 +133,6 @@ Variants: `outline`, `primary`, `secondary`, `danger`, `ghost`, `subtle`, `link`
 ```
 
 ```bash
-php artisan stencil:add button icon
 ```
 
 The square button uses the built-in loading icon from `stencil:add icon`.
@@ -176,7 +174,6 @@ Attach related action buttons with shared borders ([shadcn Button Group](https:/
 ```
 
 ```bash
-php artisan stencil:add button-group
 ```
 
 <br>
@@ -198,7 +195,6 @@ Two-state pressed button with `aria-pressed` ([shadcn Toggle](https://ui.shadcn.
 ```
 
 ```bash
-php artisan stencil:add toggle
 ```
 
 <br>
@@ -232,7 +228,6 @@ Single or multiple selection among toggle items ([shadcn Toggle Group](https://u
 ```
 
 ```bash
-php artisan stencil:add toggle-group
 ```
 
 <br>
@@ -287,7 +282,6 @@ Affixes, `prefix` / `suffix` (shortcut sugar for `input.group` + `group.prefix` 
 ```
 
 ```bash
-php artisan stencil:add input icon select switch
 ```
 
 <br>
@@ -318,7 +312,6 @@ Formatted currency display aligned with Laravel [`Number::currency`](https://lar
 ```
 
 ```bash
-php artisan stencil:add input-currency
 ```
 
 <br>
@@ -345,7 +338,6 @@ Accessible `<label>` with optional `badge` and `required` marker. Pairs with any
 ```
 
 ```bash
-php artisan stencil:add label
 ```
 
 <br>
@@ -375,7 +367,6 @@ Composable field shell: label, control, description, and Laravel errors — insp
 ```
 
 ```bash
-php artisan stencil:add field
 ```
 
 <br>
@@ -398,7 +389,6 @@ Multi-line control with the same invalid/disabled behavior as `input` ([shadcn T
 ```
 
 ```bash
-php artisan stencil:add textarea
 ```
 
 <br>
@@ -433,7 +423,6 @@ Native checkbox for forms and multi-select ([Flux checkbox](https://fluxui.dev/d
 ```
 
 ```bash
-php artisan stencil:add checkbox
 ```
 
 <br>
@@ -457,7 +446,6 @@ php artisan stencil:add checkbox
 ```
 
 ```bash
-php artisan stencil:add radio
 ```
 
 <br>
@@ -491,7 +479,6 @@ php artisan stencil:add radio
 ```
 
 ```bash
-php artisan stencil:add switch
 ```
 
 <br>
@@ -543,7 +530,6 @@ Use `multiple` for multi-select. The field name is normalized to `name[]` when n
 ```
 
 ```bash
-php artisan stencil:add select
 ```
 
 <br>
@@ -604,7 +590,6 @@ Default `shortcut` wraps items with `combobox.input`, `combobox.content`, and `c
 ```
 
 ```bash
-php artisan stencil:add combobox
 ```
 
 <br>
@@ -647,7 +632,6 @@ Default `shortcut` renders a dropzone (customize via the slot or `heading` / `te
 Wrap the control in a form with `enctype="multipart/form-data"` (Laravel forms that include files do this automatically when using `@csrf` with `files` / `enctype`).
 
 ```bash
-php artisan stencil:add file-upload
 ```
 
 <br>
@@ -703,7 +687,6 @@ $request->validate([
 Put `data-repeater-field` on the control that should submit (usually the `input` itself). After add/remove, the script dispatches `stencil:mount` so sibling Stencil widgets (`select`, `combobox`, date/time pickers, etc.) can initialize inside cloned rows.
 
 ```bash
-php artisan stencil:add repeater
 ```
 
 <br>
@@ -729,7 +712,6 @@ Free-text tags input. Submits multiple strings as `name[]`. Enter or comma adds 
 ```
 
 ```bash
-php artisan stencil:add pillbox
 ```
 
 <br>
@@ -958,7 +940,6 @@ Default `shortcut` renders slots for `length` (default `6`). Even lengths ≥ 4 
 ```
 
 ```bash
-php artisan stencil:add input-otp
 ```
 
 <br>
@@ -1003,7 +984,6 @@ Supports `min` (default `0`), `max` (default `100`), `step` (default `1`), `valu
 ```
 
 ```bash
-php artisan stencil:add slider
 ```
 
 <br>
@@ -1069,7 +1049,6 @@ Named triggers can live anywhere on the page; use the same `name` on `dialog.tri
 | `preview` | Static, in-page preview for docs (no JS) |
 
 ```bash
-php artisan stencil:add dialog
 ```
 
 <br>
@@ -1134,7 +1113,6 @@ Default `shortcut` wraps items with `command.input`, `command.list`, and `comman
 Keyboard: typeahead filter, ↑/↓ highlight, Enter select (dispatches `stencil:command:select` and closes the dialog), Escape clears or closes.
 
 ```bash
-php artisan stencil:add command
 ```
 
 <br>
@@ -1174,7 +1152,6 @@ Accessible vertically stacked disclosures ([shadcn Accordion](https://ui.shadcn.
 | `item` → `expanded` / `disabled` | Default open / non-interactive |
 
 ```bash
-php artisan stencil:add accordion
 ```
 
 <br>
@@ -1228,7 +1205,6 @@ Composable app-shell navigation ([shadcn Sidebar](https://ui.shadcn.com/docs/com
 ```
 
 ```bash
-php artisan stencil:add sidebar
 ```
 
 <br>
@@ -1253,7 +1229,6 @@ Single-panel expand/collapse ([shadcn Collapsible](https://ui.shadcn.com/docs/co
 ```
 
 ```bash
-php artisan stencil:add collapsible
 ```
 
 <br>
@@ -1279,7 +1254,6 @@ User image or initials ([shadcn Avatar](https://ui.shadcn.com/docs/components/av
 ```
 
 ```bash
-php artisan stencil:add avatar
 ```
 
 <br>
@@ -1301,7 +1275,6 @@ Compact status label ([shadcn Badge](https://ui.shadcn.com/docs/components/badge
 ```
 
 ```bash
-php artisan stencil:add badge
 ```
 
 <br>
@@ -1329,7 +1302,6 @@ Navigation trail ([shadcn Breadcrumb](https://ui.shadcn.com/docs/components/brea
 ```
 
 ```bash
-php artisan stencil:add breadcrumb
 ```
 
 <br>
@@ -1358,7 +1330,6 @@ Content container ([shadcn Card](https://ui.shadcn.com/docs/components/card), [F
 ```
 
 ```bash
-php artisan stencil:add card
 ```
 
 <br>
@@ -1398,7 +1369,6 @@ Dashboard KPI card ([Mary UI Statistic](https://mary-ui.com/docs/components/stat
 ```
 
 ```bash
-php artisan stencil:add stat
 ```
 
 <br>
@@ -1429,7 +1399,6 @@ Composable SVG charts with zero chart-library dependencies ([Flux chart](https:/
 ```
 
 ```bash
-php artisan stencil:add chart
 ```
 
 <br>
@@ -1459,7 +1428,6 @@ Accessible action menu ([shadcn Dropdown Menu](https://ui.shadcn.com/docs/compon
 ```
 
 ```bash
-php artisan stencil:add dropdown-menu
 ```
 
 <br>
@@ -1480,7 +1448,6 @@ Horizontal or vertical divider ([shadcn Separator](https://ui.shadcn.com/docs/co
 ```
 
 ```bash
-php artisan stencil:add separator
 ```
 
 <br>
@@ -1501,7 +1468,6 @@ Loading placeholder ([shadcn Skeleton](https://ui.shadcn.com/docs/components/ske
 ```
 
 ```bash
-php artisan stencil:add skeleton
 ```
 
 <br>
@@ -1532,7 +1498,6 @@ Empty state for lists, tables, and first-run screens ([shadcn Empty](https://ui.
 ```
 
 ```bash
-php artisan stencil:add empty
 ```
 
 <br>
@@ -1559,7 +1524,6 @@ Tabbed panels ([shadcn Tabs](https://ui.shadcn.com/docs/components/tabs), [Flux 
 ```
 
 ```bash
-php artisan stencil:add tabs
 ```
 
 <br>
@@ -1604,7 +1568,6 @@ Multi-step wizard indicator ([Filament Wizard](https://filamentphp.com/docs/3.x/
 ```
 
 ```bash
-php artisan stencil:add stepper
 ```
 
 <br>
@@ -1629,7 +1592,6 @@ Hover/focus hint ([shadcn Tooltip](https://ui.shadcn.com/docs/components/tooltip
 ```
 
 ```bash
-php artisan stencil:add tooltip
 ```
 
 <br>
@@ -1651,7 +1613,6 @@ Transient notifications / Sonner-style toasts ([shadcn Toast](https://ui.shadcn.
 ```
 
 ```bash
-php artisan stencil:add toast
 ```
 
 <br>
@@ -1672,7 +1633,6 @@ Progress bar ([shadcn Progress](https://ui.shadcn.com/docs/components/progress))
 ```
 
 ```bash
-php artisan stencil:add progress
 ```
 
 <br>
@@ -1694,7 +1654,6 @@ Inline callout ([shadcn Alert](https://ui.shadcn.com/docs/components/alert)). Va
 ```
 
 ```bash
-php artisan stencil:add alert
 ```
 
 <br>
@@ -1728,7 +1687,6 @@ Semantic data table ([shadcn Table](https://ui.shadcn.com/docs/components/table)
 ```
 
 ```bash
-php artisan stencil:add table
 ```
 
 <br>
@@ -1762,7 +1720,6 @@ Page controls ([shadcn Pagination](https://ui.shadcn.com/docs/components/paginat
 ```
 
 ```bash
-php artisan stencil:add pagination
 ```
 
 <br>
@@ -1795,7 +1752,6 @@ Aggregate README media for `<x-ui::heading />` (semantic levels `1`–`6`) and `
 ```
 
 ```bash
-php artisan stencil:add text heading
 ```
 
 <br>
@@ -1805,7 +1761,6 @@ php artisan stencil:add text heading
 On-demand [Lucide](https://lucide.dev/icons/) icons — `outline` (16px), `mini` (20px), and `micro` (12px) variants. The built-in loading spinner ships with `stencil:add icon`.
 
 ```bash
-php artisan stencil:add icon
 php artisan stencil:icon search
 ```
 

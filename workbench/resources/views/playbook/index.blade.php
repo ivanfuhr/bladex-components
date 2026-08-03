@@ -5,12 +5,12 @@
 @section('content')
     <div class="space-y-10">
         <header class="max-w-2xl space-y-3">
-            <x-stencil::heading :level="1"> Component catalog </x-stencil::heading>
-            <x-stencil::text variant="subtle" class="max-w-prose">
+            <x-ui::heading :level="1"> Component catalog </x-ui::heading>
+            <x-ui::text variant="subtle" class="max-w-prose">
                 Tune props and see rendered output from the package namespace. Start the app with
                 <code class="rounded-md border border-zinc-200 bg-white px-1.5 py-0.5 font-mono text-xs text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200">composer serve</code>
                 from the repository root.
-            </x-stencil::text>
+            </x-ui::text>
         </header>
 
         <a
@@ -19,11 +19,11 @@
         >
             <div class="min-w-0 space-y-1">
                 <p class="text-xs font-medium tracking-wide text-zinc-400 uppercase dark:text-zinc-500">Scenario</p>
-                <x-stencil::heading :level="2" class="text-zinc-50! dark:text-zinc-950!"
-                    >Event Studio showcase</x-stencil::heading>
-                <x-stencil::text size="sm" class="text-zinc-300 dark:text-zinc-600">
+                <x-ui::heading :level="2" class="text-zinc-50! dark:text-zinc-950!"
+                    >Event Studio showcase</x-ui::heading>
+                <x-ui::text size="sm" class="text-zinc-300 dark:text-zinc-600">
                     One screen composing every component in a realistic event-editor flow.
-                </x-stencil::text>
+                </x-ui::text>
             </div>
             <span class="inline-flex shrink-0 items-center text-sm font-medium">
                 Open showcase
@@ -62,12 +62,10 @@
                                             >{{ $playbook->slug }}</span>
                                         /&gt;
                                     </p>
-                                    <x-stencil::heading :level="3" class="mt-4">
-                                        {{ $playbook->title }}
-                                    </x-stencil::heading>
-                                    <x-stencil::text size="sm" variant="subtle" class="mt-2 flex-1">
+                                    <x-ui::heading :level="3" class="mt-4"> {{ $playbook->title }} </x-ui::heading>
+                                    <x-ui::text size="sm" variant="subtle" class="mt-2 flex-1">
                                         {{ $playbook->description }}
-                                    </x-stencil::text>
+                                    </x-ui::text>
                                     <span class="mt-5 inline-flex items-center text-sm font-medium text-zinc-900 dark:text-zinc-100">
                                         Open playground
                                         <span

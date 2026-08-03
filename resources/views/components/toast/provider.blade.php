@@ -1,18 +1,3 @@
-@props([
-    'position' => 'bottom-right',
-])
-
-@php
-    $positionClasses = match ($position) {
-        'top-left' => 'left-4 top-4 items-start',
-        'top-center' => 'left-1/2 top-4 -translate-x-1/2 items-center',
-        'top-right' => 'right-4 top-4 items-end',
-        'bottom-left' => 'bottom-4 left-4 items-start',
-        'bottom-center' => 'bottom-4 left-1/2 -translate-x-1/2 items-center',
-        default => 'bottom-4 right-4 items-end',
-    };
-@endphp
-
 <div {{
     $attributes->class([
         'toast-provider',
@@ -22,7 +7,7 @@
         'data-toast-provider' => true,
         'data-position' => $position,
         // Live region lives on each toast (role=status|alert) to avoid nested announcements.
-        'data-toast-dismiss-label' => __('stencil::messages.toast_close'),
+        'data-toast-dismiss-label' => __('Dismiss'),
     ])
 }}>
     {{ $slot }}

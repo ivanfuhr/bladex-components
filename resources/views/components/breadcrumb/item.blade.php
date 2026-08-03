@@ -1,7 +1,3 @@
-@props([
-    'href' => null,
-])
-
 <li {{
     $attributes->class([
         'breadcrumb__item',
@@ -11,7 +7,7 @@
     ])
 }}>
     @if (filled($href))
-        <x-stencil::breadcrumb.link :href="$href">{{ $slot }}</x-stencil::breadcrumb.link>
+        <x-ui::breadcrumb.link :href="$href">{{ $slot }}</x-ui::breadcrumb.link>
     @elseif (! $slot->isEmpty())
         {{ $slot }}
     @endif

@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a toast provider and toast message', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::toast.provider position="top-right">
-            <x-stencil::toast variant="success" title="Saved" description="Your changes were saved." />
-        </x-stencil::toast.provider>
+        <x-ui::toast.provider position="top-right">
+            <x-ui::toast variant="success" title="Saved" description="Your changes were saved." />
+        </x-ui::toast.provider>
     BLADE);
 
     expect($html)
@@ -25,7 +25,7 @@ it('renders a toast provider and toast message', function () {
 
 it('uses alert role for danger toast variants', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::toast variant="danger" title="Failed" description="Could not save." />
+        <x-ui::toast variant="danger" title="Failed" description="Could not save." />
     BLADE);
 
     expect($html)

@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a button group with role group', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::button-group aria-label="Actions">
-            <x-stencil::button variant="outline">One</x-stencil::button>
-            <x-stencil::button variant="outline">Two</x-stencil::button>
-        </x-stencil::button-group>
+        <x-ui::button-group aria-label="Actions">
+            <x-ui::button variant="outline">One</x-ui::button>
+            <x-ui::button variant="outline">Two</x-ui::button>
+        </x-ui::button-group>
     BLADE);
 
     expect($html)
@@ -23,10 +23,10 @@ it('renders a button group with role group', function () {
 
 it('supports vertical orientation', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::button-group orientation="vertical">
-            <x-stencil::button>Up</x-stencil::button>
-            <x-stencil::button>Down</x-stencil::button>
-        </x-stencil::button-group>
+        <x-ui::button-group orientation="vertical">
+            <x-ui::button>Up</x-ui::button>
+            <x-ui::button>Down</x-ui::button>
+        </x-ui::button-group>
     BLADE);
 
     expect($html)
@@ -36,12 +36,12 @@ it('supports vertical orientation', function () {
 
 it('renders separator and text affixes', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-stencil::button-group>
-            <x-stencil::button-group.text>https://</x-stencil::button-group.text>
-            <x-stencil::button variant="outline">Copy</x-stencil::button>
-            <x-stencil::button-group.separator />
-            <x-stencil::button variant="outline">Paste</x-stencil::button>
-        </x-stencil::button-group>
+        <x-ui::button-group>
+            <x-ui::button-group.text>https://</x-ui::button-group.text>
+            <x-ui::button variant="outline">Copy</x-ui::button>
+            <x-ui::button-group.separator />
+            <x-ui::button variant="outline">Paste</x-ui::button>
+        </x-ui::button-group>
     BLADE);
 
     expect($html)

@@ -1,47 +1,3 @@
-@props([
-    'mode' => 'single',
-    'months' => null,
-    'value' => null,
-    'name' => null,
-    'min' => null,
-    'max' => null,
-    'unavailable' => null,
-    'startDay' => null,
-    'locale' => null,
-    'timezone' => null,
-    'weekNumbers' => false,
-    'selectableHeader' => false,
-    'withToday' => false,
-    'fixedWeeks' => false,
-    'openTo' => null,
-    'forceOpenTo' => false,
-    'size' => 'default',
-    'minRange' => null,
-    'maxRange' => null,
-])
-
-@php
-    use Ivanfuhr\Stencil\Support\Date\DateFormatter;
-
-    $range = $mode === 'range';
-    $monthCount = (int) ($months ?? ($range ? 2 : 1));
-    $resolvedTimezone = DateFormatter::resolveTimezone($timezone);
-    $resolvedLocale = $locale ?? app()->getLocale();
-    $resolvedValue = DateFormatter::normalizeDateValue($value, $mode);
-
-    if (is_array($unavailable)) {
-        $unavailable = collect($unavailable)->implode(',');
-    }
-
-    $sizeClasses = match ($size) {
-        'sm' => 'size-9 text-sm',
-        'lg' => 'size-11 text-sm',
-        'xl' => 'size-12 text-sm',
-        '2xl' => 'size-12 sm:size-14 text-sm',
-        default => 'size-10 text-sm',
-    };
-@endphp
-
 <div
     {{ $attributes->class(['calendar w-full']) }}
     data-calendar
@@ -77,7 +33,7 @@
                     type="button"
                     class="inline-flex size-8 items-center justify-center rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                     data-calendar-today
-                    aria-label="{{ __('stencil::messages.preset_today') }}"
+                    aria-label="{{ __('Today') }}"
                 >
                     <span class="text-xs font-semibold" data-calendar-today-label></span>
                 </button>
@@ -86,17 +42,17 @@
                 type="button"
                 class="inline-flex size-8 items-center justify-center rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                 data-calendar-prev
-                aria-label="{{ __('stencil::messages.calendar_previous_month') }}"
+                aria-label="{{ __('Previous month') }}"
             >
-                <x-stencil::icon name="chevron-left" class="size-4" />
+                <x-ui::icon name="chevron-left" class="size-4" />
             </button>
             <button
                 type="button"
                 class="inline-flex size-8 items-center justify-center rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                 data-calendar-next
-                aria-label="{{ __('stencil::messages.calendar_next_month') }}"
+                aria-label="{{ __('Next month') }}"
             >
-                <x-stencil::icon name="chevron-right" class="size-4" />
+                <x-ui::icon name="chevron-right" class="size-4" />
             </button>
         </div>
     </div>

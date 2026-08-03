@@ -1,69 +1,6 @@
-@props([
-    'name' => null,
-    'value' => null,
-    'mode' => 'single',
-    'type' => 'button',
-    'placeholder' => null,
-    'size' => null,
-    'invalid' => false,
-    'disabled' => false,
-    'clearable' => false,
-    'locale' => null,
-    'timezone' => null,
-    'months' => null,
-    'min' => null,
-    'max' => null,
-    'unavailable' => null,
-    'startDay' => null,
-    'weekNumbers' => false,
-    'selectableHeader' => false,
-    'withToday' => false,
-    'fixedWeeks' => false,
-    'openTo' => null,
-    'forceOpenTo' => false,
-    'withConfirmation' => false,
-    'withInputs' => false,
-    'withPresets' => false,
-    'presets' => null,
-    'minRange' => null,
-    'maxRange' => null,
-    'shortcut' => true,
-    'allTimeStart' => null,
-])
-
-@aware([
-    'fieldInvalid' => false,
-])
-
-@php
-    use Ivanfuhr\Stencil\Support\Date\DateFormatter;
-    use Ivanfuhr\Stencil\Support\Date\DateRangePreset;
-
-    $invalid = $invalid || $fieldInvalid;
-    $range = $mode === 'range';
-    $resolvedTimezone = DateFormatter::resolveTimezone($timezone);
-    $resolvedLocale = $locale ?? app()->getLocale();
-    $resolvedValue = DateFormatter::normalizeDateValue($value, $mode);
-    $resolvedPlaceholder = $placeholder ?? ($range
-        ? __('stencil::messages.date_picker_range_placeholder')
-        : __('stencil::messages.date_picker_placeholder'));
-    $monthCount = (int) ($months ?? ($range ? 2 : 1));
-
-    $presetKeys = $withPresets
-        ? ($presets ?? 'today yesterday thisWeek last7Days thisMonth yearToDate allTime custom')
-        : null;
-
-    $presetMeta = $presetKeys
-        ? DateRangePreset::metadataForKeys(
-            $presetKeys,
-            filled($allTimeStart) ? \Illuminate\Support\Carbon::parse($allTimeStart) : null,
-        )
-        : [];
-@endphp
-
 <div
     {{
-        $attributes->except(['shortcut'])->class([
+        $attributes->class([
             'date-picker relative min-w-0',
             'w-full' => ! filled($attributes->get('class')),
         ])
@@ -85,19 +22,19 @@
         @if (isset($trigger))
             {{ $trigger }}
         @elseif ($type === 'input')
-            <x-stencil::date-picker.input :$placeholder :$invalid :$disabled :$clearable :$size />
+            <x-ui::date-picker.input :$placeholder :$invalid :$disabled :$clearable :$size />
         @else
-            <x-stencil::date-picker.button :$placeholder :$invalid :$disabled :$clearable :$size />
+            <x-ui::date-picker.button :$placeholder :$invalid :$disabled :$clearable :$size />
         @endif
 
-        <x-stencil::date-picker.panel :$range>
+        <x-ui::date-picker.panel :$range>
             @if ($withPresets && $presetMeta !== [])
-                <x-stencil::date-picker.presets :preset-meta="$presetMeta">
+                <x-ui::date-picker.presets :preset-meta="$presetMeta">
                     @if ($withInputs)
-                        <x-stencil::date-picker.manual-inputs />
+                        <x-ui::date-picker.manual-inputs />
                     @endif
 
-                    <x-stencil::calendar
+                    <x-ui::calendar
                         :mode="$mode"
                         :months="$monthCount"
                         :value="$resolvedValue"
@@ -117,14 +54,14 @@
                         :min-range="$minRange"
                         :max-range="$maxRange"
                     />
-                </x-stencil::date-picker.presets>
+                </x-ui::date-picker.presets>
             @else
                 <div class="min-w-0">
                     @if ($withInputs)
-                        <x-stencil::date-picker.manual-inputs />
+                        <x-ui::date-picker.manual-inputs />
                     @endif
 
-                    <x-stencil::calendar
+                    <x-ui::calendar
                         :mode="$mode"
                         :months="$monthCount"
                         :value="$resolvedValue"
@@ -148,9 +85,9 @@
             @endif
 
             @if ($withConfirmation)
-                <x-stencil::date-picker.footer :$range />
+                <x-ui::date-picker.footer :$range />
             @endif
-        </x-stencil::date-picker.panel>
+        </x-ui::date-picker.panel>
     @else
         {{ $slot }}
     @endif

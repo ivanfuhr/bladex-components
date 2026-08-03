@@ -1,8 +1,4 @@
-@php
-    $descriptionId = $attributes->get('id') ?? 'dialog-description-'.str_replace('.', '', uniqid('', true));
-@endphp
-
-<x-stencil::text
+<x-ui::text
     variant="subtle"
     {{
         $attributes->except(['id'])->merge([
@@ -12,4 +8,4 @@
     }}
 >
     {{ $slot }}
-</x-stencil::text>
+</x-ui::text>

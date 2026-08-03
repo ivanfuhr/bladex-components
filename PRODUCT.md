@@ -12,7 +12,7 @@ Primary audience: solo developers and small Laravel teams building custom server
 
 ## Product Purpose
 
-Stencil is a **development dependency** (`composer require --dev ivanfuhr/stencil`) that provides a **registry CLI** (shadcn-style) for Laravel Blade UI. Consumers run `stencil:init`, browse with `stencil:list`, and install components with `stencil:add`. Installed files are copied into the host app (`resources/views/ui`, `app/Support/Stencil`, CSS/JS patches) and committed; production runs `composer install --no-dev` without the package. Success means accessible, keyboard-complete `x-ui::*` components under the consumer's control, not opaque vendor views.
+Stencil is a **development dependency** (`composer require --dev ivanfuhr/stencil`) that provides a **registry CLI** (shadcn-style) for Laravel Blade UI. Consumers run `stencil:init`, browse with `stencil:list`, and install components with `stencil:add`. Installed files are copied into the host app (`resources/views/ui`, CSS/JS patches) and committed; production runs `composer install --no-dev` without the package. Success means accessible, keyboard-complete `x-ui::*` components under the consumer's control, not opaque vendor views.
 
 ## Positioning
 
@@ -27,7 +27,7 @@ Neighboring kits may offer one side or the other; Stencil is explicitly built to
 
 - **Distribution:** Packagist package `ivanfuhr/stencil`, MIT license, GitHub at `ivanfuhr/stencil`. Installed as a **dev dependency**; not required at runtime in production.
 - **Registry CLI:** `stencil:init`, `stencil:add`, `stencil:list`, `stencil:update`, `stencil:remove`, `stencil:icon`. Registry source lives in this repo (`registry/`); `composer registry:build` propagates `resources/views/components/` into `registry/items/*.json`.
-- **Shipped to consumers:** Owned copies under `resources/views/ui` and `app/Support/Stencil` (plus Tailwind/CSS/JS integration), not the vendor package itself.
+- **Shipped to consumers:** Owned copies under `resources/views/ui` (plus Tailwind/CSS/JS integration), not the vendor package itself.
 - **Runtime (consumer app):** PHP ^8.3, Laravel Illuminate ^12 || ^13; components render as `x-ui::*` Blade views in the host application.
 - **Development (this repo):** Orchestra Testbench workbench via `composer build` / `composer serve`; interactive playbook at `/playbook` (`composer playbook`) for visual proof only — **not shipped** to consumers.
 - **Validation:** `composer test` (PHPStan, Pint, Pest, type coverage).

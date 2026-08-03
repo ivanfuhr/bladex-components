@@ -26,7 +26,8 @@
             }
         })();
     </script>
-    <x-stencil::fonts />
+    @stencilStyles
+    <x-ui::fonts />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-full bg-zinc-100/90 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
@@ -102,5 +103,11 @@
     <main id="playbook-main" tabindex="-1" class="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
         @yield('content')
     </main>
+    {{--
+        Do not load @stencilScripts here. Vite already pulls widget modules via
+        resources/js/app.js (playbook-preview side-effect imports). A second
+        stencil.js copy would bind the same nodes again and break toggles
+        (accordion/collapsible appear inert after Alpine x-html injection).
+    --}}
 </body>
 </html>

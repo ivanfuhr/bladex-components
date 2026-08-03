@@ -1,76 +1,3 @@
-@props([
-    'name' => null,
-    'value' => null,
-    'placeholder' => null,
-    'size' => null,
-    'invalid' => false,
-    'disabled' => false,
-    'selectId' => null,
-    'listboxId' => null,
-    'shortcut' => true,
-    'multiple' => false,
-    'display' => 'count',
-])
-
-@aware([
-    'fieldInvalid' => false,
-    'controlId' => null,
-])
-
-@php
-    use Illuminate\Support\Arr;
-    use Illuminate\Support\Str;
-
-    $invalid = $invalid || $fieldInvalid;
-    $multiple = (bool) $multiple;
-    $display = in_array($display, ['count', 'chips'], true) ? $display : 'count';
-
-    if (! $multiple) {
-        $display = 'count';
-    }
-
-    $selectId = filled($selectId)
-        ? $selectId
-        : (filled($name) ? $name : 'select-'.str_replace('.', '', uniqid('', true)));
-    $listboxId = filled($listboxId) ? $listboxId : $selectId.'-listbox';
-    $controlId = filled($controlId) ? $controlId : $selectId;
-
-    $fieldName = $name;
-
-    if ($multiple && filled($name) && ! Str::endsWith($name, '[]')) {
-        $fieldName = $name.'[]';
-    }
-
-    $selectedValues = $multiple
-        ? collect(Arr::wrap($value))
-            ->filter(fn ($item) => filled($item))
-            ->map(fn ($item) => (string) $item)
-            ->values()
-            ->all()
-        : [];
-
-    $scalarValue = $multiple ? null : (filled($value) ? (string) $value : '');
-
-    $countTemplate = __('stencil::messages.select_selected_count', ['count' => '{count}']);
-    $chipRemoveLabel = __('stencil::messages.select_remove_chip');
-
-    $rootAttributes = $attributes
-        ->except('shortcut')
-        ->class([
-            'select relative min-w-0',
-            'w-full' => ! filled($attributes->get('class')),
-        ]);
-
-    if ($multiple) {
-        $rootAttributes = $rootAttributes->merge([
-            'data-select-multiple' => true,
-            'data-select-display' => $display,
-            'data-select-count-template' => $countTemplate,
-            'data-select-chip-remove-label' => $chipRemoveLabel,
-        ]);
-    }
-@endphp
-
 <div {{ $rootAttributes }} data-select data-select-id="{{ $selectId }}">
     @if ($multiple)
         <div data-select-hidden-inputs @if (filled($fieldName)) data-select-field-name="{{ $fieldName }}" @endif>
@@ -96,15 +23,26 @@
     @endif
 
     @if ($shortcut)
-        <x-stencil::select.trigger>
+        <x-ui::select.trigger
+            :size="$size"
+            :invalid="$invalid"
+            :disabled="$disabled"
+            :select-id="$selectId"
+            :listbox-id="$listboxId"
+            :multiple="$multiple"
+            :display="$display"
+            :control-id="$controlId"
+        >
             @if ($multiple && $display === 'chips')
-                <x-stencil::select.chips />
+                <x-ui::select.chips :placeholder="$placeholder" :size="$size" />
             @else
-                <x-stencil::select.value :placeholder="$placeholder" />
+                <x-ui::select.value :placeholder="$placeholder" />
             @endif
-        </x-stencil::select.trigger>
+        </x-ui::select.trigger>
 
-        <x-stencil::select.content> {{ $slot }} </x-stencil::select.content>
+        <x-ui::select.content :listbox-id="$listboxId" :size="$size" :multiple="$multiple">
+            {{ $slot }}
+        </x-ui::select.content>
     @else
         {{ $slot }}
     @endif

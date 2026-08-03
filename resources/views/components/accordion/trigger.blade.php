@@ -1,19 +1,3 @@
-@aware([
-    'variant' => null,
-    'expanded' => false,
-    'disabled' => false,
-    'triggerId' => null,
-    'contentId' => null,
-])
-
-@php
-    $isExpanded = (bool) $expanded;
-    $isDisabled = (bool) $disabled;
-    $isReverse = $variant === 'reverse';
-    $resolvedTriggerId = $triggerId ?? 'accordion-trigger-'.str_replace('.', '', uniqid('', true));
-    $resolvedContentId = $contentId;
-@endphp
-
 <h3 class="accordion__heading m-0">
     <button
         type="button"
@@ -40,7 +24,7 @@
             aria-hidden="true"
             data-accordion-icon
         >
-            <x-stencil::icon name="chevron-down" class="size-4" />
+            <x-ui::icon name="chevron-down" class="size-4" />
         </span>
     </button>
 </h3>
