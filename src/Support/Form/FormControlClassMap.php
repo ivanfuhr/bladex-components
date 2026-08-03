@@ -67,8 +67,8 @@ final class FormControlClassMap
         $dimension = $size === 'sm' ? 'size-3.5' : 'size-4';
         $rounded = $type === 'radio' ? 'rounded-full' : 'rounded-[4px]';
 
-        // Checked fill styles live on each control (checkbox vs radio differ).
-        // Shared checked:bg-* here fights Tailwind cascade and paints radios solid.
+        // Checked fill styles live on checkboxControlClasses / radioControlClasses —
+        // shared checked:bg-* here fights Tailwind cascade and paints radios solid.
         return collect([
             'choice-control',
             $dimension,
@@ -80,6 +80,27 @@ final class FormControlClassMap
             'dark:border-zinc-600 dark:bg-zinc-950 dark:focus-visible:ring-zinc-300/20 dark:focus-visible:ring-offset-zinc-950',
             'aria-invalid:border-red-500 aria-invalid:ring-red-500/20',
             'dark:aria-invalid:border-red-500',
+        ])->implode(' ');
+    }
+
+    public function checkboxControlClasses(?string $size = null): string
+    {
+        // Keep checked:bg-* in Support so Tailwind @source emits them (View/Components is not scanned).
+        return collect([
+            $this->choiceControlClasses('checkbox', $size),
+            'appearance-none',
+            'checked:border-zinc-900 checked:bg-zinc-900',
+            'dark:checked:border-zinc-50 dark:checked:bg-zinc-50',
+        ])->implode(' ');
+    }
+
+    public function radioControlClasses(?string $size = null): string
+    {
+        return collect([
+            $this->choiceControlClasses('radio', $size),
+            'appearance-none',
+            'checked:border-zinc-900',
+            'dark:checked:border-zinc-50',
         ])->implode(' ');
     }
 

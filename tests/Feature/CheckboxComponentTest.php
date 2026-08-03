@@ -11,7 +11,9 @@ it('renders a native checkbox control', function () {
         ->toContain('data-checkbox')
         ->toContain('type="checkbox"')
         ->toContain('name="terms"')
-        ->toContain('checked');
+        ->toContain('checked')
+        ->toContain('checked:bg-zinc-900')
+        ->toContain('checked:border-zinc-900');
 });
 
 it('marks checkbox invalid when invalid prop is true', function () {

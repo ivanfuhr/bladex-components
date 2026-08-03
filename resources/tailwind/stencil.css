@@ -32,6 +32,7 @@
 @source "../../src/View/Components/Dialog/Content.php";
 @source "../../src/View/Components/Command/Dialog.php";
 @source inline("open:opacity-100 open:motion-safe:scale-100");
+/* Other Component PHP class maps: scan Support/Tailwind/ComponentClassSources.php (via Support/**). */
 
 /*
  * Native <dialog> open visibility safety net. Unlayered so it always wins over

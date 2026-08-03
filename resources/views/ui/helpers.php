@@ -384,6 +384,27 @@ if (! function_exists('stencil_typography_config')) {
         ])->implode(' ');
     }
 
+    function stencil_checkbox_control_classes(?string $size = null): string
+    {
+        // checked:bg-* must live in scanned Support/helpers sources — View/Components is not @source'd.
+        return collect([
+            stencil_choice_control_classes('checkbox', $size),
+            'appearance-none',
+            'checked:border-zinc-900 checked:bg-zinc-900',
+            'dark:checked:border-zinc-50 dark:checked:bg-zinc-50',
+        ])->implode(' ');
+    }
+
+    function stencil_radio_control_classes(?string $size = null): string
+    {
+        return collect([
+            stencil_choice_control_classes('radio', $size),
+            'appearance-none',
+            'checked:border-zinc-900',
+            'dark:checked:border-zinc-50',
+        ])->implode(' ');
+    }
+
     function stencil_switch_root_classes(?string $size = null): string
     {
         return collect([

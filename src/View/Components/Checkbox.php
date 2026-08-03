@@ -36,12 +36,8 @@ final class Checkbox extends StencilComponent
 
         // Checkmark SVG is applied in stencil.css — Tailwind does not emit
         // checked:bg-[url(data:...)] when the class lives only inside a PHP string.
-        $controlClasses = collect([
-            stencil_choice_control_classes('checkbox', $this->size),
-            'appearance-none',
-            'checked:border-zinc-900 checked:bg-zinc-900',
-            'dark:checked:border-zinc-50 dark:checked:bg-zinc-50',
-        ])->implode(' ');
+        // Checked fill utilities live in FormControlClassMap (Support is @source'd).
+        $controlClasses = stencil_checkbox_control_classes($this->size);
 
         $controlAttributes = stencil_apply_interaction($this->attributes
             ->except(['id'])

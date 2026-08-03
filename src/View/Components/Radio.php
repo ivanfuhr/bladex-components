@@ -34,12 +34,8 @@ final class Radio extends StencilComponent
 
         $controlId = $this->attributes->get('id') ?? 'radio-'.Str::uuid()->toString();
 
-        $controlClasses = collect([
-            stencil_choice_control_classes('radio', $this->size),
-            'appearance-none',
-            'checked:border-zinc-900',
-            'dark:checked:border-zinc-50',
-        ])->implode(' ');
+        // Checked border utilities live in FormControlClassMap (Support is @source'd).
+        $controlClasses = stencil_radio_control_classes($this->size);
 
         $controlAttributes = stencil_apply_interaction($this->attributes
             ->except('id')
