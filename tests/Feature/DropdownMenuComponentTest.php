@@ -86,3 +86,13 @@ it('dropdown menu script removes orphaned portaled content on remount', function
         ->toContain('createBindSignal')
         ->toContain('stencil:mount');
 });
+
+it('dropdown menu script closes on external scroll instead of clamping to the viewport', function () {
+    $source = (string) file_get_contents(dirname(__DIR__, 2).'/resources/assets/js/dropdown-menu.js');
+
+    expect($source)
+        ->toContain('onScroll')
+        ->toContain('content.contains(target)')
+        ->toContain("window.addEventListener('scroll', onScroll, { capture: true, signal })")
+        ->not->toContain("window.addEventListener('scroll', reposition, { capture: true, signal })");
+});

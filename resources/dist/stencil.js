@@ -4379,6 +4379,16 @@
       }
       positionContent(content, trigger, root);
     };
+    const onScroll = (event) => {
+      if (!open) {
+        return;
+      }
+      const target = event.target;
+      if (target instanceof Node && content.contains(target)) {
+        return;
+      }
+      setOpen(false);
+    };
     const setOpen = (nextOpen, options = {}) => {
       open = nextOpen;
       content.dataset.state = open ? "open" : "closed";
@@ -4524,7 +4534,7 @@
       { signal }
     );
     window.addEventListener("resize", reposition, { signal });
-    window.addEventListener("scroll", reposition, { capture: true, signal });
+    window.addEventListener("scroll", onScroll, { capture: true, signal });
   }
   function resolveTriggerControl(wrap) {
     if (wrap.matches('button, a[href], [role="button"]')) {

@@ -83,6 +83,26 @@ function bindDropdownMenu(root) {
     };
 
     /**
+     * Close on ancestor/page scroll so fixed+portaled content doesn't stick to the
+     * viewport after the trigger scrolls away. Ignore scrolls inside the menu itself.
+     *
+     * @param {Event} event
+     */
+    const onScroll = (event) => {
+        if (!open) {
+            return;
+        }
+
+        const target = event.target;
+
+        if (target instanceof Node && content.contains(target)) {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+    /**
      * @param {boolean} nextOpen
      * @param {{ focusIndex?: number | 'last' }} [options]
      */
@@ -274,7 +294,7 @@ function bindDropdownMenu(root) {
     );
 
     window.addEventListener('resize', reposition, { signal });
-    window.addEventListener('scroll', reposition, { capture: true, signal });
+    window.addEventListener('scroll', onScroll, { capture: true, signal });
 }
 
 /**
