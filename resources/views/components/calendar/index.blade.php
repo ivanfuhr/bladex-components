@@ -21,13 +21,13 @@
 ])
 
 @php
-    use Ivanfuhr\Stencil\Support\Chrono\ChronoFormatter;
+    use Ivanfuhr\Stencil\Support\Date\DateFormatter;
 
     $range = $mode === 'range';
     $monthCount = (int) ($months ?? ($range ? 2 : 1));
-    $resolvedTimezone = ChronoFormatter::resolveTimezone($timezone);
+    $resolvedTimezone = DateFormatter::resolveTimezone($timezone);
     $resolvedLocale = $locale ?? app()->getLocale();
-    $resolvedValue = ChronoFormatter::normalizeDateValue($value, $mode);
+    $resolvedValue = DateFormatter::normalizeDateValue($value, $mode);
 
     if (is_array($unavailable)) {
         $unavailable = collect($unavailable)->implode(',');

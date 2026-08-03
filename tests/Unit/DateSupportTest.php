@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Carbon\Carbon;
-use Ivanfuhr\Stencil\Support\Chrono\ChronoFormatter;
-use Ivanfuhr\Stencil\Support\Chrono\DateRange;
-use Ivanfuhr\Stencil\Support\Chrono\DateRangePreset;
+use Ivanfuhr\Stencil\Support\Date\DateFormatter;
+use Ivanfuhr\Stencil\Support\Date\DateRange;
+use Ivanfuhr\Stencil\Support\Date\DateRangePreset;
 
 it('builds last month preset range', function () {
     Carbon::setTestNow(Carbon::parse('2026-03-15'));
@@ -27,14 +27,14 @@ it('builds all time range with custom start', function () {
 });
 
 it('normalizes array range values for pickers', function () {
-    expect(ChronoFormatter::normalizeDateValue([
+    expect(DateFormatter::normalizeDateValue([
         'start' => '2026-01-01',
         'end' => '2026-01-31',
     ], 'range'))->toBe('2026-01-01/2026-01-31');
 });
 
 it('normalizes multiple array date values for pickers', function () {
-    expect(ChronoFormatter::normalizeDateValue([
+    expect(DateFormatter::normalizeDateValue([
         '2026-01-01',
         '2026-01-15',
     ]))->toBe('2026-01-01,2026-01-15');

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\Support\Chrono;
+namespace Ivanfuhr\Stencil\Support\Date;
 
 use Illuminate\Support\Carbon;
 

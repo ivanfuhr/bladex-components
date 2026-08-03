@@ -24,10 +24,10 @@ if (! is_dir($componentsPath)) {
 }
 
 /** @var array<string, array{title: string, description: string, type: string, registryDependencies: list<string>, iconDependencies?: list<string>, source?: string, targetPrefix?: string, filesOnly?: list<string>, assets?: array<string, string>, assetOnly?: bool, appFiles?: array<string, string>}> $catalog */
-$chronoAppFiles = [
-    'src/Support/Chrono/ChronoFormatter.php' => 'app/Support/Stencil/Chrono/ChronoFormatter.php',
-    'src/Support/Chrono/DateRange.php' => 'app/Support/Stencil/Chrono/DateRange.php',
-    'src/Support/Chrono/DateRangePreset.php' => 'app/Support/Stencil/Chrono/DateRangePreset.php',
+$dateAppFiles = [
+    'src/Support/Date/DateFormatter.php' => 'app/Support/Stencil/Date/DateFormatter.php',
+    'src/Support/Date/DateRange.php' => 'app/Support/Stencil/Date/DateRange.php',
+    'src/Support/Date/DateRangePreset.php' => 'app/Support/Stencil/Date/DateRangePreset.php',
 ];
 $catalog = [
     'label' => [
@@ -545,7 +545,7 @@ $catalog = [
         'iconDependencies' => ['chevron-left', 'chevron-right'],
         'source' => 'calendar',
         'targetPrefix' => 'calendar',
-        'appFiles' => $chronoAppFiles,
+        'appFiles' => $dateAppFiles,
         'assets' => [
             'resources/assets/js/calendar.js' => 'calendar.js',
         ],
@@ -580,7 +580,7 @@ $catalog = [
         'iconDependencies' => ['calendar', 'x', 'chevron-down'],
         'source' => 'date-picker',
         'targetPrefix' => 'date-picker',
-        'appFiles' => $chronoAppFiles,
+        'appFiles' => $dateAppFiles,
         'assets' => [
             'resources/assets/js/date-picker.js' => 'date-picker.js',
         ],
@@ -604,7 +604,7 @@ $catalog = [
         'registryDependencies' => ['button', 'calendar', 'date-picker', 'date-utils', 'anchored-panel'],
         'source' => 'datetime-picker',
         'targetPrefix' => 'datetime-picker',
-        'appFiles' => $chronoAppFiles,
+        'appFiles' => $dateAppFiles,
         'assets' => [
             'resources/assets/js/datetime-picker.js' => 'datetime-picker.js',
         ],

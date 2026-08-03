@@ -36,14 +36,14 @@
 ])
 
 @php
-    use Ivanfuhr\Stencil\Support\Chrono\ChronoFormatter;
-    use Ivanfuhr\Stencil\Support\Chrono\DateRangePreset;
+    use Ivanfuhr\Stencil\Support\Date\DateFormatter;
+    use Ivanfuhr\Stencil\Support\Date\DateRangePreset;
 
     $invalid = $invalid || $fieldInvalid;
     $range = $mode === 'range';
-    $resolvedTimezone = ChronoFormatter::resolveTimezone($timezone);
+    $resolvedTimezone = DateFormatter::resolveTimezone($timezone);
     $resolvedLocale = $locale ?? app()->getLocale();
-    $resolvedValue = ChronoFormatter::normalizeDateValue($value, $mode);
+    $resolvedValue = DateFormatter::normalizeDateValue($value, $mode);
     $resolvedPlaceholder = $placeholder ?? ($range
         ? __('stencil::messages.date_picker_range_placeholder')
         : __('stencil::messages.date_picker_placeholder'));

@@ -19,12 +19,12 @@
 ])
 
 @php
-    use Ivanfuhr\Stencil\Support\Chrono\ChronoFormatter;
+    use Ivanfuhr\Stencil\Support\Date\DateFormatter;
 
     $invalid = $invalid || $fieldInvalid;
-    $resolvedTimezone = ChronoFormatter::resolveTimezone($timezone);
+    $resolvedTimezone = DateFormatter::resolveTimezone($timezone);
     $resolvedLocale = $locale ?? app()->getLocale();
-    $resolvedValue = ChronoFormatter::normalizeDateTimeValue($value, $resolvedTimezone);
+    $resolvedValue = DateFormatter::normalizeDateTimeValue($value, $resolvedTimezone);
     $resolvedPlaceholder = $placeholder ?? __('stencil::messages.datetime_picker_placeholder');
 
     $datePart = $resolvedValue ? explode('T', $resolvedValue)[0] ?? '' : '';

@@ -20,12 +20,12 @@
 ])
 
 @php
-    use Ivanfuhr\Stencil\Support\Chrono\ChronoFormatter;
+    use Ivanfuhr\Stencil\Support\Date\DateFormatter;
 
     $invalid = $invalid || $fieldInvalid;
-    $resolvedTimezone = ChronoFormatter::resolveTimezone($timezone);
+    $resolvedTimezone = DateFormatter::resolveTimezone($timezone);
     $resolvedLocale = $locale ?? app()->getLocale();
-    $resolvedValue = ChronoFormatter::normalizeTimeValue($value, $withSeconds);
+    $resolvedValue = DateFormatter::normalizeTimeValue($value, $withSeconds);
     $resolvedPlaceholder = $placeholder ?? __('stencil::messages.time_picker_placeholder');
 
     if (is_array($unavailable)) {
