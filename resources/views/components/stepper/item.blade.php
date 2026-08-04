@@ -3,8 +3,8 @@
         'stepper__item',
         'group/step relative flex min-w-0',
         $isVertical
-            ? 'w-full flex-col'
-            : 'flex-1 flex-col items-center isolate',
+        ? 'w-full flex-col'
+        : 'flex-1 flex-col items-center isolate',
         $isDisabled ? 'pointer-events-none opacity-50' : null,
     ])->merge([
         'data-stepper-item' => true,
@@ -15,10 +15,7 @@
     ])
 }}>
     @unless ($isVertical)
-        <div
-            class="pointer-events-none absolute inset-x-0 top-0 -z-10 flex h-8 w-full items-center"
-            aria-hidden="true"
-        >
+        <div class="pointer-events-none absolute inset-x-0 top-0 -z-10 flex h-8 w-full items-center" aria-hidden="true">
             <div
                 data-stepper-connector-start
                 @class([

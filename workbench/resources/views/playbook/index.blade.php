@@ -1,48 +1,53 @@
 @extends('workbench::layouts.playbook')
 
-@section('title', 'Stencil Playbook')
+@section('title', 'Stencil Docs')
 
 @section('content')
-    @php
-        $componentCount = collect($categories)->sum(fn (array $category): int => count($category['playbooks']));
-    @endphp
-
-    <div class="space-y-10">
-        <x-ui::header variant="page" :border="false">
-            <div class="min-w-0 space-y-3">
-                <div class="flex flex-wrap items-center gap-2">
+    <div class="space-y-12">
+        <header class="space-y-6">
+            <div class="space-y-4">
+                <x-ui::badge variant="outline" rounded>Documentation</x-ui::badge>
+                <div class="flex flex-wrap items-center gap-3">
                     <x-ui::heading :level="1">Component catalog</x-ui::heading>
                     <x-ui::badge variant="outline" rounded>{{ $componentCount }} components</x-ui::badge>
                 </div>
-                <x-ui::text variant="subtle" class="max-w-prose">
-                    Tune props on live
+                <x-ui::text class="max-w-prose text-base leading-7 text-zinc-600 dark:text-zinc-400">
+                    Browse
                     <code class="rounded-md border border-zinc-200 bg-white px-1.5 py-0.5 font-mono text-xs text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200">x-ui::*</code>
-                    previews. Start the workbench with
-                    <code class="rounded-md border border-zinc-200 bg-white px-1.5 py-0.5 font-mono text-xs text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200">composer serve</code>
-                    from the repository root.
+                    primitives with usage guides, live playgrounds, and copy-ready Blade snippets.
                 </x-ui::text>
             </div>
 
             <div class="flex flex-wrap items-center gap-2">
+                <x-ui::button href="{{ route('playbook.getting-started') }}" variant="primary">
+                    Getting started
+                </x-ui::button>
                 <x-ui::dialog.trigger name="playbook-catalog-command">
-                    <x-ui::button variant="outline" class="gap-2 text-zinc-500 dark:text-zinc-400">
+                    <x-ui::button variant="outline" class="gap-2 text-zinc-600 dark:text-zinc-400">
                         <x-ui::icon name="search" class="size-4" />
-                        <span>Search components…</span>
+                        <span>Search…</span>
                         <span class="hidden rounded border border-zinc-200 px-1.5 py-0.5 font-mono text-[10px] tracking-widest sm:inline dark:border-zinc-700">
                             ⌘K
                         </span>
                     </x-ui::button>
                 </x-ui::dialog.trigger>
             </div>
-        </x-ui::header>
+        </header>
 
         <x-ui::command.dialog name="playbook-catalog-command" shortcut="meta.k">
             <x-ui::command placeholder="Search components…">
-                <x-ui::command.group heading="Surfaces">
+                <x-ui::command.group heading="Docs">
+                    <x-ui::command.item
+                        value="getting-started"
+                        href="{{ route('playbook.getting-started') }}"
+                        icon="file"
+                    >
+                        Getting started
+                    </x-ui::command.item>
                     <x-ui::command.item value="showcase" href="{{ route('playbook.showcase') }}" icon="star">
                         Event Studio showcase
                     </x-ui::command.item>
-                    <x-ui::command.item value="catalog" href="{{ route('playbook.index') }}" icon="file">
+                    <x-ui::command.item value="catalog" href="{{ route('playbook.index') }}" icon="clipboard">
                         Component catalog
                     </x-ui::command.item>
                 </x-ui::command.group>
@@ -61,15 +66,6 @@
                 @endforeach
             </x-ui::command>
         </x-ui::command.dialog>
-
-        <nav aria-label="Catalog sections" class="flex flex-wrap gap-2">
-            @foreach ($categories as $category)
-                <x-ui::badge :href="'#catalog-'.$category['key']" variant="outline" rounded class="gap-1.5">
-                    {{ $category['label'] }}
-                    <span class="text-zinc-400 tabular-nums dark:text-zinc-500">{{ count($category['playbooks']) }}</span>
-                </x-ui::badge>
-            @endforeach
-        </nav>
 
         <a
             href="{{ route('playbook.showcase') }}"
@@ -103,25 +99,32 @@
             </x-ui::card>
         </a>
 
-        <div class="space-y-12">
+        <nav aria-label="Catalog sections" class="flex flex-wrap gap-2">
+            @foreach ($categories as $category)
+                <x-ui::badge :href="'#catalog-'.$category['key']" variant="outline" rounded class="gap-1.5">
+                    {{ $category['label'] }}
+                    <span class="text-zinc-400 tabular-nums dark:text-zinc-500">{{ count($category['playbooks']) }}</span>
+                </x-ui::badge>
+            @endforeach
+        </nav>
+
+        <div class="space-y-14">
             @foreach ($categories as $category)
                 <section aria-labelledby="catalog-{{ $category['key'] }}" class="scroll-mt-6">
-                    <div class="mb-4 flex items-center justify-between gap-3">
+                    <div class="mb-5 flex items-center justify-between gap-3">
                         <x-ui::heading
                             :level="2"
                             id="catalog-{{ $category['key'] }}"
-                            class="text-sm! font-semibold tracking-tight"
+                            class="text-base! font-semibold tracking-tight"
                         >
                             {{ $category['label'] }}
                         </x-ui::heading>
-                        <x-ui::badge variant="outline" rounded>
-                            {{ count($category['playbooks']) }} {{ count($category['playbooks']) === 1 ? 'component' : 'components' }}
-                        </x-ui::badge>
+                        <x-ui::badge variant="outline" rounded> {{ count($category['playbooks']) }} </x-ui::badge>
                     </div>
 
-                    <x-ui::separator class="mb-4!" />
+                    <x-ui::separator class="mb-5!" />
 
-                    <x-ui::grid sm="2" gap="4" :container="false" class="w-full" role="list">
+                    <x-ui::grid sm="2" lg="3" gap="4" :container="false" class="w-full" role="list">
                         @foreach ($category['playbooks'] as $playbook)
                             <div role="listitem" class="min-w-0">
                                 <a
@@ -129,25 +132,22 @@
                                     class="group block h-full rounded-xl focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:focus-visible:ring-zinc-300/20"
                                 >
                                     <x-ui::card class="h-full transition duration-200 group-hover:-translate-y-0.5 group-hover:border-zinc-300 group-hover:shadow-md motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 dark:group-hover:border-zinc-600 dark:group-hover:bg-zinc-900">
-                                        <x-ui::card.header class="flex-1">
+                                        <x-ui::card.header class="flex-1 space-y-3">
                                             <x-ui::text
                                                 size="sm"
                                                 inline
                                                 class="font-mono text-xs! text-zinc-500 dark:text-zinc-400"
                                             >
-                                                &lt;x-ui::<span
-                                                    class="text-zinc-800 dark:text-zinc-200"
-                                                    >{{ $playbook->slug }}</span>
-                                                /&gt;
+                                                x-ui::{{ $playbook->slug }}
                                             </x-ui::text>
-                                            <x-ui::card.title class="mt-3">{{ $playbook->title }}</x-ui::card.title>
-                                            <x-ui::card.description class="mt-2">
+                                            <x-ui::card.title>{{ $playbook->title }}</x-ui::card.title>
+                                            <x-ui::card.description class="line-clamp-2">
                                                 {{ $playbook->description }}
                                             </x-ui::card.description>
                                         </x-ui::card.header>
-                                        <x-ui::card.footer class="mt-auto">
-                                            <span class="inline-flex items-center gap-1 text-sm font-medium text-zinc-900 dark:text-zinc-100">
-                                                Open playground
+                                        <x-ui::card.footer class="mt-auto border-t-0 pt-0">
+                                            <span class="inline-flex items-center gap-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">
+                                                Read docs
                                                 <x-ui::icon
                                                     name="chevron-right"
                                                     class="size-4 transition group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"

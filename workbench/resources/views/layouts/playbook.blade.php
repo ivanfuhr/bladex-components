@@ -12,7 +12,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>@yield('title', 'Stencil Playbook')</title>
+    <title>@yield('title', 'Stencil Docs')</title>
     <script>
         (function () {
             try {
@@ -34,10 +34,7 @@
     @inject('playbookRegistry', 'Workbench\App\Playbook\PlaybookRegistry')
 
     @php
-        $catalogActive = request()->routeIs('playbook.index', 'playbook.show');
-        $showcaseActive = request()->routeIs('playbook.showcase');
         $isShowcase = request()->routeIs('playbook.showcase');
-        $projectCategories = collect($playbookRegistry->grouped())->take(3);
     @endphp
 
     <a
@@ -52,132 +49,22 @@
     @else
         <x-ui::sidebar.provider :default-open="true" storage-key="stencil-playbook-shell" class="h-svh">
             <x-ui::sidebar collapsible="icon" class="shrink-0">
-                <x-ui::sidebar.header>
-                    <x-ui::sidebar.menu>
-                        <x-ui::sidebar.menu-item>
-                            <x-ui::dropdown-menu side="right" align="start">
-                                <x-ui::dropdown-menu.trigger>
-                                    <x-ui::sidebar.menu-button
-                                        size="lg"
-                                        class="data-[state=open]:bg-zinc-100 dark:data-[state=open]:bg-zinc-800"
-                                    >
-                                        <span class="flex size-8 shrink-0 items-center justify-center rounded-lg bg-zinc-900 text-xs font-bold text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900">
-                                            S
-                                        </span>
-                                        <div class="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-                                            <span class="truncate font-semibold">Stencil Playbook</span>
-                                            <span class="truncate text-xs text-zinc-500 dark:text-zinc-400">Workbench</span>
-                                        </div>
-                                        <x-ui::icon
-                                            name="chevron-down"
-                                            class="ml-auto size-4 group-data-[collapsible=icon]:hidden"
-                                        />
-                                    </x-ui::sidebar.menu-button>
-                                </x-ui::dropdown-menu.trigger>
-                                <x-ui::dropdown-menu.content class="min-w-56">
-                                    <x-ui::dropdown-menu.label>Surfaces</x-ui::dropdown-menu.label>
-                                    <x-ui::dropdown-menu.item href="{{ route('playbook.index') }}">
-                                        Component catalog
-                                    </x-ui::dropdown-menu.item>
-                                    <x-ui::dropdown-menu.item href="{{ route('playbook.showcase') }}">
-                                        Event Studio showcase
-                                    </x-ui::dropdown-menu.item>
-                                </x-ui::dropdown-menu.content>
-                            </x-ui::dropdown-menu>
-                        </x-ui::sidebar.menu-item>
-                    </x-ui::sidebar.menu>
-                </x-ui::sidebar.header>
-
-                <x-ui::sidebar.content>
-                    <x-ui::sidebar.group>
-                        <x-ui::sidebar.group-label>Platform</x-ui::sidebar.group-label>
-                        <x-ui::sidebar.group-content>
-                            <x-ui::sidebar.menu>
-                                <x-ui::sidebar.menu-item>
-                                    <x-ui::sidebar.menu-button
-                                        href="{{ route('playbook.index') }}"
-                                        :active="$catalogActive"
-                                    >
-                                        <x-ui::icon name="file" class="size-4" />
-                                        <span>Catalog</span>
-                                    </x-ui::sidebar.menu-button>
-                                </x-ui::sidebar.menu-item>
-                                <x-ui::sidebar.menu-item>
-                                    <x-ui::sidebar.menu-button
-                                        href="{{ route('playbook.showcase') }}"
-                                        :active="$showcaseActive"
-                                    >
-                                        <x-ui::icon name="star" class="size-4" />
-                                        <span>Showcase</span>
-                                    </x-ui::sidebar.menu-button>
-                                </x-ui::sidebar.menu-item>
-                            </x-ui::sidebar.menu>
-                        </x-ui::sidebar.group-content>
-                    </x-ui::sidebar.group>
-
-                    <x-ui::sidebar.group>
-                        <x-ui::sidebar.group-label>Projects</x-ui::sidebar.group-label>
-                        <x-ui::sidebar.group-content>
-                            <x-ui::sidebar.menu>
-                                @foreach ($projectCategories as $category)
-                                    <x-ui::sidebar.menu-item>
-                                        <x-ui::sidebar.menu-button href="{{ route('playbook.index') }}#catalog-{{ $category['key'] }}">
-                                            <x-ui::icon name="clipboard" class="size-4" />
-                                            <span>{{ $category['label'] }}</span>
-                                        </x-ui::sidebar.menu-button>
-                                    </x-ui::sidebar.menu-item>
-                                @endforeach
-                                <x-ui::sidebar.menu-item>
-                                    <x-ui::sidebar.menu-button href="{{ route('playbook.index') }}">
-                                        <x-ui::icon name="plus" class="size-4" />
-                                        <span>More</span>
-                                    </x-ui::sidebar.menu-button>
-                                </x-ui::sidebar.menu-item>
-                            </x-ui::sidebar.menu>
-                        </x-ui::sidebar.group-content>
-                    </x-ui::sidebar.group>
-                </x-ui::sidebar.content>
+                @include('workbench::playbook.partials.docs-sidebar')
 
                 <x-ui::sidebar.spacer />
 
-                <x-ui::sidebar.footer>
-                    <x-ui::sidebar.menu>
-                        <x-ui::sidebar.menu-item>
-                            <x-ui::dropdown-menu side="top" align="start">
-                                <x-ui::dropdown-menu.trigger>
-                                    <x-ui::sidebar.menu-button
-                                        size="lg"
-                                        class="data-[state=open]:bg-zinc-100 dark:data-[state=open]:bg-zinc-800"
-                                    >
-                                        <x-ui::avatar name="Ivan Führ" size="sm" circle />
-                                        <div class="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-                                            <span class="truncate font-semibold">Ivan Führ</span>
-                                            <span class="truncate text-xs text-zinc-500 dark:text-zinc-400">
-                                                @ivanfuhr
-                                            </span>
-                                        </div>
-                                        <x-ui::icon
-                                            name="chevron-down"
-                                            class="ml-auto size-4 group-data-[collapsible=icon]:hidden"
-                                        />
-                                    </x-ui::sidebar.menu-button>
-                                </x-ui::dropdown-menu.trigger>
-                                <x-ui::dropdown-menu.content class="min-w-56">
-                                    <x-ui::dropdown-menu.label>Appearance</x-ui::dropdown-menu.label>
-                                    <label class="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-zinc-700 dark:text-zinc-300">
-                                        <input
-                                            type="checkbox"
-                                            role="switch"
-                                            class="size-4 rounded border-zinc-300 text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:border-zinc-600 dark:bg-zinc-950 dark:focus-visible:ring-zinc-300/20"
-                                            x-model="dark"
-                                            x-bind:aria-checked="dark.toString()"
-                                        />
-                                        <span>Dark mode</span>
-                                    </label>
-                                </x-ui::dropdown-menu.content>
-                            </x-ui::dropdown-menu>
-                        </x-ui::sidebar.menu-item>
-                    </x-ui::sidebar.menu>
+                <x-ui::sidebar.footer class="border-t border-zinc-200/80 dark:border-zinc-800/80">
+                    <div class="flex items-center justify-between gap-3 px-2 py-2 group-data-[collapsible=icon]:justify-center">
+                        <span
+                            class="truncate text-sm text-zinc-700 group-data-[collapsible=icon]:hidden dark:text-zinc-300"
+                            x-text="dark ? 'Dark mode' : 'Light mode'"
+                        ></span>
+                        <x-ui::switch
+                            size="sm"
+                            x-model.boolean="dark"
+                            x-bind:aria-label="dark ? 'Switch to light mode' : 'Switch to dark mode'"
+                        />
+                    </div>
                 </x-ui::sidebar.footer>
 
                 <x-ui::sidebar.rail />
@@ -194,13 +81,13 @@
                             <x-ui::breadcrumb>
                                 <x-ui::breadcrumb.list>
                                     <x-ui::breadcrumb.item class="hidden md:block">
-                                        <x-ui::breadcrumb.link href="{{ route('playbook.index') }}">
-                                            Stencil Playbook
+                                        <x-ui::breadcrumb.link href="{{ route('playbook.getting-started') }}">
+                                            Stencil Docs
                                         </x-ui::breadcrumb.link>
                                     </x-ui::breadcrumb.item>
                                     <x-ui::breadcrumb.separator class="hidden md:block" />
                                     <x-ui::breadcrumb.item>
-                                        <x-ui::breadcrumb.page>Catalog</x-ui::breadcrumb.page>
+                                        <x-ui::breadcrumb.page>Components</x-ui::breadcrumb.page>
                                     </x-ui::breadcrumb.item>
                                 </x-ui::breadcrumb.list>
                             </x-ui::breadcrumb>

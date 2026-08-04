@@ -5,9 +5,11 @@ use Workbench\App\Http\Controllers\PlaybookController;
 use Workbench\App\Http\Controllers\PlaybookMediaController;
 use Workbench\App\Http\Controllers\PlaybookPreviewController;
 
-Route::redirect('/', '/playbook');
+Route::redirect('/', '/playbook/getting-started');
 
 Route::get('/playbook', [PlaybookController::class, 'index'])->name('playbook.index');
+
+Route::get('/playbook/getting-started', [PlaybookController::class, 'gettingStarted'])->name('playbook.getting-started');
 
 Route::get('/playbook/showcase', [PlaybookController::class, 'showcase'])->name('playbook.showcase');
 
@@ -22,7 +24,7 @@ Route::get('/playbook/media/{component}', [PlaybookMediaController::class, 'show
 
 Route::get('/playbook/{component}', [PlaybookController::class, 'show'])
     ->name('playbook.show')
-    ->where('component', '[a-z0-9-]+');
+    ->where('component', '(?!getting-started|showcase|media)[a-z0-9-]+');
 
 Route::post('/playbook/preview', PlaybookPreviewController::class)
     ->name('playbook.preview');

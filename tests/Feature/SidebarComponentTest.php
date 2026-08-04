@@ -49,6 +49,9 @@ it('renders a sidebar provider with shell landmarks and trigger', function () {
         ->toContain('data-collapsible-mode="icon"')
         ->toContain('data-sidebar-header')
         ->toContain('data-sidebar-content')
+        ->toContain('data-scroll-area')
+        ->toContain('data-scroll-area-viewport')
+        ->toContain('data-scroll-area-scrollbar')
         ->toContain('data-sidebar-footer')
         ->toContain('data-sidebar-group-label')
         ->toContain('data-sidebar-menu-button')
@@ -61,7 +64,25 @@ it('renders a sidebar provider with shell landmarks and trigger', function () {
         ->toContain('aria-expanded')
         ->toContain('role="navigation"')
         ->toContain('Home')
-        ->toContain('Main');
+        ->toContain('Main')
+        ->not->toContain('overflow-y-auto');
+});
+
+it('forwards scroll-area options and body classes on sidebar content', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-ui::sidebar.content class="gap-0" type="always" :scroll-hide-delay="200" aria-label="Docs navigation">
+            <p>Nav</p>
+        </x-ui::sidebar.content>
+    BLADE);
+
+    expect($html)
+        ->toContain('data-sidebar-content')
+        ->toContain('data-scroll-area-type="always"')
+        ->toContain('data-scroll-area-hide-delay="200"')
+        ->toContain('aria-label="Docs navigation"')
+        ->toContain('gap-0')
+        ->toContain('Nav')
+        ->not->toContain('overflow-y-auto');
 });
 
 it('supports offcanvas and inset variants on the sidebar root', function () {

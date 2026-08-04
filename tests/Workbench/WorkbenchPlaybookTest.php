@@ -26,6 +26,7 @@ it('lists playbook components on the index', function () {
     $response->assertSee('Datetime Picker');
     $response->assertSee('Calendar');
     $response->assertSee('Event Studio showcase');
+    $response->assertSee('Getting started');
     $response->assertSee('Forms');
     $response->assertSee('Typography');
     $response->assertSee('Overlays');
@@ -79,8 +80,34 @@ it('marks catalog as the active playbook surface on the index', function () {
 
     $response->assertOk();
     $response->assertSee('aria-current="page"', false);
-    $response->assertSee('data-sidebar-menu-button', false);
-    $response->assertSee('>Catalog</span>', false);
+    $response->assertSee('>Components</span>', false);
+});
+
+it('marks getting started as active in the docs sidebar', function () {
+    $response = $this->get('/playbook/getting-started');
+
+    $response->assertOk();
+    $response->assertSee('>Getting started</span>', false);
+    $response->assertSee('Guide', false);
+    $response->assertSee('>Button</span>', false);
+    $response->assertSee('>Dialog</span>', false);
+});
+
+it('marks the current component as active in the docs sidebar', function () {
+    $response = $this->get('/playbook/button');
+
+    $response->assertOk();
+    $response->assertSee(route('playbook.show', 'button'), false);
+    $response->assertSee('>Button</span>', false);
+});
+
+it('renders the getting started documentation page', function () {
+    $response = $this->get('/playbook/getting-started');
+
+    $response->assertOk();
+    $response->assertSee('Getting started');
+    $response->assertSee('composer require ivanfuhr/stencil', false);
+    $response->assertSee('@stencilStyles', false);
 });
 
 it('bridges playground pages to media when a media view exists', function () {
@@ -88,7 +115,8 @@ it('bridges playground pages to media when a media view exists', function () {
 
     $response->assertOk();
     $response->assertSee(route('playbook.media.show', 'button'), false);
-    $response->assertSee('Media page');
+    $response->assertSee('Screenshot');
+    $response->assertSee('Usage');
 });
 
 it('loads a single widget runtime on playbook chrome pages', function () {
@@ -263,8 +291,8 @@ it('rejects invalid preview state', function () {
     $response->assertUnprocessable();
 });
 
-it('redirects the root url to the playbook index', function () {
-    $this->get('/')->assertRedirect('/playbook');
+it('redirects the root url to getting started', function () {
+    $this->get('/')->assertRedirect('/playbook/getting-started');
 });
 
 it('renders playbook media pages for button and datetime components', function (string $slug) {
