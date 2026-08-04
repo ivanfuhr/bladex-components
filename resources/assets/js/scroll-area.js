@@ -54,6 +54,7 @@ function bindScrollArea(root) {
     let hideTimer = null;
     let scrolling = false;
     let pointerInside = false;
+    const isScrollLocked = () => viewport.dataset.stencilScrollLocked === 'true';
 
     /**
      * @param {HTMLElement} scrollbar
@@ -220,6 +221,16 @@ function bindScrollArea(root) {
 
     viewport.addEventListener('scroll', onScroll, { passive: true, signal });
 
+    viewport.addEventListener(
+        'wheel',
+        (event) => {
+            if (isScrollLocked()) {
+                event.preventDefault();
+            }
+        },
+        { passive: false, signal },
+    );
+
     // Textarea scrollHeight changes on input without resizing the element.
     if (viewport instanceof HTMLTextAreaElement) {
         viewport.addEventListener('input', updateThumbs, { signal });
@@ -302,6 +313,10 @@ function bindScrollArea(root) {
         thumb.addEventListener(
             'pointerdown',
             (event) => {
+                if (isScrollLocked()) {
+                    return;
+                }
+
                 if (event.button !== 0 || !(event instanceof PointerEvent)) {
                     return;
                 }
@@ -351,6 +366,10 @@ function bindScrollArea(root) {
         scrollbar.addEventListener(
             'pointerdown',
             (event) => {
+                if (isScrollLocked()) {
+                    return;
+                }
+
                 if (
                     event.button !== 0 ||
                     event.target === thumb ||

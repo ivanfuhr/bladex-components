@@ -115,5 +115,7 @@ it('scroll area script uses lifecycle teardown and mount hooks', function () {
         ->toContain('export function initScrollAreas')
         ->toContain('ResizeObserver')
         ->toContain('data-scroll-area-thumb')
-        ->toContain('HTMLTextAreaElement');
+        ->toContain('HTMLTextAreaElement')
+        ->toContain('stencilScrollLocked')
+        ->toContain("if (isScrollLocked())");
 });

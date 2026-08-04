@@ -62,6 +62,11 @@ it('shared scroll lock helper is reference-counted and allowlists overlay panels
         ->toContain("document.addEventListener('touchmove', onScrollAttempt")
         ->toContain("window.addEventListener('scroll', onWindowScroll")
         ->toContain('options.signal?.addEventListener')
+        ->toContain('[data-scroll-area-viewport]')
+        ->toContain('syncNestedScrollAreas')
+        ->toContain("container.dataset.stencilScrollLocked = 'true'")
+        ->toContain('onLockedContainerScroll')
+        ->toContain('onLockedContainerWheel')
         ->not->toContain("document.body.style.position = 'fixed'")
         ->not->toContain("document.body.style.overflow = 'hidden'")
         ->not->toContain("document.documentElement.style.overflow = 'hidden'");

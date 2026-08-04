@@ -2270,6 +2270,10 @@
   var lockCount = 0;
   var lockedScrollY = 0;
   var allowGetters = /* @__PURE__ */ new Set();
+  var lockedScrollContainers = /* @__PURE__ */ new Map();
+  var lockedScrollAreaRoots = /* @__PURE__ */ new Map();
+  var lockFrame = null;
+  var SCROLL_AREA_VIEWPORT_SELECTOR = "[data-scroll-area-viewport]";
   function toAllowGetter(allowed) {
     if (typeof allowed === "function") {
       return () => normalizeElements(allowed());
@@ -2289,14 +2293,133 @@
     if (!(target instanceof Node)) {
       return false;
     }
+    return isInsideAllowedRoots(target);
+  }
+  function isInsideAllowedRoots(node) {
     for (const getter of allowGetters) {
       for (const root of getter()) {
-        if (root.contains(target)) {
+        if (root.contains(node)) {
           return true;
         }
       }
     }
     return false;
+  }
+  function snapshotScrollState(container) {
+    return {
+      scrollTop: container.scrollTop,
+      scrollLeft: container.scrollLeft,
+      overflow: container.style.overflow,
+      overscrollBehavior: container.style.overscrollBehavior,
+      touchAction: container.style.touchAction
+    };
+  }
+  function restoreScrollPosition(container, saved) {
+    if (container.scrollTop !== saved.scrollTop) {
+      container.scrollTop = saved.scrollTop;
+    }
+    if (container.scrollLeft !== saved.scrollLeft) {
+      container.scrollLeft = saved.scrollLeft;
+    }
+  }
+  function lockScrollContainer(container) {
+    var _a5;
+    if (lockedScrollContainers.has(container)) {
+      return;
+    }
+    const saved = snapshotScrollState(container);
+    lockedScrollContainers.set(container, saved);
+    container.dataset.stencilScrollLocked = "true";
+    container.style.overflow = "hidden";
+    container.style.overscrollBehavior = "none";
+    container.style.touchAction = "none";
+    const scrollArea = container.closest("[data-scroll-area]");
+    if (scrollArea instanceof HTMLElement && !lockedScrollAreaRoots.has(scrollArea)) {
+      lockedScrollAreaRoots.set(scrollArea, (_a5 = scrollArea.dataset.stencilScrollLocked) != null ? _a5 : "");
+      scrollArea.dataset.stencilScrollLocked = "true";
+    }
+    container.addEventListener("scroll", onLockedContainerScroll, { passive: false, capture: true });
+    container.addEventListener("wheel", onLockedContainerWheel, { passive: false, capture: true });
+  }
+  function unlockScrollContainer(container) {
+    var _a5;
+    const saved = lockedScrollContainers.get(container);
+    if (!saved) {
+      return;
+    }
+    container.removeEventListener("scroll", onLockedContainerScroll, { capture: true });
+    container.removeEventListener("wheel", onLockedContainerWheel, { capture: true });
+    container.style.overflow = saved.overflow;
+    container.style.overscrollBehavior = saved.overscrollBehavior;
+    container.style.touchAction = saved.touchAction;
+    container.scrollTop = saved.scrollTop;
+    container.scrollLeft = saved.scrollLeft;
+    delete container.dataset.stencilScrollLocked;
+    lockedScrollContainers.delete(container);
+    const scrollArea = container.closest("[data-scroll-area]");
+    if (scrollArea instanceof HTMLElement && lockedScrollAreaRoots.has(scrollArea)) {
+      const previous = (_a5 = lockedScrollAreaRoots.get(scrollArea)) != null ? _a5 : "";
+      if (previous) {
+        scrollArea.dataset.stencilScrollLocked = previous;
+      } else {
+        delete scrollArea.dataset.stencilScrollLocked;
+      }
+      lockedScrollAreaRoots.delete(scrollArea);
+    }
+  }
+  function onLockedContainerScroll(event) {
+    const container = event.currentTarget;
+    if (!(container instanceof HTMLElement)) {
+      return;
+    }
+    const saved = lockedScrollContainers.get(container);
+    if (!saved) {
+      return;
+    }
+    restoreScrollPosition(container, saved);
+  }
+  function onLockedContainerWheel(event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  function startLockFrame() {
+    if (lockFrame !== null) {
+      return;
+    }
+    const tick = () => {
+      for (const [container, saved] of lockedScrollContainers) {
+        restoreScrollPosition(container, saved);
+      }
+      lockFrame = requestAnimationFrame(tick);
+    };
+    lockFrame = requestAnimationFrame(tick);
+  }
+  function stopLockFrame() {
+    if (lockFrame === null) {
+      return;
+    }
+    cancelAnimationFrame(lockFrame);
+    lockFrame = null;
+  }
+  function syncNestedScrollAreas() {
+    if (lockCount === 0) {
+      stopLockFrame();
+      for (const container of [...lockedScrollContainers.keys()]) {
+        unlockScrollContainer(container);
+      }
+      return;
+    }
+    document.querySelectorAll(SCROLL_AREA_VIEWPORT_SELECTOR).forEach((node) => {
+      if (!(node instanceof HTMLElement)) {
+        return;
+      }
+      if (isInsideAllowedRoots(node)) {
+        unlockScrollContainer(node);
+        return;
+      }
+      lockScrollContainer(node);
+    });
+    startLockFrame();
   }
   function onScrollAttempt(event) {
     if (isAllowedTarget(event)) {
@@ -2354,6 +2477,7 @@
     if (lockCount === 1) {
       applyLockStyles();
     }
+    syncNestedScrollAreas();
     let released = false;
     const release = () => {
       if (released) {
@@ -2365,6 +2489,7 @@
       if (lockCount === 0) {
         clearLockStyles();
       }
+      syncNestedScrollAreas();
     };
     (_a5 = options.signal) == null ? void 0 : _a5.addEventListener("abort", release, { once: true });
     return release;
@@ -6804,6 +6929,7 @@
     let hideTimer = null;
     let scrolling = false;
     let pointerInside = false;
+    const isScrollLocked = () => viewport.dataset.stencilScrollLocked === "true";
     const thumbFor = (scrollbar) => {
       const thumb = scrollbar.querySelector(THUMB_SELECTOR);
       return thumb instanceof HTMLElement ? thumb : null;
@@ -6928,6 +7054,15 @@
       );
     };
     viewport.addEventListener("scroll", onScroll, { passive: true, signal });
+    viewport.addEventListener(
+      "wheel",
+      (event) => {
+        if (isScrollLocked()) {
+          event.preventDefault();
+        }
+      },
+      { passive: false, signal }
+    );
     if (viewport instanceof HTMLTextAreaElement) {
       viewport.addEventListener("input", updateThumbs, { signal });
     }
@@ -6995,6 +7130,9 @@
         "pointerdown",
         (event) => {
           var _a5;
+          if (isScrollLocked()) {
+            return;
+          }
           if (event.button !== 0 || !(event instanceof PointerEvent)) {
             return;
           }
@@ -7030,6 +7168,9 @@
       scrollbar.addEventListener(
         "pointerdown",
         (event) => {
+          if (isScrollLocked()) {
+            return;
+          }
           if (event.button !== 0 || event.target === thumb || thumb.contains(
             /** @type {Node} */
             event.target

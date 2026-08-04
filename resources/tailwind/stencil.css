@@ -164,6 +164,17 @@
         opacity: 1;
     }
 
+    [data-scroll-area][data-stencil-scroll-locked] [data-scroll-area-scrollbar],
+    [data-scroll-area][data-stencil-scroll-locked] [data-scroll-area-corner] {
+        pointer-events: none;
+    }
+
+    [data-scroll-area-viewport][data-stencil-scroll-locked] {
+        overflow: hidden !important;
+        overscroll-behavior: none;
+        touch-action: none;
+    }
+
     .code-block {
         @apply relative overflow-hidden rounded-xl border border-zinc-200/80 bg-zinc-50 shadow-sm ring-1 ring-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950 dark:ring-white/5;
     }

@@ -167,6 +167,17 @@
         opacity: 1;
     }
 
+    [data-scroll-area][data-stencil-scroll-locked] [data-scroll-area-scrollbar],
+    [data-scroll-area][data-stencil-scroll-locked] [data-scroll-area-corner] {
+        pointer-events: none;
+    }
+
+    [data-scroll-area-viewport][data-stencil-scroll-locked] {
+        overflow: hidden !important;
+        overscroll-behavior: none;
+        touch-action: none;
+    }
+
     @keyframes progress-indeterminate {
         0% {
             transform: translateX(-100%);
