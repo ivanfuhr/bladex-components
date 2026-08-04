@@ -353,7 +353,7 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                     </div>
                 </div>
 
-                <div class="grid gap-4 sm:grid-cols-3">
+                <x-ui::grid md="3" gap="4">
                     <x-ui::stat
                         label="Registrations"
                         value="248"
@@ -378,7 +378,7 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                         description="Doors open day one"
                         icon="check"
                     />
-                </div>
+                </x-ui::grid>
 
                 <x-ui::separator />
 
@@ -446,7 +446,7 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                                 </x-ui::toggle>
                                             </x-ui::field>
 
-                                            <div class="grid gap-5 sm:grid-cols-2">
+                                            <x-ui::grid sm="2" gap="5">
                                                 <x-ui::field name="format">
                                                     <x-ui::field.label>Format</x-ui::field.label>
                                                     <x-ui::select name="format" placeholder="Choose format…">
@@ -490,7 +490,7 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                                         </x-ui::combobox.group>
                                                     </x-ui::combobox>
                                                 </x-ui::field>
-                                            </div>
+                                            </x-ui::grid>
 
                                             <x-ui::field name="tags">
                                                 <x-ui::field.label>Topics</x-ui::field.label>
@@ -672,8 +672,9 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                             <x-ui::card.description>
                                                 Date, doors, and kickoff datetime.</x-ui::card.description>
                                         </x-ui::card.header>
-                                        <x-ui::card.content class="grid gap-5 sm:grid-cols-2">
-                                            <x-ui::field name="event_date">
+                                        <x-ui::card.content>
+                                            <x-ui::grid sm="2" gap="5">
+                                                <x-ui::field name="event_date">
                                                 <x-ui::field.label>Event date</x-ui::field.label>
                                                 <x-ui::date-picker name="event_date" value="2026-09-18" with-today />
                                             </x-ui::field>
@@ -683,10 +684,13 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                                 <x-ui::time-picker name="doors_open" value="08:30" />
                                             </x-ui::field>
 
-                                            <x-ui::field name="kickoff_at" class="sm:col-span-2">
-                                                <x-ui::field.label>Keynote starts</x-ui::field.label>
-                                                <x-ui::datetime-picker name="kickoff_at" value="2026-09-18T09:15" />
-                                            </x-ui::field>
+                                            <x-ui::grid.item span="full">
+                                                <x-ui::field name="kickoff_at">
+                                                    <x-ui::field.label>Keynote starts</x-ui::field.label>
+                                                    <x-ui::datetime-picker name="kickoff_at" value="2026-09-18T09:15" />
+                                                </x-ui::field>
+                                            </x-ui::grid.item>
+                                            </x-ui::grid>
                                         </x-ui::card.content>
                                     </x-ui::card>
 

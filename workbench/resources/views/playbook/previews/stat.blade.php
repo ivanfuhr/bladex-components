@@ -10,7 +10,7 @@
     };
 @endphp
 
-<div class="grid w-full max-w-3xl gap-4 sm:grid-cols-3">
+<x-ui::grid md="3" gap="4" class="w-full max-w-3xl">
     <x-ui::stat
         :variant="$variant"
         label="Open tickets"
@@ -38,4 +38,4 @@
         description="This week"
         :icon="$showIcon ? 'check' : null"
     />
-</div>
+</x-ui::grid>

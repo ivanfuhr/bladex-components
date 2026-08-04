@@ -179,6 +179,12 @@ dataset('component_regression_matrix', [
         <x-ui::fonts />
     BLADE, ['fonts.googleapis.com', 'preconnect']],
 
+    'grid' => [<<<'BLADE'
+        <x-ui::grid md="3">
+            <x-ui::grid.item span="full">Full</x-ui::grid.item>
+        </x-ui::grid>
+    BLADE, ['data-grid', 'data-grid-item', '@md:grid-cols-3', 'col-span-full']],
+
     'heading' => [<<<'BLADE'
         <x-ui::heading level="2" variant="display">Hello</x-ui::heading>
     BLADE, ['Hello']],

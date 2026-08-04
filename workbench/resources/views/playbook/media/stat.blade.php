@@ -10,7 +10,7 @@
             <x-ui::text size="sm" variant="subtle">Compact KPI cards for admin dashboards.</x-ui::text>
         </div>
 
-        <div class="grid max-w-3xl gap-4 sm:grid-cols-3">
+        <x-ui::grid md="3" gap="4" class="max-w-3xl">
             <x-ui::stat
                 label="Open tickets"
                 value="128"
@@ -28,6 +28,6 @@
                 icon="clock"
             />
             <x-ui::stat variant="muted" label="Resolved" value="86%" description="This week" />
-        </div>
+        </x-ui::grid>
     </div>
 @endsection

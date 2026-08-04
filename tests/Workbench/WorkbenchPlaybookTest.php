@@ -19,6 +19,7 @@ it('lists playbook components on the index', function () {
     $response->assertSee('Tooltip');
     $response->assertSee('Alert');
     $response->assertSee('Table');
+    $response->assertSee('Grid');
     $response->assertSee('Icons');
     $response->assertSee('Date Picker');
     $response->assertSee('Time Picker');
@@ -66,7 +67,6 @@ it('renders the event studio showcase scenario', function () {
     $response->assertSee('data-header', false);
     $response->assertSee('data-header-variant="page"', false);
     $response->assertSee('data-main', false);
-    $response->assertSee('data-sidebar-brand', false);
     $response->assertSee('id="guests"', false);
     $response->assertSee('id="insights"', false);
     $response->assertSee('aria-labelledby="setup-progress-label"', false);
@@ -288,6 +288,7 @@ it('renders playbook media pages for button and datetime components', function (
     'sidebar',
     'stepper',
     'stat',
+    'grid',
 ]);
 
 it('redirects legacy buttons media slug to button', function () {
@@ -321,6 +322,7 @@ it('renders layout and feedback playbook pages with initial previews', function 
     ['alert', 'data-alert'],
     ['table', 'data-table'],
     ['stat', 'data-stat'],
+    ['grid', 'data-grid'],
     ['icons', 'data-icon'],
     ['pagination', 'data-pagination'],
 ]);

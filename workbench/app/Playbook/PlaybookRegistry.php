@@ -86,6 +86,7 @@ final class PlaybookRegistry
             'slugs' => [
                 'avatar',
                 'card',
+                'grid',
                 'stat',
                 'chart',
                 'table',
@@ -255,6 +256,7 @@ final class PlaybookRegistry
             $this->badge(),
             $this->breadcrumb(),
             $this->card(),
+            $this->grid(),
             $this->stat(),
             $this->chart(),
             $this->dropdownMenu(),
@@ -1192,6 +1194,36 @@ final class PlaybookRegistry
                 'show_footer' => true,
             ],
             previewView: 'workbench::playbook.previews.card',
+            wide: true,
+        );
+    }
+
+    private function grid(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'grid',
+            title: 'Grid',
+            description: 'Responsive column layout with container-query breakpoints and span items.',
+            controls: [
+                new PlaybookControl('md', 'Columns from md', 'select', [
+                    '1' => '1',
+                    '2' => '2',
+                    '3' => '3',
+                ], '3'),
+                new PlaybookControl('sm', 'Columns from sm', 'select', [
+                    '' => 'Default',
+                    '2' => '2',
+                ], ''),
+                new PlaybookControl('container', 'Container queries', 'checkbox', [], true),
+                new PlaybookControl('show_span', 'Full-width item', 'checkbox', [], true),
+            ],
+            defaultState: [
+                'md' => '3',
+                'sm' => '',
+                'container' => true,
+                'show_span' => true,
+            ],
+            previewView: 'workbench::playbook.previews.grid',
             wide: true,
         );
     }
