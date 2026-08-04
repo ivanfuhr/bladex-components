@@ -30,8 +30,12 @@ it('renders a dropdown menu with trigger content and items', function () {
         ->toContain('Profile')
         ->toContain('data-dropdown-menu-separator')
         ->toContain('data-variant="danger"')
+        ->toContain('focus:bg-red-50')
+        ->toContain('data-[highlighted]:bg-red-50')
         ->toContain('⌘⌫')
-        ->toContain('Delete');
+        ->toContain('Delete')
+        // Root must not shrink-wrap; contents lets w-full triggers fill the parent (e.g. sidebar).
+        ->toContain('class="dropdown-menu contents"');
 });
 
 it('supports grouped items and disabled state', function () {
@@ -96,4 +100,14 @@ it('dropdown menu script locks page scroll while open instead of closing on scro
         ->not->toContain('onScroll')
         ->not->toContain("window.addEventListener('scroll', onScroll, { capture: true, signal })")
         ->not->toContain("window.addEventListener('scroll', reposition, { capture: true, signal })");
+});
+
+it('dropdown menu script positions left and right sides beside the trigger', function () {
+    $source = (string) file_get_contents(dirname(__DIR__, 2).'/resources/assets/js/dropdown-menu.js');
+
+    expect($source)
+        ->toContain("side === 'left' || side === 'right'")
+        ->toContain('rect.right + gap')
+        ->toContain('rect.left - gap - width')
+        ->toContain('rect.bottom - height');
 });

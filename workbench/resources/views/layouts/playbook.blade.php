@@ -141,7 +141,7 @@
                 <x-ui::sidebar.footer>
                     <x-ui::sidebar.menu>
                         <x-ui::sidebar.menu-item>
-                            <x-ui::dropdown-menu side="right" align="end">
+                            <x-ui::dropdown-menu side="top" align="start">
                                 <x-ui::dropdown-menu.trigger>
                                     <x-ui::sidebar.menu-button size="lg" class="data-[state=open]:bg-zinc-100 dark:data-[state=open]:bg-zinc-800">
                                         <x-ui::avatar name="Ivan Führ" size="sm" circle />

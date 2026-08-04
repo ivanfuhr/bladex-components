@@ -137,6 +137,16 @@
         display: none;
     }
 
+    /* Textarea reuses scroll-area chrome; hide the native control scrollbar. */
+    .textarea__control[data-scroll-area-viewport] {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .textarea__control[data-scroll-area-viewport]::-webkit-scrollbar {
+        display: none;
+    }
+
     .scroll-area__scrollbar[data-orientation='vertical'] .scroll-area__thumb {
         width: 100%;
     }

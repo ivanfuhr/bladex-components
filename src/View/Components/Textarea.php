@@ -37,6 +37,8 @@ final class Textarea extends StencilComponent
         $userClass = $this->attributes->get('class');
         $applyFullWidth = ! filled($userClass);
 
+        $useScrollArea = ! $this->autosize;
+
         $controlClasses = collect([
             'textarea__control',
             'block min-w-0',
@@ -65,6 +67,21 @@ final class Textarea extends StencilComponent
             $wrapperAttributes = $wrapperAttributes->merge(['data-textarea-counter' => true]);
         }
 
+        $frameAttributes = null;
+
+        if ($useScrollArea) {
+            $frameAttributes = (new ComponentAttributeBag([
+                'data-scroll-area' => true,
+                'data-scroll-area-type' => 'hover',
+                'data-scroll-area-hide-delay' => '600',
+            ]))->class([
+                'textarea__frame',
+                'relative',
+                'overflow-hidden',
+                'rounded-md',
+            ]);
+        }
+
         $controlExtraClass = $this->attributes->get('class:textarea') ?? $this->attributes->get('textarea:class');
 
         $controlAttributes = stencil_apply_interaction($this->attributes
@@ -74,6 +91,12 @@ final class Textarea extends StencilComponent
                 'data-textarea-control' => true,
             ]),
         );
+
+        if ($useScrollArea) {
+            $controlAttributes = $controlAttributes->merge([
+                'data-scroll-area-viewport' => true,
+            ]);
+        }
 
         if (filled($resolvedControlId)) {
             $controlAttributes = $controlAttributes->merge(['id' => $resolvedControlId]);
@@ -85,7 +108,9 @@ final class Textarea extends StencilComponent
 
         return [
             'wrapperAttributes' => $wrapperAttributes,
+            'frameAttributes' => $frameAttributes,
             'controlAttributes' => $controlAttributes,
+            'useScrollArea' => $useScrollArea,
         ];
     }
 }

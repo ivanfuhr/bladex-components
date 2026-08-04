@@ -14,6 +14,25 @@ it('renders a textarea control with name', function () {
         ->toContain('Hello');
 });
 
+it('wires scroll-area chrome on fixed-height textareas', function () {
+    $html = Blade::render('<x-ui::textarea name="bio" rows="3" />');
+
+    expect($html)
+        ->toContain('data-scroll-area')
+        ->toContain('data-scroll-area-viewport')
+        ->toContain('data-scroll-area-scrollbar')
+        ->toContain('data-scroll-area-thumb');
+});
+
+it('skips scroll-area chrome when autosize', function () {
+    $html = Blade::render('<x-ui::textarea name="bio" autosize />');
+
+    expect($html)
+        ->toContain('data-textarea-autosize')
+        ->not->toContain('data-scroll-area')
+        ->not->toContain('data-scroll-area-scrollbar');
+});
+
 it('marks textarea invalid when invalid prop is true', function () {
     $html = Blade::render('<x-ui::textarea name="bio" :invalid="true" />');
 
@@ -43,7 +62,11 @@ it('nests the character counter display inside the textarea root', function () {
     @$document->loadHTML($html);
 
     $control = $document->getElementById('bio');
-    $root = $control?->parentNode;
+    $root = $control;
+
+    while ($root instanceof DOMElement && ! $root->hasAttribute('data-textarea')) {
+        $root = $root->parentNode;
+    }
 
     expect($root)->toBeInstanceOf(DOMElement::class)
         ->and($root->hasAttribute('data-textarea-counter'))->toBeTrue();
@@ -70,7 +93,11 @@ it('keeps native attributes on the textarea control, not the wrapper', function 
     @$document->loadHTML($html);
 
     $control = $document->getElementById('bio');
-    $wrapper = $control?->parentNode;
+    $wrapper = $control;
+
+    while ($wrapper instanceof DOMElement && ! $wrapper->hasAttribute('data-textarea')) {
+        $wrapper = $wrapper->parentNode;
+    }
 
     expect($control)->toBeInstanceOf(DOMElement::class)
         ->and($wrapper)->toBeInstanceOf(DOMElement::class)

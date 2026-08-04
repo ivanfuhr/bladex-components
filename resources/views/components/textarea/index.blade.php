@@ -1,5 +1,12 @@
 <div {{ $wrapperAttributes }}>
-    <textarea {{ $controlAttributes }}>{{ $slot }}</textarea>
+    @if ($useScrollArea)
+        <div {{ $frameAttributes }}>
+            <textarea {{ $controlAttributes }}>{{ $slot }}</textarea>
+            <x-ui::scroll-area.scrollbar orientation="vertical" />
+        </div>
+    @else
+        <textarea {{ $controlAttributes }}>{{ $slot }}</textarea>
+    @endif
 
     @if ($counter)
         <div

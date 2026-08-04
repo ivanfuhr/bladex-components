@@ -10,7 +10,7 @@
     @endif
 
     @unless ($slotEmpty)
-        <span @class(['button__label', 'inline-flex items-center']) data-button-label> {{ $slot }} </span>
+        <span @class(['button__label', 'inline-flex items-center gap-2']) data-button-label> {{ $slot }} </span>
     @endunless
 
     @if ($isLoading)

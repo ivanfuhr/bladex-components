@@ -220,6 +220,11 @@ function bindScrollArea(root) {
 
     viewport.addEventListener('scroll', onScroll, { passive: true, signal });
 
+    // Textarea scrollHeight changes on input without resizing the element.
+    if (viewport instanceof HTMLTextAreaElement) {
+        viewport.addEventListener('input', updateThumbs, { signal });
+    }
+
     root.addEventListener(
         'pointerenter',
         () => {

@@ -393,13 +393,29 @@ function positionContent(content, trigger, root) {
     content.style.pointerEvents = '';
     content.hidden = wasHidden;
 
-    let top = side === 'top' ? rect.top - gap - height : rect.bottom + gap;
-    let left = rect.left;
+    let top;
+    let left;
 
-    if (align === 'end') {
-        left = rect.right - width;
-    } else if (align === 'center') {
-        left = rect.left + rect.width / 2 - width / 2;
+    if (side === 'left' || side === 'right') {
+        left = side === 'left' ? rect.left - gap - width : rect.right + gap;
+
+        if (align === 'end') {
+            top = rect.bottom - height;
+        } else if (align === 'center') {
+            top = rect.top + rect.height / 2 - height / 2;
+        } else {
+            top = rect.top;
+        }
+    } else {
+        top = side === 'top' ? rect.top - gap - height : rect.bottom + gap;
+
+        if (align === 'end') {
+            left = rect.right - width;
+        } else if (align === 'center') {
+            left = rect.left + rect.width / 2 - width / 2;
+        } else {
+            left = rect.left;
+        }
     }
 
     left = Math.min(Math.max(padding, left), window.innerWidth - width - padding);

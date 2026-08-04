@@ -895,7 +895,7 @@ final class PlaybookRegistry
         return new ComponentPlaybook(
             slug: 'textarea',
             title: 'Textarea',
-            description: 'Multi-line text control with validation and disabled states.',
+            description: 'Multi-line text control with themed scrollbars, validation, and disabled states.',
             controls: $controls,
             defaultState: [
                 'size' => 'default',

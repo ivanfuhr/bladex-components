@@ -164,7 +164,7 @@ FORM: Established playbook surface extension (Operate); seed n/a.
             <x-ui::sidebar.footer>
                 <x-ui::sidebar.menu>
                     <x-ui::sidebar.menu-item>
-                        <x-ui::dropdown-menu side="right" align="end">
+                        <x-ui::dropdown-menu side="top" align="start">
                             <x-ui::dropdown-menu.trigger>
                                 <x-ui::sidebar.menu-button size="lg" class="data-[state=open]:bg-zinc-100 dark:data-[state=open]:bg-zinc-800">
                                     <x-ui::avatar name="Ada Lovelace" size="sm" circle color="violet" />
@@ -269,7 +269,9 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                             <x-ui::dropdown-menu.trigger>
                                 <x-ui::button variant="outline">
                                     More
-                                    <x-ui::icon name="chevron-down" class="size-4 opacity-60" />
+                                    <x-slot:trailing>
+                                        <x-ui::icon name="chevron-down" class="size-4 opacity-60" />
+                                    </x-slot:trailing>
                                 </x-ui::button>
                             </x-ui::dropdown-menu.trigger>
                             <x-ui::dropdown-menu.content>
