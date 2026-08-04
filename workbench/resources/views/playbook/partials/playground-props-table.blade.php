@@ -29,6 +29,8 @@
                                 {{ $control->default ? 'true' : 'false' }}
                             @elseif ($control->type === 'select' && $control->default !== null && $control->default !== '')
                                 {{ $control->default }}
+                            @elseif ($control->type === 'text' && filled($control->default))
+                                {{ $control->default }}
                             @else
                                 —
                             @endif

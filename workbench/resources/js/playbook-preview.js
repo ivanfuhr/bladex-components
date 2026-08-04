@@ -49,6 +49,7 @@ document.addEventListener('alpine:init', () => {
     window.Alpine.data('playbookPreview', (config) => ({
         component: config.component,
         state: config.state,
+        defaultState: structuredClone(config.state),
         previewUrl: config.previewUrl,
         html: config.initialHtml,
         snippet: config.initialSnippet ?? '',
@@ -69,6 +70,27 @@ document.addEventListener('alpine:init', () => {
 
             this.$watch('snippetHtml', () => {
                 this.scheduleSnippetWidgets();
+            });
+
+            this.$el?.addEventListener('stencil:toggle-group:change', (event) => {
+                if (!(event instanceof CustomEvent)) {
+                    return;
+                }
+
+                const target = event.target;
+
+                if (!(target instanceof HTMLElement)) {
+                    return;
+                }
+
+                const key = target.dataset.playbookControlKey;
+
+                if (!key) {
+                    return;
+                }
+
+                this.state[key] = event.detail?.value ?? this.state[key];
+                this.queuePreview();
             });
 
             this.schedulePreviewWidgets();
@@ -138,6 +160,126 @@ document.addEventListener('alpine:init', () => {
         queuePreview() {
             clearTimeout(this.timer);
             this.timer = setTimeout(() => this.refreshPreview(), 150);
+        },
+
+        handleControlChange(event) {
+            const target = event.target;
+
+            if (!(target instanceof HTMLInputElement) || !target.matches('[data-select-hidden-input]')) {
+                return;
+            }
+
+            const select = target.closest('[data-playbook-control][data-select]');
+
+            if (!(select instanceof HTMLElement)) {
+                return;
+            }
+
+            const key = select.dataset.playbookControlKey;
+
+            if (!key) {
+                return;
+            }
+
+            this.state[key] = target.value;
+            this.queuePreview();
+        },
+
+        syncPropertyControls() {
+            this.$nextTick(() => {
+                const root = this.$el;
+
+                if (!(root instanceof HTMLElement)) {
+                    return;
+                }
+
+                root.querySelectorAll('[data-playbook-control][data-toggle-group]').forEach((group) => {
+                    if (!(group instanceof HTMLElement)) {
+                        return;
+                    }
+
+                    const key = group.dataset.playbookControlKey;
+
+                    if (!key) {
+                        return;
+                    }
+
+                    const value = String(this.state[key] ?? '');
+                    group.dataset.value = value;
+
+                    group.querySelectorAll('[data-toggle-group-item]').forEach((item) => {
+                        if (!(item instanceof HTMLButtonElement)) {
+                            return;
+                        }
+
+                        const selected = item.dataset.value === value;
+                        item.dataset.state = selected ? 'on' : 'off';
+                        item.setAttribute('aria-checked', selected ? 'true' : 'false');
+                        item.tabIndex = selected ? 0 : -1;
+                    });
+                });
+
+                root.querySelectorAll('[data-playbook-control][data-select]').forEach((selectRoot) => {
+                    if (!(selectRoot instanceof HTMLElement)) {
+                        return;
+                    }
+
+                    const key = selectRoot.dataset.playbookControlKey;
+
+                    if (!key) {
+                        return;
+                    }
+
+                    const value = String(this.state[key] ?? '');
+                    const hidden = selectRoot.querySelector('[data-select-hidden-input]');
+                    const valueEl = selectRoot.querySelector('[data-select-value]');
+
+                    if (!(hidden instanceof HTMLInputElement) || !(valueEl instanceof HTMLElement)) {
+                        return;
+                    }
+
+                    hidden.value = value;
+
+                    selectRoot.querySelectorAll('[data-select-item]').forEach((item) => {
+                        if (item instanceof HTMLElement) {
+                            item.setAttribute(
+                                'aria-selected',
+                                (item.getAttribute('data-value') ?? '') === value ? 'true' : 'false',
+                            );
+                        }
+                    });
+
+                    if (value === '') {
+                        const placeholder = valueEl.getAttribute('data-placeholder') === 'true'
+                            ? valueEl.textContent?.trim() ?? ''
+                            : (selectRoot.querySelector('[data-select-value][data-placeholder]')?.textContent?.trim() ?? 'Choose…');
+
+                        valueEl.textContent = placeholder;
+                        valueEl.setAttribute('data-placeholder', 'true');
+
+                        return;
+                    }
+
+                    const match = Array.from(selectRoot.querySelectorAll('[data-select-item]')).find(
+                        (item) =>
+                            item instanceof HTMLElement && (item.getAttribute('data-value') ?? '') === value,
+                    );
+
+                    if (match instanceof HTMLElement) {
+                        const label = match.querySelector('[data-select-item-label]');
+                        valueEl.textContent = label instanceof HTMLElement
+                            ? (label.textContent?.trim() ?? value)
+                            : (match.textContent?.trim() ?? value);
+                        valueEl.removeAttribute('data-placeholder');
+                    }
+                });
+            });
+        },
+
+        resetControls() {
+            this.state = structuredClone(this.defaultState);
+            this.syncPropertyControls();
+            this.queuePreview();
         },
 
         setStatus(message, { clearAfterMs = 0 } = {}) {

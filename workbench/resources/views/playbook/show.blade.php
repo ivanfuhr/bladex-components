@@ -80,7 +80,7 @@
                     <section aria-labelledby="playground-api-heading">
                         <h2 id="playground-api-heading" class="{{ $sectionHeadingClass }}">Playground properties</h2>
                         <p class="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                            Tune the live preview using the controls in the sidebar.
+                            Tune the live preview using the properties panel in the sidebar.
                         </p>
                         <div class="mt-4">
                             @include('workbench::playbook.partials.playground-props-table', ['controls' => $playbook->controls])
@@ -127,45 +127,10 @@
                 </section>
 
                 @if (count($playbook->controls) > 0)
-                    <section
-                        class="rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80"
-                        aria-labelledby="playbook-properties-heading"
-                    >
-                        <h2 id="playbook-properties-heading" class="{{ $sectionHeadingClass }}">Controls</h2>
-                        <form class="mt-4 space-y-4" @submit.prevent>
-                            @foreach ($playbook->controls as $control)
-                                <div>
-                                    @if ($control->type === 'checkbox')
-                                        <label class="flex cursor-pointer items-start gap-3 rounded-lg border border-transparent px-1 py-1.5 text-sm text-zinc-800 transition hover:bg-zinc-50 dark:text-zinc-200 dark:hover:bg-zinc-800/60">
-                                            <x-ui::checkbox
-                                                class="mt-0.5"
-                                                x-model.boolean="state.{{ $control->key }}"
-                                                @change="queuePreview()"
-                                            />
-                                            <span>{{ $control->label }}</span>
-                                        </label>
-                                    @elseif ($control->type === 'select')
-                                        <label
-                                            class="block text-sm font-medium text-zinc-800 dark:text-zinc-200"
-                                            for="control-{{ $control->key }}"
-                                        >
-                                            {{ $control->label }}
-                                        </label>
-                                        <select
-                                            id="control-{{ $control->key }}"
-                                            class="mt-1.5 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm text-zinc-900 shadow-sm transition focus-visible:border-zinc-300 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus-visible:border-zinc-600 dark:focus-visible:ring-zinc-300/20"
-                                            x-model="state.{{ $control->key }}"
-                                            @change="queuePreview()"
-                                        >
-                                            @foreach ($control->options as $value => $label)
-                                                <option value="{{ $value }}">{{ $label }}</option>
-                                            @endforeach
-                                        </select>
-                                    @endif
-                                </div>
-                            @endforeach
-                        </form>
-                    </section>
+                    @include('workbench::playbook.partials.playbook-controls', [
+                        'controls' => $playbook->controls,
+                        'defaultState' => $defaultState,
+                    ])
                 @endif
             </aside>
         </div>
