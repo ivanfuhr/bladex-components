@@ -1,7 +1,7 @@
 <li {{
     $attributes->class([
         'breadcrumb__item',
-        'inline-flex items-center gap-1.5',
+        'shrink-0 items-center gap-1.5',
     ])->merge([
         'data-breadcrumb-item' => true,
     ])

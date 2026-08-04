@@ -3,21 +3,13 @@
 @section('title', $playbook->title.' — Stencil Docs')
 
 @section('shell_breadcrumb')
-    <x-ui::breadcrumb>
-        <x-ui::breadcrumb.list>
-            <x-ui::breadcrumb.item class="hidden md:block">
-                <x-ui::breadcrumb.link href="{{ route('playbook.index') }}">Stencil Docs</x-ui::breadcrumb.link>
-            </x-ui::breadcrumb.item>
-            <x-ui::breadcrumb.separator class="hidden md:block" />
-            <x-ui::breadcrumb.item class="hidden md:block">
-                <x-ui::breadcrumb.link href="{{ route('playbook.index') }}">Components</x-ui::breadcrumb.link>
-            </x-ui::breadcrumb.item>
-            <x-ui::breadcrumb.separator class="hidden md:block" />
-            <x-ui::breadcrumb.item>
-                <x-ui::breadcrumb.page>{{ $playbook->title }}</x-ui::breadcrumb.page>
-            </x-ui::breadcrumb.item>
-        </x-ui::breadcrumb.list>
-    </x-ui::breadcrumb>
+    @include('workbench::playbook.partials.shell-breadcrumb', [
+        'items' => [
+            ['label' => 'Stencil Docs', 'href' => route('playbook.index')],
+            ['label' => 'Components', 'href' => route('playbook.index')],
+            ['label' => $playbook->title, 'current' => true],
+        ],
+    ])
 @endsection
 
 @section('content')
@@ -63,9 +55,7 @@
             </div>
 
             @if ($installCommand)
-                <div class="max-w-3xl">
-                    @include('workbench::playbook.partials.install-callout', ['command' => $installCommand])
-                </div>
+                @include('workbench::playbook.partials.install-callout', ['command' => $installCommand])
             @endif
         </header>
 
@@ -192,12 +182,17 @@
                     @if ($previousPlaybook)
                         <a
                             href="{{ route('playbook.show', $previousPlaybook->slug) }}"
-                            class="group flex min-h-full flex-col gap-1 rounded-xl border border-zinc-200/80 bg-white p-4 transition hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800 dark:bg-zinc-900/50 dark:hover:border-zinc-700"
+                            class="group block h-full rounded-xl focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:focus-visible:ring-zinc-300/20"
                         >
-                            <span class="text-xs text-zinc-500 dark:text-zinc-400">Previous</span>
-                            <span class="truncate font-medium text-zinc-900 group-hover:text-zinc-950 dark:text-zinc-100">
-                                {{ $previousPlaybook->title }}
-                            </span>
+                            <x-ui::card
+                                size="sm"
+                                class="h-full transition duration-200 group-hover:-translate-y-0.5 group-hover:border-zinc-300 group-hover:shadow-md motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 dark:group-hover:border-zinc-600 dark:group-hover:bg-zinc-900"
+                            >
+                                <div class="flex min-h-full flex-col gap-1">
+                                    <x-ui::text size="sm" variant="subtle">Previous</x-ui::text>
+                                    <x-ui::text class="truncate font-medium">{{ $previousPlaybook->title }}</x-ui::text>
+                                </div>
+                            </x-ui::card>
                         </a>
                     @endif
                 </div>
@@ -205,12 +200,17 @@
                     @if ($nextPlaybook)
                         <a
                             href="{{ route('playbook.show', $nextPlaybook->slug) }}"
-                            class="group flex min-h-full flex-col items-end gap-1 rounded-xl border border-zinc-200/80 bg-white p-4 text-right transition hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800 dark:bg-zinc-900/50 dark:hover:border-zinc-700"
+                            class="group block h-full rounded-xl focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:focus-visible:ring-zinc-300/20"
                         >
-                            <span class="text-xs text-zinc-500 dark:text-zinc-400">Next</span>
-                            <span class="truncate font-medium text-zinc-900 group-hover:text-zinc-950 dark:text-zinc-100">
-                                {{ $nextPlaybook->title }}
-                            </span>
+                            <x-ui::card
+                                size="sm"
+                                class="h-full transition duration-200 group-hover:-translate-y-0.5 group-hover:border-zinc-300 group-hover:shadow-md motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 dark:group-hover:border-zinc-600 dark:group-hover:bg-zinc-900"
+                            >
+                                <div class="flex min-h-full flex-col items-end gap-1 text-right">
+                                    <x-ui::text size="sm" variant="subtle">Next</x-ui::text>
+                                    <x-ui::text class="truncate font-medium">{{ $nextPlaybook->title }}</x-ui::text>
+                                </div>
+                            </x-ui::card>
                         </a>
                     @endif
                 </div>

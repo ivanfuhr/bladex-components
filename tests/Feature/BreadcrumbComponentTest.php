@@ -50,6 +50,27 @@ it('supports flux-style item href shorthand and slash separators', function () {
         ->toContain('Post');
 });
 
+it('allows responsive hiding via consumer classes', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-ui::breadcrumb>
+            <x-ui::breadcrumb.list>
+                <x-ui::breadcrumb.item class="max-md:hidden">
+                    <x-ui::breadcrumb.link href="/">Home</x-ui::breadcrumb.link>
+                </x-ui::breadcrumb.item>
+                <x-ui::breadcrumb.item class="min-w-0 overflow-hidden">
+                    <x-ui::breadcrumb.page>Current</x-ui::breadcrumb.page>
+                </x-ui::breadcrumb.item>
+            </x-ui::breadcrumb.list>
+        </x-ui::breadcrumb>
+    BLADE);
+
+    expect($html)
+        ->toContain('max-md:hidden')
+        ->toContain('flex-nowrap')
+        ->toContain('breadcrumb__page')
+        ->toContain('truncate');
+});
+
 it('renders ellipsis for collapsed trails', function () {
     $html = Blade::render('<x-ui::breadcrumb.ellipsis />');
 

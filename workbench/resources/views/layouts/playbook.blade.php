@@ -78,19 +78,12 @@
                         @hasSection('shell_breadcrumb')
                             @yield('shell_breadcrumb')
                         @else
-                            <x-ui::breadcrumb>
-                                <x-ui::breadcrumb.list>
-                                    <x-ui::breadcrumb.item class="hidden md:block">
-                                        <x-ui::breadcrumb.link href="{{ route('playbook.getting-started') }}">
-                                            Stencil Docs
-                                        </x-ui::breadcrumb.link>
-                                    </x-ui::breadcrumb.item>
-                                    <x-ui::breadcrumb.separator class="hidden md:block" />
-                                    <x-ui::breadcrumb.item>
-                                        <x-ui::breadcrumb.page>Components</x-ui::breadcrumb.page>
-                                    </x-ui::breadcrumb.item>
-                                </x-ui::breadcrumb.list>
-                            </x-ui::breadcrumb>
+                            @include('workbench::playbook.partials.shell-breadcrumb', [
+                                'items' => [
+                                    ['label' => 'Stencil Docs', 'href' => route('playbook.getting-started')],
+                                    ['label' => 'Components', 'current' => true],
+                                ],
+                            ])
                         @endif
                     </div>
                 </x-ui::header>

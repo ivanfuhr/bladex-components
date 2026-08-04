@@ -1,7 +1,7 @@
 <li {{
     $attributes->class([
         'breadcrumb__separator',
-        'inline-flex items-center',
+        'shrink-0 items-center',
     ])->merge([
         'role' => 'presentation',
         'aria-hidden' => 'true',

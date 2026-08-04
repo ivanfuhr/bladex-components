@@ -69,26 +69,20 @@
 
         <a
             href="{{ route('playbook.showcase') }}"
-            class="group block rounded-xl focus-visible:ring-2 focus-visible:ring-zinc-950/20 focus-visible:outline-none dark:focus-visible:ring-zinc-300/30"
+            class="group block rounded-xl focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:focus-visible:ring-zinc-300/20"
         >
-            <x-ui::card class="border-zinc-900 bg-zinc-900 text-zinc-50 transition duration-200 group-hover:-translate-y-0.5 group-hover:bg-zinc-800 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-950 dark:group-hover:bg-white">
+            <x-ui::card
+                class="border-zinc-300 bg-zinc-50 transition duration-200 group-hover:-translate-y-0.5 group-hover:border-zinc-400 group-hover:shadow-md motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 dark:border-zinc-700 dark:bg-zinc-900 dark:group-hover:border-zinc-600 dark:group-hover:bg-zinc-900/80"
+            >
                 <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div class="min-w-0 space-y-2">
-                        <x-ui::badge
-                            variant="outline"
-                            rounded
-                            class="border-zinc-700 bg-zinc-800 text-zinc-300 dark:border-zinc-300 dark:bg-zinc-200 dark:text-zinc-700"
-                        >
-                            Scenario
-                        </x-ui::badge>
-                        <x-ui::heading :level="2" class="text-zinc-50! dark:text-zinc-950!">
-                            Event Studio showcase
-                        </x-ui::heading>
-                        <x-ui::text size="sm" class="text-zinc-300 dark:text-zinc-600">
+                        <x-ui::badge variant="outline" rounded>Scenario</x-ui::badge>
+                        <x-ui::heading :level="2">Event Studio showcase</x-ui::heading>
+                        <x-ui::text size="sm" variant="subtle">
                             One screen composing every component in a realistic event-editor flow.
                         </x-ui::text>
                     </div>
-                    <span class="inline-flex shrink-0 items-center gap-1 text-sm font-medium text-zinc-50 dark:text-zinc-950">
+                    <span class="inline-flex shrink-0 items-center gap-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">
                         Open showcase
                         <x-ui::icon
                             name="chevron-right"
