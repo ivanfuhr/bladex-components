@@ -16,4 +16,15 @@ final class Collapse extends StencilComponent
     {
         return 'stencil::components.sidebar.collapse';
     }
+
+    /**
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
+    protected function resolveViewData(array $data = []): array
+    {
+        return [
+            'isExpanded' => (bool) $this->aware('defaultOpen', true),
+        ];
+    }
 }

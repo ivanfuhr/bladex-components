@@ -68,6 +68,8 @@
                 <div
                     class="input__counter mt-1 w-full basis-full text-right text-xs text-zinc-500 dark:text-zinc-400"
                     data-input-counter-display
+                    aria-live="polite"
+                    aria-atomic="true"
                 ></div>
             @endif
         </div>
@@ -141,6 +143,8 @@
             <div
                 class="input__counter mt-1 w-full basis-full text-right text-xs text-zinc-500 dark:text-zinc-400"
                 data-input-counter-display
+                aria-live="polite"
+                aria-atomic="true"
             ></div>
         @endif
     </div>

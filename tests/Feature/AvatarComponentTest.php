@@ -57,3 +57,16 @@ it('renders avatar groups with overlapping rings', function () {
         ->toContain('-space-x-2')
         ->toContain('data-avatar');
 });
+
+it('renders avatar group labels when provided', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-ui::avatar.group label="Project contributors">
+            <x-ui::avatar name="One" />
+            <x-ui::avatar name="Two" />
+        </x-ui::avatar.group>
+    BLADE);
+
+    expect($html)
+        ->toContain('aria-label="Project contributors"')
+        ->toContain('role="group"');
+});

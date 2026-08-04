@@ -18,7 +18,7 @@
                 'dark:text-zinc-200 dark:hover:bg-zinc-800 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300/20',
             ])->merge([
                 'data-sidebar-trigger' => true,
-                'aria-expanded' => 'true',
+                'aria-expanded' => $isExpanded ? 'true' : 'false',
                 'aria-label' => $attributes->get('aria-label', 'Toggle sidebar'),
             ])
         }}

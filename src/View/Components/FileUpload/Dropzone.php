@@ -61,6 +61,7 @@ final class Dropzone extends StencilComponent
                 'type' => 'button',
                 'data-file-upload-dropzone' => true,
                 'data-dragging' => 'false',
+                'aria-label' => $resolvedHeading,
             ]),
             nativeDisabled: true,
         );

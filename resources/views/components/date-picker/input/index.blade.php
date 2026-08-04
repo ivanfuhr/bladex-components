@@ -10,7 +10,7 @@
             'data-date-picker-input' => true,
             'aria-haspopup' => 'dialog',
             'aria-expanded' => 'false',
-        ])
+        ])->merge(filled($panelId) ? ['aria-controls' => $panelId] : [])
     }} />
     @if ($clearable)
         <button

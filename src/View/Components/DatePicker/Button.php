@@ -30,7 +30,7 @@ final class Button extends StencilComponent
             $this->attributes
                 ->class([
                     'date-picker__trigger',
-                    'group flex w-full min-w-0 items-center justify-between gap-2 text-left',
+                    'group flex min-w-0 flex-1 items-center justify-between gap-2 text-left',
                     stencil_field_surface_classes($size, false, 'pointer'),
                     stencil_invalid_field_classes(),
                     $invalid ? 'border-red-500' : null,
@@ -42,6 +42,12 @@ final class Button extends StencilComponent
                 ]),
             nativeDisabled: true,
         );
+
+        $panelId = $this->attributes->get('panel-id') ?? View::getConsumableComponentData('panelId');
+
+        if (filled($panelId)) {
+            $triggerAttributes = $triggerAttributes->merge(['aria-controls' => $panelId]);
+        }
 
         if ($disabled) {
             $triggerAttributes = $triggerAttributes->merge(['disabled' => true]);

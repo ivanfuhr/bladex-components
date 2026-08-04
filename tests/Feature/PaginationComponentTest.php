@@ -27,7 +27,7 @@ it('renders compound pagination controls', function () {
 
     expect($html)
         ->toContain('data-pagination')
-        ->toContain('aria-label="pagination"')
+        ->toContain('aria-label="Pagination"')
         ->toContain('data-active="true"')
         ->toContain('data-pagination-ellipsis')
         ->toContain('?page=3');

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Ivanfuhr\Stencil\View\Components;
 
+use Illuminate\Support\Str;
+
 final class TimePicker extends StencilComponent
 {
     public function __construct(
@@ -46,12 +48,20 @@ final class TimePicker extends StencilComponent
             $unavailable = collect($unavailable)->implode(',');
         }
 
+        $pickerId = filled($this->name)
+            ? (string) $this->name
+            : 'time-picker-'.Str::uuid()->toString();
+        $listboxId = $pickerId.'-listbox';
+
         return [
             'invalid' => $invalid,
             'resolvedTimezone' => $resolvedTimezone,
             'resolvedLocale' => $resolvedLocale,
             'resolvedValue' => $resolvedValue,
             'unavailable' => $unavailable,
+            'pickerId' => $pickerId,
+            'listboxId' => $listboxId,
+            'listboxLabel' => __('Select time'),
         ];
     }
 }

@@ -70,6 +70,10 @@ final class SwitchControl extends StencilComponent
             $controlAttributes = $controlAttributes->merge(['checked' => true]);
         }
 
+        $controlAttributes = $controlAttributes->merge([
+            'aria-checked' => $this->checked ? 'true' : 'false',
+        ]);
+
         if ($isInvalid) {
             $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);
         }

@@ -1545,6 +1545,19 @@ function updateChartAnnouncer(root, state, activeIndex) {
         return;
     }
 
+    const parts = collectChartAnnouncementParts(root, state, row);
+
+    announcer.textContent = parts.join(', ');
+}
+
+/**
+ * @param {HTMLElement} root
+ * @param {ChartState} state
+ * @param {Record<string, unknown>} row
+ * @returns {string[]}
+ */
+function collectChartAnnouncementParts(root, state, row) {
+    /** @type {string[]} */
     const parts = [];
 
     root.querySelectorAll(
@@ -1554,25 +1567,72 @@ function updateChartAnnouncer(root, state, activeIndex) {
             return;
         }
 
-        const field = slot.dataset.field;
-        const fallback = slot.dataset.fallback ?? '';
-        const raw = field ? row[field] : '';
-        const formatted =
-            raw === undefined || raw === null || raw === ''
-                ? fallback
-                : formatValue(
-                      raw,
-                      slot.dataset.format ?? null,
-                      slot.dataset.prefix ?? null,
-                      slot.dataset.suffix ?? null,
-                  );
+        const formatted = formatChartSlotValue(slot, row);
 
         if (formatted) {
-            parts.push(String(formatted));
+            parts.push(formatted);
         }
     });
 
-    announcer.textContent = parts.join(', ');
+    if (parts.length > 0) {
+        return parts;
+    }
+
+    const xAxis = state.axes.x;
+    const xValue = row[state.xField];
+
+    if (xValue !== undefined && xValue !== null && xValue !== '') {
+        parts.push(
+            formatValue(
+                xValue,
+                xAxis?.format ?? null,
+                xAxis?.tickPrefix ?? null,
+                xAxis?.tickSuffix ?? null,
+            ),
+        );
+    }
+
+    const yAxis = state.axes.y;
+
+    state.series.forEach((series) => {
+        const value = row[series.field];
+
+        if (value === undefined || value === null || value === '') {
+            return;
+        }
+
+        parts.push(
+            formatValue(
+                value,
+                yAxis?.format ?? null,
+                yAxis?.tickPrefix ?? null,
+                yAxis?.tickSuffix ?? null,
+            ),
+        );
+    });
+
+    return parts;
+}
+
+/**
+ * @param {HTMLElement} slot
+ * @param {Record<string, unknown>} row
+ */
+function formatChartSlotValue(slot, row) {
+    const field = slot.dataset.field;
+    const fallback = slot.dataset.fallback ?? '';
+    const raw = field ? row[field] : '';
+    const formatted =
+        raw === undefined || raw === null || raw === ''
+            ? fallback
+            : formatValue(
+                  raw,
+                  slot.dataset.format ?? null,
+                  slot.dataset.prefix ?? null,
+                  slot.dataset.suffix ?? null,
+              );
+
+    return formatted ? String(formatted) : '';
 }
 
 /**

@@ -6,12 +6,12 @@
             $useLink || $as === 'button'
             ? 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:focus-visible:ring-zinc-300/20'
             : null,
-        ])->merge([
+        ])->merge(array_filter([
             'data-badge' => true,
             'data-variant' => $variant,
-            'href' => $useLink ? ($href ?? '#') : null,
+            'href' => $useLink ? $href : null,
             'type' => $as === 'button' ? 'button' : null,
-        ])
+        ]))
     }}
 >
     {{ $slot }}

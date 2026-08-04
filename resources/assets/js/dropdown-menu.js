@@ -97,6 +97,8 @@ function bindDropdownMenu(root) {
         trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
 
         if (open) {
+            content.removeAttribute('inert');
+            content.removeAttribute('aria-hidden');
             releaseScrollLock?.();
             releaseScrollLock = acquireBodyScrollLock(content, { signal });
             ensureContentPortaled(content, root, portalMarker);
@@ -117,6 +119,8 @@ function bindDropdownMenu(root) {
         } else {
             releaseScrollLock?.();
             releaseScrollLock = null;
+            content.setAttribute('inert', '');
+            content.setAttribute('aria-hidden', 'true');
             clearHighlight(items());
             activeIndex = -1;
             restoreContentFromPortal(content, root, portalMarker);

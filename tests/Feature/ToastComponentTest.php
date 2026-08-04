@@ -33,5 +33,15 @@ it('uses alert role for danger toast variants', function () {
         ->toContain('data-variant="danger"')
         ->toContain('role="alert"')
         ->toContain('aria-live="assertive"')
+        ->toContain('data-toast-icon')
         ->not->toContain('role="status"');
+});
+
+it('renders default variant icons for success toasts', function () {
+    $html = Blade::render('<x-ui::toast variant="success" title="Saved" description="Done." />');
+
+    expect($html)
+        ->toContain('data-toast-icon')
+        ->toContain('data-icon')
+        ->toContain('M20 6 9 17l-5-5');
 });

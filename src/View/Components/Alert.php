@@ -10,6 +10,7 @@ final class Alert extends StencilComponent
         public mixed $variant = 'default',
         public mixed $title = null,
         public mixed $icon = null,
+        public bool $showIcon = true,
     ) {}
 
     protected function stencilView(): string
@@ -25,6 +26,7 @@ final class Alert extends StencilComponent
         return [
             'liveRole' => $liveRole,
             'liveMode' => $liveMode,
+            'resolvedIcon' => $this->resolveIcon(),
             'variantClasses' => match ($this->variant) {
                 'success' => 'border-green-200 bg-green-50 text-green-950 dark:border-green-900 dark:bg-green-950/40 dark:text-green-50',
                 'warning' => 'border-amber-200 bg-amber-50 text-amber-950 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-50',
@@ -33,5 +35,24 @@ final class Alert extends StencilComponent
                 default => 'border-zinc-200 bg-zinc-50 text-zinc-950 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-zinc-50',
             },
         ];
+    }
+
+    private function resolveIcon(): ?string
+    {
+        if (! $this->showIcon) {
+            return null;
+        }
+
+        if (filled($this->icon)) {
+            return (string) $this->icon;
+        }
+
+        return match ($this->variant) {
+            'success' => 'check',
+            'warning' => 'clipboard',
+            'danger', 'destructive', 'error' => 'x',
+            'info' => 'clipboard',
+            default => null,
+        };
     }
 }

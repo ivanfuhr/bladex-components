@@ -68,7 +68,7 @@ final class Badge extends StencilComponent
             default => 'bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200',
         };
 
-        $useLink = filled($this->href) || $this->as === 'a';
+        $useLink = filled($this->href);
 
         return [
             'baseClasses' => $baseClasses,

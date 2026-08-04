@@ -16,6 +16,16 @@ const initialized = new WeakSet();
  * @param {ParentNode} root
  */
 export function initPopovers(root = document) {
+    document
+        .querySelectorAll('[data-popover-content][data-popover-portaled]')
+        .forEach((content) => {
+            if (!(content instanceof HTMLElement) || content.closest('[data-popover]')) {
+                return;
+            }
+
+            content.remove();
+        });
+
     root.querySelectorAll(ROOT_SELECTOR).forEach((element) => {
         if (!(element instanceof HTMLElement)) {
             return;
@@ -55,9 +65,18 @@ function bindPopover(root) {
     }
 
     const signal = createBindSignal(root);
+    const portalMarker = document.createComment('stencil-popover-portal');
     let open = content.dataset.state === 'open' && !content.hidden;
     /** @type {(() => void) | null} */
     let releaseScrollLock = null;
+
+    const reposition = () => {
+        if (!open) {
+            return;
+        }
+
+        positionContent(content, trigger, root);
+    };
 
     trigger.setAttribute('aria-haspopup', 'dialog');
     trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -84,14 +103,26 @@ function bindPopover(root) {
         trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
 
         if (open) {
+            content.removeAttribute('inert');
+            content.removeAttribute('aria-hidden');
             releaseScrollLock?.();
             releaseScrollLock = acquireBodyScrollLock(content, { signal });
+            ensureContentPortaled(content, root, portalMarker);
             ensureAriaLabelledBy(content);
             positionContent(content, trigger, root);
             focusFirstIn(content);
+            requestAnimationFrame(reposition);
         } else {
             releaseScrollLock?.();
             releaseScrollLock = null;
+            content.setAttribute('inert', '');
+            content.setAttribute('aria-hidden', 'true');
+            restoreContentFromPortal(content, root, portalMarker);
+            content.style.top = '';
+            content.style.left = '';
+            content.style.position = '';
+            content.style.minWidth = '';
+            content.style.zIndex = '';
 
             if (options.restoreFocus !== false) {
                 trigger.focus({ preventScroll: true });
@@ -197,7 +228,7 @@ function bindPopover(root) {
             if (
                 target instanceof Element &&
                 target.closest(
-                    '[data-select-portaled], [data-combobox-portaled], [data-color-picker-portaled], [data-dropdown-menu-portaled]',
+                    '[data-select-portaled], [data-combobox-portaled], [data-color-picker-portaled], [data-dropdown-menu-portaled], [data-popover-portaled]',
                 )
             ) {
                 return;
@@ -210,8 +241,57 @@ function bindPopover(root) {
 
     if (open) {
         releaseScrollLock = acquireBodyScrollLock(content, { signal });
+        ensureContentPortaled(content, root, portalMarker);
         positionContent(content, trigger, root);
     }
+
+    window.addEventListener('resize', reposition, { signal });
+}
+
+/**
+ * Portal the popover to <body> so position:fixed isn't trapped by transformed ancestors.
+ *
+ * @param {HTMLElement} content
+ * @param {HTMLElement} root
+ * @param {Comment} portalMarker
+ */
+function ensureContentPortaled(content, root, portalMarker) {
+    // Keep overlays inside the README media canvas so #readme-media screenshots include them.
+    if (root.closest('#readme-media') || content.closest('#readme-media')) {
+        return;
+    }
+
+    if (content.parentElement === document.body) {
+        return;
+    }
+
+    if (!portalMarker.parentNode) {
+        root.insertBefore(portalMarker, content);
+    }
+
+    document.body.appendChild(content);
+    content.dataset.popoverPortaled = 'true';
+}
+
+/**
+ * @param {HTMLElement} content
+ * @param {HTMLElement} root
+ * @param {Comment} portalMarker
+ */
+function restoreContentFromPortal(content, root, portalMarker) {
+    if (content.parentElement !== document.body) {
+        return;
+    }
+
+    if (root.isConnected) {
+        if (portalMarker.parentNode === root) {
+            root.insertBefore(content, portalMarker.nextSibling);
+        } else {
+            root.appendChild(content);
+        }
+    }
+
+    delete content.dataset.popoverPortaled;
 }
 
 /**

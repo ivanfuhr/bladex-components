@@ -10,5 +10,5 @@
         'data-time-picker-input' => true,
         'aria-haspopup' => 'listbox',
         'aria-expanded' => 'false',
-    ])
+    ])->merge(filled($listboxId) ? ['aria-controls' => $listboxId] : [])
 }} />

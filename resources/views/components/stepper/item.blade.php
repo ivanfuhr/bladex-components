@@ -10,7 +10,6 @@
         'data-step' => filled($step) ? (string) $step : null,
         'data-state' => $state,
         'data-disabled' => $isDisabled ? 'true' : null,
-        'aria-current' => $isCurrent ? 'step' : null,
     ])
 }}>
     {{ $slot }}

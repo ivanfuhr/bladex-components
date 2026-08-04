@@ -12,9 +12,9 @@
     ])
 }}>
     <div class="flex gap-3">
-        @if (filled($icon))
+        @if (filled($resolvedIcon))
             <span class="mt-0.5 inline-flex shrink-0" data-alert-icon aria-hidden="true">
-                <x-ui::icon :name="$icon" class="size-4" />
+                <x-ui::icon :name="$resolvedIcon" class="size-4" />
             </span>
         @endif
         <div class="min-w-0 flex-1 space-y-1">

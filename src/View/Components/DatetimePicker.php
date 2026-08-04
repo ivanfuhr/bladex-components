@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Ivanfuhr\Stencil\View\Components;
 
+use Illuminate\Support\Str;
+
 final class DatetimePicker extends StencilComponent
 {
     public function __construct(
@@ -42,6 +44,12 @@ final class DatetimePicker extends StencilComponent
 
         $datePart = $resolvedValue ? explode('T', $resolvedValue)[0] : '';
 
+        $pickerId = filled($this->name)
+            ? (string) $this->name
+            : 'datetime-picker-'.Str::uuid()->toString();
+        $panelId = $pickerId.'-panel';
+        $timeListId = $pickerId.'-time-list';
+
         return [
             'invalid' => $invalid,
             'resolvedTimezone' => $resolvedTimezone,
@@ -49,6 +57,10 @@ final class DatetimePicker extends StencilComponent
             'resolvedValue' => $resolvedValue,
             'resolvedPlaceholder' => $resolvedPlaceholder,
             'datePart' => $datePart,
+            'pickerId' => $pickerId,
+            'panelId' => $panelId,
+            'timeListId' => $timeListId,
+            'timeListLabel' => __('Select time'),
         ];
     }
 }

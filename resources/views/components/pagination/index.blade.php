@@ -3,8 +3,7 @@
         'pagination',
         'mx-auto flex w-full justify-center',
     ])->merge([
-        'role' => 'navigation',
-        'aria-label' => 'pagination',
+        'aria-label' => __('Pagination'),
         'data-pagination' => true,
     ])
 }}>

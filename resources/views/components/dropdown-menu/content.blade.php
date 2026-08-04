@@ -11,8 +11,11 @@
         'data-side' => $side,
         'data-keep-open' => $keepOpen ? 'true' : null,
         'role' => 'menu',
+        'aria-orientation' => 'vertical',
         'tabindex' => '-1',
         'hidden' => true,
+        'inert' => true,
+        'aria-hidden' => 'true',
     ])
 }}>
     {{ $slot }}

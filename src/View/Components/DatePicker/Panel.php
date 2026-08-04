@@ -27,6 +27,7 @@ final class Panel extends StencilComponent
             'panelLabel' => $this->range
                 ? __('Select a date range')
                 : __('Select a date'),
+            'panelId' => $this->attributes->get('panel-id') ?? stencil_ancestor_attribute('panelId'),
         ];
     }
 }

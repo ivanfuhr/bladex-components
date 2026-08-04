@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ivanfuhr\Stencil\View\Components;
 
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 final class DatePicker extends StencilComponent
 {
@@ -71,6 +72,11 @@ final class DatePicker extends StencilComponent
             )
             : [];
 
+        $pickerId = filled($this->name)
+            ? (string) $this->name
+            : 'date-picker-'.Str::uuid()->toString();
+        $panelId = $pickerId.'-panel';
+
         return [
             'invalid' => $invalid,
             'range' => $range,
@@ -79,6 +85,8 @@ final class DatePicker extends StencilComponent
             'resolvedValue' => $resolvedValue,
             'monthCount' => $monthCount,
             'presetMeta' => $presetMeta,
+            'pickerId' => $pickerId,
+            'panelId' => $panelId,
         ];
     }
 }

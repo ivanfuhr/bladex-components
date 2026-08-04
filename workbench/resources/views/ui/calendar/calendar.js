@@ -485,9 +485,7 @@ function serializeSelection(state, mode) {
  */
 function buildMonthTable(viewMonth, config, state) {
     const wrap = document.createElement('div');
-    wrap.className = 'calendar__month shrink-0';
-    wrap.style.width = '17.5rem';
-    wrap.style.flexShrink = '0';
+    wrap.className = 'calendar__month min-w-0 w-full max-w-[17.5rem] shrink-0';
 
     const focusDay =
         state.selection.focus ?? state.selection.start ?? state.selection.end ?? state.today;

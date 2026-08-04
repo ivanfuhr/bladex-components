@@ -12,6 +12,8 @@ it('renders date picker with hidden input and panel', function (): void {
         ->toContain('name="published_at"')
         ->toContain('value="2026-07-29"')
         ->toContain('data-date-picker-panel')
+        ->toContain('id="published_at-panel"')
+        ->toContain('aria-controls="published_at-panel"')
         ->toContain('data-calendar');
 });
 
@@ -66,6 +68,9 @@ it('renders time picker with hidden input', function (): void {
         ->toContain('value="09:30"')
         ->toContain('role="listbox"')
         ->toContain('aria-haspopup="listbox"')
+        ->toContain('aria-controls="starts_at-listbox"')
+        ->toContain('id="starts_at-listbox"')
+        ->toContain('aria-label="Select time"')
         ->toContain('data-time-picker-panel')
         ->toContain('hidden');
 
@@ -89,6 +94,10 @@ it('renders datetime picker hidden iso value', function (): void {
         ->toContain('data-datetime-picker')
         ->toContain('name="scheduled_at"')
         ->toContain('data-datetime-picker-panel')
+        ->toContain('id="scheduled_at-panel"')
+        ->toContain('aria-controls="scheduled_at-panel"')
+        ->toContain('id="scheduled_at-time-list"')
+        ->toContain('aria-label="Select time"')
         ->toContain('data-datetime-picker-time-list')
         ->toContain('data-datetime-picker-confirm')
         ->toContain('role="listbox"');
@@ -125,6 +134,7 @@ it('calendar script follows APG keyboard and dark-aware month titles', function 
         ->toContain("event.key === 'PageDown'")
         ->toContain('dark:text-zinc-50')
         ->toContain('btn.tabIndex')
+        ->toContain('max-w-[17.5rem]')
         ->not->toContain('rgb(24 24 27)');
 });
 

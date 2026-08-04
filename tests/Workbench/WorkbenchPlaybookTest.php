@@ -287,6 +287,7 @@ it('renders playbook media pages for button and datetime components', function (
     'command',
     'empty',
     'sidebar',
+    'brand',
     'stepper',
     'stat',
     'grid',

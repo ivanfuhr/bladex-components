@@ -5,7 +5,7 @@
         $height,
     ])->merge(array_filter([
         'role' => 'progressbar',
-        'aria-label' => $label,
+        'aria-label' => $accessibleLabel,
         'aria-valuemin' => '0',
         'aria-valuemax' => (string) $resolvedMax,
         'aria-valuenow' => $indeterminate ? null : (string) $resolvedValue,
@@ -19,7 +19,6 @@
         @class([
             'progress__indicator',
             'h-full rounded-full bg-zinc-900 transition-[width] duration-300 ease-out dark:bg-zinc-100',
-            $indeterminate ? 'w-1/3 animate-pulse' : null,
         ])
         data-progress-indicator
         @if (! $indeterminate)

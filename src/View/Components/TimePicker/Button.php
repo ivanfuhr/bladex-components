@@ -30,7 +30,7 @@ final class Button extends StencilComponent
             $this->attributes
                 ->class([
                     'time-picker__trigger',
-                    'group flex w-full min-w-0 items-center justify-between gap-2 text-left',
+                    'group flex min-w-0 flex-1 items-center justify-between gap-2 text-left',
                     stencil_field_surface_classes($size, false, 'pointer'),
                     $invalid ? 'border-red-500' : null,
                 ])
@@ -41,6 +41,12 @@ final class Button extends StencilComponent
                 ]),
             nativeDisabled: true,
         );
+
+        $listboxId = $this->attributes->get('listbox-id') ?? View::getConsumableComponentData('listboxId');
+
+        if (filled($listboxId)) {
+            $triggerAttributes = $triggerAttributes->merge(['aria-controls' => $listboxId]);
+        }
 
         if ($disabled) {
             $triggerAttributes = $triggerAttributes->merge(['disabled' => true]);

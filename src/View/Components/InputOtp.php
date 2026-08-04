@@ -64,6 +64,7 @@ final class InputOtp extends StencilComponent
                 'data-input-otp-length' => (string) $length,
                 'data-input-otp-mode' => $mode,
                 'role' => 'group',
+                'aria-label' => __('One-time code'),
             ]);
 
         if ($this->disabled) {

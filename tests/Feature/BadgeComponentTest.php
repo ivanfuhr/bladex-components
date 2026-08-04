@@ -37,3 +37,12 @@ it('renders removable badge close control', function () {
         ->toContain('data-badge-close')
         ->toContain('aria-label');
 });
+
+it('renders as span when as anchor is requested without href', function () {
+    $html = Blade::render('<x-ui::badge as="a">Draft</x-ui::badge>');
+
+    expect($html)
+        ->toContain('<span')
+        ->toContain('Draft')
+        ->not->toContain('href=');
+});

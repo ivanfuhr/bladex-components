@@ -10,6 +10,7 @@ it('renders switch with role switch', function () {
     expect($html)
         ->toContain('data-switch')
         ->toContain('role="switch"')
+        ->toContain('aria-checked="true"')
         ->toContain('name="notifications"')
         ->toContain('id="notifications"')
         ->toContain('checked')

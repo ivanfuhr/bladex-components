@@ -15,7 +15,7 @@
             'aria-label' => $attributes->get('aria-label', 'Toggle sidebar'),
             'title' => $attributes->get('title', 'Toggle sidebar'),
             'tabindex' => '-1',
-            'aria-expanded' => 'true',
+            'aria-expanded' => $isExpanded ? 'true' : 'false',
         ])
     }}
 ></button>

@@ -809,9 +809,7 @@
   function buildMonthTable(viewMonth, config, state) {
     var _a5, _b, _c;
     const wrap = document.createElement("div");
-    wrap.className = "calendar__month shrink-0";
-    wrap.style.width = "17.5rem";
-    wrap.style.flexShrink = "0";
+    wrap.className = "calendar__month min-w-0 w-full max-w-[17.5rem] shrink-0";
     const focusDay = (_c = (_b = (_a5 = state.selection.focus) != null ? _a5 : state.selection.start) != null ? _b : state.selection.end) != null ? _c : state.today;
     if (config.monthCount > 1) {
       const monthTitle = document.createElement("div");
@@ -1941,28 +1939,68 @@
       announcer.textContent = "";
       return;
     }
+    const parts = collectChartAnnouncementParts(root, state, row);
+    announcer.textContent = parts.join(", ");
+  }
+  function collectChartAnnouncementParts(root, state, row) {
+    var _a5, _b, _c;
     const parts = [];
     root.querySelectorAll(
       "[data-chart-mounted-tooltip] [data-chart-slot], [data-chart-mounted-summary] [data-chart-slot]"
     ).forEach((slot) => {
-      var _a5, _b, _c, _d;
       if (!(slot instanceof HTMLElement)) {
         return;
       }
-      const field = slot.dataset.field;
-      const fallback = (_a5 = slot.dataset.fallback) != null ? _a5 : "";
-      const raw = field ? row[field] : "";
-      const formatted = raw === void 0 || raw === null || raw === "" ? fallback : formatValue(
-        raw,
-        (_b = slot.dataset.format) != null ? _b : null,
-        (_c = slot.dataset.prefix) != null ? _c : null,
-        (_d = slot.dataset.suffix) != null ? _d : null
-      );
+      const formatted = formatChartSlotValue(slot, row);
       if (formatted) {
-        parts.push(String(formatted));
+        parts.push(formatted);
       }
     });
-    announcer.textContent = parts.join(", ");
+    if (parts.length > 0) {
+      return parts;
+    }
+    const xAxis = state.axes.x;
+    const xValue = row[state.xField];
+    if (xValue !== void 0 && xValue !== null && xValue !== "") {
+      parts.push(
+        formatValue(
+          xValue,
+          (_a5 = xAxis == null ? void 0 : xAxis.format) != null ? _a5 : null,
+          (_b = xAxis == null ? void 0 : xAxis.tickPrefix) != null ? _b : null,
+          (_c = xAxis == null ? void 0 : xAxis.tickSuffix) != null ? _c : null
+        )
+      );
+    }
+    const yAxis = state.axes.y;
+    state.series.forEach((series) => {
+      var _a6, _b2, _c2;
+      const value = row[series.field];
+      if (value === void 0 || value === null || value === "") {
+        return;
+      }
+      parts.push(
+        formatValue(
+          value,
+          (_a6 = yAxis == null ? void 0 : yAxis.format) != null ? _a6 : null,
+          (_b2 = yAxis == null ? void 0 : yAxis.tickPrefix) != null ? _b2 : null,
+          (_c2 = yAxis == null ? void 0 : yAxis.tickSuffix) != null ? _c2 : null
+        )
+      );
+    });
+    return parts;
+  }
+  function formatChartSlotValue(slot, row) {
+    var _a5, _b, _c, _d;
+    const field = slot.dataset.field;
+    const fallback = (_a5 = slot.dataset.fallback) != null ? _a5 : "";
+    const raw = field ? row[field] : "";
+    const formatted = raw === void 0 || raw === null || raw === "" ? fallback : formatValue(
+      raw,
+      (_b = slot.dataset.format) != null ? _b : null,
+      (_c = slot.dataset.prefix) != null ? _c : null,
+      (_d = slot.dataset.suffix) != null ? _d : null
+    );
+    return formatted ? String(formatted) : "";
   }
   function positionTooltip(root, overlay, plot, scales, state, activeIndex) {
     const x = scales.xScale(activeIndex);
@@ -4670,6 +4708,8 @@
       content.classList.toggle("hidden", !open);
       trigger.setAttribute("aria-expanded", open ? "true" : "false");
       if (open) {
+        content.removeAttribute("inert");
+        content.removeAttribute("aria-hidden");
         releaseScrollLock == null ? void 0 : releaseScrollLock();
         releaseScrollLock = acquireBodyScrollLock(content, { signal });
         ensureContentPortaled(content, root, portalMarker);
@@ -4687,6 +4727,8 @@
       } else {
         releaseScrollLock == null ? void 0 : releaseScrollLock();
         releaseScrollLock = null;
+        content.setAttribute("inert", "");
+        content.setAttribute("aria-hidden", "true");
         clearHighlight(items());
         activeIndex = -1;
         restoreContentFromPortal(content, root, portalMarker);
@@ -5889,6 +5931,12 @@
   var FOCUSABLE_SELECTOR2 = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
   var initialized18 = /* @__PURE__ */ new WeakSet();
   function initPopovers(root = document) {
+    document.querySelectorAll("[data-popover-content][data-popover-portaled]").forEach((content) => {
+      if (!(content instanceof HTMLElement) || content.closest("[data-popover]")) {
+        return;
+      }
+      content.remove();
+    });
     root.querySelectorAll(ROOT_SELECTOR3).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
@@ -5916,8 +5964,15 @@
       return;
     }
     const signal = createBindSignal(root);
+    const portalMarker = document.createComment("stencil-popover-portal");
     let open = content.dataset.state === "open" && !content.hidden;
     let releaseScrollLock = null;
+    const reposition = () => {
+      if (!open) {
+        return;
+      }
+      positionContent2(content, trigger, root);
+    };
     trigger.setAttribute("aria-haspopup", "dialog");
     trigger.setAttribute("aria-expanded", open ? "true" : "false");
     if (!content.id) {
@@ -5934,14 +5989,26 @@
       content.classList.toggle("hidden", !open);
       trigger.setAttribute("aria-expanded", open ? "true" : "false");
       if (open) {
+        content.removeAttribute("inert");
+        content.removeAttribute("aria-hidden");
         releaseScrollLock == null ? void 0 : releaseScrollLock();
         releaseScrollLock = acquireBodyScrollLock(content, { signal });
+        ensureContentPortaled2(content, root, portalMarker);
         ensureAriaLabelledBy(content);
         positionContent2(content, trigger, root);
         focusFirstIn2(content);
+        requestAnimationFrame(reposition);
       } else {
         releaseScrollLock == null ? void 0 : releaseScrollLock();
         releaseScrollLock = null;
+        content.setAttribute("inert", "");
+        content.setAttribute("aria-hidden", "true");
+        restoreContentFromPortal2(content, root, portalMarker);
+        content.style.top = "";
+        content.style.left = "";
+        content.style.position = "";
+        content.style.minWidth = "";
+        content.style.zIndex = "";
         if (options.restoreFocus !== false) {
           trigger.focus({ preventScroll: true });
         }
@@ -6020,7 +6087,7 @@
           return;
         }
         if (target instanceof Element && target.closest(
-          "[data-select-portaled], [data-combobox-portaled], [data-color-picker-portaled], [data-dropdown-menu-portaled]"
+          "[data-select-portaled], [data-combobox-portaled], [data-color-picker-portaled], [data-dropdown-menu-portaled], [data-popover-portaled]"
         )) {
           return;
         }
@@ -6030,8 +6097,36 @@
     );
     if (open) {
       releaseScrollLock = acquireBodyScrollLock(content, { signal });
+      ensureContentPortaled2(content, root, portalMarker);
       positionContent2(content, trigger, root);
     }
+    window.addEventListener("resize", reposition, { signal });
+  }
+  function ensureContentPortaled2(content, root, portalMarker) {
+    if (root.closest("#readme-media") || content.closest("#readme-media")) {
+      return;
+    }
+    if (content.parentElement === document.body) {
+      return;
+    }
+    if (!portalMarker.parentNode) {
+      root.insertBefore(portalMarker, content);
+    }
+    document.body.appendChild(content);
+    content.dataset.popoverPortaled = "true";
+  }
+  function restoreContentFromPortal2(content, root, portalMarker) {
+    if (content.parentElement !== document.body) {
+      return;
+    }
+    if (root.isConnected) {
+      if (portalMarker.parentNode === root) {
+        root.insertBefore(content, portalMarker.nextSibling);
+      } else {
+        root.appendChild(content);
+      }
+    }
+    delete content.dataset.popoverPortaled;
   }
   function ensureAriaLabelledBy(content) {
     if (content.getAttribute("aria-labelledby")) {
@@ -8997,6 +9092,7 @@
       open = next;
       if (open) {
         content.dataset.state = "open";
+        content.removeAttribute("aria-hidden");
         positionTooltip2(content, trigger, root.dataset.side || content.dataset.side || "top");
         content.hidden = false;
         content.classList.remove("hidden");
@@ -9005,6 +9101,7 @@
         content.dataset.state = "closed";
         content.hidden = true;
         content.classList.add("hidden");
+        content.setAttribute("aria-hidden", "true");
         content.style.position = "";
         content.style.top = "";
         content.style.left = "";

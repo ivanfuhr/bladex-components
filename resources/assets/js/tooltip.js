@@ -59,6 +59,7 @@ function bindTooltip(root) {
             // Mark open + take out of flow before measuring so an in-flow
             // tooltip does not shift the trigger (e.g. header actions on the right).
             content.dataset.state = 'open';
+            content.removeAttribute('aria-hidden');
             positionTooltip(content, trigger, root.dataset.side || content.dataset.side || 'top');
             content.hidden = false;
             content.classList.remove('hidden');
@@ -67,6 +68,7 @@ function bindTooltip(root) {
             content.dataset.state = 'closed';
             content.hidden = true;
             content.classList.add('hidden');
+            content.setAttribute('aria-hidden', 'true');
             content.style.position = '';
             content.style.top = '';
             content.style.left = '';

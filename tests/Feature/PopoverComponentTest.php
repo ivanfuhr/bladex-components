@@ -23,7 +23,10 @@ it('renders a popover with trigger and dialog content', function () {
         ->toContain('data-popover-trigger')
         ->toContain('data-popover-content')
         ->toContain('role="dialog"')
+        ->toContain('aria-modal="false"')
         ->toContain('data-state="closed"')
+        ->toContain('aria-hidden="true"')
+        ->toContain('inert')
         ->toContain('Panel body');
 });
 
@@ -44,6 +47,16 @@ it('can render popover content initially open', function () {
         ->toContain('Visible');
 });
 
+it('popover script toggles inert and aria-hidden with open state', function () {
+    $source = (string) file_get_contents(dirname(__DIR__, 2).'/resources/assets/js/popover.js');
+
+    expect($source)
+        ->toContain("content.removeAttribute('inert')")
+        ->toContain("content.removeAttribute('aria-hidden')")
+        ->toContain("content.setAttribute('inert', '')")
+        ->toContain("content.setAttribute('aria-hidden', 'true')");
+});
+
 it('popover script tears down document listeners with createBindSignal', function () {
     $source = (string) file_get_contents(dirname(__DIR__, 2).'/resources/assets/js/popover.js');
 
@@ -51,5 +64,7 @@ it('popover script tears down document listeners with createBindSignal', functio
         ->toContain('createBindSignal')
         ->toContain('{ signal }')
         ->toContain('stencil:mount')
-        ->toContain('ensureAriaLabelledBy');
+        ->toContain('ensureAriaLabelledBy')
+        ->toContain('ensureContentPortaled')
+        ->toContain('restoreContentFromPortal');
 });

@@ -26,6 +26,7 @@ final class Input extends StencilComponent
             'disabled' => View::getConsumableComponentData('disabled', false),
             'clearable' => View::getConsumableComponentData('clearable', false),
             'size' => View::getConsumableComponentData('size', null),
+            'listboxId' => $this->attributes->get('listbox-id') ?? View::getConsumableComponentData('listboxId'),
         ];
     }
 }

@@ -73,7 +73,8 @@ it('exports chart runtime helpers from chart.js', function () {
 
     expect($source)
         ->toContain("export const ROOT_SELECTOR = '[data-chart]'")
-        ->toContain('export function initCharts');
+        ->toContain('export function initCharts')
+        ->toContain('collectChartAnnouncementParts');
 });
 
 it('defaults chart svg gutters so edge tick labels stay inside the paint box', function () {

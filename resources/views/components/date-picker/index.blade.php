@@ -22,12 +22,12 @@
         @if (isset($trigger))
             {{ $trigger }}
         @elseif ($type === 'input')
-            <x-ui::date-picker.input :$placeholder :$invalid :$disabled :$clearable :$size />
+            <x-ui::date-picker.input :$placeholder :$invalid :$disabled :$clearable :$size :panel-id="$panelId" />
         @else
-            <x-ui::date-picker.button :$placeholder :$invalid :$disabled :$clearable :$size />
+            <x-ui::date-picker.button :$placeholder :$invalid :$disabled :$clearable :$size :panel-id="$panelId" />
         @endif
 
-        <x-ui::date-picker.panel :$range>
+        <x-ui::date-picker.panel :$range :panel-id="$panelId">
             @if ($withPresets && $presetMeta !== [])
                 <x-ui::date-picker.presets :preset-meta="$presetMeta">
                     @if ($withInputs)

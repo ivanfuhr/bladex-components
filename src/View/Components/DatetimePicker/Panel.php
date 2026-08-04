@@ -21,6 +21,7 @@ final class Panel extends StencilComponent
     {
         return [
             'panelLabel' => __('Select date and time'),
+            'panelId' => $this->attributes->get('panel-id') ?? stencil_ancestor_attribute('panelId'),
         ];
     }
 }

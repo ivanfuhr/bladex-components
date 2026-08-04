@@ -42,5 +42,7 @@ it('applies subtle variant classes', function (): void {
 
     expect($html)
         ->toContain('text-zinc-500')
+        ->toContain('font-normal')
+        ->not->toContain('font-semibold')
         ->not->toContain('text-zinc-950');
 });

@@ -10,8 +10,11 @@
         'data-align' => $align,
         'data-side' => $side,
         'role' => 'dialog',
+        'aria-modal' => 'false',
         'tabindex' => '-1',
         'hidden' => $open ? null : true,
+        'inert' => $open ? null : true,
+        'aria-hidden' => $open ? null : 'true',
     ])
 }}>
     {{ $slot }}

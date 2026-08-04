@@ -15,7 +15,12 @@
         'hidden' => $open ? null : true,
     ])
 }}>
-    <div class="flex items-start gap-3 pr-6">
+    <div class="flex items-start gap-3 pr-9">
+        @if (filled($resolvedIcon))
+            <span class="mt-0.5 inline-flex shrink-0" data-toast-icon aria-hidden="true">
+                <x-ui::icon :name="$resolvedIcon" class="size-4" />
+            </span>
+        @endif
         <div class="min-w-0 flex-1 space-y-1">
             @if (filled($title))
                 <x-ui::toast.title>{{ $title }}</x-ui::toast.title>

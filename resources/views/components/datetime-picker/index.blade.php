@@ -19,10 +19,11 @@
             :$disabled
             :$clearable
             :$size
+            :panel-id="$panelId"
             data-datetime-picker-trigger
         />
 
-        <x-ui::datetime-picker.panel>
+        <x-ui::datetime-picker.panel :panel-id="$panelId">
             {{-- Absolute time column on md+ so list height tracks the calendar (no dead space). --}}
             <div class="relative flex flex-col md:flex-row">
                 <div class="shrink-0 p-4">
@@ -38,7 +39,7 @@
 
                 <div class="hidden w-40 shrink-0 md:block" aria-hidden="true"></div>
 
-                <x-ui::datetime-picker.time-list />
+                <x-ui::datetime-picker.time-list :time-list-id="$timeListId" />
             </div>
 
             <x-ui::datetime-picker.footer />

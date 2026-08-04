@@ -15,9 +15,9 @@
 
     @if ($shortcut)
         @if ($type === 'input')
-            <x-ui::time-picker.input :$placeholder :$invalid :$disabled :$clearable :$size />
+            <x-ui::time-picker.input :$placeholder :$invalid :$disabled :$clearable :$size :listbox-id="$listboxId" />
         @else
-            <x-ui::time-picker.button :$placeholder :$invalid :$disabled :$clearable :$size />
+            <x-ui::time-picker.button :$placeholder :$invalid :$disabled :$clearable :$size :listbox-id="$listboxId" />
         @endif
     @else
         {{ $slot }}
@@ -25,9 +25,11 @@
 
     <div
         class="time-picker__panel fixed z-50 max-h-80 min-w-48 overflow-y-auto rounded-lg border border-zinc-200 bg-white p-1 shadow-lg dark:border-zinc-800 dark:bg-zinc-950"
+        @if (filled($listboxId)) id="{{ $listboxId }}" @endif
         data-time-picker-panel
         role="listbox"
         tabindex="-1"
+        aria-label="{{ $listboxLabel }}"
         hidden
     ></div>
 </div>

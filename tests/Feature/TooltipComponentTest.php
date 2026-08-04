@@ -19,6 +19,7 @@ it('renders a tooltip with trigger and content', function () {
         ->toContain('data-side="bottom"')
         ->toContain('data-tooltip-trigger')
         ->toContain('role="tooltip"')
+        ->toContain('aria-hidden="true"')
         ->toContain('w-max')
         ->toContain('whitespace-nowrap')
         ->toContain('Add to library')

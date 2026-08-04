@@ -34,6 +34,7 @@ it('renders a stepper with list, indicators, and active panel', function () {
 
     expect($html)
         ->toContain('data-stepper')
+        ->toContain('aria-label="Steps"')
         ->toContain('data-stepper-list')
         ->toContain('data-stepper-item')
         ->toContain('data-stepper-trigger')

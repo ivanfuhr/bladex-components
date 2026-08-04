@@ -10,6 +10,7 @@
         'data-side' => $resolvedSide,
         'data-state' => 'closed',
         'hidden' => true,
+        'aria-hidden' => 'true',
     ])
 }}>
     {{ $slot }}

@@ -165,4 +165,26 @@
     .scroll-area__corner[data-state='visible'] {
         opacity: 1;
     }
+
+    @keyframes progress-indeterminate {
+        0% {
+            transform: translateX(-100%);
+        }
+
+        100% {
+            transform: translateX(400%);
+        }
+    }
+
+    .progress[data-indeterminate='true'] .progress__indicator {
+        width: 33.333%;
+        animation: progress-indeterminate 1.5s ease-in-out infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .progress[data-indeterminate='true'] .progress__indicator {
+            animation: none;
+            width: 50%;
+        }
+    }
 }

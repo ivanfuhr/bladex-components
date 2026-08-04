@@ -232,12 +232,15 @@ if (! function_exists('stencil_typography_config')) {
 
     function stencil_heading_classes(int $level, ?string $variant = null): string
     {
+        $weight = $variant === 'subtle' ? 'font-normal' : 'font-semibold';
+
         return collect([
             'heading',
             stencil_typography_size_classes(stencil_heading_size_for_level($level)),
             stencil_font_role_class('heading'),
             stencil_text_variant_classes($variant, true),
-            'font-semibold tracking-tight',
+            $weight,
+            'tracking-tight',
         ])->filter()->implode(' ');
     }
 

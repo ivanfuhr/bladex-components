@@ -53,7 +53,10 @@ final class Rating extends StencilComponent
             ]);
 
         if ($this->disabled) {
-            $rootAttributes = $rootAttributes->merge(['data-disabled' => 'true']);
+            $rootAttributes = $rootAttributes->merge([
+                'data-disabled' => 'true',
+                'aria-disabled' => 'true',
+            ]);
         }
 
         if ($invalid) {

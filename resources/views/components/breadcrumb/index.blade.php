@@ -2,7 +2,7 @@
     $attributes->class([
         'breadcrumb',
     ])->merge([
-        'aria-label' => 'Breadcrumb',
+        'aria-label' => __('Breadcrumb'),
         'data-breadcrumb' => true,
     ])
 }}>

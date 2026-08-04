@@ -26,6 +26,7 @@ final class Input extends StencilComponent
             'disabled' => View::getConsumableComponentData('disabled', false),
             'clearable' => View::getConsumableComponentData('clearable', false),
             'size' => View::getConsumableComponentData('size', null),
+            'panelId' => $this->attributes->get('panel-id') ?? View::getConsumableComponentData('panelId'),
         ];
     }
 }

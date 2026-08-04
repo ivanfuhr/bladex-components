@@ -30,6 +30,7 @@ final class Progress extends StencilComponent
             'resolvedMax' => $max,
             'resolvedValue' => $value,
             'percent' => $percent,
+            'accessibleLabel' => $this->label ?? __('Progress'),
             'valueText' => $this->indeterminate
                 ? __('Loading')
                 : __(':percent%', ['percent' => (int) round($percent)]),

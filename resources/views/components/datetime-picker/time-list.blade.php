@@ -8,7 +8,9 @@
             'dark:border-zinc-800',
         ])
     }}
+    @if (filled($timeListId)) id="{{ $timeListId }}" @endif
     data-datetime-picker-time-list
     role="listbox"
     tabindex="-1"
+    aria-label="{{ $timeListLabel }}"
 ></div>

@@ -9,6 +9,7 @@ it('renders a determinate progress bar', function () {
 
     expect($html)
         ->toContain('role="progressbar"')
+        ->toContain('aria-label="Progress"')
         ->toContain('aria-valuenow="40"')
         ->toContain('aria-valuemax="100"')
         ->toContain('width: 40%')
@@ -22,6 +23,7 @@ it('renders an indeterminate progress bar', function () {
         ->toContain('data-indeterminate="true"')
         ->toContain('aria-valuetext="Loading"')
         ->toContain('aria-busy="true"')
+        ->not->toContain('animate-pulse')
         ->not->toContain('aria-valuenow');
 });
 

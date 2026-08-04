@@ -10,6 +10,8 @@ final class Toast extends StencilComponent
         public mixed $variant = 'default',
         public mixed $title = null,
         public mixed $description = null,
+        public mixed $icon = null,
+        public bool $showIcon = true,
         public int $duration = 4000,
         public bool $open = true,
     ) {}
@@ -39,6 +41,25 @@ final class Toast extends StencilComponent
             'variantClasses' => $variantClasses,
             'liveRole' => $liveRole,
             'liveMode' => $liveMode,
+            'resolvedIcon' => $this->resolveIcon(),
         ];
+    }
+
+    private function resolveIcon(): ?string
+    {
+        if (! $this->showIcon) {
+            return null;
+        }
+
+        if (filled($this->icon)) {
+            return (string) $this->icon;
+        }
+
+        return match ($this->variant) {
+            'success' => 'check',
+            'warning' => 'clipboard',
+            'danger', 'destructive', 'error' => 'x',
+            default => null,
+        };
     }
 }

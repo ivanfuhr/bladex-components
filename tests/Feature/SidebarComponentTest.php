@@ -4,6 +4,16 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Blade;
 
+it('reflects provider default-open on trigger aria-expanded', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-ui::sidebar.provider :default-open="false">
+            <x-ui::sidebar.trigger />
+        </x-ui::sidebar.provider>
+    BLADE);
+
+    expect($html)->toContain('aria-expanded="false"');
+});
+
 it('renders a sidebar provider with shell landmarks and trigger', function () {
     $html = Blade::render(<<<'BLADE'
         <x-ui::sidebar.provider storage-key="test-sidebar" :default-open="true">

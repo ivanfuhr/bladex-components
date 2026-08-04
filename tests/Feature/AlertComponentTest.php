@@ -20,5 +20,15 @@ it('uses alert role and assertive live region for danger alerts', function () {
     expect($html)
         ->toContain('role="alert"')
         ->toContain('aria-live="assertive"')
-        ->toContain('aria-atomic="true"');
+        ->toContain('aria-atomic="true"')
+        ->toContain('data-alert-icon');
+});
+
+it('renders default variant icons when enabled', function () {
+    $html = Blade::render('<x-ui::alert variant="success" title="Saved">Done</x-ui::alert>');
+
+    expect($html)
+        ->toContain('data-alert-icon')
+        ->toContain('data-icon')
+        ->toContain('M20 6 9 17l-5-5');
 });

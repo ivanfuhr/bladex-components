@@ -20,6 +20,8 @@ it('renders an empty state with media, title, description, and content', functio
 
     expect($html)
         ->toContain('data-empty')
+        ->toContain('role="status"')
+        ->toContain('border-dashed')
         ->toContain('data-empty-header')
         ->toContain('data-empty-media')
         ->toContain('data-variant="icon"')

@@ -55,6 +55,7 @@ it('supports grouped items and disabled state', function () {
 
     expect($html)
         ->toContain('data-dropdown-menu-group')
+        ->toMatch('/aria-labelledby="[^"]+"/')
         ->toContain('Billing')
         ->toContain('href="/invoices"')
         ->toContain('data-disabled="true"')
@@ -75,8 +76,11 @@ it('marks menu content as a closed menu region for the widget script', function 
 
     expect($html)
         ->toContain('role="menu"')
+        ->toContain('aria-orientation="vertical"')
         ->toContain('tabindex="-1"')
         ->toContain('data-state="closed"')
+        ->toContain('aria-hidden="true"')
+        ->toContain('inert')
         ->toContain('hidden');
 });
 
@@ -100,6 +104,16 @@ it('dropdown menu script locks page scroll while open instead of closing on scro
         ->not->toContain('onScroll')
         ->not->toContain("window.addEventListener('scroll', onScroll, { capture: true, signal })")
         ->not->toContain("window.addEventListener('scroll', reposition, { capture: true, signal })");
+});
+
+it('dropdown menu script toggles inert and aria-hidden with open state', function () {
+    $source = (string) file_get_contents(dirname(__DIR__, 2).'/resources/assets/js/dropdown-menu.js');
+
+    expect($source)
+        ->toContain("content.removeAttribute('inert')")
+        ->toContain("content.removeAttribute('aria-hidden')")
+        ->toContain("content.setAttribute('inert', '')")
+        ->toContain("content.setAttribute('aria-hidden', 'true')");
 });
 
 it('dropdown menu script positions left and right sides beside the trigger', function () {
