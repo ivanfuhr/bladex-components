@@ -72,6 +72,10 @@ function bindTooltip(root) {
     };
 
     const scheduleOpen = () => {
+        if (isSidebarMenuTooltipDisabled(root)) {
+            return;
+        }
+
         window.clearTimeout(showTimer ?? undefined);
         showTimer = window.setTimeout(() => setOpen(true), delay);
     };
@@ -83,13 +87,38 @@ function bindTooltip(root) {
 
     trigger.addEventListener('pointerenter', scheduleOpen);
     trigger.addEventListener('pointerleave', close);
-    control.addEventListener('focus', () => setOpen(true));
+    control.addEventListener('focus', () => {
+        if (isSidebarMenuTooltipDisabled(root)) {
+            return;
+        }
+
+        setOpen(true);
+    });
     control.addEventListener('blur', close);
     root.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
             close();
         }
     });
+}
+
+/**
+ * Sidebar menu tooltips only appear in icon-collapsed desktop mode.
+ *
+ * @param {HTMLElement} root
+ */
+function isSidebarMenuTooltipDisabled(root) {
+    if (! root.hasAttribute('data-sidebar-menu-tooltip')) {
+        return false;
+    }
+
+    const sidebarRoot = root.closest('[data-sidebar-root]');
+
+    if (!(sidebarRoot instanceof HTMLElement)) {
+        return true;
+    }
+
+    return sidebarRoot.dataset.collapsible !== 'icon' || sidebarRoot.dataset.mobile === 'true';
 }
 
 /**

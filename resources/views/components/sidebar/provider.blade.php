@@ -1,7 +1,8 @@
 <div {{
     $attributes->class([
         'sidebar-provider',
-        'group/sidebar-wrapper flex min-h-svh w-full has-data-[variant=inset]:bg-zinc-100 dark:has-data-[variant=inset]:bg-zinc-950',
+        'relative flex min-h-0 w-full flex-row overflow-hidden has-data-[variant=inset]:bg-zinc-100 dark:has-data-[variant=inset]:bg-zinc-950',
+        'group/sidebar-wrapper',
     ])->merge([
         'data-sidebar-provider' => true,
         'data-default-open' => $isDefaultOpen ? 'true' : 'false',

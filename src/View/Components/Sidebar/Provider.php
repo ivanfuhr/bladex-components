@@ -12,8 +12,9 @@ final class Provider extends StencilComponent
         public bool $defaultOpen = true,
         public mixed $storageKey = 'stencil-sidebar-state',
         public mixed $width = '16rem',
-        public mixed $widthIcon = '3rem',
+        public mixed $widthIcon = '3.5rem',
         public mixed $widthMobile = '18rem',
+        public mixed $headerHeight = '4rem',
     ) {}
 
     protected function stencilView(): string
@@ -29,7 +30,7 @@ final class Provider extends StencilComponent
     {
         return [
             'isDefaultOpen' => $this->defaultOpen,
-            'style' => '--stencil-sidebar-width: '.e($this->width).'; --stencil-sidebar-width-icon: '.e($this->widthIcon).'; --stencil-sidebar-width-mobile: '.e($this->widthMobile).';',
+            'style' => '--stencil-sidebar-width: '.e($this->width).'; --stencil-sidebar-width-icon: '.e($this->widthIcon).'; --stencil-sidebar-width-mobile: '.e($this->widthMobile).'; --stencil-header-height: '.e($this->headerHeight).';',
         ];
     }
 }

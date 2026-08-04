@@ -4,14 +4,16 @@
 
 @section('content')
     <div class="space-y-10">
-        <header class="max-w-2xl space-y-3">
-            <x-ui::heading :level="1"> Component catalog </x-ui::heading>
-            <x-ui::text variant="subtle" class="max-w-prose">
-                Tune props and see rendered output from the package namespace. Start the app with
-                <code class="rounded-md border border-zinc-200 bg-white px-1.5 py-0.5 font-mono text-xs text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200">composer serve</code>
-                from the repository root.
-            </x-ui::text>
-        </header>
+        <x-ui::header variant="page" class="max-w-2xl">
+            <div class="space-y-3">
+                <x-ui::heading :level="1"> Component catalog </x-ui::heading>
+                <x-ui::text variant="subtle" class="max-w-prose">
+                    Tune props and see rendered output from the package namespace. Start the app with
+                    <code class="rounded-md border border-zinc-200 bg-white px-1.5 py-0.5 font-mono text-xs text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200">composer serve</code>
+                    from the repository root.
+                </x-ui::text>
+            </div>
+        </x-ui::header>
 
         <a
             href="{{ route('playbook.showcase') }}"

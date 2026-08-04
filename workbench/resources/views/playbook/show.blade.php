@@ -2,6 +2,26 @@
 
 @section('title', $playbook->title.' — Stencil Playbook')
 
+@section('shell_breadcrumb')
+    <x-ui::breadcrumb>
+        <x-ui::breadcrumb.list>
+            <x-ui::breadcrumb.item class="hidden md:block">
+                <x-ui::breadcrumb.link href="{{ route('playbook.index') }}">
+                    Stencil Playbook
+                </x-ui::breadcrumb.link>
+            </x-ui::breadcrumb.item>
+            <x-ui::breadcrumb.separator class="hidden md:block" />
+            <x-ui::breadcrumb.item class="hidden md:block">
+                <x-ui::breadcrumb.link href="{{ route('playbook.index') }}">Catalog</x-ui::breadcrumb.link>
+            </x-ui::breadcrumb.item>
+            <x-ui::breadcrumb.separator class="hidden md:block" />
+            <x-ui::breadcrumb.item>
+                <x-ui::breadcrumb.page>{{ $playbook->title }}</x-ui::breadcrumb.page>
+            </x-ui::breadcrumb.item>
+        </x-ui::breadcrumb.list>
+    </x-ui::breadcrumb>
+@endsection
+
 @section('content')
     @php
         $defaultState = $playbook->defaultState;
@@ -20,7 +40,7 @@
         })"
         x-init="init()"
     >
-        <aside class="order-2 lg:sticky lg:top-24 lg:order-1 lg:self-start" aria-label="Component controls">
+        <aside class="order-2 lg:sticky lg:top-6 lg:order-1 lg:self-start" aria-label="Component controls">
             <nav class="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2" aria-label="Playbook wayfinding">
                 <a href="{{ route('playbook.index') }}" class="inline-flex items-center gap-1 {{ $linkClass }}">
                     <span aria-hidden="true">←</span>

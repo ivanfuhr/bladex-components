@@ -136,6 +136,35 @@ it('supports as-child trigger wrapping', function () {
         ->toContain('Toggle');
 });
 
+it('wraps menu buttons with icon-mode tooltips and stronger active chrome', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-ui::sidebar.provider>
+            <x-ui::sidebar collapsible="icon">
+                <x-ui::sidebar.content>
+                    <x-ui::sidebar.menu>
+                        <x-ui::sidebar.menu-item>
+                            <x-ui::sidebar.menu-button href="/" active tooltip="Home">
+                                Home
+                            </x-ui::sidebar.menu-button>
+                            <x-ui::sidebar.menu-badge>12</x-ui::sidebar.menu-badge>
+                        </x-ui::sidebar.menu-item>
+                    </x-ui::sidebar.menu>
+                </x-ui::sidebar.content>
+            </x-ui::sidebar>
+        </x-ui::sidebar.provider>
+    BLADE);
+
+    expect($html)
+        ->toContain('data-sidebar-menu-tooltip')
+        ->toContain('data-tooltip')
+        ->toContain('data-tooltip-content')
+        ->toContain('data-[active=true]:bg-zinc-900')
+        ->toContain('group-data-[collapsible=icon]:rounded-full')
+        ->toContain('group-has-data-[active=true]/menu-item:text-zinc-50')
+        ->toContain('contents!')
+        ->toContain('Home');
+});
+
 it('sidebar script tears down document and matchMedia listeners with createBindSignal', function () {
     $source = (string) file_get_contents(dirname(__DIR__, 2).'/resources/assets/js/sidebar.js');
 
@@ -144,4 +173,13 @@ it('sidebar script tears down document and matchMedia listeners with createBindS
         ->toContain("document.addEventListener('keydown', onKeydown, { signal })")
         ->toContain("media.addEventListener('change', onMediaChange, { signal })")
         ->toContain('stencil:mount');
+});
+
+it('tooltip script gates sidebar menu tooltips to icon-collapsed mode', function () {
+    $source = (string) file_get_contents(dirname(__DIR__, 2).'/resources/assets/js/tooltip.js');
+
+    expect($source)
+        ->toContain('isSidebarMenuTooltipDisabled')
+        ->toContain('data-sidebar-menu-tooltip')
+        ->toContain("dataset.collapsible !== 'icon'");
 });

@@ -54,7 +54,21 @@ it('renders the event studio showcase scenario', function () {
     $response->assertSee('data-dialog', false);
     $response->assertSee('data-table', false);
     $response->assertSee('data-toast-provider', false);
+    $response->assertSee('data-sidebar-provider', false);
+    $response->assertSee('data-command', false);
+    $response->assertSee('data-stat', false);
+    $response->assertSee('data-stepper', false);
+    $response->assertSee('data-chart', false);
+    $response->assertSee('data-button-group', false);
+    $response->assertSee('data-empty', false);
+    $response->assertSee('data-toggle', false);
+    $response->assertSee('data-toggle-group', false);
+    $response->assertSee('data-header', false);
+    $response->assertSee('data-header-variant="page"', false);
+    $response->assertSee('data-main', false);
+    $response->assertSee('data-sidebar-brand', false);
     $response->assertSee('id="guests"', false);
+    $response->assertSee('id="insights"', false);
     $response->assertSee('aria-labelledby="setup-progress-label"', false);
     $response->assertSee('aria-label="Event sidebar"', false);
     $response->assertSee('aria-busy="true"', false);
@@ -65,7 +79,8 @@ it('marks catalog as the active playbook surface on the index', function () {
 
     $response->assertOk();
     $response->assertSee('aria-current="page"', false);
-    $response->assertSee('>Catalog</a>', false);
+    $response->assertSee('data-sidebar-menu-button', false);
+    $response->assertSee('>Catalog</span>', false);
 });
 
 it('bridges playground pages to media when a media view exists', function () {

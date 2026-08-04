@@ -1066,7 +1066,7 @@ final class PlaybookRegistry
         return new ComponentPlaybook(
             slug: 'sidebar',
             title: 'Sidebar',
-            description: 'App-shell navigation with collapse modes and mobile overlay. Requires sidebar.js in the app entry.',
+            description: 'App-shell layout with icon collapse, brand, header, and main — pairs with x-ui::header inside sidebar.inset.',
             controls: [
                 new PlaybookControl('collapsible', 'Collapsible', 'select', [
                     'icon' => 'Icon',

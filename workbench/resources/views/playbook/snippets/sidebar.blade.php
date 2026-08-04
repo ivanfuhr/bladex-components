@@ -8,7 +8,10 @@
     $provider = PlaybookCode::component('sidebar.provider');
     $sidebar = PlaybookCode::component('sidebar');
     $header = PlaybookCode::component('sidebar.header');
+    $brand = PlaybookCode::component('sidebar.brand');
+    $collapse = PlaybookCode::component('sidebar.collapse');
     $content = PlaybookCode::component('sidebar.content');
+    $spacer = PlaybookCode::component('sidebar.spacer');
     $footer = PlaybookCode::component('sidebar.footer');
     $group = PlaybookCode::component('sidebar.group');
     $groupLabel = PlaybookCode::component('sidebar.group-label');
@@ -19,6 +22,8 @@
     $inset = PlaybookCode::component('sidebar.inset');
     $trigger = PlaybookCode::component('sidebar.trigger');
     $rail = PlaybookCode::component('sidebar.rail');
+    $appHeader = PlaybookCode::component('header');
+    $main = PlaybookCode::component('main');
 
     $code = PlaybookCode::openingTag($provider, array_filter([
         PlaybookCode::boolean('default-open', $defaultOpen, true),
@@ -28,11 +33,8 @@
         PlaybookCode::attribute('variant', $variant, 'sidebar'),
     ]))."\n";
     $code .= '        <'.$header.'>'."\n";
-    $code .= '            <'.$menu.'>'."\n";
-    $code .= '                <'.$menuItem.'>'."\n";
-    $code .= '                    <'.$menuButton.' href="/" class="font-semibold">Stencil</'.$menuButton.'>'."\n";
-    $code .= '                </'.$menuItem.'>'."\n";
-    $code .= '            </'.$menu.'>'."\n";
+    $code .= '            <'.$brand.' href="/" name="Stencil Inc." />'."\n";
+    $code .= '            <'.$collapse.' />'."\n";
     $code .= '        </'.$header.'>'."\n";
     $code .= '        <'.$content.'>'."\n";
     $code .= '            <'.$group.'>'."\n";
@@ -46,12 +48,15 @@
     $code .= '                </'.$groupContent.'>'."\n";
     $code .= '            </'.$group.'>'."\n";
     $code .= '        </'.$content.'>'."\n";
+    $code .= '        <'.$spacer.' />'."\n";
     $code .= '        <'.$footer.'>...</'.$footer.'>'."\n";
     $code .= '        <'.$rail.' />'."\n";
     $code .= '    '.PlaybookCode::closingTag($sidebar)."\n";
     $code .= '    <'.$inset.'>'."\n";
-    $code .= '        <'.$trigger.' />'."\n";
-    $code .= '        {{ $slot }}'."\n";
+    $code .= '        <'.$appHeader.'>'."\n";
+    $code .= '            <'.$trigger.' />'."\n";
+    $code .= '        </'.$appHeader.'>'."\n";
+    $code .= '        <'.$main.'>{{ $slot }}</'.$main.'>'."\n";
     $code .= '    </'.$inset.'>'."\n";
     $code .= PlaybookCode::closingTag($provider);
 

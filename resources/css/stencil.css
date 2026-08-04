@@ -30,6 +30,10 @@
 /* Dialog open: utilities live only in these PHP class maps — not all Components. */
 @source "../../src/View/Components/Dialog/Content.php";
 @source "../../src/View/Components/Command/Dialog.php";
+/* Shell layout classes live in PHP class maps — scan them so height/flex utilities emit. */
+@source "../../src/View/Components/Header.php";
+@source "../../src/View/Components/Main.php";
+@source "../../src/View/Components/Sidebar/**/*.php";
 @source inline("open:opacity-100 open:motion-safe:scale-100");
 /* Other Component PHP class maps: scan Support/Tailwind/ComponentClassSources.php (via Support/**). */
 
