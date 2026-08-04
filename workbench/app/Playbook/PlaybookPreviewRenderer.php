@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Workbench\App\Playbook;
 
 use Illuminate\Contracts\View\Factory as ViewFactory;
+use Ivanfuhr\Stencil\Support\Code\CodeHighlighter;
 
 final class PlaybookPreviewRenderer
 {
@@ -12,6 +13,7 @@ final class PlaybookPreviewRenderer
         private readonly PlaybookRegistry $registry,
         private readonly PlaybookStateValidator $validator,
         private readonly ViewFactory $views,
+        private readonly CodeHighlighter $highlighter,
     ) {}
 
     /**
@@ -51,5 +53,23 @@ final class PlaybookPreviewRenderer
         $validated = $this->validator->validate($playbook, $state);
 
         return trim($this->views->make($view, ['state' => $validated])->render());
+    }
+
+    /**
+     * @param  array<string, mixed>  $state
+     */
+    public function renderHighlightedSnippet(string $slug, array $state = [], string $language = 'blade'): string
+    {
+        $snippet = $this->renderSnippet($slug, $state);
+
+        if ($snippet === '') {
+            return '';
+        }
+
+        return $this->highlighter->renderBlock(
+            $this->highlighter->highlight($snippet, $language),
+            $language,
+            $snippet,
+        );
     }
 }

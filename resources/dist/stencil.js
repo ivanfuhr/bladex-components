@@ -2049,13 +2049,14 @@
     }
   }
 
-  // resources/assets/js/collapsible.js
-  var COLLAPSIBLE_SELECTOR = "[data-collapsible]";
-  var TRIGGER_SELECTOR2 = "[data-collapsible-trigger]";
-  var CONTENT_SELECTOR2 = "[data-collapsible-content]";
+  // resources/assets/js/code-block.js
+  var CODE_BLOCK_SELECTOR = "[data-code-block]";
+  var COPY_SELECTOR = "[data-code-block-copy]";
+  var SOURCE_SELECTOR = "[data-code-block-source]";
+  var CONTENT_SELECTOR2 = "[data-code-block-content]";
   var initialized5 = /* @__PURE__ */ new WeakSet();
-  function initCollapsibles(root = document) {
-    root.querySelectorAll(COLLAPSIBLE_SELECTOR).forEach((element) => {
+  function initCodeBlocks(root = document) {
+    root.querySelectorAll(CODE_BLOCK_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
@@ -2063,13 +2064,78 @@
         return;
       }
       initialized5.add(element);
+      bindCodeBlock(element);
+    });
+  }
+  function bindCodeBlock(root) {
+    var _a5;
+    const copyButton = root.querySelector(COPY_SELECTOR);
+    if (!(copyButton instanceof HTMLButtonElement)) {
+      return;
+    }
+    const defaultLabel = ((_a5 = copyButton.textContent) == null ? void 0 : _a5.trim()) || "Copy";
+    copyButton.addEventListener("click", async () => {
+      var _a6, _b;
+      const source = root.querySelector(SOURCE_SELECTOR);
+      const content = root.querySelector(CONTENT_SELECTOR2);
+      const text = source instanceof HTMLTemplateElement ? (_a6 = source.content.textContent) != null ? _a6 : "" : content instanceof HTMLElement ? (_b = content.textContent) != null ? _b : "" : "";
+      if (text === "") {
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(text);
+        copyButton.textContent = "Copied";
+        window.setTimeout(() => {
+          copyButton.textContent = defaultLabel;
+        }, 1600);
+      } catch (e) {
+        copyButton.textContent = "Failed";
+        window.setTimeout(() => {
+          copyButton.textContent = defaultLabel;
+        }, 1600);
+      }
+    });
+  }
+  document.addEventListener("stencil:mount", (event) => {
+    var _a5;
+    if (!(event instanceof CustomEvent)) {
+      return;
+    }
+    const mountRoot = (_a5 = event.detail) == null ? void 0 : _a5.root;
+    if (!(mountRoot instanceof HTMLElement)) {
+      return;
+    }
+    initCodeBlocks(mountRoot);
+  });
+  if (typeof document !== "undefined") {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => initCodeBlocks());
+    } else {
+      initCodeBlocks();
+    }
+  }
+
+  // resources/assets/js/collapsible.js
+  var COLLAPSIBLE_SELECTOR = "[data-collapsible]";
+  var TRIGGER_SELECTOR2 = "[data-collapsible-trigger]";
+  var CONTENT_SELECTOR3 = "[data-collapsible-content]";
+  var initialized6 = /* @__PURE__ */ new WeakSet();
+  function initCollapsibles(root = document) {
+    root.querySelectorAll(COLLAPSIBLE_SELECTOR).forEach((element) => {
+      if (!(element instanceof HTMLElement)) {
+        return;
+      }
+      if (initialized6.has(element)) {
+        return;
+      }
+      initialized6.add(element);
       bindCollapsible(element);
     });
   }
   function bindCollapsible(root) {
     var _a5, _b;
     const trigger = root.querySelector(TRIGGER_SELECTOR2);
-    const content = root.querySelector(CONTENT_SELECTOR2);
+    const content = root.querySelector(CONTENT_SELECTOR3);
     if (!(trigger instanceof HTMLElement) || !(content instanceof HTMLElement)) {
       return;
     }
@@ -2118,7 +2184,7 @@
   }
   function applyState(root, open) {
     const trigger = root.querySelector(TRIGGER_SELECTOR2);
-    const content = root.querySelector(CONTENT_SELECTOR2);
+    const content = root.querySelector(CONTENT_SELECTOR3);
     const transition = root.dataset.collapsibleTransition === "true";
     const control = trigger instanceof HTMLElement ? resolveControl(trigger) : null;
     root.dataset.state = open ? "open" : "closed";
@@ -2307,7 +2373,7 @@
   // resources/assets/js/color-picker.js
   var COLOR_PICKER_SELECTOR = "[data-color-picker]";
   var FOCUSABLE_SELECTOR = 'button:not([disabled]):not([hidden]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-  var initialized6 = /* @__PURE__ */ new WeakSet();
+  var initialized7 = /* @__PURE__ */ new WeakSet();
   var HEX_PATTERN = /^#[0-9a-fA-F]{6}$/;
   function initColorPickers(root = document) {
     document.querySelectorAll("[data-color-picker-popover][data-color-picker-portaled]").forEach((popover) => {
@@ -2320,10 +2386,10 @@
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized6.has(element)) {
+      if (initialized7.has(element)) {
         return;
       }
-      initialized6.add(element);
+      initialized7.add(element);
       bindColorPicker(element);
     });
   }
@@ -2872,7 +2938,7 @@
 
   // resources/assets/js/combobox.js
   var COMBOBOX_SELECTOR = "[data-combobox]";
-  var initialized7 = /* @__PURE__ */ new WeakSet();
+  var initialized8 = /* @__PURE__ */ new WeakSet();
   function initComboboxes(root = document) {
     document.querySelectorAll("[data-combobox-content][data-combobox-portaled]").forEach((content) => {
       if (!(content instanceof HTMLElement) || content.closest("[data-combobox]")) {
@@ -2884,10 +2950,10 @@
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized7.has(element)) {
+      if (initialized8.has(element)) {
         return;
       }
-      initialized7.add(element);
+      initialized8.add(element);
       bindCombobox(element);
     });
   }
@@ -3452,17 +3518,17 @@
   // resources/assets/js/command.js
   var COMMAND_SELECTOR = "[data-command]";
   var DIALOG_SHORTCUT_SELECTOR = "[data-command-dialog][data-command-shortcut]";
-  var initialized8 = /* @__PURE__ */ new WeakSet();
+  var initialized9 = /* @__PURE__ */ new WeakSet();
   var shortcutBound = /* @__PURE__ */ new WeakSet();
   function initCommands(root = document) {
     root.querySelectorAll(COMMAND_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized8.has(element)) {
+      if (initialized9.has(element)) {
         return;
       }
-      initialized8.add(element);
+      initialized9.add(element);
       bindCommand(element);
     });
     bindDocumentShortcuts(root);
@@ -3910,7 +3976,7 @@
 
   // resources/assets/js/date-picker.js
   var SELECTOR = "[data-date-picker]";
-  var initialized9 = /* @__PURE__ */ new WeakSet();
+  var initialized10 = /* @__PURE__ */ new WeakSet();
   function initDatePickers(root = document) {
     document.querySelectorAll("[data-date-picker-panel][data-stencil-portaled]").forEach((panel) => {
       if (!(panel instanceof HTMLElement) || panel.closest("[data-date-picker]")) {
@@ -3922,10 +3988,10 @@
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized9.has(element)) {
+      if (initialized10.has(element)) {
         return;
       }
-      initialized9.add(element);
+      initialized10.add(element);
       bindDatePicker(element);
     });
   }
@@ -4131,7 +4197,7 @@
 
   // resources/assets/js/datetime-picker.js
   var SELECTOR2 = "[data-datetime-picker]";
-  var initialized10 = /* @__PURE__ */ new WeakSet();
+  var initialized11 = /* @__PURE__ */ new WeakSet();
   function initDatetimePickers(root = document) {
     document.querySelectorAll("[data-datetime-picker-panel][data-stencil-portaled]").forEach((panel) => {
       if (!(panel instanceof HTMLElement) || panel.closest("[data-datetime-picker]")) {
@@ -4140,10 +4206,10 @@
       panel.remove();
     });
     root.querySelectorAll(SELECTOR2).forEach((element) => {
-      if (!(element instanceof HTMLElement) || initialized10.has(element)) {
+      if (!(element instanceof HTMLElement) || initialized11.has(element)) {
         return;
       }
-      initialized10.add(element);
+      initialized11.add(element);
       bindDatetimePicker(element);
     });
   }
@@ -4443,7 +4509,7 @@
 
   // resources/assets/js/dialog.js
   var DIALOG_CONTENT_SELECTOR = "[data-dialog-content]";
-  var initialized11 = /* @__PURE__ */ new WeakSet();
+  var initialized12 = /* @__PURE__ */ new WeakSet();
   var boundTriggers = /* @__PURE__ */ new WeakSet();
   var namedDialogs = /* @__PURE__ */ new Map();
   function initDialogs(root = document) {
@@ -4451,10 +4517,10 @@
       if (!(element instanceof HTMLDialogElement)) {
         return;
       }
-      if (initialized11.has(element)) {
+      if (initialized12.has(element)) {
         return;
       }
-      initialized11.add(element);
+      initialized12.add(element);
       bindDialog(element);
     });
     root.querySelectorAll("[data-dialog-trigger], [data-dialog-open]").forEach((trigger) => {
@@ -4650,9 +4716,9 @@
   // resources/assets/js/dropdown-menu.js
   var ROOT_SELECTOR2 = "[data-dropdown-menu]";
   var TRIGGER_SELECTOR3 = "[data-dropdown-menu-trigger]";
-  var CONTENT_SELECTOR3 = "[data-dropdown-menu-content]";
+  var CONTENT_SELECTOR4 = "[data-dropdown-menu-content]";
   var ITEM_SELECTOR2 = '[data-dropdown-menu-item]:not([data-disabled="true"])';
-  var initialized12 = /* @__PURE__ */ new WeakSet();
+  var initialized13 = /* @__PURE__ */ new WeakSet();
   function initDropdownMenus(root = document) {
     document.querySelectorAll("[data-dropdown-menu-content][data-dropdown-menu-portaled]").forEach((content) => {
       if (!(content instanceof HTMLElement) || content.closest("[data-dropdown-menu]")) {
@@ -4664,16 +4730,16 @@
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized12.has(element)) {
+      if (initialized13.has(element)) {
         return;
       }
-      initialized12.add(element);
+      initialized13.add(element);
       bindDropdownMenu(element);
     });
   }
   function bindDropdownMenu(root) {
     const triggerWrap = root.querySelector(TRIGGER_SELECTOR3);
-    const content = root.querySelector(CONTENT_SELECTOR3);
+    const content = root.querySelector(CONTENT_SELECTOR4);
     if (!(triggerWrap instanceof HTMLElement) || !(content instanceof HTMLElement)) {
       return;
     }
@@ -4968,16 +5034,16 @@
 
   // resources/assets/js/file-upload.js
   var FILE_UPLOAD_SELECTOR = "[data-file-upload]";
-  var initialized13 = /* @__PURE__ */ new WeakSet();
+  var initialized14 = /* @__PURE__ */ new WeakSet();
   function initFileUploads(root = document) {
     root.querySelectorAll(FILE_UPLOAD_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized13.has(element)) {
+      if (initialized14.has(element)) {
         return;
       }
-      initialized13.add(element);
+      initialized14.add(element);
       bindFileUpload(element);
     });
   }
@@ -5237,16 +5303,16 @@
 
   // resources/assets/js/input-currency.js
   var INPUT_CURRENCY_SELECTOR = "[data-input-currency]";
-  var initialized14 = /* @__PURE__ */ new WeakSet();
+  var initialized15 = /* @__PURE__ */ new WeakSet();
   function initInputCurrencies(root = document) {
     root.querySelectorAll(INPUT_CURRENCY_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized14.has(element)) {
+      if (initialized15.has(element)) {
         return;
       }
-      initialized14.add(element);
+      initialized15.add(element);
       bindInputCurrency(element);
     });
   }
@@ -5386,16 +5452,16 @@
 
   // resources/assets/js/input-enhancements.js
   var INPUT_ENHANCED_SELECTOR = "[data-input-enhanced]";
-  var initialized15 = /* @__PURE__ */ new WeakSet();
+  var initialized16 = /* @__PURE__ */ new WeakSet();
   function initInputEnhancements(root = document) {
     root.querySelectorAll(INPUT_ENHANCED_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized15.has(element)) {
+      if (initialized16.has(element)) {
         return;
       }
-      initialized15.add(element);
+      initialized16.add(element);
       bindInputEnhancements(element);
     });
   }
@@ -5543,16 +5609,16 @@
 
   // resources/assets/js/input-otp.js
   var INPUT_OTP_SELECTOR = "[data-input-otp]";
-  var initialized16 = /* @__PURE__ */ new WeakSet();
+  var initialized17 = /* @__PURE__ */ new WeakSet();
   function initInputOtps(root = document) {
     root.querySelectorAll(INPUT_OTP_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized16.has(element)) {
+      if (initialized17.has(element)) {
         return;
       }
-      initialized16.add(element);
+      initialized17.add(element);
       bindInputOtp(element);
     });
   }
@@ -5759,16 +5825,16 @@
 
   // resources/assets/js/pillbox.js
   var PILLBOX_SELECTOR = "[data-pillbox]";
-  var initialized17 = /* @__PURE__ */ new WeakSet();
+  var initialized18 = /* @__PURE__ */ new WeakSet();
   function initPillboxes(root = document) {
     root.querySelectorAll(PILLBOX_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized17.has(element)) {
+      if (initialized18.has(element)) {
         return;
       }
-      initialized17.add(element);
+      initialized18.add(element);
       bindPillbox(element);
     });
   }
@@ -5927,9 +5993,9 @@
   // resources/assets/js/popover.js
   var ROOT_SELECTOR3 = "[data-popover]";
   var TRIGGER_SELECTOR4 = "[data-popover-trigger]";
-  var CONTENT_SELECTOR4 = "[data-popover-content]";
+  var CONTENT_SELECTOR5 = "[data-popover-content]";
   var FOCUSABLE_SELECTOR2 = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-  var initialized18 = /* @__PURE__ */ new WeakSet();
+  var initialized19 = /* @__PURE__ */ new WeakSet();
   function initPopovers(root = document) {
     document.querySelectorAll("[data-popover-content][data-popover-portaled]").forEach((content) => {
       if (!(content instanceof HTMLElement) || content.closest("[data-popover]")) {
@@ -5941,21 +6007,21 @@
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized18.has(element)) {
+      if (initialized19.has(element)) {
         return;
       }
       const triggerWrap = element.querySelector(TRIGGER_SELECTOR4);
-      const content = element.querySelector(CONTENT_SELECTOR4);
+      const content = element.querySelector(CONTENT_SELECTOR5);
       if (!(triggerWrap instanceof HTMLElement) || !(content instanceof HTMLElement)) {
         return;
       }
-      initialized18.add(element);
+      initialized19.add(element);
       bindPopover(element);
     });
   }
   function bindPopover(root) {
     const triggerWrap = root.querySelector(TRIGGER_SELECTOR4);
-    const content = root.querySelector(CONTENT_SELECTOR4);
+    const content = root.querySelector(CONTENT_SELECTOR5);
     if (!(triggerWrap instanceof HTMLElement) || !(content instanceof HTMLElement)) {
       return;
     }
@@ -6212,16 +6278,16 @@
 
   // resources/assets/js/rating.js
   var RATING_SELECTOR = "[data-rating]";
-  var initialized19 = /* @__PURE__ */ new WeakSet();
+  var initialized20 = /* @__PURE__ */ new WeakSet();
   function initRatings(root = document) {
     root.querySelectorAll(RATING_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized19.has(element)) {
+      if (initialized20.has(element)) {
         return;
       }
-      initialized19.add(element);
+      initialized20.add(element);
       bindRating(element);
     });
   }
@@ -6336,16 +6402,16 @@
 
   // resources/assets/js/repeater.js
   var REPEATER_SELECTOR = "[data-repeater]";
-  var initialized20 = /* @__PURE__ */ new WeakSet();
+  var initialized21 = /* @__PURE__ */ new WeakSet();
   function initRepeaters(root = document) {
     root.querySelectorAll(REPEATER_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized20.has(element)) {
+      if (initialized21.has(element)) {
         return;
       }
-      initialized20.add(element);
+      initialized21.add(element);
       bindRepeater(element);
     });
   }
@@ -6710,16 +6776,16 @@
   var SCROLLBAR_SELECTOR = "[data-scroll-area-scrollbar]";
   var THUMB_SELECTOR = "[data-scroll-area-thumb]";
   var CORNER_SELECTOR = "[data-scroll-area-corner]";
-  var initialized21 = /* @__PURE__ */ new WeakSet();
+  var initialized22 = /* @__PURE__ */ new WeakSet();
   function initScrollAreas(root = document) {
     root.querySelectorAll(ROOT_SELECTOR4).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized21.has(element)) {
+      if (initialized22.has(element)) {
         return;
       }
-      initialized21.add(element);
+      initialized22.add(element);
       bindScrollArea(element);
     });
   }
@@ -7042,7 +7108,7 @@
 
   // resources/assets/js/select.js
   var SELECT_SELECTOR = "[data-select]";
-  var initialized22 = /* @__PURE__ */ new WeakSet();
+  var initialized23 = /* @__PURE__ */ new WeakSet();
   function initSelects(root = document) {
     document.querySelectorAll("[data-select-content][data-select-portaled]").forEach((content) => {
       if (!(content instanceof HTMLElement) || content.closest("[data-select]")) {
@@ -7054,10 +7120,10 @@
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized22.has(element)) {
+      if (initialized23.has(element)) {
         return;
       }
-      initialized22.add(element);
+      initialized23.add(element);
       bindSelect(element);
     });
   }
@@ -7573,16 +7639,16 @@
   var ROOT_SELECTOR5 = "[data-sidebar-root]";
   var MOBILE_QUERY = "(max-width: 767px)";
   var KEYBOARD_SHORTCUT = "b";
-  var initialized23 = /* @__PURE__ */ new WeakSet();
+  var initialized24 = /* @__PURE__ */ new WeakSet();
   function initSidebars(root = document) {
     root.querySelectorAll(PROVIDER_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized23.has(element)) {
+      if (initialized24.has(element)) {
         return;
       }
-      initialized23.add(element);
+      initialized24.add(element);
       bindSidebarProvider(element);
     });
   }
@@ -7748,16 +7814,16 @@
 
   // resources/assets/js/slider.js
   var SLIDER_SELECTOR = "[data-slider]";
-  var initialized24 = /* @__PURE__ */ new WeakSet();
+  var initialized25 = /* @__PURE__ */ new WeakSet();
   function initSliders(root = document) {
     root.querySelectorAll(SLIDER_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized24.has(element)) {
+      if (initialized25.has(element)) {
         return;
       }
-      initialized24.add(element);
+      initialized25.add(element);
       bindSlider(element);
     });
   }
@@ -8035,19 +8101,19 @@
   var STEPPER_SELECTOR = "[data-stepper]";
   var ITEM_SELECTOR3 = "[data-stepper-item]";
   var TRIGGER_SELECTOR6 = "[data-stepper-trigger]";
-  var CONTENT_SELECTOR5 = "[data-stepper-content]";
+  var CONTENT_SELECTOR6 = "[data-stepper-content]";
   var PREVIOUS_SELECTOR = "[data-stepper-previous]";
   var NEXT_SELECTOR = "[data-stepper-next]";
-  var initialized25 = /* @__PURE__ */ new WeakSet();
+  var initialized26 = /* @__PURE__ */ new WeakSet();
   function initSteppers(root = document) {
     root.querySelectorAll(STEPPER_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized25.has(element)) {
+      if (initialized26.has(element)) {
         return;
       }
-      initialized25.add(element);
+      initialized26.add(element);
       bindStepper(element);
     });
   }
@@ -8057,7 +8123,7 @@
     const items = () => Array.from(root.querySelectorAll(ITEM_SELECTOR3)).filter(
       (node) => node instanceof HTMLElement && node.dataset.disabled !== "true"
     );
-    const contents = () => Array.from(root.querySelectorAll(CONTENT_SELECTOR5)).filter(
+    const contents = () => Array.from(root.querySelectorAll(CONTENT_SELECTOR6)).filter(
       (node) => node instanceof HTMLElement
     );
     const triggers = () => Array.from(root.querySelectorAll(TRIGGER_SELECTOR6)).filter(
@@ -8248,17 +8314,17 @@
   // resources/assets/js/tabs.js
   var TABS_SELECTOR = "[data-tabs]";
   var TRIGGER_SELECTOR7 = "[data-tabs-trigger]";
-  var CONTENT_SELECTOR6 = "[data-tabs-content]";
-  var initialized26 = /* @__PURE__ */ new WeakSet();
+  var CONTENT_SELECTOR7 = "[data-tabs-content]";
+  var initialized27 = /* @__PURE__ */ new WeakSet();
   function initTabs(root = document) {
     root.querySelectorAll(TABS_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized26.has(element)) {
+      if (initialized27.has(element)) {
         return;
       }
-      initialized26.add(element);
+      initialized27.add(element);
       bindTabs(element);
     });
   }
@@ -8267,7 +8333,7 @@
     const triggers = () => Array.from(root.querySelectorAll(TRIGGER_SELECTOR7)).filter(
       (node) => node instanceof HTMLButtonElement && !node.disabled
     );
-    const contents = () => Array.from(root.querySelectorAll(CONTENT_SELECTOR6)).filter(
+    const contents = () => Array.from(root.querySelectorAll(CONTENT_SELECTOR7)).filter(
       (node) => node instanceof HTMLElement
     );
     const activate = (value) => {
@@ -8356,16 +8422,16 @@
 
   // resources/assets/js/textarea.js
   var TEXTAREA_SELECTOR = "[data-textarea]";
-  var initialized27 = /* @__PURE__ */ new WeakSet();
+  var initialized28 = /* @__PURE__ */ new WeakSet();
   function initTextareas(root = document) {
     root.querySelectorAll(TEXTAREA_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized27.has(element)) {
+      if (initialized28.has(element)) {
         return;
       }
-      initialized27.add(element);
+      initialized28.add(element);
       bindTextarea(element);
     });
   }
@@ -8416,7 +8482,7 @@
 
   // resources/assets/js/time-picker.js
   var SELECTOR3 = "[data-time-picker]";
-  var initialized28 = /* @__PURE__ */ new WeakSet();
+  var initialized29 = /* @__PURE__ */ new WeakSet();
   function initTimePickers(root = document) {
     document.querySelectorAll("[data-time-picker-panel][data-stencil-portaled]").forEach((panel) => {
       if (!(panel instanceof HTMLElement) || panel.closest("[data-time-picker]")) {
@@ -8425,10 +8491,10 @@
       panel.remove();
     });
     root.querySelectorAll(SELECTOR3).forEach((element) => {
-      if (!(element instanceof HTMLElement) || initialized28.has(element)) {
+      if (!(element instanceof HTMLElement) || initialized29.has(element)) {
         return;
       }
-      initialized28.add(element);
+      initialized29.add(element);
       bindTimePicker(element);
     });
   }
@@ -8691,7 +8757,7 @@
   var PROVIDER_SELECTOR2 = "[data-toast-provider]";
   var TOAST_SELECTOR = "[data-toast]";
   var CLOSE_SELECTOR = "[data-toast-close]";
-  var initialized29 = /* @__PURE__ */ new WeakSet();
+  var initialized30 = /* @__PURE__ */ new WeakSet();
   function isAssertiveVariant(variant) {
     return variant === "danger" || variant === "destructive" || variant === "error";
   }
@@ -8706,10 +8772,10 @@
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized29.has(element)) {
+      if (initialized30.has(element)) {
         return;
       }
-      initialized29.add(element);
+      initialized30.add(element);
       bindToast(element);
     });
   }
@@ -8752,7 +8818,7 @@
     el.appendChild(body);
     el.appendChild(close);
     provider.appendChild(el);
-    initialized29.add(el);
+    initialized30.add(el);
     bindToast(el);
     return el;
   }
@@ -8852,16 +8918,16 @@
   // resources/assets/js/toggle-group.js
   var GROUP_SELECTOR = "[data-toggle-group]";
   var ITEM_SELECTOR4 = "[data-toggle-group-item]";
-  var initialized30 = /* @__PURE__ */ new WeakSet();
+  var initialized31 = /* @__PURE__ */ new WeakSet();
   function initToggleGroups(root = document) {
     root.querySelectorAll(GROUP_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized30.has(element)) {
+      if (initialized31.has(element)) {
         return;
       }
-      initialized30.add(element);
+      initialized31.add(element);
       bindToggleGroup(element);
     });
   }
@@ -9001,19 +9067,19 @@
 
   // resources/assets/js/toggle.js
   var TOGGLE_SELECTOR = "[data-toggle]";
-  var initialized31 = /* @__PURE__ */ new WeakSet();
+  var initialized32 = /* @__PURE__ */ new WeakSet();
   function initToggles(root = document) {
     root.querySelectorAll(TOGGLE_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLButtonElement)) {
         return;
       }
-      if (initialized31.has(element)) {
+      if (initialized32.has(element)) {
         return;
       }
       if (element.closest("[data-toggle-group]")) {
         return;
       }
-      initialized31.add(element);
+      initialized32.add(element);
       bindToggle(element);
     });
   }
@@ -9057,23 +9123,23 @@
   // resources/assets/js/tooltip.js
   var ROOT_SELECTOR6 = "[data-tooltip]";
   var TRIGGER_SELECTOR8 = "[data-tooltip-trigger]";
-  var CONTENT_SELECTOR7 = "[data-tooltip-content]";
-  var initialized32 = /* @__PURE__ */ new WeakSet();
+  var CONTENT_SELECTOR8 = "[data-tooltip-content]";
+  var initialized33 = /* @__PURE__ */ new WeakSet();
   function initTooltips(root = document) {
     root.querySelectorAll(ROOT_SELECTOR6).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized32.has(element)) {
+      if (initialized33.has(element)) {
         return;
       }
-      initialized32.add(element);
+      initialized33.add(element);
       bindTooltip(element);
     });
   }
   function bindTooltip(root) {
     const trigger = root.querySelector(TRIGGER_SELECTOR8);
-    const content = root.querySelector(CONTENT_SELECTOR7);
+    const content = root.querySelector(CONTENT_SELECTOR8);
     if (!(trigger instanceof HTMLElement) || !(content instanceof HTMLElement)) {
       return;
     }

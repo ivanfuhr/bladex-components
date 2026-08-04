@@ -31,6 +31,7 @@ import '../views/ui/input/input-enhancements.js';
 import '../views/ui/textarea/textarea.js';
 import '../../../resources/assets/js/accordion.js';
 import '../../../resources/assets/js/collapsible.js';
+import '../../../resources/assets/js/code-block.js';
 import '../../../resources/assets/js/scroll-area.js';
 import '../../../resources/assets/js/sidebar.js';
 import '../../../resources/assets/js/avatar.js';
@@ -51,6 +52,7 @@ document.addEventListener('alpine:init', () => {
         previewUrl: config.previewUrl,
         html: config.initialHtml,
         snippet: config.initialSnippet ?? '',
+        snippetHtml: config.initialSnippetHtml ?? '',
         loading: false,
         copied: false,
         copyFailed: false,
@@ -65,7 +67,34 @@ document.addEventListener('alpine:init', () => {
                 this.schedulePreviewWidgets();
             });
 
+            this.$watch('snippetHtml', () => {
+                this.scheduleSnippetWidgets();
+            });
+
             this.schedulePreviewWidgets();
+            this.scheduleSnippetWidgets();
+        },
+
+        scheduleSnippetWidgets() {
+            this.$nextTick(() => {
+                this.$nextTick(() => {
+                    requestAnimationFrame(() => this.bindSnippetWidgets());
+                });
+            });
+        },
+
+        bindSnippetWidgets() {
+            const snippetRoot = document.querySelector('[data-playbook-snippet]');
+
+            if (!(snippetRoot instanceof HTMLElement)) {
+                return;
+            }
+
+            document.dispatchEvent(
+                new CustomEvent('stencil:mount', {
+                    detail: { root: snippetRoot },
+                }),
+            );
         },
 
         schedulePreviewWidgets() {
@@ -165,6 +194,7 @@ document.addEventListener('alpine:init', () => {
                 const data = await response.json();
                 this.html = data.html;
                 this.snippet = data.snippet ?? '';
+                this.snippetHtml = data.snippetHtml ?? '';
                 this.error = null;
                 this.setStatus('Preview updated', { clearAfterMs: 1500 });
             } catch (error) {

@@ -31,10 +31,12 @@
         <section class="space-y-4" aria-labelledby="install-heading">
             <x-ui::heading :level="2" id="install-heading" class="text-lg!">Installation</x-ui::heading>
             <x-ui::text variant="subtle">Add the package to your Laravel application.</x-ui::text>
-            <pre class="overflow-x-auto rounded-xl border border-zinc-200/80 bg-zinc-50 p-4 font-mono text-xs leading-relaxed text-zinc-800 shadow-sm ring-1 ring-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-200 dark:ring-white/5"><code>composer require ivanfuhr/stencil</code></pre>
+            <x-ui::code-block language="bash">
+composer require ivanfuhr/stencil
+            </x-ui::code-block>
             <x-ui::text size="sm" variant="subtle">
                 Optional config:
-                <code class="rounded-md border border-zinc-200 bg-white px-1.5 py-0.5 font-mono text-xs dark:border-zinc-700 dark:bg-zinc-900">php artisan vendor:publish --tag=stencil-config</code>
+                <x-ui::code-block inline language="bash" code="php artisan vendor:publish --tag=stencil-config" />
             </x-ui::text>
         </section>
 
@@ -43,34 +45,34 @@
             <x-ui::text variant="subtle">
                 Add Stencil directives to your layout. Scripts and styles are served from the package by default.
             </x-ui::text>
-            <pre
-                class="overflow-x-auto rounded-xl border border-zinc-200/80 bg-zinc-50 p-4 font-mono text-xs leading-relaxed text-zinc-800 shadow-sm ring-1 ring-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-200 dark:ring-white/5"
-            ><code>&lt;head&gt;
-    @@stencilStyles
-    &lt;x-ui::fonts /&gt;
-    @@vite(['resources/css/app.css', 'resources/js/app.js'])
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;x-ui::input name="email" /&gt;
-    @@stencilScripts
-&lt;/body&gt;</code></pre>
+            <x-ui::code-block language="html">
+@verbatim
+<head>
+    @stencilStyles
+    <x-ui::fonts />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body>
+    <x-ui::input name="email" />
+    @stencilScripts
+</body>
+@endverbatim
+            </x-ui::code-block>
         </section>
 
         <section class="space-y-4" aria-labelledby="tailwind-heading">
             <x-ui::heading :level="2" id="tailwind-heading" class="text-lg!">Tailwind CSS</x-ui::heading>
             <x-ui::text variant="subtle">
                 Import the package entry in your app CSS. Dark mode uses a
-                <code class="rounded-md border border-zinc-200 bg-white px-1.5 py-0.5 font-mono text-xs dark:border-zinc-700 dark:bg-zinc-900">.dark</code>
+                <x-ui::code-block inline language="html" code=".dark" />
                 class on
-                <code
-                    class="rounded-md border border-zinc-200 bg-white px-1.5 py-0.5 font-mono text-xs dark:border-zinc-700 dark:bg-zinc-900"
-                    >&lt;html&gt;</code
-                >.
+                <x-ui::code-block inline language="html" code="&lt;html&gt;" />
+                .
             </x-ui::text>
-            <pre
-                class="overflow-x-auto rounded-xl border border-zinc-200/80 bg-zinc-50 p-4 font-mono text-xs leading-relaxed text-zinc-800 shadow-sm ring-1 ring-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-200 dark:ring-white/5"
-            ><code>@@import "tailwindcss";
-@@import "../../vendor/ivanfuhr/stencil/resources/css/stencil.css";</code></pre>
+            <x-ui::code-block language="css">
+@import "tailwindcss";
+@import "../../vendor/ivanfuhr/stencil/resources/css/stencil.css";
+            </x-ui::code-block>
         </section>
 
         <section class="space-y-4" aria-labelledby="directives-heading">
@@ -85,13 +87,17 @@
                     </thead>
                     <tbody class="divide-y divide-zinc-200/80 dark:divide-zinc-800">
                         <tr>
-                            <td class="px-4 py-2.5 font-mono text-xs">@@stencilStyles</td>
+                            <td class="px-4 py-2.5">
+                                <x-ui::code-block inline language="blade" code="@@stencilStyles" />
+                            </td>
                             <td class="px-4 py-2.5 text-zinc-600 dark:text-zinc-400">
                                 Base CSS tokens and component layers
                             </td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-2.5 font-mono text-xs">@@stencilScripts</td>
+                            <td class="px-4 py-2.5">
+                                <x-ui::code-block inline language="blade" code="@@stencilScripts" />
+                            </td>
                             <td class="px-4 py-2.5 text-zinc-600 dark:text-zinc-400">
                                 Vanilla JS runtime for interactive widgets
                             </td>
@@ -106,7 +112,7 @@
             <x-ui::text variant="subtle">
                 Each component page includes usage examples, a live playground, and generated Blade snippets.
                 Interactive widgets list their
-                <code class="rounded-md border border-zinc-200 bg-white px-1.5 py-0.5 font-mono text-xs dark:border-zinc-700 dark:bg-zinc-900">stencil:add</code>
+                <x-ui::code-block inline language="text" code="stencil:add" />
                 install command when a JavaScript module is required.
             </x-ui::text>
             <div class="flex flex-wrap gap-2">
@@ -123,11 +129,11 @@
             <x-ui::text size="sm" variant="subtle">
                 Run the workbench from the repository root to preview changes locally.
             </x-ui::text>
-            <pre
-                class="overflow-x-auto rounded-xl border border-zinc-200/80 bg-white p-4 font-mono text-xs leading-relaxed text-zinc-800 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-200"
-            ><code>composer playbook   # http://127.0.0.1:8000/playbook
+            <x-ui::code-block language="bash">
+composer playbook   # http://127.0.0.1:8000/playbook
 composer build
-composer serve</code></pre>
+composer serve
+            </x-ui::code-block>
         </section>
     </div>
 @endsection

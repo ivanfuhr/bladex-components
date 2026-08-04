@@ -46,6 +46,7 @@ final class PlaybookRegistry
             'slugs' => [
                 'text',
                 'heading',
+                'code-block',
             ],
         ],
         'overlays' => [
@@ -249,6 +250,7 @@ final class PlaybookRegistry
             $this->switch(),
             $this->text(),
             $this->heading(),
+            $this->codeBlock(),
             $this->dialog(),
             $this->command(),
             $this->accordion(),
@@ -826,6 +828,31 @@ final class PlaybookRegistry
                 'variant' => 'default',
             ],
             previewView: 'workbench::playbook.previews.heading',
+        );
+    }
+
+    private function codeBlock(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'code-block',
+            title: 'Code block',
+            description: 'Syntax-highlighted code samples with optional copy button. Requires code-block.js in the app entry.',
+            controls: [
+                new PlaybookControl('language', 'Language', 'select', [
+                    'blade' => 'Blade',
+                    'php' => 'PHP',
+                    'bash' => 'Bash',
+                    'json' => 'JSON',
+                    'html' => 'HTML',
+                ], 'blade'),
+                new PlaybookControl('show_copy', 'Copy button', 'checkbox', [], true),
+            ],
+            defaultState: [
+                'language' => 'blade',
+                'show_copy' => true,
+            ],
+            previewView: 'workbench::playbook.previews.code-block',
+            wide: true,
         );
     }
 

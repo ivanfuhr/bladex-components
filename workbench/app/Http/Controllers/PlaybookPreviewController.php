@@ -42,6 +42,7 @@ final class PlaybookPreviewController
         return response()->json([
             'html' => $html,
             'snippet' => $snippet,
+            'snippetHtml' => $this->preview->renderHighlightedSnippet($slug, $state),
         ]);
     }
 }

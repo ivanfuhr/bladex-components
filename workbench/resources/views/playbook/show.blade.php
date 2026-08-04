@@ -35,6 +35,7 @@
             previewUrl: @js($previewUrl),
             initialHtml: @js($initialPreview),
             initialSnippet: @js($initialSnippet),
+            initialSnippetHtml: @js($initialSnippetHtml),
         })"
         x-init="init()"
     >
@@ -58,9 +59,6 @@
                         <span aria-hidden="true">←</span>
                         Catalog
                     </a>
-                    @if ($mediaUrl)
-                        <a href="{{ $mediaUrl }}" class="{{ $linkClass }}">Screenshot</a>
-                    @endif
                 </nav>
             </div>
 
@@ -83,19 +81,12 @@
                 @endif
 
                 <section aria-labelledby="playground-code-heading" x-show="snippet.length > 0">
-                    <div class="flex flex-wrap items-center justify-between gap-3">
-                        <h2 id="playground-code-heading" class="{{ $sectionHeadingClass }}">Playground output</h2>
-                        <button
-                            type="button"
-                            class="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-700 shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20"
-                            @click="copySnippet()"
-                        >
-                            <span x-text="copyLabel()"></span>
-                        </button>
-                    </div>
-                    <div class="playbook-code mt-4 min-w-0 overflow-hidden rounded-2xl border border-zinc-200/80 bg-zinc-50 shadow-sm ring-1 ring-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-950 dark:ring-white/5">
-                        <pre class="playbook-code__pre max-h-[min(28rem,50vh)] overflow-auto p-4 font-mono text-xs leading-relaxed text-zinc-800 dark:text-zinc-200"><code class="playbook-code__content block whitespace-pre-wrap" x-text="snippet">{{ $initialSnippet }}</code></pre>
-                    </div>
+                    <h2 id="playground-code-heading" class="{{ $sectionHeadingClass }}">Playground output</h2>
+                    <div
+                        class="mt-4 min-w-0 max-h-[min(28rem,50vh)] overflow-auto"
+                        data-playbook-snippet
+                        x-html="snippetHtml"
+                    >{!! $initialSnippetHtml !!}</div>
                 </section>
 
                 @if (count($playbook->controls) > 0)

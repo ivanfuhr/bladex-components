@@ -9,7 +9,5 @@
             Run the install command to copy the widget script and patch your Vite entry.
         </p>
     </div>
-    <code class="shrink-0 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 font-mono text-xs text-zinc-800 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200">
-        php artisan {{ $command }}
-    </code>
+    <x-ui::code-block inline language="bash" :code="'php artisan '.$command" />
 </div>

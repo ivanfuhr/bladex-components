@@ -114,8 +114,7 @@ it('bridges playground pages to media when a media view exists', function () {
     $response = $this->get('/playbook/button');
 
     $response->assertOk();
-    $response->assertSee(route('playbook.media.show', 'button'), false);
-    $response->assertSee('Screenshot');
+    $response->assertDontSee('Screenshot');
     $response->assertSee('Usage');
 });
 

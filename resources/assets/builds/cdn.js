@@ -6,6 +6,7 @@ import '../js/accordion.js';
 import '../js/avatar.js';
 import '../js/calendar.js';
 import '../js/chart.js';
+import '../js/code-block.js';
 import '../js/collapsible.js';
 import '../js/color-picker.js';
 import '../js/combobox.js';
