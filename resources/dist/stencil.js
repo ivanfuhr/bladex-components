@@ -6313,9 +6313,342 @@
     }
   }
 
+  // resources/assets/js/scroll-area.js
+  var ROOT_SELECTOR4 = "[data-scroll-area]";
+  var VIEWPORT_SELECTOR = "[data-scroll-area-viewport]";
+  var SCROLLBAR_SELECTOR = "[data-scroll-area-scrollbar]";
+  var THUMB_SELECTOR = "[data-scroll-area-thumb]";
+  var CORNER_SELECTOR = "[data-scroll-area-corner]";
+  var initialized21 = /* @__PURE__ */ new WeakSet();
+  function initScrollAreas(root = document) {
+    root.querySelectorAll(ROOT_SELECTOR4).forEach((element) => {
+      if (!(element instanceof HTMLElement)) {
+        return;
+      }
+      if (initialized21.has(element)) {
+        return;
+      }
+      initialized21.add(element);
+      bindScrollArea(element);
+    });
+  }
+  function bindScrollArea(root) {
+    const viewport = root.querySelector(VIEWPORT_SELECTOR);
+    if (!(viewport instanceof HTMLElement)) {
+      return;
+    }
+    const signal = createBindSignal(root);
+    const type = root.dataset.scrollAreaType || "hover";
+    const hideDelay = Number.parseInt(root.dataset.scrollAreaHideDelay || "600", 10);
+    const scrollbars = Array.from(root.querySelectorAll(SCROLLBAR_SELECTOR)).filter(
+      (node) => node instanceof HTMLElement
+    );
+    const corner = root.querySelector(CORNER_SELECTOR);
+    let hideTimer = null;
+    let scrolling = false;
+    let pointerInside = false;
+    const thumbFor = (scrollbar) => {
+      const thumb = scrollbar.querySelector(THUMB_SELECTOR);
+      return thumb instanceof HTMLElement ? thumb : null;
+    };
+    const isScrollable = (orientation) => {
+      if (orientation === "horizontal") {
+        return viewport.scrollWidth - viewport.clientWidth > 1;
+      }
+      return viewport.scrollHeight - viewport.clientHeight > 1;
+    };
+    const setChromeState = (state) => {
+      for (const scrollbar of scrollbars) {
+        const orientation = scrollbar.dataset.orientation === "horizontal" ? "horizontal" : "vertical";
+        const next = state === "visible" && isScrollable(orientation) ? "visible" : "hidden";
+        scrollbar.dataset.state = next;
+        const thumb = thumbFor(scrollbar);
+        if (thumb) {
+          thumb.dataset.state = next;
+        }
+      }
+      if (corner instanceof HTMLElement) {
+        const verticalVisible = scrollbars.some(
+          (bar) => bar.dataset.orientation !== "horizontal" && bar.dataset.state === "visible"
+        );
+        const horizontalVisible = scrollbars.some(
+          (bar) => bar.dataset.orientation === "horizontal" && bar.dataset.state === "visible"
+        );
+        corner.dataset.state = verticalVisible && horizontalVisible ? "visible" : "hidden";
+      }
+    };
+    const showChrome = () => {
+      if (hideTimer !== null) {
+        clearTimeout(hideTimer);
+        hideTimer = null;
+      }
+      setChromeState("visible");
+    };
+    const scheduleHide = () => {
+      if (type === "always") {
+        setChromeState("visible");
+        return;
+      }
+      if (pointerInside && (type === "hover" || type === "auto")) {
+        return;
+      }
+      if (hideTimer !== null) {
+        clearTimeout(hideTimer);
+      }
+      hideTimer = setTimeout(
+        () => {
+          hideTimer = null;
+          if (!scrolling && !(pointerInside && (type === "hover" || type === "auto"))) {
+            setChromeState("hidden");
+          }
+        },
+        Number.isFinite(hideDelay) ? hideDelay : 600
+      );
+    };
+    const updateThumbs = () => {
+      for (const scrollbar of scrollbars) {
+        const orientation = scrollbar.dataset.orientation === "horizontal" ? "horizontal" : "vertical";
+        const thumb = thumbFor(scrollbar);
+        if (!thumb) {
+          continue;
+        }
+        if (!isScrollable(orientation)) {
+          scrollbar.dataset.state = "hidden";
+          thumb.dataset.state = "hidden";
+          continue;
+        }
+        if (orientation === "vertical") {
+          const trackSize = scrollbar.clientHeight;
+          const ratio = viewport.clientHeight / viewport.scrollHeight;
+          const thumbSize = Math.max(16, Math.floor(trackSize * ratio));
+          const maxScroll = viewport.scrollHeight - viewport.clientHeight;
+          const maxOffset = Math.max(0, trackSize - thumbSize);
+          const offset = maxScroll > 0 ? viewport.scrollTop / maxScroll * maxOffset : 0;
+          thumb.style.height = `${thumbSize}px`;
+          thumb.style.width = "";
+          thumb.style.transform = `translate3d(0, ${offset}px, 0)`;
+        } else {
+          const trackSize = scrollbar.clientWidth;
+          const ratio = viewport.clientWidth / viewport.scrollWidth;
+          const thumbSize = Math.max(16, Math.floor(trackSize * ratio));
+          const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+          const maxOffset = Math.max(0, trackSize - thumbSize);
+          const offset = maxScroll > 0 ? viewport.scrollLeft / maxScroll * maxOffset : 0;
+          thumb.style.width = `${thumbSize}px`;
+          thumb.style.height = "";
+          thumb.style.transform = `translate3d(${offset}px, 0, 0)`;
+        }
+      }
+      if (type === "always") {
+        setChromeState("visible");
+      } else if (corner instanceof HTMLElement) {
+        const verticalVisible = scrollbars.some(
+          (bar) => bar.dataset.orientation !== "horizontal" && bar.dataset.state === "visible"
+        );
+        const horizontalVisible = scrollbars.some(
+          (bar) => bar.dataset.orientation === "horizontal" && bar.dataset.state === "visible"
+        );
+        corner.dataset.state = verticalVisible && horizontalVisible ? "visible" : "hidden";
+      }
+    };
+    const onScroll = () => {
+      updateThumbs();
+      if (type === "always") {
+        return;
+      }
+      scrolling = true;
+      showChrome();
+      if (hideTimer !== null) {
+        clearTimeout(hideTimer);
+      }
+      hideTimer = setTimeout(
+        () => {
+          scrolling = false;
+          hideTimer = null;
+          scheduleHide();
+        },
+        Number.isFinite(hideDelay) ? hideDelay : 600
+      );
+    };
+    viewport.addEventListener("scroll", onScroll, { passive: true, signal });
+    root.addEventListener(
+      "pointerenter",
+      () => {
+        pointerInside = true;
+        if (type === "hover" || type === "auto" || type === "always") {
+          updateThumbs();
+          showChrome();
+        }
+      },
+      { signal }
+    );
+    root.addEventListener(
+      "pointerleave",
+      () => {
+        pointerInside = false;
+        scheduleHide();
+      },
+      { signal }
+    );
+    const bindScrollbarPointer = (scrollbar) => {
+      const orientation = scrollbar.dataset.orientation === "horizontal" ? "horizontal" : "vertical";
+      const thumb = thumbFor(scrollbar);
+      if (!thumb) {
+        return;
+      }
+      let drag = null;
+      const onPointerMove = (event) => {
+        if (!drag || event.pointerId !== drag.pointerId) {
+          return;
+        }
+        if (orientation === "vertical") {
+          const trackSize = scrollbar.clientHeight;
+          const thumbSize = thumb.offsetHeight;
+          const maxOffset = Math.max(0, trackSize - thumbSize);
+          const maxScroll = viewport.scrollHeight - viewport.clientHeight;
+          const delta = event.clientY - drag.startPos;
+          const nextOffset = Math.min(maxOffset, Math.max(0, drag.startScroll + delta));
+          viewport.scrollTop = maxOffset > 0 ? nextOffset / maxOffset * maxScroll : 0;
+        } else {
+          const trackSize = scrollbar.clientWidth;
+          const thumbSize = thumb.offsetWidth;
+          const maxOffset = Math.max(0, trackSize - thumbSize);
+          const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+          const delta = event.clientX - drag.startPos;
+          const nextOffset = Math.min(maxOffset, Math.max(0, drag.startScroll + delta));
+          viewport.scrollLeft = maxOffset > 0 ? nextOffset / maxOffset * maxScroll : 0;
+        }
+      };
+      const endDrag = (event) => {
+        var _a5;
+        if (!drag || event.pointerId !== drag.pointerId) {
+          return;
+        }
+        drag = null;
+        (_a5 = thumb.releasePointerCapture) == null ? void 0 : _a5.call(thumb, event.pointerId);
+        document.removeEventListener("pointermove", onPointerMove);
+        document.removeEventListener("pointerup", endDrag);
+        document.removeEventListener("pointercancel", endDrag);
+        scheduleHide();
+      };
+      thumb.addEventListener(
+        "pointerdown",
+        (event) => {
+          var _a5;
+          if (event.button !== 0 || !(event instanceof PointerEvent)) {
+            return;
+          }
+          event.preventDefault();
+          event.stopPropagation();
+          const startPos = orientation === "vertical" ? event.clientY : event.clientX;
+          const startScroll = orientation === "vertical" ? (() => {
+            const trackSize = scrollbar.clientHeight;
+            const thumbSize = thumb.offsetHeight;
+            const maxOffset = Math.max(0, trackSize - thumbSize);
+            const maxScroll = viewport.scrollHeight - viewport.clientHeight;
+            return maxScroll > 0 ? viewport.scrollTop / maxScroll * maxOffset : 0;
+          })() : (() => {
+            const trackSize = scrollbar.clientWidth;
+            const thumbSize = thumb.offsetWidth;
+            const maxOffset = Math.max(0, trackSize - thumbSize);
+            const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+            return maxScroll > 0 ? viewport.scrollLeft / maxScroll * maxOffset : 0;
+          })();
+          drag = {
+            pointerId: event.pointerId,
+            startPos,
+            startScroll
+          };
+          (_a5 = thumb.setPointerCapture) == null ? void 0 : _a5.call(thumb, event.pointerId);
+          document.addEventListener("pointermove", onPointerMove, { signal });
+          document.addEventListener("pointerup", endDrag, { signal });
+          document.addEventListener("pointercancel", endDrag, { signal });
+          showChrome();
+        },
+        { signal }
+      );
+      scrollbar.addEventListener(
+        "pointerdown",
+        (event) => {
+          if (event.button !== 0 || event.target === thumb || thumb.contains(
+            /** @type {Node} */
+            event.target
+          )) {
+            return;
+          }
+          event.preventDefault();
+          const rect = scrollbar.getBoundingClientRect();
+          if (orientation === "vertical") {
+            const thumbSize = thumb.offsetHeight;
+            const clickOffset = event.clientY - rect.top - thumbSize / 2;
+            const maxOffset = Math.max(0, scrollbar.clientHeight - thumbSize);
+            const maxScroll = viewport.scrollHeight - viewport.clientHeight;
+            viewport.scrollTop = maxOffset > 0 ? Math.min(maxOffset, Math.max(0, clickOffset)) / maxOffset * maxScroll : 0;
+          } else {
+            const thumbSize = thumb.offsetWidth;
+            const clickOffset = event.clientX - rect.left - thumbSize / 2;
+            const maxOffset = Math.max(0, scrollbar.clientWidth - thumbSize);
+            const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+            viewport.scrollLeft = maxOffset > 0 ? Math.min(maxOffset, Math.max(0, clickOffset)) / maxOffset * maxScroll : 0;
+          }
+          showChrome();
+        },
+        { signal }
+      );
+    };
+    for (const scrollbar of scrollbars) {
+      bindScrollbarPointer(scrollbar);
+    }
+    const resizeObserver = new ResizeObserver(() => {
+      updateThumbs();
+      if (type === "always") {
+        setChromeState("visible");
+      }
+    });
+    resizeObserver.observe(viewport);
+    const content = viewport.querySelector("[data-scroll-area-content]");
+    if (content instanceof HTMLElement) {
+      resizeObserver.observe(content);
+    }
+    signal.addEventListener(
+      "abort",
+      () => {
+        resizeObserver.disconnect();
+        if (hideTimer !== null) {
+          clearTimeout(hideTimer);
+        }
+      },
+      { once: true }
+    );
+    updateThumbs();
+    if (type === "always") {
+      setChromeState("visible");
+    } else {
+      setChromeState("hidden");
+    }
+  }
+  document.addEventListener("stencil:mount", (event) => {
+    var _a5;
+    if (!(event instanceof CustomEvent)) {
+      return;
+    }
+    const mountRoot = (_a5 = event.detail) == null ? void 0 : _a5.root;
+    if (!(mountRoot instanceof HTMLElement)) {
+      return;
+    }
+    initScrollAreas(mountRoot);
+  });
+  if (typeof document !== "undefined") {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => initScrollAreas());
+    } else {
+      initScrollAreas();
+    }
+  }
+
   // resources/assets/js/select.js
   var SELECT_SELECTOR = "[data-select]";
-  var initialized21 = /* @__PURE__ */ new WeakSet();
+  var initialized22 = /* @__PURE__ */ new WeakSet();
   function initSelects(root = document) {
     document.querySelectorAll("[data-select-content][data-select-portaled]").forEach((content) => {
       if (!(content instanceof HTMLElement) || content.closest("[data-select]")) {
@@ -6327,10 +6660,10 @@
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized21.has(element)) {
+      if (initialized22.has(element)) {
         return;
       }
-      initialized21.add(element);
+      initialized22.add(element);
       bindSelect(element);
     });
   }
@@ -6839,19 +7172,19 @@
   var TRIGGER_SELECTOR5 = "[data-sidebar-trigger]";
   var RAIL_SELECTOR = "[data-sidebar-rail]";
   var BACKDROP_SELECTOR = "[data-sidebar-backdrop]";
-  var ROOT_SELECTOR4 = "[data-sidebar-root]";
+  var ROOT_SELECTOR5 = "[data-sidebar-root]";
   var MOBILE_QUERY = "(max-width: 767px)";
   var KEYBOARD_SHORTCUT = "b";
-  var initialized22 = /* @__PURE__ */ new WeakSet();
+  var initialized23 = /* @__PURE__ */ new WeakSet();
   function initSidebars(root = document) {
     root.querySelectorAll(PROVIDER_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized22.has(element)) {
+      if (initialized23.has(element)) {
         return;
       }
-      initialized22.add(element);
+      initialized23.add(element);
       bindSidebarProvider(element);
     });
   }
@@ -6869,7 +7202,7 @@
       provider.dataset.mobileOpen = openMobile ? "true" : "false";
       provider.dataset.state = open ? "expanded" : "collapsed";
       provider.dataset.open = open ? "true" : "false";
-      const sidebarRoot = provider.querySelector(ROOT_SELECTOR4);
+      const sidebarRoot = provider.querySelector(ROOT_SELECTOR5);
       if (sidebarRoot instanceof HTMLElement) {
         const mode = sidebarRoot.dataset.collapsibleMode || "offcanvas";
         sidebarRoot.dataset.state = open ? "expanded" : "collapsed";
@@ -7017,16 +7350,16 @@
 
   // resources/assets/js/slider.js
   var SLIDER_SELECTOR = "[data-slider]";
-  var initialized23 = /* @__PURE__ */ new WeakSet();
+  var initialized24 = /* @__PURE__ */ new WeakSet();
   function initSliders(root = document) {
     root.querySelectorAll(SLIDER_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized23.has(element)) {
+      if (initialized24.has(element)) {
         return;
       }
-      initialized23.add(element);
+      initialized24.add(element);
       bindSlider(element);
     });
   }
@@ -7307,16 +7640,16 @@
   var CONTENT_SELECTOR5 = "[data-stepper-content]";
   var PREVIOUS_SELECTOR = "[data-stepper-previous]";
   var NEXT_SELECTOR = "[data-stepper-next]";
-  var initialized24 = /* @__PURE__ */ new WeakSet();
+  var initialized25 = /* @__PURE__ */ new WeakSet();
   function initSteppers(root = document) {
     root.querySelectorAll(STEPPER_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized24.has(element)) {
+      if (initialized25.has(element)) {
         return;
       }
-      initialized24.add(element);
+      initialized25.add(element);
       bindStepper(element);
     });
   }
@@ -7518,16 +7851,16 @@
   var TABS_SELECTOR = "[data-tabs]";
   var TRIGGER_SELECTOR7 = "[data-tabs-trigger]";
   var CONTENT_SELECTOR6 = "[data-tabs-content]";
-  var initialized25 = /* @__PURE__ */ new WeakSet();
+  var initialized26 = /* @__PURE__ */ new WeakSet();
   function initTabs(root = document) {
     root.querySelectorAll(TABS_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized25.has(element)) {
+      if (initialized26.has(element)) {
         return;
       }
-      initialized25.add(element);
+      initialized26.add(element);
       bindTabs(element);
     });
   }
@@ -7625,16 +7958,16 @@
 
   // resources/assets/js/textarea.js
   var TEXTAREA_SELECTOR = "[data-textarea]";
-  var initialized26 = /* @__PURE__ */ new WeakSet();
+  var initialized27 = /* @__PURE__ */ new WeakSet();
   function initTextareas(root = document) {
     root.querySelectorAll(TEXTAREA_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized26.has(element)) {
+      if (initialized27.has(element)) {
         return;
       }
-      initialized26.add(element);
+      initialized27.add(element);
       bindTextarea(element);
     });
   }
@@ -7685,7 +8018,7 @@
 
   // resources/assets/js/time-picker.js
   var SELECTOR3 = "[data-time-picker]";
-  var initialized27 = /* @__PURE__ */ new WeakSet();
+  var initialized28 = /* @__PURE__ */ new WeakSet();
   function initTimePickers(root = document) {
     document.querySelectorAll("[data-time-picker-panel][data-stencil-portaled]").forEach((panel) => {
       if (!(panel instanceof HTMLElement) || panel.closest("[data-time-picker]")) {
@@ -7694,10 +8027,10 @@
       panel.remove();
     });
     root.querySelectorAll(SELECTOR3).forEach((element) => {
-      if (!(element instanceof HTMLElement) || initialized27.has(element)) {
+      if (!(element instanceof HTMLElement) || initialized28.has(element)) {
         return;
       }
-      initialized27.add(element);
+      initialized28.add(element);
       bindTimePicker(element);
     });
   }
@@ -7958,7 +8291,7 @@
   var PROVIDER_SELECTOR2 = "[data-toast-provider]";
   var TOAST_SELECTOR = "[data-toast]";
   var CLOSE_SELECTOR = "[data-toast-close]";
-  var initialized28 = /* @__PURE__ */ new WeakSet();
+  var initialized29 = /* @__PURE__ */ new WeakSet();
   function isAssertiveVariant(variant) {
     return variant === "danger" || variant === "destructive" || variant === "error";
   }
@@ -7970,10 +8303,10 @@
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized28.has(element)) {
+      if (initialized29.has(element)) {
         return;
       }
-      initialized28.add(element);
+      initialized29.add(element);
       bindToast(element);
     });
   }
@@ -8014,7 +8347,7 @@
     el.appendChild(body);
     el.appendChild(close);
     provider.appendChild(el);
-    initialized28.add(el);
+    initialized29.add(el);
     bindToast(el);
     return el;
   }
@@ -8114,16 +8447,16 @@
   // resources/assets/js/toggle-group.js
   var GROUP_SELECTOR = "[data-toggle-group]";
   var ITEM_SELECTOR4 = "[data-toggle-group-item]";
-  var initialized29 = /* @__PURE__ */ new WeakSet();
+  var initialized30 = /* @__PURE__ */ new WeakSet();
   function initToggleGroups(root = document) {
     root.querySelectorAll(GROUP_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized29.has(element)) {
+      if (initialized30.has(element)) {
         return;
       }
-      initialized29.add(element);
+      initialized30.add(element);
       bindToggleGroup(element);
     });
   }
@@ -8260,19 +8593,19 @@
 
   // resources/assets/js/toggle.js
   var TOGGLE_SELECTOR = "[data-toggle]";
-  var initialized30 = /* @__PURE__ */ new WeakSet();
+  var initialized31 = /* @__PURE__ */ new WeakSet();
   function initToggles(root = document) {
     root.querySelectorAll(TOGGLE_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLButtonElement)) {
         return;
       }
-      if (initialized30.has(element)) {
+      if (initialized31.has(element)) {
         return;
       }
       if (element.closest("[data-toggle-group]")) {
         return;
       }
-      initialized30.add(element);
+      initialized31.add(element);
       bindToggle(element);
     });
   }
@@ -8314,19 +8647,19 @@
   }
 
   // resources/assets/js/tooltip.js
-  var ROOT_SELECTOR5 = "[data-tooltip]";
+  var ROOT_SELECTOR6 = "[data-tooltip]";
   var TRIGGER_SELECTOR8 = "[data-tooltip-trigger]";
   var CONTENT_SELECTOR7 = "[data-tooltip-content]";
-  var initialized31 = /* @__PURE__ */ new WeakSet();
+  var initialized32 = /* @__PURE__ */ new WeakSet();
   function initTooltips(root = document) {
-    root.querySelectorAll(ROOT_SELECTOR5).forEach((element) => {
+    root.querySelectorAll(ROOT_SELECTOR6).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
         return;
       }
-      if (initialized31.has(element)) {
+      if (initialized32.has(element)) {
         return;
       }
-      initialized31.add(element);
+      initialized32.add(element);
       bindTooltip(element);
     });
   }

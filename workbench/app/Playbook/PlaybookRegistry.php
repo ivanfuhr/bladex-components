@@ -90,6 +90,7 @@ final class PlaybookRegistry
                 'stat',
                 'chart',
                 'table',
+                'scroll-area',
                 'separator',
                 'icons',
             ],
@@ -271,6 +272,7 @@ final class PlaybookRegistry
             $this->progress(),
             $this->alert(),
             $this->table(),
+            $this->scrollArea(),
             $this->icons(),
             $this->pagination(),
             $this->calendar(),
@@ -1547,6 +1549,29 @@ final class PlaybookRegistry
             ],
             previewView: 'workbench::playbook.previews.table',
             wide: true,
+        );
+    }
+
+    private function scrollArea(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'scroll-area',
+            title: 'Scroll Area',
+            description: 'Native scrolling with themed overlay scrollbars. Requires scroll-area.js in the package bundle.',
+            controls: [
+                new PlaybookControl('type', 'Visibility', 'select', [
+                    'hover' => 'Hover',
+                    'always' => 'Always',
+                    'scroll' => 'While scrolling',
+                    'auto' => 'Auto',
+                ], 'always'),
+                new PlaybookControl('horizontal', 'Horizontal bar', 'checkbox', [], false),
+            ],
+            defaultState: [
+                'type' => 'always',
+                'horizontal' => false,
+            ],
+            previewView: 'workbench::playbook.previews.scroll-area',
         );
     }
 

@@ -279,6 +279,30 @@ Ship flexible Blade components that consumers assemble from small pieces, while 
 </x-ui::slider>
 ```
 
+### Scroll area (shortcut + full composition)
+
+```blade
+{{-- Shortcut: viewport + vertical scrollbar (scroll-area.js in the package bundle) --}}
+<x-ui::scroll-area class="h-72" aria-label="Tags">
+    …
+</x-ui::scroll-area>
+
+{{-- Both axes --}}
+<x-ui::scroll-area class="h-48 w-96" horizontal type="always">
+    …
+</x-ui::scroll-area>
+
+{{-- Full: :shortcut="false" and explicit viewport / scrollbar / corner tree --}}
+<x-ui::scroll-area class="h-72" :shortcut="false" type="hover">
+    <x-ui::scroll-area.viewport>
+        …
+    </x-ui::scroll-area.viewport>
+    <x-ui::scroll-area.scrollbar orientation="vertical" />
+    <x-ui::scroll-area.scrollbar orientation="horizontal" />
+    <x-ui::scroll-area.corner />
+</x-ui::scroll-area>
+```
+
 ### Root with `@aware` for children (`field/index.blade.php`)
 
 ```blade

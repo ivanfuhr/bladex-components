@@ -42,10 +42,40 @@ it('renders a layout main content landmark', function () {
     expect($html)
         ->toContain('data-main')
         ->toContain('app-main')
+        ->toContain('app-main__content')
+        ->toContain('data-scroll-area')
+        ->toContain('data-scroll-area-viewport')
+        ->toContain('data-scroll-area-scrollbar')
         ->toContain('max-w-7xl')
         ->toContain('p-4')
         ->not->toContain('pt-0')
+        ->not->toContain('overflow-y-auto')
         ->toContain('Body');
+});
+
+it('forwards landmark attributes to main and content classes to the scroll body', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-ui::main id="app-main" tabindex="-1" aria-label="Primary" class="gap-8" type="always">
+            <p>Body</p>
+        </x-ui::main>
+    BLADE);
+
+    expect($html)
+        ->toContain('id="app-main"')
+        ->toContain('tabindex="-1"')
+        ->toContain('aria-label="Primary"')
+        ->toContain('data-scroll-area-type="always"')
+        ->toContain('gap-8')
+        ->toContain('Body');
+
+    preg_match('/<main\b[^>]*>/', $html, $mainTag);
+    preg_match('/class="([^"]*app-main__content[^"]*)"/', $html, $contentClass);
+
+    expect($mainTag[0] ?? '')
+        ->toContain('id="app-main"')
+        ->toContain('aria-label="Primary"')
+        ->and($contentClass[1] ?? '')->toContain('gap-8')
+        ->and($contentClass[1] ?? '')->not->toContain('aria-label');
 });
 
 it('renders sidebar brand, spacer, and collapse controls', function () {

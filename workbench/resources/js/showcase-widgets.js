@@ -8,6 +8,7 @@ import '../../../resources/assets/js/toggle-group.js';
 import '../../../resources/assets/js/stepper.js';
 import '../../../resources/assets/js/accordion.js';
 import '../../../resources/assets/js/collapsible.js';
+import '../../../resources/assets/js/scroll-area.js';
 import '../../../resources/assets/js/sidebar.js';
 import '../../../resources/assets/js/command.js';
 import '../../../resources/assets/js/dropdown-menu.js';

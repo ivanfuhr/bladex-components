@@ -946,7 +946,7 @@ Default `shortcut` renders slots for `length` (default `6`). Even lengths ≥ 4 
 
 ## Slider
 
-Accessible slider and dual-thumb range control (WAI-ARIA `role="slider"`). Subcomponents include `track`, `range`, and `thumb`. `stencil:add slider` copies `slider.js` and patches your Vite entry. A hidden input carries the value for form submit (`name`); range mode emits `name[0]` / `name[1]`.
+Accessible slider and dual-thumb range control (WAI-ARIA `role="slider"`). Subcomponents include `track`, `range`, and `thumb`. Included in `@stencilScripts`. A hidden input carries the value for form submit (`name`); range mode emits `name[0]` / `name[1]`.
 
 Supports `min` (default `0`), `max` (default `100`), `step` (default `1`), `value` (number or `[low, high]`), and `:range="true"` for two thumbs. Keyboard: arrows, Home/End, PageUp/Down. Set `:shortcut="false"` for full composition. Works inside `field` (inherits `invalid` / Laravel `$errors`).
 
@@ -1712,6 +1712,43 @@ Semantic data table ([shadcn Table](https://ui.shadcn.com/docs/components/table)
         </x-ui::table.row>
     </x-ui::table.body>
 </x-ui::table>
+```
+
+```bash
+```
+
+<br>
+
+## Scroll Area
+
+Native scrolling with themed overlay scrollbars ([shadcn Scroll Area](https://ui.shadcn.com/docs/components/scroll-area), [Radix Scroll Area](https://www.radix-ui.com/primitives/docs/components/scroll-area)). Included in `@stencilScripts`. The viewport keeps browser wheel, touch, and keyboard scrolling; scrollbar chrome is presentational (`aria-hidden`). Give the root an accessible name (`aria-label` / `aria-labelledby`) when it is a primary region.
+
+Subcomponents: `viewport`, `scrollbar`, `thumb`, and `corner`. Shortcut mode wraps the slot in a viewport and adds a vertical scrollbar. Pass `horizontal` to also compose the horizontal bar and corner. Set `:shortcut="false"` for full composition.
+
+`type` controls chrome visibility: `hover` (default), `always`, `scroll`, or `auto`. `scroll-hide-delay` (ms, default `600`) controls how long bars stay visible after scrolling.
+
+```blade
+<x-ui::scroll-area class="h-72 w-48 rounded-md border" aria-label="Tags">
+    <div class="p-4">
+        {{-- tall content --}}
+    </div>
+</x-ui::scroll-area>
+
+<x-ui::scroll-area class="h-48 w-96" horizontal type="always" aria-label="Gallery">
+    <div class="flex w-max gap-2 p-4">
+        {{-- wide content --}}
+    </div>
+</x-ui::scroll-area>
+
+{{-- Full composition --}}
+<x-ui::scroll-area class="h-72" :shortcut="false" type="hover">
+    <x-ui::scroll-area.viewport>
+        {{-- content --}}
+    </x-ui::scroll-area.viewport>
+    <x-ui::scroll-area.scrollbar orientation="vertical" />
+    <x-ui::scroll-area.scrollbar orientation="horizontal" />
+    <x-ui::scroll-area.corner />
+</x-ui::scroll-area>
 ```
 
 ```bash

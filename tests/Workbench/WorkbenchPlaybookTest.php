@@ -104,7 +104,7 @@ it('loads a single widget runtime on playbook chrome pages', function () {
         ->and($html)->not->toContain('/stencil/stencil.js');
 });
 
-it('returns interactive accordion and collapsible markup from the preview endpoint', function (string $slug, string $marker) {
+it('returns interactive accordion, collapsible, and scroll-area markup from the preview endpoint', function (string $slug, string $marker) {
     $response = $this->postJson('/playbook/preview', [
         'component' => $slug,
         'state' => [],
@@ -115,6 +115,7 @@ it('returns interactive accordion and collapsible markup from the preview endpoi
 })->with([
     ['accordion', 'data-accordion-trigger'],
     ['collapsible', 'data-collapsible-trigger'],
+    ['scroll-area', 'data-scroll-area-viewport'],
 ]);
 
 it('links sibling components within the same catalog category', function () {
@@ -289,6 +290,7 @@ it('renders playbook media pages for button and datetime components', function (
     'stepper',
     'stat',
     'grid',
+    'scroll-area',
 ]);
 
 it('redirects legacy buttons media slug to button', function () {
@@ -321,6 +323,7 @@ it('renders layout and feedback playbook pages with initial previews', function 
     ['progress', 'data-progress'],
     ['alert', 'data-alert'],
     ['table', 'data-table'],
+    ['scroll-area', 'data-scroll-area'],
     ['stat', 'data-stat'],
     ['grid', 'data-grid'],
     ['icons', 'data-icon'],

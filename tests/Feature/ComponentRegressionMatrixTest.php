@@ -98,6 +98,13 @@ dataset('component_regression_matrix', [
         </x-ui::collapsible>
     BLADE, ['data-collapsible', 'aria-expanded="true"', 'aria-controls=', 'role="region"']],
 
+    'scroll-area' => [<<<'BLADE'
+        <x-ui::scroll-area class="h-40" aria-label="List">
+            <div>One</div>
+            <div>Two</div>
+        </x-ui::scroll-area>
+    BLADE, ['data-scroll-area', 'data-scroll-area-viewport', 'data-scroll-area-scrollbar', 'tabindex="0"']],
+
     'color-picker' => [<<<'BLADE'
         <x-ui::color-picker name="accent" value="#112233" size="sm" />
     BLADE, ['data-color-picker', 'name="accent"']],

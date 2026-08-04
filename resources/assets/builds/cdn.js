@@ -22,6 +22,7 @@ import '../js/pillbox.js';
 import '../js/popover.js';
 import '../js/rating.js';
 import '../js/repeater.js';
+import '../js/scroll-area.js';
 import '../js/select.js';
 import '../js/sidebar.js';
 import '../js/slider.js';

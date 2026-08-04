@@ -17,6 +17,8 @@
 
 ### Added
 
+- `scroll-area` — compound scroll region with themed overlay scrollbars (`viewport`, `scrollbar`, `thumb`, `corner`), shortcut + full composition, vertical/horizontal axes, `type` visibility modes, playbook preview, and README docs.
+- `main` — shell content landmark now composes `scroll-area` (themed overlay scrollbar, `type` / `scroll-hide-delay` passthrough) instead of native `overflow-y-auto`.
 - `FrontendAssets` with `@stencilScripts` / `@stencilStyles` directives (BladeX-style route-served assets).
 - JS sources at `resources/assets/js/` with modular vanilla runtime; `npm run build` outputs `resources/dist/stencil.js`.
 - Codegen scripts: `scripts/generate-component-classes.php`, `scripts/strip-blade-props.php`.

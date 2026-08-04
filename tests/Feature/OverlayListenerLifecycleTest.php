@@ -32,6 +32,7 @@ it('overlay widgets tear down document listeners with createBindSignal', functio
     'datetime-picker' => ['datetime-picker.js'],
     'date-picker' => ['date-picker.js'],
     'command' => ['command.js'],
+    'scroll-area' => ['scroll-area.js'],
 ]);
 
 it('sidebar matchMedia listener uses abort signal', function () {

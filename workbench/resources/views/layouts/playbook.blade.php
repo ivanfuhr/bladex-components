@@ -202,7 +202,7 @@
                     id="playbook-main"
                     tabindex="-1"
                     :container="true"
-                    class="@yield('main_class', '')"
+                    @class([trim($__env->yieldContent('main_class'))])
                 >
                     @yield('content')
                 </x-ui::main>

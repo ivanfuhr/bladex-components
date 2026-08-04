@@ -123,4 +123,36 @@
     .dark .switch:has([aria-invalid="true"]) [data-switch-track] {
         @apply border-red-500;
     }
+
+    /*
+     * Scroll area — native overflow + hidden OS chrome; themed overlay bars are JS-driven.
+     */
+    .scroll-area__viewport {
+        overflow: scroll;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .scroll-area__viewport::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scroll-area__scrollbar[data-orientation='vertical'] .scroll-area__thumb {
+        width: 100%;
+    }
+
+    .scroll-area__scrollbar[data-orientation='horizontal'] .scroll-area__thumb {
+        height: 100%;
+    }
+
+    .scroll-area__scrollbar[data-state='hidden'],
+    .scroll-area__corner[data-state='hidden'] {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .scroll-area__scrollbar[data-state='visible'],
+    .scroll-area__corner[data-state='visible'] {
+        opacity: 1;
+    }
 }

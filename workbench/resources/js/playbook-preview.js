@@ -31,6 +31,7 @@ import '../views/ui/input/input-enhancements.js';
 import '../views/ui/textarea/textarea.js';
 import '../../../resources/assets/js/accordion.js';
 import '../../../resources/assets/js/collapsible.js';
+import '../../../resources/assets/js/scroll-area.js';
 import '../../../resources/assets/js/sidebar.js';
 import '../../../resources/assets/js/avatar.js';
 import '../../../resources/assets/js/dropdown-menu.js';

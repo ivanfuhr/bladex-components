@@ -45,7 +45,9 @@ active:bg-zinc-100 active:text-zinc-950 disabled:pointer-events-none disabled:op
 active:cursor-grabbing
 after:absolute after:-inset-2 md:after:hidden
 app-header w-full shrink-0
-app-main flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto p-4
+app-main flex min-h-0 flex-1 flex-col overflow-hidden
+app-main__content flex flex-col gap-4 p-4
+min-h-0 w-full flex-1
 appearance-none
 aria-expanded:border-zinc-300 aria-expanded:ring-2 aria-expanded:ring-zinc-950/10
 aria-selected:font-medium
@@ -254,6 +256,12 @@ left-4 top-4 items-start
 left-auto right-0 top-0 translate-x-0 translate-y-0
 m-0 h-dvh max-h-dvh w-full max-w-md rounded-none
 max-h-[min(300px,50vh)] scroll-py-1 overflow-x-hidden overflow-y-auto p-1
+relative overflow-hidden
+size-full rounded-[inherit] outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-zinc-300/20 dark:focus-visible:ring-offset-zinc-950
+flex touch-none select-none p-0.5 transition-opacity duration-150 ease-out motion-reduce:transition-none data-[state=hidden]:pointer-events-none data-[state=hidden]:opacity-0 data-[state=visible]:opacity-100 h-full w-2.5 absolute top-0 right-0 bottom-0 h-2.5 w-full flex-col absolute right-0 bottom-0 left-0
+relative rounded-full bg-zinc-400/50 transition-colors duration-150 ease-out motion-reduce:transition-none before:absolute before:-inset-1 before:content-[''] hover:bg-zinc-400/80 active:bg-zinc-500 dark:bg-zinc-500/50 dark:hover:bg-zinc-400/70 dark:active:bg-zinc-400
+absolute right-0 bottom-0 size-2.5 bg-transparent transition-opacity duration-150 ease-out motion-reduce:transition-none data-[state=hidden]:opacity-0 data-[state=visible]:opacity-100
+min-w-full
 max-w-lg
 max-w-sm
 min-h-12 py-2

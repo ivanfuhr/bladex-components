@@ -65,6 +65,7 @@ final class PlaybookMediaController
         'stat',
         'chart',
         'pagination',
+        'scroll-area',
     ];
 
     public function __construct(

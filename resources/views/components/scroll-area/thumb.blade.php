@@ -1,0 +1,1 @@
+<div {{ $thumbAttributes }}></div>
