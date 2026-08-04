@@ -1,4 +1,4 @@
-Multi-step wizard indicator ([Filament Wizard](https://filamentphp.com/docs/3.x/forms/layout/wizard), [shadcn community steppers](https://github.com/francozeta/stepper)). Horizontal or vertical, with complete / current / upcoming states. `stencil:add stepper` copies `stepper.js`.
+Multi-step wizard indicator ([Filament Wizard](https://filamentphp.com/docs/3.x/forms/layout/wizard), [shadcn community steppers](https://github.com/francozeta/stepper)). Horizontal or vertical, with complete / current / upcoming states. Included in `@stencilScripts`.
 
 ```blade
 <x-ui::stepper default-value="account">

@@ -1,4 +1,4 @@
-Composable SVG charts with zero chart-library dependencies ([Flux chart](https://fluxui.dev/components/chart), [shadcn chart tokens](https://ui.shadcn.com/docs/components/chart)). Compose `chart.svg` with `line`, `area`, `bar`, `point`, `axis`, `cursor`, `tooltip`, `legend`, and `summary`. Reference series colors with `var(--chart-1)` through `var(--chart-5)` from owned `stencil.css`. `stencil:add chart` copies `chart.js`.
+Composable SVG charts with zero chart-library dependencies ([Flux chart](https://fluxui.dev/components/chart), [shadcn chart tokens](https://ui.shadcn.com/docs/components/chart)). Compose `chart.svg` with `line`, `area`, `bar`, `point`, `axis`, `cursor`, `tooltip`, `legend`, and `summary`. Reference series colors with `var(--chart-1)` through `var(--chart-5)` from package `stencil.css`. Included in `@stencilScripts`.
 
 ```blade
 <x-ui::chart :value="$data" class="aspect-[3/1]">

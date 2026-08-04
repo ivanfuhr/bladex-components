@@ -1,4 +1,4 @@
-Scrollable time list with optional seconds and clear. `stencil:add time-picker` copies `time-picker.js`.
+Scrollable time list with optional seconds and clear. Included in `@stencilScripts`.
 
 ```blade
 <x-ui::time-picker name="starts_at" value="09:15" clearable />

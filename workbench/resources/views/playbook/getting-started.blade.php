@@ -105,9 +105,9 @@ composer require ivanfuhr/stencil
             <x-ui::heading :level="2" id="browse-heading" class="text-lg!">Browse components</x-ui::heading>
             <x-ui::text variant="subtle">
                 Each component page includes usage examples, a live playground, and generated Blade snippets.
-                Interactive widgets list their
-                <x-ui::code-block inline language="text" code="stencil:add" />
-                install command when a JavaScript module is required.
+                Interactive widgets are powered by
+                <x-ui::code-block inline language="blade" code="@@stencilScripts" />
+                in your layout — no per-component JavaScript install step.
             </x-ui::text>
             <div class="flex flex-wrap gap-2">
                 <x-ui::button href="{{ route('playbook.index') }}" variant="primary">Open catalog</x-ui::button>

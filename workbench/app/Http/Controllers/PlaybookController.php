@@ -7,7 +7,6 @@ namespace Workbench\App\Http\Controllers;
 use Illuminate\Contracts\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Workbench\App\Playbook\PlaybookGuide;
-use Workbench\App\Playbook\PlaybookInstallNotes;
 use Workbench\App\Playbook\PlaybookPreviewRenderer;
 use Workbench\App\Playbook\PlaybookRegistry;
 
@@ -55,7 +54,6 @@ final class PlaybookController
             'previousPlaybook' => $siblings['previous'],
             'nextPlaybook' => $siblings['next'],
             'guideHtml' => $this->guide->html($component),
-            'installCommand' => PlaybookInstallNotes::for($component),
         ]);
     }
 }

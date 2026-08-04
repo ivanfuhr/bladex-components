@@ -1,4 +1,4 @@
-Single or multiple selection among toggle items ([shadcn Toggle Group](https://ui.shadcn.com/docs/components/toggle-group), Flux segmented / buttons radio & checkbox groups). `type="single"` uses `role="radiogroup"`; `type="multiple"` uses `role="group"` with `aria-pressed`. Pass `default-value` for the initial selection (string, or array for `multiple`). `spacing="0"` (default) connects items; use `spacing="2"` for a gap. `stencil:add toggle-group` also installs `toggle` and copies `toggle-group.js`.
+Single or multiple selection among toggle items ([shadcn Toggle Group](https://ui.shadcn.com/docs/components/toggle-group), Flux segmented / buttons radio & checkbox groups). `type="single"` uses `role="radiogroup"`; `type="multiple"` uses `role="group"` with `aria-pressed`. Pass `default-value` for the initial selection (string, or array for `multiple`). `spacing="0"` (default) connects items; use `spacing="2"` for a gap. Included in `@stencilScripts`.
 
 ```blade
 <x-ui::toggle-group type="single" variant="outline" default-value="bold" aria-label="Text style">

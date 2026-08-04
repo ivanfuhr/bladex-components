@@ -1,4 +1,4 @@
-Calendar popover with optional range mode, presets sidebar, manual inputs, and confirmation footer. Subcomponents include `button`, `selected`, `input`, `panel`, `presets`, `manual-inputs`, and `footer`. `stencil:add date-picker` copies `date-picker.js` and `calendar.js`.
+Calendar popover with optional range mode, presets sidebar, manual inputs, and confirmation footer. Subcomponents include `button`, `selected`, `input`, `panel`, `presets`, `manual-inputs`, and `footer`. Included in `@stencilScripts`.
 
 `withPresets`, `withInputs`, and `withConfirmation` are shortcut conveniences that compose the matching panel parts.
 

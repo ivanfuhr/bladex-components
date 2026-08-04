@@ -1,4 +1,4 @@
-Composition-first repeater for dynamic Laravel array fields. Subcomponents include `item`, `add`, and `remove`. `stencil:add repeater` copies `repeater.js` and patches your Vite entry.
+Composition-first repeater for dynamic Laravel array fields. Subcomponents include `item`, `add`, and `remove`. Included in `@stencilScripts`.
 
 Declare one `repeater.item` row template with `data-repeater-field` on each control. The script clones rows, reindexes `name="members[0][field]"` attributes, and hydrates from `:value` / `old()`. Use `min` / `max` to control row limits. Works inside `field` (inherits `invalid` / Laravel `$errors`).
 

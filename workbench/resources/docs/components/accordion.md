@@ -1,4 +1,4 @@
-Accessible vertically stacked disclosures ([shadcn Accordion](https://ui.shadcn.com/docs/components/accordion), [Flux accordion](https://fluxui.dev/components/accordion)). Subcomponents include `item`, `trigger`, and `content`. `stencil:add accordion` copies `accordion.js` and patches your Vite entry.
+Accessible vertically stacked disclosures ([shadcn Accordion](https://ui.shadcn.com/docs/components/accordion), [Flux accordion](https://fluxui.dev/components/accordion)). Subcomponents include `item`, `trigger`, and `content`. Included in `@stencilScripts`.
 
 ```blade
 <x-ui::accordion exclusive transition>

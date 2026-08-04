@@ -1,4 +1,4 @@
-Accessible filterable combobox / autocomplete (WAI-ARIA combobox + listbox). Subcomponents include `input`, `content`, `empty`, `group`, `label`, `item`, and `separator`. `stencil:add combobox` copies `combobox.js` and patches your Vite entry. Single-select for now; typeahead filters options client-side and shows the empty state when nothing matches.
+Accessible filterable combobox / autocomplete (WAI-ARIA combobox + listbox). Subcomponents include `input`, `content`, `empty`, `group`, `label`, `item`, and `separator`. Included in `@stencilScripts`. Single-select for now; typeahead filters options client-side and shows the empty state when nothing matches.
 
 Default `shortcut` wraps items with `combobox.input`, `combobox.content`, and `combobox.empty`. Set `:shortcut="false"` for full composition. Works inside `field` (inherits `invalid` / Laravel `$errors`).
 

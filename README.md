@@ -115,7 +115,7 @@ From there you can browse **Getting started**, search the full catalog (⌘K), a
 | **Display** | Avatar, Card, Grid, Stat, Chart, Table, Scroll Area, Separator, Icons |
 | **Date & time** | Calendar, Date Picker, Time Picker, Datetime Picker |
 
-Each page documents install commands (`stencil:add …`) when a JavaScript module is required.
+Interactive components work with `@stencilScripts` in your layout — no per-component JavaScript install step.
 
 <br>
 

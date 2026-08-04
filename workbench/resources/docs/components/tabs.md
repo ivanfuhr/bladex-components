@@ -1,4 +1,4 @@
-Tabbed panels ([shadcn Tabs](https://ui.shadcn.com/docs/components/tabs), [Flux tabs](https://fluxui.dev/components/tabs)). Variants: `default`, `segmented`, `pills`, `line`. `stencil:add tabs` copies `tabs.js`.
+Tabbed panels ([shadcn Tabs](https://ui.shadcn.com/docs/components/tabs), [Flux tabs](https://fluxui.dev/components/tabs)). Variants: `default`, `segmented`, `pills`, `line`. Included in `@stencilScripts`.
 
 ```blade
 <x-ui::tabs default-value="account">

@@ -1,4 +1,4 @@
-Accessible command palette ([shadcn Command](https://ui.shadcn.com/docs/components/command) / [cmdk](https://cmdk.paco.me), [Flux command](https://fluxui.dev/components/command)). Subcomponents include `input`, `list`, `empty`, `group`, `item`, `shortcut`, `separator`, and `dialog`. `stencil:add command` copies `command.js` (and pulls `dialog` via registry dependencies) and patches your Vite entry.
+Accessible command palette ([shadcn Command](https://ui.shadcn.com/docs/components/command) / [cmdk](https://cmdk.paco.me), [Flux command](https://fluxui.dev/components/command)). Subcomponents include `input`, `list`, `empty`, `group`, `item`, `shortcut`, `separator`, and `dialog`. Included in `@stencilScripts`.
 
 Default `shortcut` wraps items with `command.input`, `command.list`, and `command.empty`. Set `:shortcut="false"` for full composition. Use `command.dialog` for a ⌘K-style modal palette (`shortcut="meta.k"` listens on the document; pair with `dialog.trigger` using the same `name`).
 

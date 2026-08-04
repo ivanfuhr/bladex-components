@@ -1,4 +1,4 @@
-Accessible one-time password / PIN input with labeled slots, paste support, and arrow/backspace navigation. Subcomponents include `group`, `slot`, and `separator`. `stencil:add input-otp` copies `input-otp.js` and patches your Vite entry. A hidden input carries the combined value for form submit (`name`).
+Accessible one-time password / PIN input with labeled slots, paste support, and arrow/backspace navigation. Subcomponents include `group`, `slot`, and `separator`. Included in `@stencilScripts`. A hidden input carries the combined value for form submit (`name`).
 
 Default `shortcut` renders slots for `length` (default `6`). Even lengths ≥ 4 include a middle separator unless you set `:separated="false"`. Use `mode="numeric"` (default) or `mode="alphanumeric"`. Set `:shortcut="false"` for full composition. Works inside `field` (inherits `invalid` / Laravel `$errors`).
 

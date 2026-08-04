@@ -54,9 +54,6 @@
                 </nav>
             </div>
 
-            @if ($installCommand)
-                @include('workbench::playbook.partials.install-callout', ['command' => $installCommand])
-            @endif
         </header>
 
         <div class="grid gap-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] xl:items-start xl:gap-12">

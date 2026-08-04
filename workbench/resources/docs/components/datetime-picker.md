@@ -1,4 +1,4 @@
-Date + time selection with calendar and scrollable time list. Subcomponents include `panel`, `time-list`, and `footer`. Reuses `date-picker.button` for the trigger. `stencil:add datetime-picker` copies `datetime-picker.js`.
+Date + time selection with calendar and scrollable time list. Subcomponents include `panel`, `time-list`, and `footer`. Reuses `date-picker.button` for the trigger. Included in `@stencilScripts`.
 
 ```blade
 <x-ui::datetime-picker name="scheduled_at" value="2026-07-29T14:30:00+00:00" />

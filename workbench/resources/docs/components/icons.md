@@ -1,4 +1,4 @@
-On-demand [Lucide](https://lucide.dev/icons/) icons — `outline` (16px), `mini` (20px), and `micro` (12px) variants. The built-in loading spinner ships with `stencil:add icon`.
+On-demand [Lucide](https://lucide.dev/icons/) icons — `outline` (16px), `mini` (20px), and `micro` (12px) variants. The built-in loading spinner ships with the package. Use `php artisan stencil:icon` to publish additional Lucide icons.
 
 ```bash
 php artisan stencil:icon search

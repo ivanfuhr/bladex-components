@@ -1,4 +1,4 @@
-Standalone month grid for single-day or range selection. `stencil:add calendar` copies `calendar.js`.
+Standalone month grid for single-day or range selection. Included in `@stencilScripts`.
 
 ```blade
 <x-ui::calendar value="2026-09-18" with-today />

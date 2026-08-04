@@ -1,4 +1,4 @@
-Accessible action menu ([shadcn Dropdown Menu](https://ui.shadcn.com/docs/components/dropdown-menu), [Flux dropdown](https://fluxui.dev/components/dropdown)). `stencil:add dropdown-menu` copies `dropdown-menu.js`.
+Accessible action menu ([shadcn Dropdown Menu](https://ui.shadcn.com/docs/components/dropdown-menu), [Flux dropdown](https://fluxui.dev/components/dropdown)). Included in `@stencilScripts`.
 
 ```blade
 <x-ui::dropdown-menu align="end">

@@ -18,6 +18,6 @@ Variants: `outline`, `primary`, `secondary`, `danger`, `ghost`, `subtle`, `link`
 </x-ui::button>
 ```
 
-The square button uses the built-in loading icon from `stencil:add icon`.
+The square button uses the built-in loading icon from. Included in `@stencilScripts`.
 
 <br>

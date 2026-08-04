@@ -1,4 +1,4 @@
-Hover/focus hint ([shadcn Tooltip](https://ui.shadcn.com/docs/components/tooltip)). `stencil:add tooltip` copies `tooltip.js`.
+Hover/focus hint ([shadcn Tooltip](https://ui.shadcn.com/docs/components/tooltip)). Included in `@stencilScripts`.
 
 ```blade
 <x-ui::tooltip side="top">

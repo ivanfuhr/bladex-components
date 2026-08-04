@@ -1,4 +1,4 @@
-Two-state pressed button with `aria-pressed` ([shadcn Toggle](https://ui.shadcn.com/docs/components/toggle)). Variants: `default`, `outline`. Sizes: `sm`, `default`, `lg`. `stencil:add toggle` copies `toggle.js` and patches your Vite entry.
+Two-state pressed button with `aria-pressed` ([shadcn Toggle](https://ui.shadcn.com/docs/components/toggle)). Variants: `default`, `outline`. Sizes: `sm`, `default`, `lg`. Included in `@stencilScripts`.
 
 ```blade
 <x-ui::toggle aria-label="Toggle italic">Italic</x-ui::toggle>
