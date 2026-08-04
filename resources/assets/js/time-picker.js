@@ -2,7 +2,11 @@
  * Stencil — time picker (vanilla JS).
  */
 
-import { ensurePanelPortaled, positionAnchoredPanel, restorePanelFromPortal } from './shared/anchored-panel.js';
+import {
+    ensurePanelPortaled,
+    positionAnchoredPanel,
+    restorePanelFromPortal,
+} from './shared/anchored-panel.js';
 import { formatTimeLabel } from './shared/date-timezone.js';
 import { createBindSignal } from './shared/lifecycle.js';
 import { acquireBodyScrollLock } from './shared/scroll-lock.js';
@@ -74,9 +78,11 @@ function bindTimePicker(root) {
         const button = document.createElement('button');
         button.type = 'button';
         button.className =
-            'flex w-full rounded-lg px-2 py-1.5 text-left text-sm tabular-nums hover:bg-zinc-100 dark:hover:bg-zinc-800';
+            'flex w-full rounded-lg px-2 py-1.5 text-left text-sm tabular-nums hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20';
         button.dataset.timePickerOption = time;
-        button.textContent = formatTimeLabel(time, locale, timeZone, withSeconds);
+        const label = formatTimeLabel(time, locale, timeZone, withSeconds);
+        button.textContent = label;
+        button.setAttribute('aria-label', label);
         button.setAttribute('role', 'option');
         button.tabIndex = -1;
         panel.appendChild(button);

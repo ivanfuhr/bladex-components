@@ -12,15 +12,13 @@ const initialized = new WeakSet();
  * @param {ParentNode} root
  */
 export function initSelects(root = document) {
-    document
-        .querySelectorAll('[data-select-content][data-select-portaled]')
-        .forEach((content) => {
-            if (!(content instanceof HTMLElement) || content.closest('[data-select]')) {
-                return;
-            }
+    document.querySelectorAll('[data-select-content][data-select-portaled]').forEach((content) => {
+        if (!(content instanceof HTMLElement) || content.closest('[data-select]')) {
+            return;
+        }
 
-            content.remove();
-        });
+        content.remove();
+    });
 
     root.querySelectorAll(SELECT_SELECTOR).forEach((element) => {
         if (!(element instanceof HTMLElement)) {
@@ -291,6 +289,7 @@ function bindSelect(root) {
         options().forEach((el) => {
             el.removeAttribute('data-highlighted');
         });
+        content.removeAttribute('aria-activedescendant');
     }
 
     function highlightActive() {
@@ -299,6 +298,9 @@ function bindSelect(root) {
         const el = list[activeIndex];
         if (el) {
             el.setAttribute('data-highlighted', 'true');
+            if (el.id) {
+                content.setAttribute('aria-activedescendant', el.id);
+            }
             el.scrollIntoView({ block: 'nearest' });
         }
     }

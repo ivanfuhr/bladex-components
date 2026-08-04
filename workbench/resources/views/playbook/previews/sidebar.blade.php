@@ -8,7 +8,7 @@
     <x-ui::sidebar.provider
         :default-open="$defaultOpen"
         storage-key="stencil-playbook-sidebar"
-        class="min-h-full h-full"
+        class="h-full min-h-full"
     >
         <x-ui::sidebar :collapsible="$collapsible" :variant="$variant">
             <x-ui::sidebar.header class="border-b border-zinc-200 p-0 dark:border-zinc-800">
@@ -63,9 +63,7 @@
                                         </x-ui::sidebar.menu-sub-button>
                                     </x-ui::sidebar.menu-sub-item>
                                     <x-ui::sidebar.menu-sub-item>
-                                        <x-ui::sidebar.menu-sub-button href="#">
-                                            Team
-                                        </x-ui::sidebar.menu-sub-button>
+                                        <x-ui::sidebar.menu-sub-button href="#"> Team </x-ui::sidebar.menu-sub-button>
                                     </x-ui::sidebar.menu-sub-item>
                                 </x-ui::sidebar.menu-sub>
                             </x-ui::sidebar.menu-item>
@@ -132,7 +130,8 @@
                     Main content sits in <code class="font-mono text-xs">sidebar.inset</code> with
                     <code class="font-mono text-xs">header</code> and <code class="font-mono text-xs">main</code>.
                     Toggle with the trigger, rail edge, or
-                    <kbd class="rounded border border-zinc-200 px-1 font-mono text-[10px] dark:border-zinc-700">⌘B</kbd>.
+                    <kbd class="rounded border border-zinc-200 px-1 font-mono text-[10px] dark:border-zinc-700">⌘B</kbd
+                    >.
                 </x-ui::text>
             </x-ui::main>
         </x-ui::sidebar.inset>

@@ -40,5 +40,7 @@ it('maps heading levels to the standardized size scale', function (int $level, s
 it('applies subtle variant classes', function (): void {
     $html = Blade::render('<x-ui::heading variant="subtle">Muted</x-ui::heading>');
 
-    expect($html)->toContain('text-zinc-500');
+    expect($html)
+        ->toContain('text-zinc-500')
+        ->not->toContain('text-zinc-950');
 });

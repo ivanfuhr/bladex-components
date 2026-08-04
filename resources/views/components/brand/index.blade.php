@@ -6,7 +6,7 @@
     @include('stencil::components.brand.logo-media', [
         'logo' => $logo,
         'logoDark' => $resolvedLogoDark,
-        'alt' => $alt,
+        'alt' => $resolvedAlt,
         'logoWrapperClasses' => $logoWrapperClasses,
         'imageClasses' => $imageClasses,
     ])

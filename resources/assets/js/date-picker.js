@@ -109,6 +109,7 @@ function bindDatePicker(root) {
 
         if (trigger instanceof HTMLElement) {
             trigger.setAttribute('aria-expanded', 'true');
+            root.querySelector('[data-date-picker-input]')?.setAttribute('aria-expanded', 'true');
             ensurePanelPortaled(panel, root, portalMarker);
             positionAnchoredPanel(panel, trigger, { fitContent: true });
         }
@@ -136,6 +137,8 @@ function bindDatePicker(root) {
             trigger.setAttribute('aria-expanded', 'false');
             trigger.focus();
         }
+
+        root.querySelector('[data-date-picker-input]')?.setAttribute('aria-expanded', 'false');
     }
 
     function revertSelection() {

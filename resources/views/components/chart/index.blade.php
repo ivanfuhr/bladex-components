@@ -9,7 +9,7 @@
             'tabindex' => '0',
         ])
     }}
-    @if (filled($label)) aria-label="{{ $label }}" @endif
+    aria-label="{{ filled($label) ? $label : 'Chart' }}"
     @if (filled($encodedValue)) data-chart-value="{{ $encodedValue }}" @endif
 >
     <div class="sr-only" aria-live="polite" aria-atomic="true" data-chart-announcer></div>

@@ -190,6 +190,7 @@ it('nests the character counter display inside the enhanced input root', functio
     foreach ($root->getElementsByTagName('div') as $div) {
         if ($div->hasAttribute('data-input-counter-display')) {
             $counter = $div;
+
             break;
         }
     }

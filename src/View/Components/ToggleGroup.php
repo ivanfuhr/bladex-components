@@ -39,7 +39,7 @@ final class ToggleGroup extends StencilComponent
         $isDisabled = $this->disabled;
 
         $initialValue = match (true) {
-            is_array($this->defaultValue) => implode(',', array_map(static fn ($item): string => (string) $item, $this->defaultValue)),
+            is_array($this->defaultValue) => implode(',', array_map(static fn (mixed $item): string => (string) $item, $this->defaultValue)),
             filled($this->defaultValue) => (string) $this->defaultValue,
             default => '',
         };
@@ -71,6 +71,7 @@ final class ToggleGroup extends StencilComponent
 
         return [
             'rootAttributes' => $rootAttributes,
+            'isDisabled' => $isDisabled,
         ];
     }
 }

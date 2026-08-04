@@ -24,6 +24,14 @@ function toastRole(variant) {
 }
 
 /**
+ * @param {string | undefined} variant
+ * @returns {'assertive' | 'polite'}
+ */
+function toastLiveMode(variant) {
+    return isAssertiveVariant(variant) ? 'assertive' : 'polite';
+}
+
+/**
  * @param {ParentNode} root
  */
 export function initToasts(root = document) {
@@ -56,6 +64,8 @@ export function toast(options = {}) {
     el.dataset.duration = String(options.duration ?? 4000);
     el.dataset.state = 'open';
     el.setAttribute('role', toastRole(variant));
+    el.setAttribute('aria-live', toastLiveMode(variant));
+    el.setAttribute('aria-atomic', 'true');
 
     const body = document.createElement('div');
     body.className = 'space-y-1 pr-6';
@@ -70,7 +80,7 @@ export function toast(options = {}) {
 
     if (options.description) {
         const description = document.createElement('p');
-        description.className = 'toast__description text-sm opacity-80';
+        description.className = 'toast__description text-sm';
         description.dataset.toastDescription = 'true';
         description.textContent = options.description;
         body.appendChild(description);

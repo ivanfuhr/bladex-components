@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Blade;
 
-it('renders an alert with title and description', function () {
-    $html = Blade::render(<<<'BLADE'
-        <x-ui::alert variant="warning" title="Heads up">
-            <x-ui::alert.description>Check your billing details.</x-ui::alert.description>
-        </x-ui::alert>
-    BLADE);
+it('uses status role and polite live region for info alerts', function () {
+    $html = Blade::render('<x-ui::alert variant="info" title="Tip">Note</x-ui::alert>');
+
+    expect($html)
+        ->toContain('role="status"')
+        ->toContain('aria-live="polite"')
+        ->toContain('aria-atomic="true"')
+        ->not->toContain('role="alert"');
+});
+
+it('uses alert role and assertive live region for danger alerts', function () {
+    $html = Blade::render('<x-ui::alert variant="danger" title="Failed">Error</x-ui::alert>');
 
     expect($html)
         ->toContain('role="alert"')
-        ->toContain('data-alert')
-        ->toContain('data-variant="warning"')
-        ->toContain('Heads up')
-        ->toContain('Check your billing details.');
+        ->toContain('aria-live="assertive"')
+        ->toContain('aria-atomic="true"');
 });

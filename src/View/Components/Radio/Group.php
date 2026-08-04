@@ -38,10 +38,6 @@ final class Group extends StencilComponent
                 'data-radio-group' => true,
             ]);
 
-        if ($isInvalid) {
-            $groupAttributes = $groupAttributes->merge(['aria-invalid' => 'true']);
-        }
-
         return [
             'groupAttributes' => $groupAttributes,
         ];

@@ -3,14 +3,17 @@
         'progress',
         'relative w-full overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800',
         $height,
-    ])->merge([
+    ])->merge(array_filter([
         'role' => 'progressbar',
+        'aria-label' => $label,
         'aria-valuemin' => '0',
         'aria-valuemax' => (string) $resolvedMax,
         'aria-valuenow' => $indeterminate ? null : (string) $resolvedValue,
+        'aria-valuetext' => $valueText,
+        'aria-busy' => $indeterminate ? 'true' : null,
         'data-progress' => true,
         'data-indeterminate' => $indeterminate ? 'true' : null,
-    ])
+    ]))
 }}>
     <div
         @class([

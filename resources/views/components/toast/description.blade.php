@@ -1,7 +1,7 @@
 <p {{
     $attributes->class([
         'toast__description',
-        'text-sm opacity-80',
+        'text-sm',
     ])->merge([
         'data-toast-description' => true,
     ])

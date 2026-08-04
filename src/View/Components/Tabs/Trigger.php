@@ -35,9 +35,9 @@ final class Trigger extends StencilComponent
         $panelId = filled($tabsId) ? $tabsId.'-panel-'.$this->value : null;
 
         $triggerClasses = match ($variant) {
-            'pills' => 'rounded-full px-3 py-1.5 text-sm font-medium data-[state=active]:bg-zinc-900 data-[state=active]:text-white dark:data-[state=active]:bg-zinc-100 dark:data-[state=active]:text-zinc-900',
-            'line' => 'border-b-2 border-transparent px-1 py-2 text-sm font-medium data-[state=active]:border-zinc-900 dark:data-[state=active]:border-zinc-100',
-            default => 'rounded-md px-3 py-1.5 text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-zinc-950 data-[state=active]:shadow-sm dark:data-[state=active]:bg-zinc-950 dark:data-[state=active]:text-zinc-50',
+            'pills' => 'min-h-11 rounded-full px-3 py-2 text-sm font-medium data-[state=active]:bg-zinc-900 data-[state=active]:text-white dark:data-[state=active]:bg-zinc-100 dark:data-[state=active]:text-zinc-900',
+            'line' => 'min-h-11 border-b-2 border-transparent px-1 py-2 text-sm font-medium data-[state=active]:border-zinc-900 dark:data-[state=active]:border-zinc-100',
+            default => 'min-h-11 rounded-md px-3 py-2 text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-zinc-950 data-[state=active]:shadow-sm dark:data-[state=active]:bg-zinc-950 dark:data-[state=active]:text-zinc-50',
         };
 
         return [

@@ -40,7 +40,7 @@ final class Range extends StencilComponent
 
         if (is_array($value)) {
             $values = array_map(
-                static fn ($item): float => $clamp((float) $item),
+                static fn (mixed $item): float => $clamp((float) $item),
                 array_values(array_slice($value, 0, $isRange ? 2 : 1)),
             );
         } elseif (filled($value) || $value === 0 || $value === 0.0 || $value === '0') {

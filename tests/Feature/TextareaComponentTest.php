@@ -76,6 +76,7 @@ it('nests the character counter display inside the textarea root', function () {
     foreach ($root->getElementsByTagName('div') as $div) {
         if ($div->hasAttribute('data-textarea-counter-display')) {
             $counter = $div;
+
             break;
         }
     }

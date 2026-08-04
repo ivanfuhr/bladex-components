@@ -26,7 +26,7 @@ abstract class StencilComponent extends Component
     /**
      * @return array<string, mixed>
      */
-    public function data()
+    public function data(): array
     {
         if ($this->attributes === null) {
             $this->attributes = $this->newAttributeBag();

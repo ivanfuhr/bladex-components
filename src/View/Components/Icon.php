@@ -17,7 +17,7 @@ final class Icon extends StencilComponent
     /**
      * @param  array<string, mixed>  $data
      */
-    public static function resolve($data)
+    public static function resolve($data): static
     {
         if (($data['name'] ?? '') === '' && isset($data['attributes']) && $data['attributes'] instanceof ComponentAttributeBag) {
             $data['name'] = (string) $data['attributes']->get('name', '');

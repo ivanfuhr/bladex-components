@@ -7,6 +7,8 @@
     data-datetime-picker-panel
     hidden
     aria-hidden="true"
+    tabindex="-1"
+    aria-label="{{ $panelLabel }}"
 >
     {{ $slot }}
 </div>

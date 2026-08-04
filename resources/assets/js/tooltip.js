@@ -45,8 +45,12 @@ function bindTooltip(root) {
         content.id = `tooltip-${Math.random().toString(36).slice(2, 10)}`;
     }
 
-    const control = trigger.querySelector('button, a, [tabindex]') ?? trigger;
-    control.setAttribute('aria-describedby', content.id);
+    const syncDescribedBy = () => {
+        const control = resolveControl(trigger);
+        control.setAttribute('aria-describedby', content.id);
+    };
+
+    syncDescribedBy();
 
     const setOpen = (next) => {
         open = next;
@@ -87,14 +91,24 @@ function bindTooltip(root) {
 
     trigger.addEventListener('pointerenter', scheduleOpen);
     trigger.addEventListener('pointerleave', close);
-    control.addEventListener('focus', () => {
+    trigger.addEventListener('focusin', () => {
+        syncDescribedBy();
+
         if (isSidebarMenuTooltipDisabled(root)) {
             return;
         }
 
         setOpen(true);
     });
-    control.addEventListener('blur', close);
+    trigger.addEventListener('focusout', (event) => {
+        const next = event.relatedTarget;
+
+        if (next instanceof Node && root.contains(next)) {
+            return;
+        }
+
+        close();
+    });
     root.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
             close();
@@ -103,12 +117,22 @@ function bindTooltip(root) {
 }
 
 /**
+ * @param {HTMLElement} trigger
+ * @returns {HTMLElement}
+ */
+function resolveControl(trigger) {
+    const control = trigger.querySelector('button, a, [tabindex]');
+
+    return control instanceof HTMLElement ? control : trigger;
+}
+
+/**
  * Sidebar menu tooltips only appear in icon-collapsed desktop mode.
  *
  * @param {HTMLElement} root
  */
 function isSidebarMenuTooltipDisabled(root) {
-    if (! root.hasAttribute('data-sidebar-menu-tooltip')) {
+    if (!root.hasAttribute('data-sidebar-menu-tooltip')) {
         return false;
     }
 

@@ -1,4 +1,6 @@
 <div {{ $rootAttributes }}>
+    <div class="sr-only" aria-live="polite" aria-atomic="true" data-file-upload-status></div>
+
     <input {{ $inputAttributes }} />
 
     @if ($shortcut)

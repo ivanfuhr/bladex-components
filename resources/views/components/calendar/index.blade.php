@@ -31,7 +31,7 @@
             @if ($withToday)
                 <button
                     type="button"
-                    class="inline-flex size-8 items-center justify-center rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                    class="inline-flex size-8 items-center justify-center rounded-lg text-zinc-500 hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20"
                     data-calendar-today
                     aria-label="{{ __('Today') }}"
                 >
@@ -40,7 +40,7 @@
             @endif
             <button
                 type="button"
-                class="inline-flex size-8 items-center justify-center rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                class="inline-flex size-8 items-center justify-center rounded-lg text-zinc-500 hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20"
                 data-calendar-prev
                 aria-label="{{ __('Previous month') }}"
             >
@@ -48,7 +48,7 @@
             </button>
             <button
                 type="button"
-                class="inline-flex size-8 items-center justify-center rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                class="inline-flex size-8 items-center justify-center rounded-lg text-zinc-500 hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20"
                 data-calendar-next
                 aria-label="{{ __('Next month') }}"
             >

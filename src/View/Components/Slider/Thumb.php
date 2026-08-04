@@ -126,6 +126,8 @@ final class Thumb extends StencilComponent
             $thumbAttributes = $thumbAttributes->merge(['id' => $thumbId]);
         }
 
+        $thumbAttributes = stencil_merge_described_by($thumbAttributes, $this->aware('describedBy'));
+
         return [
             'thumbAttributes' => $thumbAttributes,
         ];

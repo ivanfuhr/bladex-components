@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ivanfuhr\Stencil\View\Components;
 
 use Illuminate\Support\Str;
+use Illuminate\View\ComponentSlot;
 
 final class SwitchControl extends StencilComponent
 {
@@ -15,6 +16,7 @@ final class SwitchControl extends StencilComponent
         public bool $invalid = false,
         public mixed $size = null,
         public mixed $controlId = null,
+        public mixed $label = null,
     ) {}
 
     protected function stencilView(): string
@@ -29,7 +31,7 @@ final class SwitchControl extends StencilComponent
     protected function resolveViewData(array $data = []): array
     {
         $fieldInvalid = (bool) ($data['fieldInvalid'] ?? false);
-        $isInvalid = $this->invalid || $fieldInvalid;
+        $isInvalid = $this->invalid || $fieldInvalid || stencil_field_has_errors($this->name);
 
         $controlId = $this->attributes->get('id')
             ?? $this->controlId
@@ -72,12 +74,18 @@ final class SwitchControl extends StencilComponent
             $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);
         }
 
+        $controlAttributes = stencil_merge_described_by($controlAttributes, $this->aware('describedBy'));
+
+        $slot = $data['slot'] ?? null;
+        $hasSlotLabel = $slot instanceof ComponentSlot ? ! $slot->isEmpty() : filled($slot);
+
         return [
             'rootClasses' => $rootClasses,
             'trackClasses' => $trackClasses,
             'thumbClasses' => $thumbClasses,
             'wrapperClass' => $wrapperClass,
             'controlAttributes' => $controlAttributes,
+            'hasSlotLabel' => $hasSlotLabel,
         ];
     }
 }

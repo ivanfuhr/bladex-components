@@ -87,18 +87,18 @@ final class ButtonClassMap
 
         if ($iconOnly || $square) {
             return match ($size) {
-                'xs' => 'size-7 [&_[data-icon]]:size-3.5',
-                'sm' => 'size-8 [&_[data-icon]]:size-3.5',
-                'lg' => 'size-10 [&_[data-icon]]:size-5',
-                default => 'size-9 [&_[data-icon]]:size-4',
+                'xs' => 'size-8 [&_[data-icon]]:size-3.5',
+                'sm' => 'size-10 [&_[data-icon]]:size-3.5',
+                'lg' => 'size-12 [&_[data-icon]]:size-5',
+                default => 'size-11 [&_[data-icon]]:size-4',
             };
         }
 
         $height = match ($size) {
-            'xs' => 'h-7 px-2.5',
-            'sm' => 'h-8 px-3',
-            'lg' => 'h-10 px-6',
-            default => 'h-9 px-4',
+            'xs' => 'h-8 px-2.5',
+            'sm' => 'h-10 px-3',
+            'lg' => 'h-12 px-6',
+            default => 'h-11 px-4',
         };
 
         $iconSize = match ($size) {

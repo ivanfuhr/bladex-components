@@ -86,6 +86,7 @@ function bindPopover(root) {
         if (open) {
             releaseScrollLock?.();
             releaseScrollLock = acquireBodyScrollLock(content, { signal });
+            ensureAriaLabelledBy(content);
             positionContent(content, trigger, root);
             focusFirstIn(content);
         } else {
@@ -129,7 +130,9 @@ function bindPopover(root) {
         'click',
         (event) => {
             const closer =
-                event.target instanceof Element ? event.target.closest('[data-popover-close]') : null;
+                event.target instanceof Element
+                    ? event.target.closest('[data-popover-close]')
+                    : null;
 
             if (closer instanceof HTMLElement && content.contains(closer)) {
                 setOpen(false);
@@ -209,6 +212,29 @@ function bindPopover(root) {
         releaseScrollLock = acquireBodyScrollLock(content, { signal });
         positionContent(content, trigger, root);
     }
+}
+
+/**
+ * Wire dialog role popovers to their first visible heading when authors omit aria-labelledby.
+ *
+ * @param {HTMLElement} content
+ */
+function ensureAriaLabelledBy(content) {
+    if (content.getAttribute('aria-labelledby')) {
+        return;
+    }
+
+    const heading = content.querySelector('h1, h2, h3, h4, h5, h6, [data-popover-title]');
+
+    if (!(heading instanceof HTMLElement)) {
+        return;
+    }
+
+    if (!heading.id) {
+        heading.id = `popover-title-${Math.random().toString(36).slice(2, 10)}`;
+    }
+
+    content.setAttribute('aria-labelledby', heading.id);
 }
 
 /**

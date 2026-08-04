@@ -106,6 +106,8 @@ final class Textarea extends StencilComponent
             $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);
         }
 
+        $controlAttributes = stencil_merge_described_by($controlAttributes, $this->aware('describedBy'));
+
         return [
             'wrapperAttributes' => $wrapperAttributes,
             'frameAttributes' => $frameAttributes,

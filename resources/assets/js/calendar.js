@@ -152,9 +152,27 @@ export function bindCalendar(root) {
         }
     }
 
+    function findSelectableDay(from, stepDays) {
+        let day = from;
+
+        for (let i = 0; i < 62; i++) {
+            day = day.incrementDays(stepDays);
+
+            if (isSelectable(day, config, state.today)) {
+                return day;
+            }
+        }
+
+        return from;
+    }
+
     function moveFocusTo(day) {
-        state.selection.focus = day;
-        ensureFocusVisible(day);
+        const target = isSelectable(day, config, state.today)
+            ? day
+            : findSelectableDay(day, day.isBefore(focusedDay()) ? -1 : 1);
+
+        state.selection.focus = target;
+        ensureFocusVisible(target);
         render();
         focusActiveDayButton();
     }
@@ -269,23 +287,35 @@ export function bindCalendar(root) {
         let next = base;
 
         if (event.key === 'ArrowLeft') {
-            next = base.incrementDays(-1);
+            next = findSelectableDay(base, -1);
         } else if (event.key === 'ArrowRight') {
-            next = base.incrementDays(1);
+            next = findSelectableDay(base, 1);
         } else if (event.key === 'ArrowUp') {
-            next = base.incrementDays(-7);
+            next = findSelectableDay(base, -7);
         } else if (event.key === 'ArrowDown') {
-            next = base.incrementDays(7);
+            next = findSelectableDay(base, 7);
         } else if (event.key === 'Home') {
             const offset = (base.getDayOfWeek() - config.startDay + 7) % 7;
-            next = base.incrementDays(-offset);
+            const weekStart = base.incrementDays(-offset);
+            next = isSelectable(weekStart, config, state.today)
+                ? weekStart
+                : findSelectableDay(weekStart, 1);
         } else if (event.key === 'End') {
             const offset = (base.getDayOfWeek() - config.startDay + 7) % 7;
-            next = base.incrementDays(6 - offset);
+            const weekEnd = base.incrementDays(6 - offset);
+            next = isSelectable(weekEnd, config, state.today)
+                ? weekEnd
+                : findSelectableDay(weekEnd, -1);
         } else if (event.key === 'PageUp') {
-            next = base.addMonths(event.shiftKey ? -12 : -1);
+            const targetMonth = base.addMonths(event.shiftKey ? -12 : -1);
+            next = isSelectable(targetMonth, config, state.today)
+                ? targetMonth
+                : findSelectableDay(targetMonth, -1);
         } else if (event.key === 'PageDown') {
-            next = base.addMonths(event.shiftKey ? 12 : 1);
+            const targetMonth = base.addMonths(event.shiftKey ? 12 : 1);
+            next = isSelectable(targetMonth, config, state.today)
+                ? targetMonth
+                : findSelectableDay(targetMonth, 1);
         }
 
         moveFocusTo(next);
@@ -510,15 +540,25 @@ function buildMonthTable(viewMonth, config, state) {
     grid.style.gridTemplateColumns = 'repeat(7, minmax(0, 1fr))';
     grid.style.gap = '2px';
 
+    const monthTitleText = formatDateValue(viewMonth, config.locale, {
+        month: 'long',
+        year: 'numeric',
+    });
+    grid.setAttribute('aria-label', monthTitleText);
+
     for (let i = 0; i < 7; i++) {
         const header = document.createElement('div');
         header.setAttribute('role', 'columnheader');
         header.className = `flex ${config.sizeClass} items-center justify-center font-medium text-zinc-500`;
         const idx = (i + config.startDay) % 7;
         const date = new Date(2024, 0, 7 + idx);
+        const weekdayLabel = new Intl.DateTimeFormat(config.locale, { weekday: 'long' }).format(
+            date,
+        );
         header.textContent = new Intl.DateTimeFormat(config.locale, { weekday: 'narrow' }).format(
             date,
         );
+        header.setAttribute('aria-label', weekdayLabel);
         grid.appendChild(header);
     }
 
@@ -543,7 +583,7 @@ function buildMonthTable(viewMonth, config, state) {
             const btn = document.createElement('button');
             btn.type = 'button';
             btn.dataset.calendarDay = iso;
-            btn.className = `flex ${config.sizeClass} w-full items-center justify-center rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800`;
+            btn.className = `flex ${config.sizeClass} w-full items-center justify-center rounded-lg hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20`;
             btn.textContent = String(cellDay.getDay());
             btn.setAttribute(
                 'aria-label',

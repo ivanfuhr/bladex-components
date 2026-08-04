@@ -27,7 +27,7 @@ final class Checkbox extends StencilComponent
     protected function resolveViewData(array $data = []): array
     {
         $fieldInvalid = (bool) ($data['fieldInvalid'] ?? false);
-        $isInvalid = $this->invalid || $fieldInvalid;
+        $isInvalid = $this->invalid || $fieldInvalid || stencil_field_has_errors($this->attributes->get('name') ?? $this->name);
 
         $resolvedControlId = $this->attributes->get('id')
             ?? $this->controlId
@@ -68,6 +68,8 @@ final class Checkbox extends StencilComponent
         if ($isInvalid) {
             $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);
         }
+
+        $controlAttributes = stencil_merge_described_by($controlAttributes, $this->aware('describedBy'));
 
         return [
             'fieldInvalid' => $fieldInvalid,

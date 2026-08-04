@@ -54,7 +54,7 @@ final class ColorPicker extends StencilComponent
         $showSwatches = $this->swatches !== false;
         $swatchPalette = match (true) {
             is_array($this->swatches) => collect($this->swatches)
-                ->map(function ($swatch) {
+                ->map(function (mixed $swatch): array {
                     if (is_array($swatch)) {
                         return [
                             'value' => (string) ($swatch[0] ?? $swatch['value'] ?? '#000000'),

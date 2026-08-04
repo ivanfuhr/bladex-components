@@ -85,6 +85,29 @@ it('respects an explicit control-id over the field name', function () {
         ->toContain('id="signup-email"');
 });
 
+it('wires aria-describedby from field description and errors to nested controls', function () {
+    $bag = new MessageBag(['email' => ['Invalid email.']]);
+    $errors = new ViewErrorBag;
+    $errors->put('default', $bag);
+    view()->share('errors', $errors);
+
+    $html = Blade::render(<<<'BLADE'
+        <x-ui::field name="email">
+            <x-ui::field.label>Email</x-ui::field.label>
+            <x-ui::input name="email" type="email" />
+            <x-ui::field.description>We never share your email.</x-ui::field.description>
+            <x-ui::field.errors name="email" />
+        </x-ui::field>
+    BLADE);
+
+    expect($html)
+        ->toContain('aria-describedby="email-description email-errors"')
+        ->toContain('id="email-description"')
+        ->toContain('id="email-errors"')
+        ->toContain('We never share your email.')
+        ->toContain('Invalid email.');
+});
+
 it('renders wildcard field errors for indexed validation keys', function () {
     $bag = new MessageBag([
         'members.0.name' => ['Name is required.'],

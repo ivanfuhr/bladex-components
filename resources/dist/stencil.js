@@ -19,6 +19,35 @@
   }
   function bindAccordion(accordion) {
     syncItemWiring(accordion);
+    const triggers = () => Array.from(accordion.querySelectorAll(TRIGGER_SELECTOR)).filter(
+      (node) => node instanceof HTMLButtonElement && !node.disabled
+    );
+    accordion.addEventListener("keydown", (event) => {
+      var _a5;
+      const trigger = event.target instanceof Element ? event.target.closest(TRIGGER_SELECTOR) : null;
+      if (!(trigger instanceof HTMLButtonElement) || !accordion.contains(trigger)) {
+        return;
+      }
+      const enabled = triggers();
+      const index = enabled.indexOf(trigger);
+      if (index < 0) {
+        return;
+      }
+      let nextIndex = index;
+      if (event.key === "ArrowDown") {
+        nextIndex = index + 1 >= enabled.length ? 0 : index + 1;
+      } else if (event.key === "ArrowUp") {
+        nextIndex = index - 1 < 0 ? enabled.length - 1 : index - 1;
+      } else if (event.key === "Home") {
+        nextIndex = 0;
+      } else if (event.key === "End") {
+        nextIndex = enabled.length - 1;
+      } else {
+        return;
+      }
+      event.preventDefault();
+      (_a5 = enabled[nextIndex]) == null ? void 0 : _a5.focus();
+    });
     accordion.addEventListener("click", (event) => {
       const trigger = event.target instanceof Element ? event.target.closest(TRIGGER_SELECTOR) : null;
       if (!(trigger instanceof HTMLButtonElement) || !accordion.contains(trigger)) {
@@ -526,9 +555,20 @@
         button.focus();
       }
     }
+    function findSelectableDay(from, stepDays) {
+      let day = from;
+      for (let i = 0; i < 62; i++) {
+        day = day.incrementDays(stepDays);
+        if (isSelectable(day, config, state.today)) {
+          return day;
+        }
+      }
+      return from;
+    }
     function moveFocusTo(day) {
-      state.selection.focus = day;
-      ensureFocusVisible(day);
+      const target = isSelectable(day, config, state.today) ? day : findSelectableDay(day, day.isBefore(focusedDay()) ? -1 : 1);
+      state.selection.focus = target;
+      ensureFocusVisible(target);
       render();
       focusActiveDayButton();
     }
@@ -614,23 +654,27 @@
       const base = focusedDay();
       let next = base;
       if (event.key === "ArrowLeft") {
-        next = base.incrementDays(-1);
+        next = findSelectableDay(base, -1);
       } else if (event.key === "ArrowRight") {
-        next = base.incrementDays(1);
+        next = findSelectableDay(base, 1);
       } else if (event.key === "ArrowUp") {
-        next = base.incrementDays(-7);
+        next = findSelectableDay(base, -7);
       } else if (event.key === "ArrowDown") {
-        next = base.incrementDays(7);
+        next = findSelectableDay(base, 7);
       } else if (event.key === "Home") {
         const offset = (base.getDayOfWeek() - config.startDay + 7) % 7;
-        next = base.incrementDays(-offset);
+        const weekStart = base.incrementDays(-offset);
+        next = isSelectable(weekStart, config, state.today) ? weekStart : findSelectableDay(weekStart, 1);
       } else if (event.key === "End") {
         const offset = (base.getDayOfWeek() - config.startDay + 7) % 7;
-        next = base.incrementDays(6 - offset);
+        const weekEnd = base.incrementDays(6 - offset);
+        next = isSelectable(weekEnd, config, state.today) ? weekEnd : findSelectableDay(weekEnd, -1);
       } else if (event.key === "PageUp") {
-        next = base.addMonths(event.shiftKey ? -12 : -1);
+        const targetMonth = base.addMonths(event.shiftKey ? -12 : -1);
+        next = isSelectable(targetMonth, config, state.today) ? targetMonth : findSelectableDay(targetMonth, -1);
       } else if (event.key === "PageDown") {
-        next = base.addMonths(event.shiftKey ? 12 : 1);
+        const targetMonth = base.addMonths(event.shiftKey ? 12 : 1);
+        next = isSelectable(targetMonth, config, state.today) ? targetMonth : findSelectableDay(targetMonth, 1);
       }
       moveFocusTo(next);
     });
@@ -784,15 +828,24 @@
     grid.style.display = "grid";
     grid.style.gridTemplateColumns = "repeat(7, minmax(0, 1fr))";
     grid.style.gap = "2px";
+    const monthTitleText = formatDateValue(viewMonth, config.locale, {
+      month: "long",
+      year: "numeric"
+    });
+    grid.setAttribute("aria-label", monthTitleText);
     for (let i = 0; i < 7; i++) {
       const header = document.createElement("div");
       header.setAttribute("role", "columnheader");
       header.className = `flex ${config.sizeClass} items-center justify-center font-medium text-zinc-500`;
       const idx = (i + config.startDay) % 7;
       const date = new Date(2024, 0, 7 + idx);
+      const weekdayLabel = new Intl.DateTimeFormat(config.locale, { weekday: "long" }).format(
+        date
+      );
       header.textContent = new Intl.DateTimeFormat(config.locale, { weekday: "narrow" }).format(
         date
       );
+      header.setAttribute("aria-label", weekdayLabel);
       grid.appendChild(header);
     }
     const first = new DateValue(viewMonth.getYear(), viewMonth.getMonth(), 1);
@@ -811,7 +864,7 @@
         const btn = document.createElement("button");
         btn.type = "button";
         btn.dataset.calendarDay = iso;
-        btn.className = `flex ${config.sizeClass} w-full items-center justify-center rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800`;
+        btn.className = `flex ${config.sizeClass} w-full items-center justify-center rounded-lg hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20`;
         btn.textContent = String(cellDay.getDay());
         btn.setAttribute(
           "aria-label",
@@ -1889,7 +1942,9 @@
       return;
     }
     const parts = [];
-    root.querySelectorAll("[data-chart-mounted-tooltip] [data-chart-slot], [data-chart-mounted-summary] [data-chart-slot]").forEach((slot) => {
+    root.querySelectorAll(
+      "[data-chart-mounted-tooltip] [data-chart-slot], [data-chart-mounted-summary] [data-chart-slot]"
+    ).forEach((slot) => {
       var _a5, _b, _c, _d;
       if (!(slot instanceof HTMLElement)) {
         return;
@@ -2213,6 +2268,7 @@
 
   // resources/assets/js/color-picker.js
   var COLOR_PICKER_SELECTOR = "[data-color-picker]";
+  var FOCUSABLE_SELECTOR = 'button:not([disabled]):not([hidden]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
   var initialized6 = /* @__PURE__ */ new WeakSet();
   var HEX_PATTERN = /^#[0-9a-fA-F]{6}$/;
   function initColorPickers(root = document) {
@@ -2330,6 +2386,32 @@
     }
     return null;
   }
+  function getFocusableElements(container) {
+    return Array.from(container.querySelectorAll(FOCUSABLE_SELECTOR)).filter(
+      (node) => node instanceof HTMLElement && !node.hasAttribute("hidden")
+    );
+  }
+  function focusFirstIn(container) {
+    const first = getFocusableElements(container)[0];
+    if (first instanceof HTMLElement) {
+      first.focus({ preventScroll: true });
+    }
+  }
+  function trapFocus(event, container) {
+    const focusable = getFocusableElements(container);
+    if (focusable.length === 0) {
+      return;
+    }
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
   function bindColorPicker(root) {
     const hiddenInput = root.querySelector("[data-color-picker-hidden-input]");
     const hexInput = root.querySelector("[data-color-picker-hex]");
@@ -2346,6 +2428,7 @@
     if (!(hiddenInput instanceof HTMLInputElement) || !(hexInput instanceof HTMLInputElement) || !(popover instanceof HTMLElement) || !(area instanceof HTMLElement) || !(areaBase instanceof HTMLElement) || !(areaThumb instanceof HTMLElement) || !(hueInput instanceof HTMLInputElement) || !(swatchTrigger instanceof HTMLButtonElement)) {
       return;
     }
+    const swatchesContainer = popover.querySelector("[data-color-picker-swatches]");
     const portalMarker = document.createComment("stencil-color-picker-portal");
     let portalInserted = false;
     const signal = createBindSignal(root);
@@ -2355,6 +2438,18 @@
     let hue = 0;
     let saturation = 100;
     let brightness = 100;
+    function getSwatchButtons() {
+      return Array.from(popover.querySelectorAll("[data-color-picker-swatch]")).filter(
+        (node) => node instanceof HTMLButtonElement && !node.disabled
+      );
+    }
+    function syncSwatchTabIndex() {
+      const buttons = getSwatchButtons();
+      buttons.forEach((button, index) => {
+        const selected = button.dataset.selected === "true";
+        button.tabIndex = selected || index === 0 ? 0 : -1;
+      });
+    }
     function dispatchChange(target) {
       target.dispatchEvent(new Event("input", { bubbles: true }));
       target.dispatchEvent(new Event("change", { bubbles: true }));
@@ -2399,6 +2494,7 @@
         button.setAttribute("aria-selected", selected ? "true" : "false");
         button.dataset.selected = selected ? "true" : "false";
       });
+      syncSwatchTabIndex();
       if (dispatch) {
         dispatchChange(hiddenInput);
       }
@@ -2474,6 +2570,8 @@
         syncHsvFromHex(hiddenInput.value || "#000000");
         renderPickerUi();
         positionPopover();
+        syncSwatchTabIndex();
+        focusFirstIn(popover);
       } else {
         releaseScrollLock == null ? void 0 : releaseScrollLock();
         releaseScrollLock = null;
@@ -2545,6 +2643,36 @@
     area.addEventListener("pointercancel", () => {
       draggingArea = false;
     });
+    area.setAttribute("tabindex", "0");
+    area.addEventListener("keydown", (event) => {
+      if (disabled) {
+        return;
+      }
+      const step = event.shiftKey ? 10 : 2;
+      let nextSaturation = saturation;
+      let nextBrightness = brightness;
+      switch (event.key) {
+        case "ArrowRight":
+          nextSaturation = Math.min(100, saturation + step);
+          break;
+        case "ArrowLeft":
+          nextSaturation = Math.max(0, saturation - step);
+          break;
+        case "ArrowUp":
+          nextBrightness = Math.min(100, brightness + step);
+          break;
+        case "ArrowDown":
+          nextBrightness = Math.max(0, brightness - step);
+          break;
+        default:
+          return;
+      }
+      event.preventDefault();
+      saturation = nextSaturation;
+      brightness = nextBrightness;
+      setValue(hsvToHex(hue, saturation, brightness), { syncPicker: false });
+      renderPickerUi();
+    });
     root.querySelectorAll("[data-color-picker-swatch]").forEach((button) => {
       button.addEventListener("click", () => {
         if (disabled || !(button instanceof HTMLButtonElement)) {
@@ -2556,6 +2684,70 @@
         }
       });
     });
+    if (swatchesContainer instanceof HTMLElement) {
+      swatchesContainer.addEventListener("keydown", (event) => {
+        var _a5;
+        if (disabled) {
+          return;
+        }
+        const buttons = getSwatchButtons();
+        if (buttons.length === 0) {
+          return;
+        }
+        const currentIndex = buttons.findIndex((button) => button === document.activeElement);
+        const columns = 8;
+        const focusSwatchAt = (nextIndex) => {
+          const button = buttons[nextIndex];
+          if (!(button instanceof HTMLButtonElement)) {
+            return;
+          }
+          buttons.forEach((node, index) => {
+            node.tabIndex = index === nextIndex ? 0 : -1;
+          });
+          button.focus();
+        };
+        switch (event.key) {
+          case "ArrowRight":
+            event.preventDefault();
+            focusSwatchAt(Math.min(currentIndex + 1, buttons.length - 1));
+            return;
+          case "ArrowLeft":
+            event.preventDefault();
+            focusSwatchAt(Math.max(currentIndex - 1, 0));
+            return;
+          case "ArrowDown":
+            event.preventDefault();
+            focusSwatchAt(Math.min(currentIndex + columns, buttons.length - 1));
+            return;
+          case "ArrowUp":
+            event.preventDefault();
+            focusSwatchAt(Math.max(currentIndex - columns, 0));
+            return;
+          case "Home":
+            event.preventDefault();
+            focusSwatchAt(0);
+            return;
+          case "End":
+            event.preventDefault();
+            focusSwatchAt(buttons.length - 1);
+            return;
+          case "Enter":
+          case " ":
+            if (currentIndex >= 0) {
+              event.preventDefault();
+              const value = (_a5 = buttons[currentIndex]) == null ? void 0 : _a5.getAttribute(
+                "data-color-picker-swatch"
+              );
+              if (value) {
+                setValue(value);
+              }
+            }
+            return;
+          default:
+            return;
+        }
+      });
+    }
     if (dropperButton instanceof HTMLButtonElement && "EyeDropper" in window) {
       dropperButton.hidden = false;
       dropperButton.addEventListener("click", async () => {
@@ -2593,11 +2785,17 @@
     document.addEventListener(
       "keydown",
       (event) => {
-        if (!open || disabled || event.key !== "Escape") {
+        if (!open || disabled) {
           return;
         }
-        setOpen(false);
-        swatchTrigger.focus();
+        if (event.key === "Escape") {
+          setOpen(false);
+          swatchTrigger.focus();
+          return;
+        }
+        if (event.key === "Tab") {
+          trapFocus(event, popover);
+        }
       },
       { signal }
     );
@@ -3044,14 +3242,6 @@
         }
       });
     }
-    input.addEventListener("focus", () => {
-      if (input.disabled) {
-        return;
-      }
-      if (!open) {
-        setOpen(true);
-      }
-    });
     input.addEventListener("input", () => {
       if (input.disabled) {
         return;
@@ -3742,6 +3932,7 @@
       calendarApi == null ? void 0 : calendarApi.setValue(hidden.value);
     }
     function open() {
+      var _a6;
       isOpen = true;
       panel.hidden = false;
       panel.removeAttribute("aria-hidden");
@@ -3751,6 +3942,7 @@
       releaseScrollLock = acquireBodyScrollLock(panel, { signal });
       if (trigger instanceof HTMLElement) {
         trigger.setAttribute("aria-expanded", "true");
+        (_a6 = root.querySelector("[data-date-picker-input]")) == null ? void 0 : _a6.setAttribute("aria-expanded", "true");
         ensurePanelPortaled(panel, root, portalMarker);
         positionAnchoredPanel(panel, trigger, { fitContent: true });
       }
@@ -3762,6 +3954,7 @@
       }
     }
     function close() {
+      var _a6;
       isOpen = false;
       panel.hidden = true;
       panel.setAttribute("aria-hidden", "true");
@@ -3774,6 +3967,7 @@
         trigger.setAttribute("aria-expanded", "false");
         trigger.focus();
       }
+      (_a6 = root.querySelector("[data-date-picker-input]")) == null ? void 0 : _a6.setAttribute("aria-expanded", "false");
     }
     function revertSelection() {
       syncCalendarFromHidden();
@@ -3952,9 +4146,11 @@
         const value = withSeconds ? `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:00` : `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
         const button = document.createElement("button");
         button.type = "button";
-        button.className = "flex w-full rounded-lg px-2 py-1.5 text-left text-sm tabular-nums hover:bg-zinc-100 dark:hover:bg-zinc-800";
+        button.className = "flex w-full rounded-lg px-2 py-1.5 text-left text-sm tabular-nums hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20";
         button.dataset.datetimePickerTime = value;
-        button.textContent = formatTimeLabel(value, locale, timeZone, withSeconds);
+        const label = formatTimeLabel(value, locale, timeZone, withSeconds);
+        button.textContent = label;
+        button.setAttribute("aria-label", label);
         button.setAttribute("role", "option");
         button.tabIndex = -1;
         timeList.appendChild(button);
@@ -4748,6 +4944,7 @@
     const input = root.querySelector("[data-file-upload-input]");
     const dropzone = root.querySelector("[data-file-upload-dropzone]");
     const list = root.querySelector("[data-file-upload-list]");
+    const status = root.querySelector("[data-file-upload-status]");
     const template = root.querySelector("template[data-file-upload-item-template]");
     if (!(input instanceof HTMLInputElement)) {
       return;
@@ -4794,7 +4991,18 @@
         return mime === token;
       });
     }
+    function announce(message) {
+      if (!(status instanceof HTMLElement) || message === "") {
+        return;
+      }
+      status.textContent = "";
+      window.requestAnimationFrame(() => {
+        status.textContent = message;
+      });
+    }
     function setFiles(nextFiles, options = {}) {
+      var _a6, _b;
+      const previousCount = files.length;
       const incoming = Array.from(nextFiles != null ? nextFiles : []).filter(
         (file) => file instanceof File && matchesAccept(file, input.accept)
       );
@@ -4817,6 +5025,14 @@
       syncInput();
       renderList();
       updateEmptyState();
+      const addedCount = Math.max(0, files.length - previousCount);
+      if (addedCount > 0) {
+        const label = addedCount === 1 ? (_b = (_a6 = files.at(-1)) == null ? void 0 : _a6.name) != null ? _b : "1 file" : `${addedCount} files`;
+        announce(`Added ${label}`);
+      } else if (files.length < previousCount) {
+        const removedCount = previousCount - files.length;
+        announce(removedCount === 1 ? "Removed 1 file" : `Removed ${removedCount} files`);
+      }
     }
     function syncInput(options = {}) {
       const transfer = new DataTransfer();
@@ -4870,13 +5086,16 @@
       });
     }
     function removeAt(index) {
+      var _a6, _b;
       if (index < 0 || index >= files.length) {
         return;
       }
+      const removedName = (_b = (_a6 = files[index]) == null ? void 0 : _a6.name) != null ? _b : "file";
       files.splice(index, 1);
       syncInput();
       renderList();
       updateEmptyState();
+      announce(`Removed ${removedName}`);
     }
     if (dropzone instanceof HTMLElement) {
       dropzone.addEventListener("click", (event) => {
@@ -5037,6 +5256,29 @@
       return Math.max(0, floatToMinor(parsed));
     }
     let minorUnits = readInitialMinor();
+    if (mode === "decimal") {
+      let parseDecimal = function(text) {
+        const normalized = text.trim().replace(/[^\d.,-]/g, "").replace(",", ".");
+        const parsed = Number.parseFloat(normalized);
+        return Number.isFinite(parsed) ? Math.max(0, parsed) : null;
+      }, syncFromDecimal = function(amount) {
+        if (amount === null || amount <= 0) {
+          hidden.value = "";
+          display.value = "";
+          return;
+        }
+        hidden.value = amount.toFixed(precision);
+        display.value = formatter.format(amount);
+      };
+      display.addEventListener("blur", () => {
+        syncFromDecimal(parseDecimal(display.value));
+      });
+      display.addEventListener("input", () => {
+        const amount = parseDecimal(display.value);
+        hidden.value = amount === null ? "" : amount.toFixed(precision);
+      });
+      return;
+    }
     if (mode !== "cents") {
       return;
     }
@@ -5536,6 +5778,7 @@
     function renderChips() {
       list.replaceChildren();
       tags.forEach((tag, index) => {
+        var _a6;
         const fragment = chipTemplate.content.cloneNode(true);
         const chip = fragment instanceof DocumentFragment ? fragment.querySelector("[data-pillbox-chip]") : null;
         if (!(chip instanceof HTMLElement)) {
@@ -5547,6 +5790,8 @@
         }
         const removeButton = chip.querySelector("[data-pillbox-chip-remove]");
         if (removeButton instanceof HTMLButtonElement) {
+          const removeLabel = (_a6 = root.getAttribute("data-pillbox-chip-remove-label")) != null ? _a6 : "Remove tag";
+          removeButton.setAttribute("aria-label", `${removeLabel} ${tag}`);
           removeButton.disabled = disabled;
           removeButton.addEventListener("click", (event) => {
             event.preventDefault();
@@ -5641,7 +5886,7 @@
   var ROOT_SELECTOR3 = "[data-popover]";
   var TRIGGER_SELECTOR4 = "[data-popover-trigger]";
   var CONTENT_SELECTOR4 = "[data-popover-content]";
-  var FOCUSABLE_SELECTOR = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  var FOCUSABLE_SELECTOR2 = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
   var initialized18 = /* @__PURE__ */ new WeakSet();
   function initPopovers(root = document) {
     root.querySelectorAll(ROOT_SELECTOR3).forEach((element) => {
@@ -5691,8 +5936,9 @@
       if (open) {
         releaseScrollLock == null ? void 0 : releaseScrollLock();
         releaseScrollLock = acquireBodyScrollLock(content, { signal });
+        ensureAriaLabelledBy(content);
         positionContent2(content, trigger, root);
-        focusFirstIn(content);
+        focusFirstIn2(content);
       } else {
         releaseScrollLock == null ? void 0 : releaseScrollLock();
         releaseScrollLock = null;
@@ -5787,6 +6033,19 @@
       positionContent2(content, trigger, root);
     }
   }
+  function ensureAriaLabelledBy(content) {
+    if (content.getAttribute("aria-labelledby")) {
+      return;
+    }
+    const heading = content.querySelector("h1, h2, h3, h4, h5, h6, [data-popover-title]");
+    if (!(heading instanceof HTMLElement)) {
+      return;
+    }
+    if (!heading.id) {
+      heading.id = `popover-title-${Math.random().toString(36).slice(2, 10)}`;
+    }
+    content.setAttribute("aria-labelledby", heading.id);
+  }
   function resolveTriggerControl2(wrap) {
     if (wrap.matches('button, a[href], [role="button"]')) {
       return wrap;
@@ -5794,8 +6053,8 @@
     const nested = wrap.querySelector('button, a[href], [role="button"]');
     return nested instanceof HTMLElement ? nested : wrap;
   }
-  function focusFirstIn(content) {
-    const first = content.querySelector(FOCUSABLE_SELECTOR);
+  function focusFirstIn2(content) {
+    const first = content.querySelector(FOCUSABLE_SELECTOR2);
     if (first instanceof HTMLElement) {
       first.focus({ preventScroll: true });
       return;
@@ -6303,6 +6562,29 @@
         item.addEventListener("dragend", () => {
           item.classList.remove("opacity-60");
           draggedItem = null;
+        });
+        handle.addEventListener("keydown", (event) => {
+          if (disabled) {
+            return;
+          }
+          const itemsBefore = items();
+          const index = itemsBefore.indexOf(item);
+          if (index < 0) {
+            return;
+          }
+          if (event.key === "ArrowUp" && index > 0) {
+            event.preventDefault();
+            itemsBefore[index - 1].before(item);
+            reindex();
+            dispatchChange(root);
+            handle.focus();
+          } else if (event.key === "ArrowDown" && index < itemsBefore.length - 1) {
+            event.preventDefault();
+            itemsBefore[index + 1].after(item);
+            reindex();
+            dispatchChange(root);
+            handle.focus();
+          }
         });
       });
     }
@@ -6875,6 +7157,7 @@
       options().forEach((el) => {
         el.removeAttribute("data-highlighted");
       });
+      content.removeAttribute("aria-activedescendant");
     }
     function highlightActive() {
       clearHighlights();
@@ -6882,6 +7165,9 @@
       const el = list[activeIndex];
       if (el) {
         el.setAttribute("data-highlighted", "true");
+        if (el.id) {
+          content.setAttribute("aria-activedescendant", el.id);
+        }
         el.scrollIntoView({ block: "nearest" });
       }
     }
@@ -8078,9 +8364,11 @@
     options.forEach((time) => {
       const button = document.createElement("button");
       button.type = "button";
-      button.className = "flex w-full rounded-lg px-2 py-1.5 text-left text-sm tabular-nums hover:bg-zinc-100 dark:hover:bg-zinc-800";
+      button.className = "flex w-full rounded-lg px-2 py-1.5 text-left text-sm tabular-nums hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-300/20";
       button.dataset.timePickerOption = time;
-      button.textContent = formatTimeLabel(time, locale, timeZone, withSeconds);
+      const label = formatTimeLabel(time, locale, timeZone, withSeconds);
+      button.textContent = label;
+      button.setAttribute("aria-label", label);
       button.setAttribute("role", "option");
       button.tabIndex = -1;
       panel.appendChild(button);
@@ -8315,6 +8603,9 @@
   function toastRole(variant) {
     return isAssertiveVariant(variant) ? "alert" : "status";
   }
+  function toastLiveMode(variant) {
+    return isAssertiveVariant(variant) ? "assertive" : "polite";
+  }
   function initToasts(root = document) {
     root.querySelectorAll(TOAST_SELECTOR).forEach((element) => {
       if (!(element instanceof HTMLElement)) {
@@ -8338,6 +8629,8 @@
     el.dataset.duration = String((_b = options.duration) != null ? _b : 4e3);
     el.dataset.state = "open";
     el.setAttribute("role", toastRole(variant));
+    el.setAttribute("aria-live", toastLiveMode(variant));
+    el.setAttribute("aria-atomic", "true");
     const body = document.createElement("div");
     body.className = "space-y-1 pr-6";
     if (options.title) {
@@ -8349,7 +8642,7 @@
     }
     if (options.description) {
       const description = document.createElement("p");
-      description.className = "toast__description text-sm opacity-80";
+      description.className = "toast__description text-sm";
       description.dataset.toastDescription = "true";
       description.textContent = options.description;
       body.appendChild(description);
@@ -8550,6 +8843,9 @@
       }
     });
     root.addEventListener("keydown", (event) => {
+      if (root.dataset.disabled === "true") {
+        return;
+      }
       const item = event.target instanceof Element ? event.target.closest(ITEM_SELECTOR4) : null;
       if (!(item instanceof HTMLButtonElement) || !root.contains(item)) {
         return;
@@ -8681,7 +8977,6 @@
     });
   }
   function bindTooltip(root) {
-    var _a5;
     const trigger = root.querySelector(TRIGGER_SELECTOR8);
     const content = root.querySelector(CONTENT_SELECTOR7);
     if (!(trigger instanceof HTMLElement) || !(content instanceof HTMLElement)) {
@@ -8693,8 +8988,11 @@
     if (!content.id) {
       content.id = `tooltip-${Math.random().toString(36).slice(2, 10)}`;
     }
-    const control = (_a5 = trigger.querySelector("button, a, [tabindex]")) != null ? _a5 : trigger;
-    control.setAttribute("aria-describedby", content.id);
+    const syncDescribedBy = () => {
+      const control = resolveControl3(trigger);
+      control.setAttribute("aria-describedby", content.id);
+    };
+    syncDescribedBy();
     const setOpen = (next) => {
       open = next;
       if (open) {
@@ -8727,18 +9025,29 @@
     };
     trigger.addEventListener("pointerenter", scheduleOpen);
     trigger.addEventListener("pointerleave", close);
-    control.addEventListener("focus", () => {
+    trigger.addEventListener("focusin", () => {
+      syncDescribedBy();
       if (isSidebarMenuTooltipDisabled(root)) {
         return;
       }
       setOpen(true);
     });
-    control.addEventListener("blur", close);
+    trigger.addEventListener("focusout", (event) => {
+      const next = event.relatedTarget;
+      if (next instanceof Node && root.contains(next)) {
+        return;
+      }
+      close();
+    });
     root.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
         close();
       }
     });
+  }
+  function resolveControl3(trigger) {
+    const control = trigger.querySelector("button, a, [tabindex]");
+    return control instanceof HTMLElement ? control : trigger;
   }
   function isSidebarMenuTooltipDisabled(root) {
     if (!root.hasAttribute("data-sidebar-menu-tooltip")) {

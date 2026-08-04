@@ -46,6 +46,12 @@ final class Content extends StencilComponent
             ])
             ->merge(['data-combobox-content' => '']);
 
+        $multiple = (bool) stencil_ancestor_attribute('multiple', false);
+
+        if ($multiple) {
+            $contentAttributes = $contentAttributes->merge(['aria-multiselectable' => 'true']);
+        }
+
         if (filled($resolvedListboxId)) {
             $contentAttributes = $contentAttributes->merge(['id' => $resolvedListboxId]);
         }

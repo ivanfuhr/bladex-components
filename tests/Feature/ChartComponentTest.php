@@ -60,6 +60,7 @@ it('renders a sparkline shortcut with flat numeric data', function () {
 
     expect($html)
         ->toContain('data-chart')
+        ->toContain('aria-label="Chart"')
         ->toContain('data-gutter="0"')
         ->toContain('data-chart-template="line"')
         ->toContain('data-field="value"')

@@ -25,6 +25,7 @@ final class Item extends StencilComponent
     protected function resolveViewData(array $data = []): array
     {
         $size = $this->attributes->get('size') ?? stencil_ancestor_attribute('size');
+        $listboxId = stencil_ancestor_attribute('listboxId');
 
         $itemClasses = collect([
             'select__item',
@@ -45,6 +46,14 @@ final class Item extends StencilComponent
 
         if (filled($this->value)) {
             $itemAttributes = $itemAttributes->merge(['data-value' => $this->value]);
+        }
+
+        if (filled($listboxId) && filled($this->value)) {
+            $slug = preg_replace('/[^a-zA-Z0-9_-]/', '-', (string) $this->value) ?: 'option';
+
+            $itemAttributes = $itemAttributes->merge([
+                'id' => $listboxId.'-opt-'.$slug,
+            ]);
         }
 
         if ($this->disabled) {

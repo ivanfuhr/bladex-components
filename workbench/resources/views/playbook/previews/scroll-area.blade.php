@@ -37,7 +37,8 @@
 @endphp
 
 <div class="w-full max-w-sm space-y-3">
-    <x-ui::text size="sm" variant="subtle">Scroll inside the panel — themed overlay bars follow the content.</x-ui::text>
+    <x-ui::text size="sm" variant="subtle"
+        >Scroll inside the panel — themed overlay bars follow the content.</x-ui::text>
 
     <x-ui::scroll-area
         class="h-56 rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950"

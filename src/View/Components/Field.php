@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Ivanfuhr\Stencil\View\Components;
 
+use Throwable;
+
 final class Field extends StencilComponent
 {
     public function __construct(
@@ -16,6 +18,29 @@ final class Field extends StencilComponent
     protected function stencilView(): string
     {
         return 'stencil::components.field.index';
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function data(): array
+    {
+        $data = parent::data();
+
+        try {
+            $resolved = $this->computedViewData($data);
+
+            return array_merge($data, array_filter([
+                'fieldInvalid' => $resolved['resolvedFieldInvalid'] ?? null,
+                'controlId' => $resolved['resolvedControlId'] ?? null,
+                'name' => $resolved['resolvedName'] ?? null,
+                'descriptionId' => $resolved['resolvedDescriptionId'] ?? null,
+                'errorId' => $resolved['resolvedErrorId'] ?? null,
+                'describedBy' => $resolved['resolvedDescribedBy'] ?? null,
+            ], static fn (mixed $value): bool => $value !== null && $value !== ''));
+        } catch (Throwable) {
+            return $data;
+        }
     }
 
     /**
@@ -36,6 +61,10 @@ final class Field extends StencilComponent
         $resolvedFieldInvalid = $this->invalid || stencil_field_has_errors($name);
         $isInline = $this->orientation === 'inline';
 
+        $descriptionId = filled($controlId) ? $controlId.'-description' : null;
+        $errorId = filled($name) ? $name.'-errors' : null;
+        $describedBy = collect([$descriptionId, $errorId])->filter()->implode(' ');
+
         $rootClasses = collect([
             'field',
             'flex min-w-0',
@@ -48,6 +77,9 @@ final class Field extends StencilComponent
             'resolvedName' => $name,
             'resolvedIsInline' => $isInline,
             'resolvedRootClasses' => $rootClasses,
+            'resolvedDescriptionId' => $descriptionId,
+            'resolvedErrorId' => $errorId,
+            'resolvedDescribedBy' => filled($describedBy) ? $describedBy : null,
         ];
     }
 }

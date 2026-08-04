@@ -46,6 +46,7 @@ it('renders composable stat parts and variants', function () {
         ->toContain('Resolved')
         ->toContain('86%')
         ->toContain('data-direction="down"')
+        ->toContain('Trending down')
         ->toContain('−2.1%')
         ->toContain('This week');
 });

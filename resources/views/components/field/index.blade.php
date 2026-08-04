@@ -10,6 +10,9 @@
             'fieldInvalid' => $resolvedFieldInvalid,
             'controlId' => $resolvedControlId,
             'name' => $resolvedName ?? null,
+            'descriptionId' => $resolvedDescriptionId,
+            'errorId' => $resolvedErrorId,
+            'describedBy' => $resolvedDescribedBy,
         ])
     }}
 </div>

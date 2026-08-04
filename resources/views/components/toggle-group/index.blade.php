@@ -1,1 +1,1 @@
-<div {{ $rootAttributes }}>{{ $slot }}</div>
+<div {{ $rootAttributes }}>{{ $slot->withAttributes(['disabled' => $isDisabled]) }}</div>

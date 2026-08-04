@@ -5,13 +5,7 @@
     $showSpan = (bool) ($state['show_span'] ?? true);
 @endphp
 
-<x-ui::grid
-    :md="$md"
-    :sm="$sm"
-    gap="4"
-    class="w-full max-w-3xl"
-    :container="$container"
->
+<x-ui::grid :md="$md" :sm="$sm" gap="4" class="w-full max-w-3xl" :container="$container">
     <x-ui::stat
         label="Registrations"
         value="248"

@@ -10,6 +10,8 @@
         'data-duration' => (string) $duration,
         'data-state' => $open ? 'open' : 'closed',
         'role' => $liveRole,
+        'aria-live' => $liveMode,
+        'aria-atomic' => 'true',
         'hidden' => $open ? null : true,
     ])
 }}>

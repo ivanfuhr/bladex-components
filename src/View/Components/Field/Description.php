@@ -12,4 +12,17 @@ final class Description extends StencilComponent
     {
         return 'stencil::components.field.description';
     }
+
+    /**
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
+    protected function resolveViewData(array $data = []): array
+    {
+        $descriptionId = $data['descriptionId'] ?? $this->aware('descriptionId');
+
+        return [
+            'descriptionId' => $descriptionId,
+        ];
+    }
 }

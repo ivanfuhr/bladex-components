@@ -14,7 +14,8 @@ it('renders a toast provider and toast message', function () {
     expect($html)
         ->toContain('data-toast-provider')
         ->toContain('data-toast-dismiss-label')
-        ->not->toContain('aria-live=')
+        ->toContain('aria-live="polite"')
+        ->toContain('aria-atomic="true"')
         ->toContain('data-toast')
         ->toContain('data-variant="success"')
         ->toContain('role="status"')
@@ -31,5 +32,6 @@ it('uses alert role for danger toast variants', function () {
     expect($html)
         ->toContain('data-variant="danger"')
         ->toContain('role="alert"')
+        ->toContain('aria-live="assertive"')
         ->not->toContain('role="status"');
 });

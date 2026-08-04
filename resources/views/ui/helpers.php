@@ -187,7 +187,7 @@ if (! function_exists('stencil_typography_config')) {
             'strong' => 'font-semibold text-zinc-950 dark:text-zinc-50',
             'subtle' => 'text-zinc-500 dark:text-zinc-400',
             'error' => 'text-red-600 dark:text-red-400',
-            default => $forHeading ? '' : 'text-zinc-700 dark:text-zinc-300',
+            default => $forHeading ? 'text-zinc-950 dark:text-zinc-50' : 'text-zinc-700 dark:text-zinc-300',
         };
     }
 
@@ -237,7 +237,7 @@ if (! function_exists('stencil_typography_config')) {
             stencil_typography_size_classes(stencil_heading_size_for_level($level)),
             stencil_font_role_class('heading'),
             stencil_text_variant_classes($variant, true),
-            'font-semibold tracking-tight text-zinc-950 dark:text-zinc-50',
+            'font-semibold tracking-tight',
         ])->filter()->implode(' ');
     }
 
@@ -984,6 +984,30 @@ if (! function_exists('stencil_typography_config')) {
         $errors = View::shared('errors');
 
         return $errors instanceof ViewErrorBag && $errors->has($name);
+    }
+}
+
+if (! function_exists('stencil_merge_described_by')) {
+    /**
+     * Merge ancestor field description/error ids into control aria-describedby.
+     */
+    function stencil_merge_described_by(ComponentAttributeBag $attributes, mixed $describedBy = null): ComponentAttributeBag
+    {
+        $describedBy ??= stencil_ancestor_attribute('describedBy');
+
+        if (! filled($describedBy)) {
+            return $attributes;
+        }
+
+        $existing = $attributes->get('aria-describedby');
+
+        if (filled($existing)) {
+            return $attributes->merge([
+                'aria-describedby' => trim($existing.' '.$describedBy),
+            ]);
+        }
+
+        return $attributes->merge(['aria-describedby' => $describedBy]);
     }
 }
 

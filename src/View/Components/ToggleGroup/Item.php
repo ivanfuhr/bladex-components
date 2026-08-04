@@ -43,10 +43,11 @@ final class Item extends StencilComponent
         };
         $groupSpacing = is_numeric($spacing) ? max(0, (int) $spacing) : 0;
         $groupOrientation = $orientation === 'vertical' ? 'vertical' : 'horizontal';
-        $isDisabled = $this->disabled;
+        $groupDisabled = (bool) View::getConsumableComponentData('disabled', false);
+        $isDisabled = $this->disabled || $groupDisabled;
 
         $selectedValues = match (true) {
-            is_array($defaultValue) => array_map(static fn ($item): string => (string) $item, $defaultValue),
+            is_array($defaultValue) => array_map(static fn (mixed $item): string => (string) $item, $defaultValue),
             filled($defaultValue) => array_values(array_filter(array_map(
                 static fn (string $item): string => trim($item),
                 explode(',', (string) $defaultValue),
@@ -56,9 +57,9 @@ final class Item extends StencilComponent
         $isSelected = in_array($itemValue, $selectedValues, true);
 
         $sizeClasses = match ($groupSize) {
-            'sm' => 'h-8 min-w-8 px-2 text-sm',
-            'lg' => 'h-10 min-w-10 px-3 text-base',
-            default => 'h-9 min-w-9 px-3 text-sm',
+            'sm' => 'h-10 min-w-10 px-2 text-sm',
+            'lg' => 'h-12 min-w-12 px-3 text-base',
+            default => 'h-11 min-w-11 px-3 text-sm',
         };
 
         $variantClasses = match ($groupVariant) {
@@ -119,6 +120,7 @@ final class Item extends StencilComponent
                 'aria-pressed' => $groupType === 'multiple' ? ($isSelected ? 'true' : 'false') : null,
                 'tabindex' => $groupType === 'single' ? ($isSelected ? '0' : '-1') : '0',
                 'disabled' => $isDisabled ? true : null,
+                'aria-disabled' => $isDisabled ? 'true' : null,
             ]);
 
         return [

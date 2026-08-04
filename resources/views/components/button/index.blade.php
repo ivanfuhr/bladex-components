@@ -16,6 +16,7 @@
     @if ($isLoading)
         <span @class(['button__loading', 'inline-flex shrink-0 items-center']) data-button-loading aria-hidden="true">
             <x-ui::icon.loading />
+            <span class="sr-only">{{ __('Loading') }}</span>
         </span>
     @elseif ($hasTrailing)
         <span @class(['button__trailing', 'inline-flex shrink-0 items-center']) data-button-trailing>

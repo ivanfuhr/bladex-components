@@ -30,7 +30,7 @@ final class Radio extends StencilComponent
     {
         $name = stencil_ancestor_attribute('name');
         $fieldInvalid = (bool) stencil_ancestor_attribute('fieldInvalid', false);
-        $isInvalid = $this->invalid || $fieldInvalid;
+        $isInvalid = $this->invalid || $fieldInvalid || stencil_field_has_errors($name);
 
         $controlId = $this->attributes->get('id') ?? 'radio-'.Str::uuid()->toString();
 
@@ -63,6 +63,8 @@ final class Radio extends StencilComponent
         if ($isInvalid) {
             $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);
         }
+
+        $controlAttributes = stencil_merge_described_by($controlAttributes, $this->aware('describedBy'));
 
         $slot = $data['slot'] ?? null;
         $hasSlotLabel = $slot instanceof ComponentSlot ? ! $slot->isEmpty() : filled($slot);

@@ -11,9 +11,9 @@
         type="button"
         {{
             $attributes->class([
-            'sidebar__trigger',
-            'inline-flex size-7 shrink-0 items-center justify-center rounded-md text-zinc-700',
-            '-ms-1 transition-colors hover:bg-zinc-100 hover:text-zinc-950',
+                'sidebar__trigger',
+                'inline-flex size-11 shrink-0 items-center justify-center rounded-md text-zinc-700',
+                '-ms-1 transition-colors hover:bg-zinc-100 hover:text-zinc-950',
                 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10',
                 'dark:text-zinc-200 dark:hover:bg-zinc-800 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300/20',
             ])->merge([

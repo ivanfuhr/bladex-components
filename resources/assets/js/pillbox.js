@@ -124,6 +124,9 @@ function bindPillbox(root) {
             const removeButton = chip.querySelector('[data-pillbox-chip-remove]');
 
             if (removeButton instanceof HTMLButtonElement) {
+                const removeLabel =
+                    root.getAttribute('data-pillbox-chip-remove-label') ?? 'Remove tag';
+                removeButton.setAttribute('aria-label', `${removeLabel} ${tag}`);
                 removeButton.disabled = disabled;
                 removeButton.addEventListener('click', (event) => {
                     event.preventDefault();

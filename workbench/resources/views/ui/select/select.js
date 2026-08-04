@@ -12,15 +12,13 @@ const initialized = new WeakSet();
  * @param {ParentNode} root
  */
 export function initSelects(root = document) {
-    document
-        .querySelectorAll('[data-select-content][data-select-portaled]')
-        .forEach((content) => {
-            if (!(content instanceof HTMLElement) || content.closest('[data-select]')) {
-                return;
-            }
+    document.querySelectorAll('[data-select-content][data-select-portaled]').forEach((content) => {
+        if (!(content instanceof HTMLElement) || content.closest('[data-select]')) {
+            return;
+        }
 
-            content.remove();
-        });
+        content.remove();
+    });
 
     root.querySelectorAll(SELECT_SELECTOR).forEach((element) => {
         if (!(element instanceof HTMLElement)) {

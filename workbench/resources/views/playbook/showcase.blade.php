@@ -41,7 +41,10 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                     <x-ui::sidebar.menu-item>
                         <x-ui::dropdown-menu side="right" align="start">
                             <x-ui::dropdown-menu.trigger>
-                                <x-ui::sidebar.menu-button size="lg" class="data-[state=open]:bg-zinc-100 dark:data-[state=open]:bg-zinc-800">
+                                <x-ui::sidebar.menu-button
+                                    size="lg"
+                                    class="data-[state=open]:bg-zinc-100 dark:data-[state=open]:bg-zinc-800"
+                                >
                                     <span class="flex size-8 shrink-0 items-center justify-center rounded-lg bg-zinc-900 text-xs font-bold text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900">
                                         E
                                     </span>
@@ -49,7 +52,10 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                         <span class="truncate font-semibold">Event Studio</span>
                                         <span class="truncate text-xs text-zinc-500 dark:text-zinc-400">Enterprise</span>
                                     </div>
-                                    <x-ui::icon name="chevron-down" class="ml-auto size-4 group-data-[collapsible=icon]:hidden" />
+                                    <x-ui::icon
+                                        name="chevron-down"
+                                        class="ml-auto size-4 group-data-[collapsible=icon]:hidden"
+                                    />
                                 </x-ui::sidebar.menu-button>
                             </x-ui::dropdown-menu.trigger>
                             <x-ui::dropdown-menu.content class="min-w-56">
@@ -72,7 +78,11 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                     <x-ui::sidebar.group-content>
                         <x-ui::sidebar.menu>
                             <x-ui::sidebar.menu-item>
-                                <x-ui::sidebar.menu-button href="{{ route('playbook.showcase') }}" active tooltip="Northwind Summit">
+                                <x-ui::sidebar.menu-button
+                                    href="{{ route('playbook.showcase') }}"
+                                    active
+                                    tooltip="Northwind Summit"
+                                >
                                     <x-ui::icon name="star" class="size-4" />
                                     <span>Northwind Summit</span>
                                 </x-ui::sidebar.menu-button>
@@ -166,13 +176,19 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                     <x-ui::sidebar.menu-item>
                         <x-ui::dropdown-menu side="top" align="start">
                             <x-ui::dropdown-menu.trigger>
-                                <x-ui::sidebar.menu-button size="lg" class="data-[state=open]:bg-zinc-100 dark:data-[state=open]:bg-zinc-800">
+                                <x-ui::sidebar.menu-button
+                                    size="lg"
+                                    class="data-[state=open]:bg-zinc-100 dark:data-[state=open]:bg-zinc-800"
+                                >
                                     <x-ui::avatar name="Ada Lovelace" size="sm" circle color="violet" />
                                     <div class="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
                                         <span class="truncate font-semibold">Ada Lovelace</span>
                                         <span class="truncate text-xs text-zinc-500 dark:text-zinc-400">organizer@northwind.dev</span>
                                     </div>
-                                    <x-ui::icon name="chevron-down" class="ml-auto size-4 group-data-[collapsible=icon]:hidden" />
+                                    <x-ui::icon
+                                        name="chevron-down"
+                                        class="ml-auto size-4 group-data-[collapsible=icon]:hidden"
+                                    />
                                 </x-ui::sidebar.menu-button>
                             </x-ui::dropdown-menu.trigger>
                             <x-ui::dropdown-menu.content class="min-w-56">
@@ -248,9 +264,7 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                             <x-ui::button variant="outline" class="gap-2 text-zinc-500 dark:text-zinc-400">
                                 <x-ui::icon name="search" class="size-4" />
                                 <span class="hidden sm:inline">Search commands…</span>
-                                <span
-                                    class="rounded border border-zinc-200 px-1.5 py-0.5 font-mono text-[10px] tracking-widest dark:border-zinc-700"
-                                >
+                                <span class="rounded border border-zinc-200 px-1.5 py-0.5 font-mono text-[10px] tracking-widest dark:border-zinc-700">
                                     ⌘K
                                 </span>
                             </x-ui::button>
@@ -618,9 +632,7 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                         </div>
                                     </div>
 
-                                    <div
-                                        class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900/60"
-                                    >
+                                    <div class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900/60">
                                         <div class="flex items-center justify-between gap-2">
                                             <x-ui::heading :level="3" class="text-base!">Quick filters</x-ui::heading>
                                             <x-ui::popover align="end" side="bottom">
@@ -677,21 +689,28 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                         <x-ui::card.content>
                                             <x-ui::grid sm="2" gap="5">
                                                 <x-ui::field name="event_date">
-                                                <x-ui::field.label>Event date</x-ui::field.label>
-                                                <x-ui::date-picker name="event_date" value="2026-09-18" with-today />
-                                            </x-ui::field>
-
-                                            <x-ui::field name="doors_open">
-                                                <x-ui::field.label>Doors open</x-ui::field.label>
-                                                <x-ui::time-picker name="doors_open" value="08:30" />
-                                            </x-ui::field>
-
-                                            <x-ui::grid.item span="full">
-                                                <x-ui::field name="kickoff_at">
-                                                    <x-ui::field.label>Keynote starts</x-ui::field.label>
-                                                    <x-ui::datetime-picker name="kickoff_at" value="2026-09-18T09:15" />
+                                                    <x-ui::field.label>Event date</x-ui::field.label>
+                                                    <x-ui::date-picker
+                                                        name="event_date"
+                                                        value="2026-09-18"
+                                                        with-today
+                                                    />
                                                 </x-ui::field>
-                                            </x-ui::grid.item>
+
+                                                <x-ui::field name="doors_open">
+                                                    <x-ui::field.label>Doors open</x-ui::field.label>
+                                                    <x-ui::time-picker name="doors_open" value="08:30" />
+                                                </x-ui::field>
+
+                                                <x-ui::grid.item span="full">
+                                                    <x-ui::field name="kickoff_at">
+                                                        <x-ui::field.label>Keynote starts</x-ui::field.label>
+                                                        <x-ui::datetime-picker
+                                                            name="kickoff_at"
+                                                            value="2026-09-18T09:15"
+                                                        />
+                                                    </x-ui::field>
+                                                </x-ui::grid.item>
                                             </x-ui::grid>
                                         </x-ui::card.content>
                                     </x-ui::card>
@@ -728,9 +747,7 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                     </x-ui::card>
                                 </div>
 
-                                <div
-                                    class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900/60"
-                                >
+                                <div class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900/60">
                                     <x-ui::heading :level="3" class="text-base!">Month view</x-ui::heading>
                                     <x-ui::text size="sm" variant="subtle" class="mt-1 mb-4">
                                         Standalone calendar for blocking hold dates.
@@ -1057,8 +1074,7 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                                 Yes — transfers stay open until doors open on day one.
                                             </x-ui::accordion.item>
                                             <x-ui::accordion.item heading="How do speakers get access?">
-                                                Speakers receive a complimentary Pro pass and a private green-room
-                                                link.
+                                                Speakers receive a complimentary Pro pass and a private green-room link.
                                             </x-ui::accordion.item>
                                         </x-ui::accordion>
                                     </x-ui::card.content>
@@ -1071,8 +1087,8 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                                 <x-ui::dialog.header>
                                                     <x-ui::dialog.title>Cancel this event?</x-ui::dialog.title>
                                                     <x-ui::dialog.description>
-                                                        Guests are emailed automatically. This cannot be undone from
-                                                        the UI.
+                                                        Guests are emailed automatically. This cannot be undone from the
+                                                        UI.
                                                     </x-ui::dialog.description>
                                                 </x-ui::dialog.header>
                                                 <x-ui::dialog.footer>

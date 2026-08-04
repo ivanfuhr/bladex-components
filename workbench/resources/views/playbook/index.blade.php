@@ -28,9 +28,7 @@
                     <x-ui::button variant="outline" class="gap-2 text-zinc-500 dark:text-zinc-400">
                         <x-ui::icon name="search" class="size-4" />
                         <span>Search components…</span>
-                        <span
-                            class="hidden rounded border border-zinc-200 px-1.5 py-0.5 font-mono text-[10px] tracking-widest sm:inline dark:border-zinc-700"
-                        >
+                        <span class="hidden rounded border border-zinc-200 px-1.5 py-0.5 font-mono text-[10px] tracking-widest sm:inline dark:border-zinc-700">
                             ⌘K
                         </span>
                     </x-ui::button>
@@ -41,18 +39,10 @@
         <x-ui::command.dialog name="playbook-catalog-command" shortcut="meta.k">
             <x-ui::command placeholder="Search components…">
                 <x-ui::command.group heading="Surfaces">
-                    <x-ui::command.item
-                        value="showcase"
-                        href="{{ route('playbook.showcase') }}"
-                        icon="star"
-                    >
+                    <x-ui::command.item value="showcase" href="{{ route('playbook.showcase') }}" icon="star">
                         Event Studio showcase
                     </x-ui::command.item>
-                    <x-ui::command.item
-                        value="catalog"
-                        href="{{ route('playbook.index') }}"
-                        icon="file"
-                    >
+                    <x-ui::command.item value="catalog" href="{{ route('playbook.index') }}" icon="file">
                         Component catalog
                     </x-ui::command.item>
                 </x-ui::command.group>
@@ -74,25 +64,18 @@
 
         <nav aria-label="Catalog sections" class="flex flex-wrap gap-2">
             @foreach ($categories as $category)
-                <x-ui::badge
-                    :href="'#catalog-'.$category['key']"
-                    variant="outline"
-                    rounded
-                    class="gap-1.5"
-                >
+                <x-ui::badge :href="'#catalog-'.$category['key']" variant="outline" rounded class="gap-1.5">
                     {{ $category['label'] }}
-                    <span class="tabular-nums text-zinc-400 dark:text-zinc-500">{{ count($category['playbooks']) }}</span>
+                    <span class="text-zinc-400 tabular-nums dark:text-zinc-500">{{ count($category['playbooks']) }}</span>
                 </x-ui::badge>
             @endforeach
         </nav>
 
         <a
             href="{{ route('playbook.showcase') }}"
-            class="group block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/20 dark:focus-visible:ring-zinc-300/30"
+            class="group block rounded-xl focus-visible:ring-2 focus-visible:ring-zinc-950/20 focus-visible:outline-none dark:focus-visible:ring-zinc-300/30"
         >
-            <x-ui::card
-                class="border-zinc-900 bg-zinc-900 text-zinc-50 transition duration-200 group-hover:-translate-y-0.5 group-hover:bg-zinc-800 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-950 dark:group-hover:bg-white"
-            >
+            <x-ui::card class="border-zinc-900 bg-zinc-900 text-zinc-50 transition duration-200 group-hover:-translate-y-0.5 group-hover:bg-zinc-800 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-950 dark:group-hover:bg-white">
                 <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div class="min-w-0 space-y-2">
                         <x-ui::badge
@@ -109,9 +92,7 @@
                             One screen composing every component in a realistic event-editor flow.
                         </x-ui::text>
                     </div>
-                    <span
-                        class="inline-flex shrink-0 items-center gap-1 text-sm font-medium text-zinc-50 dark:text-zinc-950"
-                    >
+                    <span class="inline-flex shrink-0 items-center gap-1 text-sm font-medium text-zinc-50 dark:text-zinc-950">
                         Open showcase
                         <x-ui::icon
                             name="chevron-right"
@@ -134,8 +115,7 @@
                             {{ $category['label'] }}
                         </x-ui::heading>
                         <x-ui::badge variant="outline" rounded>
-                            {{ count($category['playbooks']) }}
-                            {{ count($category['playbooks']) === 1 ? 'component' : 'components' }}
+                            {{ count($category['playbooks']) }} {{ count($category['playbooks']) === 1 ? 'component' : 'components' }}
                         </x-ui::badge>
                     </div>
 
@@ -146,18 +126,18 @@
                             <div role="listitem" class="min-w-0">
                                 <a
                                     href="{{ route('playbook.show', $playbook->slug) }}"
-                                    class="group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:focus-visible:ring-zinc-300/20"
+                                    class="group block h-full rounded-xl focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:focus-visible:ring-zinc-300/20"
                                 >
-                                    <x-ui::card
-                                        class="h-full transition duration-200 group-hover:-translate-y-0.5 group-hover:border-zinc-300 group-hover:shadow-md motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 dark:group-hover:border-zinc-600 dark:group-hover:bg-zinc-900"
-                                    >
+                                    <x-ui::card class="h-full transition duration-200 group-hover:-translate-y-0.5 group-hover:border-zinc-300 group-hover:shadow-md motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 dark:group-hover:border-zinc-600 dark:group-hover:bg-zinc-900">
                                         <x-ui::card.header class="flex-1">
                                             <x-ui::text
                                                 size="sm"
                                                 inline
                                                 class="font-mono text-xs! text-zinc-500 dark:text-zinc-400"
                                             >
-                                                &lt;x-ui::<span class="text-zinc-800 dark:text-zinc-200">{{ $playbook->slug }}</span>
+                                                &lt;x-ui::<span
+                                                    class="text-zinc-800 dark:text-zinc-200"
+                                                    >{{ $playbook->slug }}</span>
                                                 /&gt;
                                             </x-ui::text>
                                             <x-ui::card.title class="mt-3">{{ $playbook->title }}</x-ui::card.title>
@@ -166,9 +146,7 @@
                                             </x-ui::card.description>
                                         </x-ui::card.header>
                                         <x-ui::card.footer class="mt-auto">
-                                            <span
-                                                class="inline-flex items-center gap-1 text-sm font-medium text-zinc-900 dark:text-zinc-100"
-                                            >
+                                            <span class="inline-flex items-center gap-1 text-sm font-medium text-zinc-900 dark:text-zinc-100">
                                                 Open playground
                                                 <x-ui::icon
                                                     name="chevron-right"

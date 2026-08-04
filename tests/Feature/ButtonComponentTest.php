@@ -65,7 +65,7 @@ it('renders an icon-only square control', function () {
     BLADE);
 
     expect($html)
-        ->toContain('size-9')
+        ->toContain('size-11')
         ->toContain('data-button-icon-only')
         ->not->toContain('data-button-label');
 });

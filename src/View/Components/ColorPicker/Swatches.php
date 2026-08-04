@@ -27,7 +27,7 @@ final class Swatches extends StencilComponent
     {
         $palette = match (true) {
             is_array($this->swatches) => collect($this->swatches)
-                ->map(function ($swatch) {
+                ->map(function (mixed $swatch): array {
                     if (is_array($swatch)) {
                         return [
                             'value' => (string) ($swatch[0] ?? $swatch['value'] ?? '#000000'),
@@ -44,7 +44,7 @@ final class Swatches extends StencilComponent
                 ->values()
                 ->all(),
             default => collect((array) $this->swatchPalette)
-                ->map(function ($swatch) {
+                ->map(function (mixed $swatch): array {
                     if (is_array($swatch) && isset($swatch['value'])) {
                         return $swatch;
                     }

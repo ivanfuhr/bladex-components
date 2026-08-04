@@ -77,6 +77,7 @@ final class Avatar extends StencilComponent
         };
 
         $useLink = filled($this->href) || $this->as === 'a';
+        $isInteractive = $useLink || $this->as === 'button';
 
         return [
             'sizeClasses' => $sizeClasses,
@@ -85,6 +86,8 @@ final class Avatar extends StencilComponent
             'colorClasses' => $colorClasses,
             'shapeClass' => $this->circle ? 'rounded-full' : 'rounded-lg',
             'useLink' => $useLink,
+            'isInteractive' => $isInteractive,
+            'hasImage' => filled($this->src),
             'tag' => $useLink ? 'a' : ($this->as === 'button' ? 'button' : 'span'),
         ];
     }

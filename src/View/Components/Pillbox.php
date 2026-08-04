@@ -67,6 +67,7 @@ final class Pillbox extends StencilComponent
                 'data-pillbox' => true,
                 'data-pillbox-name' => $fieldName,
                 'data-pillbox-value' => json_encode($normalizedValue, JSON_THROW_ON_ERROR),
+                'data-pillbox-chip-remove-label' => __('Remove tag'),
             ]);
 
         if ($this->max !== null) {

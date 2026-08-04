@@ -26,6 +26,12 @@ final class Trend extends StencilComponent
                 'neutral' => 'text-zinc-600 dark:text-zinc-300',
                 default => 'text-zinc-600 dark:text-zinc-300',
             },
+            'directionLabel' => match ((string) $this->direction) {
+                'up' => 'Trending up',
+                'down' => 'Trending down',
+                'neutral' => 'No change',
+                default => null,
+            },
         ];
     }
 }

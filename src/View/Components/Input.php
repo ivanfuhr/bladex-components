@@ -189,6 +189,8 @@ final class Input extends StencilComponent
             $wrapperTagAttributes = $wrapperTagAttributes->merge(['data-input-counter' => true]);
         }
 
+        $controlAttributes = stencil_merge_described_by($controlAttributes, $this->aware('describedBy'));
+
         return [
             'fieldInvalid' => $fieldInvalid,
             'invalid' => $invalid,

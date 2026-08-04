@@ -7,6 +7,6 @@
         'data-pagination-ellipsis' => true,
     ])
 }}>
-    <span class="text-zinc-500">…</span>
+    <span class="text-zinc-500 dark:text-zinc-400">…</span>
     <span class="sr-only">{{ __('More pages') }}</span>
 </span>

@@ -22,7 +22,7 @@ it('renders outline and size variants', function () {
         ->toContain('data-variant="outline"')
         ->toContain('data-size="sm"')
         ->toContain('border-zinc-200')
-        ->toContain('h-8')
+        ->toContain('h-10')
         ->toContain('aria-pressed="false"');
 });
 

@@ -2,7 +2,11 @@
  * Stencil — time picker (vanilla JS).
  */
 
-import { ensurePanelPortaled, positionAnchoredPanel, restorePanelFromPortal } from '../../../js/ui/anchored-panel.js';
+import {
+    ensurePanelPortaled,
+    positionAnchoredPanel,
+    restorePanelFromPortal,
+} from '../../../js/ui/anchored-panel.js';
 import { formatTimeLabel } from '../../../js/ui/date-timezone.js';
 import { createBindSignal } from '../../../js/ui/lifecycle.js';
 import { acquireBodyScrollLock } from '../../../js/ui/scroll-lock.js';

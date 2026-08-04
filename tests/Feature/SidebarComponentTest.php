@@ -181,5 +181,8 @@ it('tooltip script gates sidebar menu tooltips to icon-collapsed mode', function
     expect($source)
         ->toContain('isSidebarMenuTooltipDisabled')
         ->toContain('data-sidebar-menu-tooltip')
-        ->toContain("dataset.collapsible !== 'icon'");
+        ->toContain("dataset.collapsible !== 'icon'")
+        ->toContain('focusin')
+        ->toContain('focusout')
+        ->toContain('resolveControl');
 });

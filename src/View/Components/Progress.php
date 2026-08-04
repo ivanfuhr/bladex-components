@@ -11,6 +11,7 @@ final class Progress extends StencilComponent
         public int $max = 100,
         public bool $indeterminate = false,
         public mixed $size = null,
+        public ?string $label = null,
     ) {}
 
     protected function stencilView(): string
@@ -23,10 +24,15 @@ final class Progress extends StencilComponent
         $max = max(1, (float) $this->max);
         $value = max(0, min($max, (float) $this->value));
 
+        $percent = $this->indeterminate ? null : round(($value / $max) * 100, 2);
+
         return [
             'resolvedMax' => $max,
             'resolvedValue' => $value,
-            'percent' => $this->indeterminate ? null : round(($value / $max) * 100, 2),
+            'percent' => $percent,
+            'valueText' => $this->indeterminate
+                ? __('Loading')
+                : __(':percent%', ['percent' => (int) round($percent)]),
             'height' => match ($this->size) {
                 'sm' => 'h-1.5',
                 'lg' => 'h-3',

@@ -8,5 +8,7 @@
         'readonly' => true,
         'data-time-picker-trigger' => true,
         'data-time-picker-input' => true,
+        'aria-haspopup' => 'listbox',
+        'aria-expanded' => 'false',
     ])
 }} />

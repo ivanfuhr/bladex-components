@@ -6,9 +6,7 @@
     <x-ui::breadcrumb>
         <x-ui::breadcrumb.list>
             <x-ui::breadcrumb.item class="hidden md:block">
-                <x-ui::breadcrumb.link href="{{ route('playbook.index') }}">
-                    Stencil Playbook
-                </x-ui::breadcrumb.link>
+                <x-ui::breadcrumb.link href="{{ route('playbook.index') }}"> Stencil Playbook </x-ui::breadcrumb.link>
             </x-ui::breadcrumb.item>
             <x-ui::breadcrumb.separator class="hidden md:block" />
             <x-ui::breadcrumb.item class="hidden md:block">

@@ -19,7 +19,12 @@ final class Alert extends StencilComponent
 
     protected function resolveViewData(array $data = []): array
     {
+        $liveRole = in_array($this->variant, ['danger', 'destructive', 'error', 'warning'], true) ? 'alert' : 'status';
+        $liveMode = $liveRole === 'alert' ? 'assertive' : 'polite';
+
         return [
+            'liveRole' => $liveRole,
+            'liveMode' => $liveMode,
             'variantClasses' => match ($this->variant) {
                 'success' => 'border-green-200 bg-green-50 text-green-950 dark:border-green-900 dark:bg-green-950/40 dark:text-green-50',
                 'warning' => 'border-amber-200 bg-amber-50 text-amber-950 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-50',

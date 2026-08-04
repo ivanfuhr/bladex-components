@@ -33,10 +33,12 @@ final class Toast extends StencilComponent
         };
 
         $liveRole = in_array($this->variant, ['danger', 'destructive', 'error'], true) ? 'alert' : 'status';
+        $liveMode = $liveRole === 'alert' ? 'assertive' : 'polite';
 
         return [
             'variantClasses' => $variantClasses,
             'liveRole' => $liveRole,
+            'liveMode' => $liveMode,
         ];
     }
 }

@@ -24,6 +24,8 @@ it('renders initials-only avatar with color', function () {
     expect($html)
         ->toContain('AL')
         ->toContain('bg-violet-100')
+        ->toContain('role="img"')
+        ->toContain('aria-label="Ada Lovelace"')
         ->not->toContain('data-avatar-image');
 });
 

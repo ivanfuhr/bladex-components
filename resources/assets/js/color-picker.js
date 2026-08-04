@@ -6,6 +6,8 @@ import { createBindSignal } from './shared/lifecycle.js';
 import { acquireBodyScrollLock } from './shared/scroll-lock.js';
 
 const COLOR_PICKER_SELECTOR = '[data-color-picker]';
+const FOCUSABLE_SELECTOR =
+    'button:not([disabled]):not([hidden]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 const initialized = new WeakSet();
 const HEX_PATTERN = /^#[0-9a-fA-F]{6}$/;
 
@@ -190,6 +192,50 @@ function parseHexInput(raw) {
 }
 
 /**
+ * @param {HTMLElement} container
+ * @returns {HTMLElement[]}
+ */
+function getFocusableElements(container) {
+    return Array.from(container.querySelectorAll(FOCUSABLE_SELECTOR)).filter(
+        (node) => node instanceof HTMLElement && !node.hasAttribute('hidden'),
+    );
+}
+
+/**
+ * @param {HTMLElement} container
+ */
+function focusFirstIn(container) {
+    const first = getFocusableElements(container)[0];
+
+    if (first instanceof HTMLElement) {
+        first.focus({ preventScroll: true });
+    }
+}
+
+/**
+ * @param {KeyboardEvent} event
+ * @param {HTMLElement} container
+ */
+function trapFocus(event, container) {
+    const focusable = getFocusableElements(container);
+
+    if (focusable.length === 0) {
+        return;
+    }
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+    }
+}
+
+/**
  * @param {HTMLElement} root
  */
 function bindColorPicker(root) {
@@ -222,6 +268,8 @@ function bindColorPicker(root) {
         return;
     }
 
+    const swatchesContainer = popover.querySelector('[data-color-picker-swatches]');
+
     const portalMarker = document.createComment('stencil-color-picker-portal');
     let portalInserted = false;
     const signal = createBindSignal(root);
@@ -233,6 +281,21 @@ function bindColorPicker(root) {
     let hue = 0;
     let saturation = 100;
     let brightness = 100;
+
+    function getSwatchButtons() {
+        return Array.from(popover.querySelectorAll('[data-color-picker-swatch]')).filter(
+            (node) => node instanceof HTMLButtonElement && !node.disabled,
+        );
+    }
+
+    function syncSwatchTabIndex() {
+        const buttons = getSwatchButtons();
+
+        buttons.forEach((button, index) => {
+            const selected = button.dataset.selected === 'true';
+            button.tabIndex = selected || index === 0 ? 0 : -1;
+        });
+    }
 
     /**
      * @param {HTMLElement} target
@@ -301,6 +364,8 @@ function bindColorPicker(root) {
             button.setAttribute('aria-selected', selected ? 'true' : 'false');
             button.dataset.selected = selected ? 'true' : 'false';
         });
+
+        syncSwatchTabIndex();
 
         if (dispatch) {
             dispatchChange(hiddenInput);
@@ -398,6 +463,8 @@ function bindColorPicker(root) {
             syncHsvFromHex(hiddenInput.value || '#000000');
             renderPickerUi();
             positionPopover();
+            syncSwatchTabIndex();
+            focusFirstIn(popover);
         } else {
             releaseScrollLock?.();
             releaseScrollLock = null;
@@ -494,6 +561,40 @@ function bindColorPicker(root) {
         draggingArea = false;
     });
 
+    area.setAttribute('tabindex', '0');
+    area.addEventListener('keydown', (event) => {
+        if (disabled) {
+            return;
+        }
+
+        const step = event.shiftKey ? 10 : 2;
+        let nextSaturation = saturation;
+        let nextBrightness = brightness;
+
+        switch (event.key) {
+            case 'ArrowRight':
+                nextSaturation = Math.min(100, saturation + step);
+                break;
+            case 'ArrowLeft':
+                nextSaturation = Math.max(0, saturation - step);
+                break;
+            case 'ArrowUp':
+                nextBrightness = Math.min(100, brightness + step);
+                break;
+            case 'ArrowDown':
+                nextBrightness = Math.max(0, brightness - step);
+                break;
+            default:
+                return;
+        }
+
+        event.preventDefault();
+        saturation = nextSaturation;
+        brightness = nextBrightness;
+        setValue(hsvToHex(hue, saturation, brightness), { syncPicker: false });
+        renderPickerUi();
+    });
+
     root.querySelectorAll('[data-color-picker-swatch]').forEach((button) => {
         button.addEventListener('click', () => {
             if (disabled || !(button instanceof HTMLButtonElement)) {
@@ -507,6 +608,88 @@ function bindColorPicker(root) {
             }
         });
     });
+
+    if (swatchesContainer instanceof HTMLElement) {
+        swatchesContainer.addEventListener('keydown', (event) => {
+            if (disabled) {
+                return;
+            }
+
+            const buttons = getSwatchButtons();
+
+            if (buttons.length === 0) {
+                return;
+            }
+
+            const currentIndex = buttons.findIndex((button) => button === document.activeElement);
+            const columns = 8;
+
+            /**
+             * @param {number} nextIndex
+             */
+            const focusSwatchAt = (nextIndex) => {
+                const button = buttons[nextIndex];
+
+                if (!(button instanceof HTMLButtonElement)) {
+                    return;
+                }
+
+                buttons.forEach((node, index) => {
+                    node.tabIndex = index === nextIndex ? 0 : -1;
+                });
+                button.focus();
+            };
+
+            switch (event.key) {
+                case 'ArrowRight':
+                    event.preventDefault();
+                    focusSwatchAt(Math.min(currentIndex + 1, buttons.length - 1));
+
+                    return;
+                case 'ArrowLeft':
+                    event.preventDefault();
+                    focusSwatchAt(Math.max(currentIndex - 1, 0));
+
+                    return;
+                case 'ArrowDown':
+                    event.preventDefault();
+                    focusSwatchAt(Math.min(currentIndex + columns, buttons.length - 1));
+
+                    return;
+                case 'ArrowUp':
+                    event.preventDefault();
+                    focusSwatchAt(Math.max(currentIndex - columns, 0));
+
+                    return;
+                case 'Home':
+                    event.preventDefault();
+                    focusSwatchAt(0);
+
+                    return;
+                case 'End':
+                    event.preventDefault();
+                    focusSwatchAt(buttons.length - 1);
+
+                    return;
+                case 'Enter':
+                case ' ':
+                    if (currentIndex >= 0) {
+                        event.preventDefault();
+                        const value = buttons[currentIndex]?.getAttribute(
+                            'data-color-picker-swatch',
+                        );
+
+                        if (value) {
+                            setValue(value);
+                        }
+                    }
+
+                    return;
+                default:
+                    return;
+            }
+        });
+    }
 
     if (dropperButton instanceof HTMLButtonElement && 'EyeDropper' in window) {
         dropperButton.hidden = false;
@@ -556,12 +739,20 @@ function bindColorPicker(root) {
     document.addEventListener(
         'keydown',
         (event) => {
-            if (!open || disabled || event.key !== 'Escape') {
+            if (!open || disabled) {
                 return;
             }
 
-            setOpen(false);
-            swatchTrigger.focus();
+            if (event.key === 'Escape') {
+                setOpen(false);
+                swatchTrigger.focus();
+
+                return;
+            }
+
+            if (event.key === 'Tab') {
+                trapFocus(event, popover);
+            }
         },
         { signal },
     );

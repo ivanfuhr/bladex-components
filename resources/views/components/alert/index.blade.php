@@ -4,7 +4,9 @@
         'relative w-full rounded-xl border px-4 py-3 text-sm',
         $variantClasses,
     ])->merge([
-        'role' => 'alert',
+        'role' => $liveRole,
+        'aria-live' => $liveMode,
+        'aria-atomic' => 'true',
         'data-alert' => true,
         'data-variant' => $variant,
     ])

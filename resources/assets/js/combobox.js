@@ -592,16 +592,6 @@ function bindCombobox(root) {
         });
     }
 
-    input.addEventListener('focus', () => {
-        if (input.disabled) {
-            return;
-        }
-
-        if (!open) {
-            setOpen(true);
-        }
-    });
-
     input.addEventListener('input', () => {
         if (input.disabled) {
             return;

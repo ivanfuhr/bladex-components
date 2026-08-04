@@ -1374,8 +1374,7 @@ function drawCursor(layer, state, plot, scales, activeIndex) {
     const x = scales.xScale(activeIndex);
 
     if (state.cursorConfig.type === 'area') {
-        const slotWidth =
-            state.data.length > 0 ? plot.width / state.data.length : plot.width;
+        const slotWidth = state.data.length > 0 ? plot.width / state.data.length : plot.width;
         path.setAttribute(
             'd',
             `M ${x - slotWidth / 2} ${plot.y} H ${x + slotWidth / 2} V ${plot.y + plot.height} H ${x - slotWidth / 2} Z`,
@@ -1548,7 +1547,9 @@ function updateChartAnnouncer(root, state, activeIndex) {
 
     const parts = [];
 
-    root.querySelectorAll('[data-chart-mounted-tooltip] [data-chart-slot], [data-chart-mounted-summary] [data-chart-slot]').forEach((slot) => {
+    root.querySelectorAll(
+        '[data-chart-mounted-tooltip] [data-chart-slot], [data-chart-mounted-summary] [data-chart-slot]',
+    ).forEach((slot) => {
         if (!(slot instanceof HTMLElement)) {
             return;
         }

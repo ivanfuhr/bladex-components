@@ -10,7 +10,7 @@
             {{ $slot }}
         @endif
         <input
-            {{ $inputAttributes->except(['id', 'role', 'aria-autocomplete', 'aria-expanded', 'aria-haspopup', 'aria-controls', 'autocomplete', 'spellcheck']) }}
+            {{ $inputAttributes }}
             class="combobox__input combobox__input--multiple min-w-[6rem] flex-1 border-0 bg-transparent p-0 text-sm shadow-none focus-visible:ring-0"
             data-combobox-filter-input
             @if ($resolvedPlaceholder) placeholder="{{ $resolvedPlaceholder }}" @endif

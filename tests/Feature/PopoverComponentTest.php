@@ -50,5 +50,6 @@ it('popover script tears down document listeners with createBindSignal', functio
     expect($source)
         ->toContain('createBindSignal')
         ->toContain('{ signal }')
-        ->toContain('stencil:mount');
+        ->toContain('stencil:mount')
+        ->toContain('ensureAriaLabelledBy');
 });

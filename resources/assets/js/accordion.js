@@ -32,6 +32,44 @@ export function initAccordions(root = document) {
 function bindAccordion(accordion) {
     syncItemWiring(accordion);
 
+    const triggers = () =>
+        Array.from(accordion.querySelectorAll(TRIGGER_SELECTOR)).filter(
+            (node) => node instanceof HTMLButtonElement && !node.disabled,
+        );
+
+    accordion.addEventListener('keydown', (event) => {
+        const trigger =
+            event.target instanceof Element ? event.target.closest(TRIGGER_SELECTOR) : null;
+
+        if (!(trigger instanceof HTMLButtonElement) || !accordion.contains(trigger)) {
+            return;
+        }
+
+        const enabled = triggers();
+        const index = enabled.indexOf(trigger);
+
+        if (index < 0) {
+            return;
+        }
+
+        let nextIndex = index;
+
+        if (event.key === 'ArrowDown') {
+            nextIndex = index + 1 >= enabled.length ? 0 : index + 1;
+        } else if (event.key === 'ArrowUp') {
+            nextIndex = index - 1 < 0 ? enabled.length - 1 : index - 1;
+        } else if (event.key === 'Home') {
+            nextIndex = 0;
+        } else if (event.key === 'End') {
+            nextIndex = enabled.length - 1;
+        } else {
+            return;
+        }
+
+        event.preventDefault();
+        enabled[nextIndex]?.focus();
+    });
+
     accordion.addEventListener('click', (event) => {
         const trigger =
             event.target instanceof Element ? event.target.closest(TRIGGER_SELECTOR) : null;

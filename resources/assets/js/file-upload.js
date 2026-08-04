@@ -31,6 +31,7 @@ function bindFileUpload(root) {
     const input = root.querySelector('[data-file-upload-input]');
     const dropzone = root.querySelector('[data-file-upload-dropzone]');
     const list = root.querySelector('[data-file-upload-list]');
+    const status = root.querySelector('[data-file-upload-status]');
     /** @type {HTMLTemplateElement | null} */
     const template = root.querySelector('template[data-file-upload-item-template]');
 
@@ -107,10 +108,25 @@ function bindFileUpload(root) {
     }
 
     /**
+     * @param {string} message
+     */
+    function announce(message) {
+        if (!(status instanceof HTMLElement) || message === '') {
+            return;
+        }
+
+        status.textContent = '';
+        window.requestAnimationFrame(() => {
+            status.textContent = message;
+        });
+    }
+
+    /**
      * @param {FileList | File[] | null | undefined} nextFiles
      * @param {{ append?: boolean }} [options]
      */
     function setFiles(nextFiles, options = {}) {
+        const previousCount = files.length;
         const incoming = Array.from(nextFiles ?? []).filter(
             (file) => file instanceof File && matchesAccept(file, input.accept),
         );
@@ -136,6 +152,17 @@ function bindFileUpload(root) {
         syncInput();
         renderList();
         updateEmptyState();
+
+        const addedCount = Math.max(0, files.length - previousCount);
+
+        if (addedCount > 0) {
+            const label =
+                addedCount === 1 ? (files.at(-1)?.name ?? '1 file') : `${addedCount} files`;
+            announce(`Added ${label}`);
+        } else if (files.length < previousCount) {
+            const removedCount = previousCount - files.length;
+            announce(removedCount === 1 ? 'Removed 1 file' : `Removed ${removedCount} files`);
+        }
     }
 
     /**
@@ -217,10 +244,12 @@ function bindFileUpload(root) {
             return;
         }
 
+        const removedName = files[index]?.name ?? 'file';
         files.splice(index, 1);
         syncInput();
         renderList();
         updateEmptyState();
+        announce(`Removed ${removedName}`);
     }
 
     if (dropzone instanceof HTMLElement) {

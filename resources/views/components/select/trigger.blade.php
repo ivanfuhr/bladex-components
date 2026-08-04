@@ -10,5 +10,6 @@
         name="chevron-down"
         class="{{ $chevronClasses }} text-zinc-500 transition-transform duration-200 group-aria-expanded:rotate-180 dark:text-zinc-400"
         data-select-chevron
+        aria-hidden="true"
     />
 </button>

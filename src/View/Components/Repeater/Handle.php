@@ -42,7 +42,7 @@ final class Handle extends StencilComponent
                 'type' => 'button',
                 'data-repeater-handle' => true,
                 'aria-label' => __('Reorder item'),
-                'tabindex' => '-1',
+                'tabindex' => '0',
             ]);
 
         if ($isDisabled) {

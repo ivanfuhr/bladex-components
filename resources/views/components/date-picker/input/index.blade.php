@@ -8,6 +8,8 @@
             'size' => $size,
             'readonly' => true,
             'data-date-picker-input' => true,
+            'aria-haspopup' => 'dialog',
+            'aria-expanded' => 'false',
         ])
     }} />
     @if ($clearable)

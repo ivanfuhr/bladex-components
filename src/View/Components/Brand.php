@@ -25,8 +25,13 @@ final class Brand extends StencilComponent
      */
     protected function resolveViewData(array $data = []): array
     {
+        $resolvedAlt = filled($this->alt)
+            ? (string) $this->alt
+            : (filled($this->name) ? '' : __('Home'));
+
         return [
             'resolvedLogoDark' => $this->logoDark ?? $this->attributes->get('logo:dark'),
+            'resolvedAlt' => $resolvedAlt,
             'classes' => array_filter([
                 'brand',
                 'flex h-10 items-center me-4',

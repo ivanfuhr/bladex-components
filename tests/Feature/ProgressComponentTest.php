@@ -20,5 +20,15 @@ it('renders an indeterminate progress bar', function () {
 
     expect($html)
         ->toContain('data-indeterminate="true"')
+        ->toContain('aria-valuetext="Loading"')
+        ->toContain('aria-busy="true"')
         ->not->toContain('aria-valuenow');
+});
+
+it('renders an accessible label and value text', function () {
+    $html = Blade::render('<x-ui::progress :value="40" label="Upload progress" />');
+
+    expect($html)
+        ->toContain('aria-label="Upload progress"')
+        ->toContain('aria-valuetext="40%"');
 });

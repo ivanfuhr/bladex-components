@@ -521,6 +521,33 @@ function bindRepeater(root) {
                 item.classList.remove('opacity-60');
                 draggedItem = null;
             });
+
+            handle.addEventListener('keydown', (event) => {
+                if (disabled) {
+                    return;
+                }
+
+                const itemsBefore = items();
+                const index = itemsBefore.indexOf(item);
+
+                if (index < 0) {
+                    return;
+                }
+
+                if (event.key === 'ArrowUp' && index > 0) {
+                    event.preventDefault();
+                    itemsBefore[index - 1].before(item);
+                    reindex();
+                    dispatchChange(root);
+                    handle.focus();
+                } else if (event.key === 'ArrowDown' && index < itemsBefore.length - 1) {
+                    event.preventDefault();
+                    itemsBefore[index + 1].after(item);
+                    reindex();
+                    dispatchChange(root);
+                    handle.focus();
+                }
+            });
         });
     }
 

@@ -7,6 +7,7 @@
         'data-table-head' => true,
         'data-sortable' => $sortable ? 'true' : null,
         'data-sorted' => $sorted ? 'true' : null,
+        'scope' => 'col',
         'aria-sort' => $sorted ? ($direction === 'desc' ? 'descending' : 'ascending') : ($sortable ? 'none' : null),
     ])
 }}>

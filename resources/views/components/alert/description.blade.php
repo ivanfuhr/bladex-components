@@ -1,7 +1,7 @@
 <div {{
     $attributes->class([
         'alert__description',
-        'text-sm opacity-90',
+        'text-sm',
     ])->merge([
         'data-alert-description' => true,
     ])

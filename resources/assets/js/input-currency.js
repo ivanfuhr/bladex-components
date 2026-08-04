@@ -102,6 +102,44 @@ function bindInputCurrency(root) {
 
     let minorUnits = readInitialMinor();
 
+    if (mode === 'decimal') {
+        /**
+         * @param {string} text
+         */
+        function parseDecimal(text) {
+            const normalized = text
+                .trim()
+                .replace(/[^\d.,-]/g, '')
+                .replace(',', '.');
+            const parsed = Number.parseFloat(normalized);
+
+            return Number.isFinite(parsed) ? Math.max(0, parsed) : null;
+        }
+
+        function syncFromDecimal(amount) {
+            if (amount === null || amount <= 0) {
+                hidden.value = '';
+                display.value = '';
+
+                return;
+            }
+
+            hidden.value = amount.toFixed(precision);
+            display.value = formatter.format(amount);
+        }
+
+        display.addEventListener('blur', () => {
+            syncFromDecimal(parseDecimal(display.value));
+        });
+
+        display.addEventListener('input', () => {
+            const amount = parseDecimal(display.value);
+            hidden.value = amount === null ? '' : amount.toFixed(precision);
+        });
+
+        return;
+    }
+
     if (mode !== 'cents') {
         return;
     }

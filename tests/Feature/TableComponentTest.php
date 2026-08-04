@@ -28,6 +28,7 @@ it('renders a table with caption header body and cells', function () {
         ->toContain('<table')
         ->toContain('Invoices')
         ->toContain('data-table-head')
+        ->toContain('scope="col"')
         ->toContain('aria-sort="descending"')
         ->toContain('INV001')
         ->toContain('data-variant="strong"')

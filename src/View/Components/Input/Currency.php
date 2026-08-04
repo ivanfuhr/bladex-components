@@ -112,6 +112,8 @@ final class Currency extends StencilComponent
             $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);
         }
 
+        $controlAttributes = stencil_merge_described_by($controlAttributes, $this->aware('describedBy'));
+
         return [
             'mode' => $mode,
             'localeForJs' => $localeForJs,
