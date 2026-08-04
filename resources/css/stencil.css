@@ -187,4 +187,12 @@
             width: 50%;
         }
     }
+
+    .stepper__list > .stepper__item:first-child .stepper__connector-start {
+        display: none;
+    }
+
+    .stepper__list > .stepper__item:last-child .stepper__separator {
+        display: none;
+    }
 }

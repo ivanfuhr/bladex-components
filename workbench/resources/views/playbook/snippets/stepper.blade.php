@@ -9,6 +9,7 @@
     $item = PlaybookCode::component('stepper.item');
     $trigger = PlaybookCode::component('stepper.trigger');
     $indicator = PlaybookCode::component('stepper.indicator');
+    $label = PlaybookCode::component('stepper.label');
     $title = PlaybookCode::component('stepper.title');
     $description = PlaybookCode::component('stepper.description');
     $separator = PlaybookCode::component('stepper.separator');
@@ -29,7 +30,10 @@
     ])."\n";
     $code .= '            <'.$trigger.'>'."\n";
     $code .= '                <'.$indicator.' />'."\n";
-    $code .= '                <'.$title.'>Account'.PlaybookCode::closingTag($title)."\n";
+    $code .= '                <'.$label.'>'."\n";
+    $code .= '                    <'.$title.'>Account'.PlaybookCode::closingTag($title)."\n";
+    $code .= '                    <'.$description.'>Profile details'.PlaybookCode::closingTag($description)."\n";
+    $code .= '                </'.$label.'>'."\n";
     $code .= '            </'.$trigger.'>'."\n";
     $code .= '            <'.$separator.' />'."\n";
     $code .= '        </'.$item.'>'."\n";
@@ -39,7 +43,9 @@
     ])."\n";
     $code .= '            <'.$trigger.'>'."\n";
     $code .= '                <'.$indicator.' />'."\n";
-    $code .= '                <'.$title.'>Workspace'.PlaybookCode::closingTag($title)."\n";
+    $code .= '                <'.$label.'>'."\n";
+    $code .= '                    <'.$title.'>Workspace'.PlaybookCode::closingTag($title)."\n";
+    $code .= '                </'.$label.'>'."\n";
     $code .= '            </'.$trigger.'>'."\n";
     $code .= '        </'.$item.'>'."\n";
     $code .= '    </'.$list.'>'."\n";

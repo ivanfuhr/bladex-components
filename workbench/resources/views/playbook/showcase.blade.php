@@ -978,33 +978,33 @@ FORM: Established playbook surface extension (Operate); seed n/a.
                                                 <x-ui::stepper.item value="profile" :step="1">
                                                     <x-ui::stepper.trigger>
                                                         <x-ui::stepper.indicator />
-                                                        <span class="space-y-0.5">
+                                                        <x-ui::stepper.label>
                                                             <x-ui::stepper.title>Profile</x-ui::stepper.title>
                                                             <x-ui::stepper.description>
                                                                 Event details complete</x-ui::stepper.description>
-                                                        </span>
+                                                        </x-ui::stepper.label>
                                                     </x-ui::stepper.trigger>
                                                     <x-ui::stepper.separator />
                                                 </x-ui::stepper.item>
                                                 <x-ui::stepper.item value="tickets" :step="2">
                                                     <x-ui::stepper.trigger>
                                                         <x-ui::stepper.indicator />
-                                                        <span class="space-y-0.5">
+                                                        <x-ui::stepper.label>
                                                             <x-ui::stepper.title>Tickets</x-ui::stepper.title>
                                                             <x-ui::stepper.description>
                                                                 Pricing and capacity</x-ui::stepper.description>
-                                                        </span>
+                                                        </x-ui::stepper.label>
                                                     </x-ui::stepper.trigger>
                                                     <x-ui::stepper.separator />
                                                 </x-ui::stepper.item>
                                                 <x-ui::stepper.item value="review" :step="3">
                                                     <x-ui::stepper.trigger>
                                                         <x-ui::stepper.indicator />
-                                                        <span class="space-y-0.5">
+                                                        <x-ui::stepper.label>
                                                             <x-ui::stepper.title>Review</x-ui::stepper.title>
                                                             <x-ui::stepper.description>
                                                                 Final publish check</x-ui::stepper.description>
-                                                        </span>
+                                                        </x-ui::stepper.label>
                                                     </x-ui::stepper.trigger>
                                                 </x-ui::stepper.item>
                                             </x-ui::stepper.list>

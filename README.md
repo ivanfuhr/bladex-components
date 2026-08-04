@@ -1595,8 +1595,10 @@ Multi-step wizard indicator ([Filament Wizard](https://filamentphp.com/docs/3.x/
         <x-ui::stepper.item value="account" :step="1">
             <x-ui::stepper.trigger>
                 <x-ui::stepper.indicator />
-                <x-ui::stepper.title>Account</x-ui::stepper.title>
-                <x-ui::stepper.description>Profile details</x-ui::stepper.description>
+                <x-ui::stepper.label>
+                    <x-ui::stepper.title>Account</x-ui::stepper.title>
+                    <x-ui::stepper.description>Profile details</x-ui::stepper.description>
+                </x-ui::stepper.label>
             </x-ui::stepper.trigger>
             <x-ui::stepper.separator />
         </x-ui::stepper.item>

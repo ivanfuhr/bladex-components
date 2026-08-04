@@ -15,30 +15,30 @@
                 <x-ui::stepper.item value="account" :step="1" :completed="true">
                     <x-ui::stepper.trigger>
                         <x-ui::stepper.indicator />
-                        <span class="space-y-0.5 text-left">
+                        <x-ui::stepper.label>
                             <x-ui::stepper.title>Account</x-ui::stepper.title>
                             <x-ui::stepper.description>Owner details</x-ui::stepper.description>
-                        </span>
+                        </x-ui::stepper.label>
                     </x-ui::stepper.trigger>
                     <x-ui::stepper.separator />
                 </x-ui::stepper.item>
                 <x-ui::stepper.item value="workspace" :step="2">
                     <x-ui::stepper.trigger>
                         <x-ui::stepper.indicator />
-                        <span class="space-y-0.5 text-left">
+                        <x-ui::stepper.label>
                             <x-ui::stepper.title>Workspace</x-ui::stepper.title>
                             <x-ui::stepper.description>Name and region</x-ui::stepper.description>
-                        </span>
+                        </x-ui::stepper.label>
                     </x-ui::stepper.trigger>
                     <x-ui::stepper.separator />
                 </x-ui::stepper.item>
                 <x-ui::stepper.item value="review" :step="3">
                     <x-ui::stepper.trigger>
                         <x-ui::stepper.indicator />
-                        <span class="space-y-0.5 text-left">
+                        <x-ui::stepper.label>
                             <x-ui::stepper.title>Review</x-ui::stepper.title>
                             <x-ui::stepper.description>Confirm setup</x-ui::stepper.description>
-                        </span>
+                        </x-ui::stepper.label>
                     </x-ui::stepper.trigger>
                 </x-ui::stepper.item>
             </x-ui::stepper.list>
