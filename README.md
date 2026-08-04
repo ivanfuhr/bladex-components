@@ -22,7 +22,7 @@
 
 | 🧩 **Components** | 📖 **Guide** | 🛠 **Project** |
 | :--- | :--- | :--- |
-| [Button](#button) · [Button Group](#button-group) · [Toggle](#toggle) · [Toggle Group](#toggle-group) · [Input](#input) · [Label](#label) · [Field](#field) · [Textarea](#textarea) · [Checkbox](#checkbox) · [Radio](#radio) · [Switch](#switch) · [Select](#select) · [Dialog](#dialog) · [Command](#command) · [Accordion](#accordion) · [Sidebar](#sidebar) · [Collapsible](#collapsible) · [Avatar](#avatar) · [Badge](#badge) · [Breadcrumb](#breadcrumb) · [Card](#card) · [Stat](#stat) · [Chart](#chart) · [Dropdown Menu](#dropdown-menu) · [Separator](#separator) · [Skeleton](#skeleton) · [Empty](#empty) · [Tabs](#tabs) · [Stepper](#stepper) · [Tooltip](#tooltip) · [Toast](#toast) · [Progress](#progress) · [Alert](#alert) · [Table](#table) · [Typography](#typography) · [Icons](#icons) | [Installation](#installation) · [Usage](#usage) · [Assets](#assets) · [Tailwind](#tailwind-css) · [Playbook](#development) | [Changelog](CHANGELOG.md) · [Contributing](.github/CONTRIBUTING.md) · [Security](.github/SECURITY.md) · [License](LICENSE.md) |
+| [Button](#button) · [Button Group](#button-group) · [Toggle](#toggle) · [Toggle Group](#toggle-group) · [Input](#input) · [Label](#label) · [Field](#field) · [Textarea](#textarea) · [Checkbox](#checkbox) · [Radio](#radio) · [Switch](#switch) · [Select](#select) · [Dialog](#dialog) · [Command](#command) · [Accordion](#accordion) · [Brand](#brand) · [Sidebar](#sidebar) · [Collapsible](#collapsible) · [Avatar](#avatar) · [Badge](#badge) · [Breadcrumb](#breadcrumb) · [Card](#card) · [Stat](#stat) · [Chart](#chart) · [Dropdown Menu](#dropdown-menu) · [Separator](#separator) · [Skeleton](#skeleton) · [Empty](#empty) · [Tabs](#tabs) · [Stepper](#stepper) · [Tooltip](#tooltip) · [Toast](#toast) · [Progress](#progress) · [Alert](#alert) · [Table](#table) · [Typography](#typography) · [Icons](#icons) | [Installation](#installation) · [Usage](#usage) · [Assets](#assets) · [Tailwind](#tailwind-css) · [Playbook](#development) | [Changelog](CHANGELOG.md) · [Contributing](.github/CONTRIBUTING.md) · [Security](.github/SECURITY.md) · [License](LICENSE.md) |
 
 <br>
 
@@ -1156,9 +1156,27 @@ Accessible vertically stacked disclosures ([shadcn Accordion](https://ui.shadcn.
 
 <br>
 
+## Brand
+
+Application logo and name for headers and navbars ([Flux brand](https://fluxui.dev/components/brand)). Props include `name`, `logo`, `logo-dark` / `logoDark`, `alt`, and `href` (default `/`). Use the `logo` slot for custom markup such as monograms or icons.
+
+```blade
+<x-ui::header>
+    <x-ui::brand href="/" name="Acme Inc." logo="/logo.svg" alt="Acme" />
+
+    <x-ui::brand href="/" name="Launchpad">
+        <x-slot:logo>
+            <span class="text-xs font-bold">A</span>
+        </x-slot:logo>
+    </x-ui::brand>
+</x-ui::header>
+```
+
+<br>
+
 ## Sidebar
 
-Composable app-shell navigation ([shadcn Sidebar](https://ui.shadcn.com/docs/components/sidebar), [Flux sidebar](https://fluxui.dev/components/sidebar)). Subcomponents include `provider`, `trigger`, `inset`, `header`, `footer`, `content`, `group`, `group-label`, `group-content`, `group-action`, `menu`, `menu-item`, `menu-button`, `menu-action`, `menu-badge`, `menu-sub`, `menu-sub-item`, `menu-sub-button`, `separator`, `rail`, and `backdrop`. Collapse modes: `offcanvas`, `icon`, `none`. Open state persists in `localStorage` (not cookies). `stencil:add sidebar` copies `sidebar.js` and the `panel-left` icon.
+Composable app-shell navigation ([shadcn Sidebar](https://ui.shadcn.com/docs/components/sidebar), [Flux sidebar](https://fluxui.dev/components/sidebar)). Subcomponents include `provider`, `trigger`, `inset`, `header`, `footer`, `content`, `group`, `group-label`, `group-content`, `group-action`, `menu`, `menu-item`, `menu-button`, `menu-action`, `menu-badge`, `menu-sub`, `menu-sub-item`, `menu-sub-button`, `brand`, `separator`, `rail`, and `backdrop`. The `sidebar.brand` subcomponent accepts the same `logo`, `logo-dark`, `alt`, and `logo` slot API as `x-ui::brand`. Collapse modes: `offcanvas`, `icon`, `none`. Open state persists in `localStorage` (not cookies). `stencil:add sidebar` copies `sidebar.js` and the `panel-left` icon.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/sidebar-dark.png">
@@ -1170,6 +1188,11 @@ Composable app-shell navigation ([shadcn Sidebar](https://ui.shadcn.com/docs/com
 <x-ui::sidebar.provider>
     <x-ui::sidebar collapsible="icon">
         <x-ui::sidebar.header>
+            <x-ui::sidebar.brand href="/" name="Acme Inc.">
+                <x-slot:logo>
+                    <span class="text-xs font-bold">A</span>
+                </x-slot:logo>
+            </x-ui::sidebar.brand>
             <x-ui::sidebar.menu>
                 <x-ui::sidebar.menu-item>
                     <x-ui::sidebar.menu-button href="/" class="font-semibold">Acme</x-ui::sidebar.menu-button>

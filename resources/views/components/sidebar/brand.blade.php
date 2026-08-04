@@ -1,3 +1,10 @@
+@php
+    $hasSlotLogo = isset($logo) && $logo instanceof \Illuminate\View\ComponentSlot;
+    $hasUrlLogo = filled($logo) && ! $hasSlotLogo;
+    $hasDarkLogo = filled($resolvedLogoDark ?? null);
+    $showLogo = $hasSlotLogo || $hasUrlLogo || $hasDarkLogo;
+@endphp
+
 @if ($useLink)
     <a
         href="{{ $href }}"
@@ -7,15 +14,27 @@
             ])
         }}
     >
-        @if (isset($logo))
-            <span class="flex size-8 shrink-0 items-center justify-center rounded-lg bg-zinc-900 text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900">
-                {{ $logo }}
-            </span>
+        @if ($showLogo)
+            @if ($hasSlotLogo)
+                @include('stencil::components.brand.logo-media', [
+                    'logo' => $logo,
+                    'logoDark' => $resolvedLogoDark,
+                    'alt' => $alt,
+                    'logoWrapperClasses' => $slotLogoWrapperClasses,
+                    'imageClasses' => $imageClasses,
+                ])
+            @else
+                @include('stencil::components.brand.logo-media', [
+                    'logo' => $logo,
+                    'logoDark' => $resolvedLogoDark,
+                    'alt' => $alt,
+                    'logoWrapperClasses' => $urlLogoWrapperClasses,
+                    'imageClasses' => $imageClasses,
+                ])
+            @endif
         @endif
         @if (filled($name))
-            <span
-                class="truncate text-sm font-semibold tracking-tight text-zinc-950 group-data-[collapsible=icon]:hidden dark:text-zinc-50"
-            >
+            <span class="truncate text-sm font-semibold tracking-tight text-zinc-950 group-data-[collapsible=icon]:hidden dark:text-zinc-50">
                 {{ $name }}
             </span>
         @endif
@@ -27,15 +46,27 @@
             'data-sidebar-brand' => true,
         ])
     }}>
-        @if (isset($logo))
-            <span class="flex size-8 shrink-0 items-center justify-center rounded-lg bg-zinc-900 text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900">
-                {{ $logo }}
-            </span>
+        @if ($showLogo)
+            @if ($hasSlotLogo)
+                @include('stencil::components.brand.logo-media', [
+                    'logo' => $logo,
+                    'logoDark' => $resolvedLogoDark,
+                    'alt' => $alt,
+                    'logoWrapperClasses' => $slotLogoWrapperClasses,
+                    'imageClasses' => $imageClasses,
+                ])
+            @else
+                @include('stencil::components.brand.logo-media', [
+                    'logo' => $logo,
+                    'logoDark' => $resolvedLogoDark,
+                    'alt' => $alt,
+                    'logoWrapperClasses' => $urlLogoWrapperClasses,
+                    'imageClasses' => $imageClasses,
+                ])
+            @endif
         @endif
         @if (filled($name))
-            <span
-                class="truncate text-sm font-semibold tracking-tight text-zinc-950 group-data-[collapsible=icon]:hidden dark:text-zinc-50"
-            >
+            <span class="truncate text-sm font-semibold tracking-tight text-zinc-950 group-data-[collapsible=icon]:hidden dark:text-zinc-50">
                 {{ $name }}
             </span>
         @endif

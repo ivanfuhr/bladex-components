@@ -78,6 +78,7 @@ final class PlaybookRegistry
                 'pagination',
                 'accordion',
                 'collapsible',
+                'brand',
                 'sidebar',
             ],
         ],
@@ -252,6 +253,7 @@ final class PlaybookRegistry
             $this->command(),
             $this->accordion(),
             $this->collapsible(),
+            $this->brand(),
             $this->sidebar(),
             $this->avatar(),
             $this->badge(),
@@ -1062,6 +1064,26 @@ final class PlaybookRegistry
                 'transition' => true,
             ],
             previewView: 'workbench::playbook.previews.collapsible',
+        );
+    }
+
+    private function brand(): ComponentPlaybook
+    {
+        return new ComponentPlaybook(
+            slug: 'brand',
+            title: 'Brand',
+            description: 'Application logo and name for headers and navbars. Supports image URLs, dark-mode logos, and a custom logo slot.',
+            controls: [
+                new PlaybookControl('name', 'Name', 'text', [], 'Stencil Inc.'),
+                new PlaybookControl('href', 'Href', 'text', [], '/'),
+                new PlaybookControl('use_logo_url', 'Use logo URL', 'checkbox', [], false),
+            ],
+            defaultState: [
+                'name' => 'Stencil Inc.',
+                'href' => '/',
+                'use_logo_url' => false,
+            ],
+            previewView: 'workbench::playbook.previews.brand',
         );
     }
 

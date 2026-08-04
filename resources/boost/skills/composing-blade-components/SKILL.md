@@ -201,6 +201,22 @@ Ship flexible Blade components that consumers assemble from small pieces, while 
 </x-ui::input.group>
 ```
 
+### Brand (logo slot + image URLs)
+
+```blade
+<x-ui::header>
+    <x-ui::brand href="/" name="Acme Inc." logo="/logo.svg" logo-dark="/logo-dark.svg" alt="Acme" />
+
+    <x-ui::brand href="/" name="Launchpad">
+        <x-slot:logo>
+            <span class="text-xs font-bold">L</span>
+        </x-slot:logo>
+    </x-ui::brand>
+</x-ui::header>
+
+<x-ui::sidebar.brand href="/" name="Acme Inc." logo="/logo.svg" />
+```
+
 ### Color picker (shortcut + full composition)
 
 ```blade

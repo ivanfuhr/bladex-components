@@ -112,3 +112,30 @@ it('renders sidebar brand, spacer, and collapse controls', function () {
         ->toContain('Acme Inc.')
         ->toContain('Content');
 });
+
+it('renders sidebar brand with logo url and dark variant', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-ui::sidebar.provider>
+            <x-ui::sidebar collapsible="icon">
+                <x-ui::sidebar.header>
+                    <x-ui::sidebar.brand
+                        href="/"
+                        name="Acme Inc."
+                        logo="/logo-light.svg"
+                        logo-dark="/logo-dark.svg"
+                        alt="Acme"
+                    />
+                </x-ui::sidebar.header>
+            </x-ui::sidebar>
+        </x-ui::sidebar.provider>
+    BLADE);
+
+    expect($html)
+        ->toContain('data-sidebar-brand')
+        ->toContain('Acme Inc.')
+        ->toContain('src="/logo-light.svg"')
+        ->toContain('src="/logo-dark.svg"')
+        ->toContain('alt="Acme"')
+        ->toContain('dark:hidden')
+        ->toContain('hidden dark:block');
+});

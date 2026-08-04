@@ -44,6 +44,7 @@ final class PlaybookMediaController
         'slider',
         'accordion',
         'collapsible',
+        'brand',
         'avatar',
         'badge',
         'breadcrumb',
