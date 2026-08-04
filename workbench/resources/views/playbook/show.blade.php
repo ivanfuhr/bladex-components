@@ -116,12 +116,19 @@
 
                     <div
                         id="playbook-canvas"
-                        class="playbook-stage mt-4 flex min-h-[min(20rem,45vh)] items-start justify-center overflow-visible rounded-2xl border border-zinc-200/80 bg-white p-6 shadow-sm ring-1 ring-zinc-950/5 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900/50 dark:ring-white/5"
+                        class="playbook-stage mt-4"
                         x-bind:aria-busy="loading.toString()"
                     >
                         <div
+                            class="playbook-stage__loading"
+                            x-show="loading"
+                            x-cloak
+                            aria-hidden="true"
+                        ></div>
+
+                        <div
                             @class([
-                                'w-full',
+                                'playbook-stage__viewport',
                                 'max-w-md' => ! $playbook->wide,
                                 'max-w-5xl' => $playbook->wide,
                             ])
