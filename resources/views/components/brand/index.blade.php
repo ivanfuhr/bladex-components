@@ -3,7 +3,7 @@
         'data-brand' => true,
     ])
 }}>
-    @include('stencil::components.brand.logo-media', [
+    @include('std-components::components.brand.logo-media', [
         'logo' => $logo,
         'logoDark' => $resolvedLogoDark,
         'alt' => $resolvedAlt,

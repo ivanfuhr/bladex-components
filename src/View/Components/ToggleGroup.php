@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class ToggleGroup extends StencilComponent
+final class ToggleGroup extends StdComponent
 {
     public function __construct(
         public mixed $type = 'single',
@@ -16,9 +16,9 @@ final class ToggleGroup extends StencilComponent
         public bool $disabled = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.toggle-group.index';
+        return 'std-components::components.toggle-group.index';
     }
 
     /**

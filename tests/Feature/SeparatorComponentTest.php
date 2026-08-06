@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Blade;
 
 it('renders a horizontal decorative separator by default', function () {
-    $html = Blade::render('<x-ui::separator />');
+    $html = Blade::render('<x-std::separator />');
 
     expect($html)
         ->toContain('data-separator')
@@ -15,7 +15,7 @@ it('renders a horizontal decorative separator by default', function () {
 });
 
 it('renders a semantic vertical separator', function () {
-    $html = Blade::render('<x-ui::separator orientation="vertical" :decorative="false" />');
+    $html = Blade::render('<x-std::separator orientation="vertical" :decorative="false" />');
 
     expect($html)
         ->toContain('data-orientation="vertical"')

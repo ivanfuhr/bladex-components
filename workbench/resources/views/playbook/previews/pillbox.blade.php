@@ -5,7 +5,7 @@
     $value = ['laravel', 'php', 'blade'];
 @endphp
 
-<x-ui::pillbox
+<x-std::pillbox
     name="tags"
     :value="$value"
     :max="$max"

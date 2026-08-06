@@ -1,5 +1,5 @@
 /**
- * Stencil — accessible tabs (vanilla JS, no Alpine).
+ * Std Components — accessible tabs (vanilla JS, no Alpine).
  */
 
 const TABS_SELECTOR = '[data-tabs]';
@@ -57,7 +57,7 @@ function bindTabs(root) {
         });
 
         root.dispatchEvent(
-            new CustomEvent('stencil:tabs:change', {
+            new CustomEvent('std:tabs:change', {
                 bubbles: true,
                 detail: { value },
             }),
@@ -130,7 +130,7 @@ function bindTabs(root) {
     });
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

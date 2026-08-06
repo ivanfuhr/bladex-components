@@ -7,7 +7,7 @@
     $separated = (bool) ($state['separated'] ?? true);
 @endphp
 
-<x-ui::input-otp
+<x-std::input-otp
     name="code"
     :length="$length"
     :mode="$mode"

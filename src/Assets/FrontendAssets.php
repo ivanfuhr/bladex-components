@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\Assets;
+namespace Ivanfuhr\StdComponents\Assets;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
@@ -17,42 +17,42 @@ class FrontendAssets
     public function boot(): void
     {
         Route::get(self::scriptPath(), [self::class, 'returnJavaScriptAsFile'])
-            ->name('stencil.scripts');
+            ->name('std-components.scripts');
 
         Route::get(self::stylePath(), [self::class, 'returnStylesheetAsFile'])
-            ->name('stencil.styles');
+            ->name('std-components.styles');
 
-        Blade::directive('stencilScripts', static function (?string $expression = null) {
+        Blade::directive('stdScripts', static function (?string $expression = null) {
             $expression = $expression ?? '';
 
-            return '<?php echo \\Ivanfuhr\\Stencil\\Assets\\FrontendAssets::scripts('.$expression.'); ?>';
+            return '<?php echo \\Ivanfuhr\\StdComponents\\Assets\\FrontendAssets::scripts('.$expression.'); ?>';
         });
 
-        Blade::directive('stencilStyles', static function (?string $expression = null) {
+        Blade::directive('stdStyles', static function (?string $expression = null) {
             $expression = $expression ?? '';
 
-            return '<?php echo \\Ivanfuhr\\Stencil\\Assets\\FrontendAssets::styles('.$expression.'); ?>';
+            return '<?php echo \\Ivanfuhr\\StdComponents\\Assets\\FrontendAssets::styles('.$expression.'); ?>';
         });
     }
 
     public static function scriptPath(): string
     {
-        return '/stencil/stencil.js';
+        return '/std-components/std-components.js';
     }
 
     public static function stylePath(): string
     {
-        return '/stencil/stencil.css';
+        return '/std-components/std-components.css';
     }
 
     public static function javaScriptPath(): string
     {
-        return dirname(__DIR__, 2).'/resources/dist/stencil.js';
+        return dirname(__DIR__, 2).'/resources/dist/std-components.js';
     }
 
     public static function stylesheetPath(): string
     {
-        return dirname(__DIR__, 2).'/resources/css/stencil.css';
+        return dirname(__DIR__, 2).'/resources/css/std-components.css';
     }
 
     public static function returnJavaScriptAsFile(): BinaryFileResponse

@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Combobox;
+namespace Ivanfuhr\StdComponents\View\Components\Combobox;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Item extends StencilComponent
+final class Item extends StdComponent
 {
     public function __construct(
         public mixed $value = null,
         public bool $disabled = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.combobox.item';
+        return 'std-components::components.combobox.item';
     }
 
     /**
@@ -24,9 +24,9 @@ final class Item extends StencilComponent
      */
     protected function resolveViewData(array $data = []): array
     {
-        $size = stencil_ancestor_attribute('size');
-        $comboboxId = stencil_ancestor_attribute('comboboxId');
-        $name = stencil_ancestor_attribute('name');
+        $size = std_ancestor_attribute('size');
+        $comboboxId = std_ancestor_attribute('comboboxId');
+        $name = std_ancestor_attribute('name');
 
         $resolvedComboboxId = filled($comboboxId)
             ? $comboboxId
@@ -34,7 +34,7 @@ final class Item extends StencilComponent
 
         $itemClasses = collect([
             'combobox__item',
-            stencil_select_option_classes($size),
+            std_select_option_classes($size),
             'aria-selected:font-medium',
             '[&[aria-selected=true]_[data-combobox-item-check]]:opacity-100',
         ])->implode(' ');

@@ -10,8 +10,8 @@
     };
 @endphp
 
-<x-ui::grid md="3" gap="4" class="w-full max-w-3xl">
-    <x-ui::stat
+<x-std::grid md="3" gap="4" class="w-full max-w-3xl">
+    <x-std::stat
         :variant="$variant"
         label="Open tickets"
         value="128"
@@ -20,7 +20,7 @@
         description="vs last 7 days"
         :icon="$showIcon ? 'file' : null"
     />
-    <x-ui::stat
+    <x-std::stat
         :variant="$variant"
         label="Avg. response"
         value="2.4h"
@@ -29,7 +29,7 @@
         description="First reply time"
         :icon="$showIcon ? 'clock' : null"
     />
-    <x-ui::stat
+    <x-std::stat
         :variant="$variant"
         label="Resolved"
         value="86%"
@@ -38,4 +38,4 @@
         description="This week"
         :icon="$showIcon ? 'check' : null"
     />
-</x-ui::grid>
+</x-std::grid>

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Sidebar extends StencilComponent
+final class Sidebar extends StdComponent
 {
     public function __construct(
         public mixed $side = 'left',
@@ -12,9 +12,9 @@ final class Sidebar extends StencilComponent
         public mixed $collapsible = 'offcanvas',
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.sidebar.index';
+        return 'std-components::components.sidebar.index';
     }
 
     /**

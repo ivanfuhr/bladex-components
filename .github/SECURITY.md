@@ -8,4 +8,4 @@ Only the latest major version receives security fixes.
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability within Stencil, please send an email to Ivan Führ at dev.ivanfuhr@gmail.com. All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within Std Components, please send an email to Ivan Führ at dev.ivanfuhr@gmail.com. All security vulnerabilities will be promptly addressed.

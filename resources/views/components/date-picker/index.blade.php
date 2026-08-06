@@ -22,19 +22,19 @@
         @if (isset($trigger))
             {{ $trigger }}
         @elseif ($type === 'input')
-            <x-ui::date-picker.input :$placeholder :$invalid :$disabled :$clearable :$size :panel-id="$panelId" />
+            <x-std::date-picker.input :$placeholder :$invalid :$disabled :$clearable :$size :panel-id="$panelId" />
         @else
-            <x-ui::date-picker.button :$placeholder :$invalid :$disabled :$clearable :$size :panel-id="$panelId" />
+            <x-std::date-picker.button :$placeholder :$invalid :$disabled :$clearable :$size :panel-id="$panelId" />
         @endif
 
-        <x-ui::date-picker.panel :$range :panel-id="$panelId">
+        <x-std::date-picker.panel :$range :panel-id="$panelId">
             @if ($withPresets && $presetMeta !== [])
-                <x-ui::date-picker.presets :preset-meta="$presetMeta">
+                <x-std::date-picker.presets :preset-meta="$presetMeta">
                     @if ($withInputs)
-                        <x-ui::date-picker.manual-inputs />
+                        <x-std::date-picker.manual-inputs />
                     @endif
 
-                    <x-ui::calendar
+                    <x-std::calendar
                         :mode="$mode"
                         :months="$monthCount"
                         :value="$resolvedValue"
@@ -54,14 +54,14 @@
                         :min-range="$minRange"
                         :max-range="$maxRange"
                     />
-                </x-ui::date-picker.presets>
+                </x-std::date-picker.presets>
             @else
                 <div class="min-w-0">
                     @if ($withInputs)
-                        <x-ui::date-picker.manual-inputs />
+                        <x-std::date-picker.manual-inputs />
                     @endif
 
-                    <x-ui::calendar
+                    <x-std::calendar
                         :mode="$mode"
                         :months="$monthCount"
                         :value="$resolvedValue"
@@ -85,9 +85,9 @@
             @endif
 
             @if ($withConfirmation)
-                <x-ui::date-picker.footer :$range />
+                <x-std::date-picker.footer :$range />
             @endif
-        </x-ui::date-picker.panel>
+        </x-std::date-picker.panel>
     @else
         {{ $slot }}
     @endif

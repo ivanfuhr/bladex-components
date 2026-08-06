@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\InputOtp;
+namespace Ivanfuhr\StdComponents\View\Components\InputOtp;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Slot extends StencilComponent
+final class Slot extends StdComponent
 {
     public function __construct(
         public int $index = 0,
@@ -19,9 +19,9 @@ final class Slot extends StencilComponent
         public mixed $controlId = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.input-otp.slot';
+        return 'std-components::components.input-otp.slot';
     }
 
     /**
@@ -30,16 +30,16 @@ final class Slot extends StencilComponent
      */
     protected function resolveViewData(array $data = []): array
     {
-        $fieldInvalid = (bool) stencil_ancestor_attribute('fieldInvalid', false);
-        $name = stencil_ancestor_attribute('name');
-        $isInvalid = $this->invalid || $fieldInvalid || stencil_field_has_errors($name);
+        $fieldInvalid = (bool) std_ancestor_attribute('fieldInvalid', false);
+        $name = std_ancestor_attribute('name');
+        $isInvalid = $this->invalid || $fieldInvalid || std_field_has_errors($name);
 
         $index = max(0, $this->index);
-        $length = max(1, (int) ($this->length ?? stencil_ancestor_attribute('length', 6)));
-        $mode = $this->mode ?? stencil_ancestor_attribute('mode', 'numeric');
+        $length = max(1, (int) ($this->length ?? std_ancestor_attribute('length', 6)));
+        $mode = $this->mode ?? std_ancestor_attribute('mode', 'numeric');
         $mode = in_array($mode, ['numeric', 'alphanumeric'], true) ? $mode : 'numeric';
 
-        $resolvedInputOtpId = $this->controlId ?? stencil_ancestor_attribute('inputOtpId');
+        $resolvedInputOtpId = $this->controlId ?? std_ancestor_attribute('inputOtpId');
         $resolvedInputOtpId = filled($resolvedInputOtpId)
             ? $resolvedInputOtpId
             : (filled($name) ? $name : null);
@@ -60,12 +60,12 @@ final class Slot extends StencilComponent
             'input-otp__slot',
             'text-center font-medium tabular-nums !px-0',
             $this->size === 'sm' ? 'w-8' : 'w-9',
-            stencil_field_surface_classes($this->size, false, 'text'),
-            stencil_invalid_field_classes(),
+            std_field_surface_classes($this->size, false, 'text'),
+            std_invalid_field_classes(),
             $isInvalid ? 'border-red-500 focus-visible:ring-red-500/20 dark:border-red-500' : null,
         ])->filter()->implode(' ');
 
-        $inputAttributes = stencil_apply_interaction($this->attributes
+        $inputAttributes = std_apply_interaction($this->attributes
             ->except(['index', 'invalid', 'disabled', 'size'])
             ->class($slotClasses)
             ->merge([

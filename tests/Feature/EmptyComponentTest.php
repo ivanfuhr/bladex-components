@@ -6,16 +6,16 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders an empty state with media, title, description, and content', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::empty class="border">
-            <x-ui::empty.header>
-                <x-ui::empty.media variant="icon" icon="file" />
-                <x-ui::empty.title>No projects yet</x-ui::empty.title>
-                <x-ui::empty.description>Get started by creating a project.</x-ui::empty.description>
-            </x-ui::empty.header>
-            <x-ui::empty.content>
+        <x-std::empty class="border">
+            <x-std::empty.header>
+                <x-std::empty.media variant="icon" icon="file" />
+                <x-std::empty.title>No projects yet</x-std::empty.title>
+                <x-std::empty.description>Get started by creating a project.</x-std::empty.description>
+            </x-std::empty.header>
+            <x-std::empty.content>
                 <button type="button">Create project</button>
-            </x-ui::empty.content>
-        </x-ui::empty>
+            </x-std::empty.content>
+        </x-std::empty>
     BLADE);
 
     expect($html)
@@ -35,14 +35,14 @@ it('renders an empty state with media, title, description, and content', functio
 
 it('supports default media variant without an icon prop', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::empty>
-            <x-ui::empty.header>
-                <x-ui::empty.media>
+        <x-std::empty>
+            <x-std::empty.header>
+                <x-std::empty.media>
                     <span data-custom-media>Avatar</span>
-                </x-ui::empty.media>
-                <x-ui::empty.title level="2">Inbox zero</x-ui::empty.title>
-            </x-ui::empty.header>
-        </x-ui::empty>
+                </x-std::empty.media>
+                <x-std::empty.title level="2">Inbox zero</x-std::empty.title>
+            </x-std::empty.header>
+        </x-std::empty>
     BLADE);
 
     expect($html)

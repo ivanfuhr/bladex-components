@@ -1,5 +1,5 @@
 /**
- * Stencil — custom listbox select (vanilla JS, no Alpine).
+ * Std Components — custom listbox select (vanilla JS, no Alpine).
  */
 
 import { createBindSignal } from './shared/lifecycle.js';
@@ -71,7 +71,7 @@ function bindSelect(root) {
         }
     }
 
-    const portalMarker = document.createComment('stencil-select-portal');
+    const portalMarker = document.createComment('std-select-portal');
     let portalInserted = false;
     const signal = createBindSignal(root);
 
@@ -662,7 +662,7 @@ function bindSelect(root) {
     syncFromValue();
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

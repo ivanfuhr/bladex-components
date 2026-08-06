@@ -1,5 +1,5 @@
 /**
- * Stencil — accessible accordion (vanilla JS, no Alpine).
+ * Std Components — accessible accordion (vanilla JS, no Alpine).
  */
 
 const ACCORDION_SELECTOR = '[data-accordion]';
@@ -144,7 +144,7 @@ function toggleItem(accordion, item) {
     applyItemState(item, willOpen);
 
     accordion.dispatchEvent(
-        new CustomEvent('stencil:accordion:change', {
+        new CustomEvent('std:accordion:change', {
             bubbles: true,
             detail: {
                 value: item.dataset.accordionValue ?? null,
@@ -205,7 +205,7 @@ function applyItemState(item, open) {
     }
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

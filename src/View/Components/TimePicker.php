@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\Support\Str;
 
-final class TimePicker extends StencilComponent
+final class TimePicker extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
@@ -25,9 +25,9 @@ final class TimePicker extends StencilComponent
         public bool $shortcut = true,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.time-picker.index';
+        return 'std-components::components.time-picker.index';
     }
 
     /**
@@ -38,9 +38,9 @@ final class TimePicker extends StencilComponent
     {
         $fieldInvalid = (bool) ($data['fieldInvalid'] ?? false);
         $invalid = $this->invalid || $fieldInvalid;
-        $resolvedTimezone = stencil_resolve_timezone($this->timezone);
+        $resolvedTimezone = std_resolve_timezone($this->timezone);
         $resolvedLocale = $this->locale ?? app()->getLocale();
-        $resolvedValue = stencil_normalize_time_value($this->value, $this->withSeconds);
+        $resolvedValue = std_normalize_time_value($this->value, $this->withSeconds);
 
         $unavailable = $this->unavailable;
 

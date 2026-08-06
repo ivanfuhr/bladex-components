@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Select;
+namespace Ivanfuhr\StdComponents\View\Components\Select;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Value extends StencilComponent
+final class Value extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.select.value';
+        return 'std-components::components.select.value';
     }
 
     /**
@@ -19,7 +19,7 @@ final class Value extends StencilComponent
      */
     protected function resolveViewData(array $data = []): array
     {
-        $placeholder = $this->attributes->get('placeholder') ?? stencil_ancestor_attribute('placeholder');
+        $placeholder = $this->attributes->get('placeholder') ?? std_ancestor_attribute('placeholder');
         $resolvedPlaceholder = filled($placeholder) ? $placeholder : null;
 
         $valueClasses = collect([

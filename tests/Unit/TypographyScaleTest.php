@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Ivanfuhr\Stencil\Support\Typography\TypographyConfig;
-use Ivanfuhr\Stencil\Support\Typography\TypographyScale;
+use Ivanfuhr\StdComponents\Support\Typography\TypographyConfig;
+use Ivanfuhr\StdComponents\Support\Typography\TypographyScale;
 
 it('resolves the four standardized size tokens', function (): void {
     $scale = app(TypographyScale::class);
@@ -21,7 +21,7 @@ it('rejects unknown size tokens', function (): void {
 
 it('merges partial scale overrides from package config', function (): void {
     config([
-        'stencil.typography.scale.sm' => ['text' => 'text-xs', 'leading' => 'leading-4'],
+        'std-components.typography.scale.sm' => ['text' => 'text-xs', 'leading' => 'leading-4'],
     ]);
 
     $this->app->forgetInstance(TypographyConfig::class);

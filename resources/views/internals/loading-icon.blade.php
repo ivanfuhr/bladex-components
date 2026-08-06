@@ -1,8 +1,8 @@
 @php
-    $loadingVariant = stencil_normalize_icon_variant($variant ?? 'outline');
-    $loadingIconClasses = stencil_icon_variant_class_string($loadingVariant);
-    $loadingStrokeWidth = stencil_icon_variant_resolve($loadingVariant)[1];
-    $loadingPixelSize = stencil_icon_variant_resolve($loadingVariant)[2];
+    $loadingVariant = std_normalize_icon_variant($variant ?? 'outline');
+    $loadingIconClasses = std_icon_variant_class_string($loadingVariant);
+    $loadingStrokeWidth = std_icon_variant_resolve($loadingVariant)[1];
+    $loadingPixelSize = std_icon_variant_resolve($loadingVariant)[2];
     $loadingMergedClass = trim($loadingIconClasses.' animate-spin '.($class ?? ''));
 @endphp
 

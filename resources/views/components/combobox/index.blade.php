@@ -24,7 +24,7 @@
 
     @if ($shortcut)
         @if ($multiple && $display === 'chips')
-            <x-ui::combobox.input
+            <x-std::combobox.input
                 :placeholder="$placeholder"
                 :multiple="true"
                 :invalid="$resolvedInvalid"
@@ -33,10 +33,10 @@
                 :listbox-id="$listboxId"
                 :control-id="$controlId"
             >
-                <x-ui::combobox.chips :placeholder="$placeholder" />
-            </x-ui::combobox.input>
+                <x-std::combobox.chips :placeholder="$placeholder" />
+            </x-std::combobox.input>
         @else
-            <x-ui::combobox.input
+            <x-std::combobox.input
                 :placeholder="$placeholder"
                 :multiple="$multiple"
                 :invalid="$resolvedInvalid"
@@ -47,10 +47,10 @@
             />
         @endif
 
-        <x-ui::combobox.content>
-            <x-ui::combobox.empty>{{ $emptyMessage }}</x-ui::combobox.empty>
+        <x-std::combobox.content>
+            <x-std::combobox.empty>{{ $emptyMessage }}</x-std::combobox.empty>
             {{ $slot }}
-        </x-ui::combobox.content>
+        </x-std::combobox.content>
     @else
         {{ $slot }}
     @endif

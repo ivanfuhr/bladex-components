@@ -1,5 +1,5 @@
 /**
- * Stencil — command palette / cmdk (vanilla JS, no Alpine).
+ * Std Components — command palette / cmdk (vanilla JS, no Alpine).
  */
 
 import { createBindSignal } from './shared/lifecycle.js';
@@ -174,8 +174,12 @@ function matchesShortcut(event, parsed) {
  * @param {HTMLDialogElement} dialog
  */
 function openCommandDialog(dialog) {
-    if (typeof window !== 'undefined' && window.Stencil?.dialog && dialog.dataset.dialogName) {
-        window.Stencil.dialog(dialog.dataset.dialogName).show();
+    if (
+        typeof window !== 'undefined' &&
+        window.StdComponents?.dialog &&
+        dialog.dataset.dialogName
+    ) {
+        window.StdComponents.dialog(dialog.dataset.dialogName).show();
 
         return;
     }
@@ -320,7 +324,7 @@ function bindCommand(root) {
         const value = el.getAttribute('data-value') ?? '';
 
         root.dispatchEvent(
-            new CustomEvent('stencil:command:select', {
+            new CustomEvent('std:command:select', {
                 bubbles: true,
                 detail: { value, label: itemLabel(el), element: el },
             }),
@@ -491,7 +495,7 @@ function bindCommand(root) {
             activeIndex = -1;
         });
 
-        dialog.addEventListener('stencil:dialog:open', () => {
+        dialog.addEventListener('std:dialog:open', () => {
             applyFilter(input.value);
             resetHighlight();
         });
@@ -502,13 +506,13 @@ function bindCommand(root) {
 }
 
 if (typeof window !== 'undefined') {
-    window.Stencil = window.Stencil ?? {};
-    window.Stencil.command = {
+    window.StdComponents = window.StdComponents ?? {};
+    window.StdComponents.command = {
         init: initCommands,
     };
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

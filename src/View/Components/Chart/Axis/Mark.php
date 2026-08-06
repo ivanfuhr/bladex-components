@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Chart\Axis;
+namespace Ivanfuhr\StdComponents\View\Components\Chart\Axis;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Mark extends StencilComponent
+final class Mark extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.chart.axis.mark';
+        return 'std-components::components.chart.axis.mark';
     }
 
     protected function resolveViewData(array $data = []): array

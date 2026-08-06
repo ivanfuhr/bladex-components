@@ -2,7 +2,7 @@
     @if ($useScrollArea)
         <div {{ $frameAttributes }}>
             <textarea {{ $controlAttributes }}>{{ $slot }}</textarea>
-            <x-ui::scroll-area.scrollbar orientation="vertical" />
+            <x-std::scroll-area.scrollbar orientation="vertical" />
         </div>
     @else
         <textarea {{ $controlAttributes }}>{{ $slot }}</textarea>

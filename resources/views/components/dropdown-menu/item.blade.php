@@ -23,6 +23,6 @@
 >
     <span class="min-w-0 flex-1 text-left">{{ $slot }}</span>
     @if (filled($kbd))
-        <x-ui::dropdown-menu.shortcut>{{ $kbd }}</x-ui::dropdown-menu.shortcut>
+        <x-std::dropdown-menu.shortcut>{{ $kbd }}</x-std::dropdown-menu.shortcut>
     @endif
 </{{ $tag }}>

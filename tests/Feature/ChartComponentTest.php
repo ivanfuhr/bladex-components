@@ -11,24 +11,24 @@ it('renders a composable chart with data templates and slots', function () {
     ];
 
     $html = Blade::render(<<<'BLADE'
-        <x-ui::chart :value="$data" class="aspect-[3/1]">
-            <x-ui::chart.svg>
-                <x-ui::chart.line field="visitors" class="text-[var(--chart-3)]" />
-                <x-ui::chart.axis axis="x" field="date">
-                    <x-ui::chart.axis.line />
-                    <x-ui::chart.axis.tick />
-                </x-ui::chart.axis>
-                <x-ui::chart.axis axis="y">
-                    <x-ui::chart.axis.grid />
-                    <x-ui::chart.axis.tick />
-                </x-ui::chart.axis>
-                <x-ui::chart.cursor />
-            </x-ui::chart.svg>
-            <x-ui::chart.tooltip>
-                <x-ui::chart.tooltip.heading field="date" />
-                <x-ui::chart.tooltip.value field="visitors" label="Visitors" />
-            </x-ui::chart.tooltip>
-        </x-ui::chart>
+        <x-std::chart :value="$data" class="aspect-[3/1]">
+            <x-std::chart.svg>
+                <x-std::chart.line field="visitors" class="text-[var(--chart-3)]" />
+                <x-std::chart.axis axis="x" field="date">
+                    <x-std::chart.axis.line />
+                    <x-std::chart.axis.tick />
+                </x-std::chart.axis>
+                <x-std::chart.axis axis="y">
+                    <x-std::chart.axis.grid />
+                    <x-std::chart.axis.tick />
+                </x-std::chart.axis>
+                <x-std::chart.cursor />
+            </x-std::chart.svg>
+            <x-std::chart.tooltip>
+                <x-std::chart.tooltip.heading field="date" />
+                <x-std::chart.tooltip.value field="visitors" label="Visitors" />
+            </x-std::chart.tooltip>
+        </x-std::chart>
     BLADE, ['data' => $data]);
 
     expect($html)
@@ -51,11 +51,11 @@ it('renders a composable chart with data templates and slots', function () {
 
 it('renders a sparkline shortcut with flat numeric data', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::chart :value="[15, 18, 16, 19]" class="w-32 aspect-[3/1]">
-            <x-ui::chart.svg gutter="0">
-                <x-ui::chart.line class="text-[var(--chart-4)]" />
-            </x-ui::chart.svg>
-        </x-ui::chart>
+        <x-std::chart :value="[15, 18, 16, 19]" class="w-32 aspect-[3/1]">
+            <x-std::chart.svg gutter="0">
+                <x-std::chart.line class="text-[var(--chart-4)]" />
+            </x-std::chart.svg>
+        </x-std::chart>
     BLADE);
 
     expect($html)
@@ -89,22 +89,22 @@ it('defaults chart svg gutters so edge tick labels stay inside the paint box', f
 
 it('renders accessible chart landmarks and live region support', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::chart :value="[['month' => 'Jan', 'revenue' => 4200], ['month' => 'Feb', 'revenue' => 3800]]" label="Monthly revenue">
-            <x-ui::chart.svg>
-                <x-ui::chart.bar field="revenue" />
-                <x-ui::chart.axis axis="x" field="month">
-                    <x-ui::chart.axis.tick />
-                </x-ui::chart.axis>
-                <x-ui::chart.axis axis="y" tick-prefix="$">
-                    <x-ui::chart.axis.grid />
-                    <x-ui::chart.axis.tick />
-                </x-ui::chart.axis>
-            </x-ui::chart.svg>
-            <x-ui::chart.tooltip>
-                <x-ui::chart.tooltip.heading field="month" />
-                <x-ui::chart.tooltip.value field="revenue" label="Revenue" prefix="$" />
-            </x-ui::chart.tooltip>
-        </x-ui::chart>
+        <x-std::chart :value="[['month' => 'Jan', 'revenue' => 4200], ['month' => 'Feb', 'revenue' => 3800]]" label="Monthly revenue">
+            <x-std::chart.svg>
+                <x-std::chart.bar field="revenue" />
+                <x-std::chart.axis axis="x" field="month">
+                    <x-std::chart.axis.tick />
+                </x-std::chart.axis>
+                <x-std::chart.axis axis="y" tick-prefix="$">
+                    <x-std::chart.axis.grid />
+                    <x-std::chart.axis.tick />
+                </x-std::chart.axis>
+            </x-std::chart.svg>
+            <x-std::chart.tooltip>
+                <x-std::chart.tooltip.heading field="month" />
+                <x-std::chart.tooltip.value field="revenue" label="Revenue" prefix="$" />
+            </x-std::chart.tooltip>
+        </x-std::chart>
     BLADE);
 
     expect($html)
@@ -120,11 +120,11 @@ it('renders accessible chart landmarks and live region support', function () {
 
 it('renders bar series templates with owned svg primitives', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::chart :value="[['month' => 'Jan', 'revenue' => 4200], ['month' => 'Feb', 'revenue' => 3800]]">
-            <x-ui::chart.svg>
-                <x-ui::chart.bar field="revenue" width="70%" />
-            </x-ui::chart.svg>
-        </x-ui::chart>
+        <x-std::chart :value="[['month' => 'Jan', 'revenue' => 4200], ['month' => 'Feb', 'revenue' => 3800]]">
+            <x-std::chart.svg>
+                <x-std::chart.bar field="revenue" width="70%" />
+            </x-std::chart.svg>
+        </x-std::chart>
     BLADE);
 
     expect($html)

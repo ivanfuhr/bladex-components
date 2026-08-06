@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Blade;
 it('registers ui class components', function () {
     $namespaces = Blade::getClassComponentNamespaces();
 
-    expect($namespaces)->toHaveKey('ui')
-        ->and($namespaces['ui'])->toBe('Ivanfuhr\\Stencil\\View\\Components');
+    expect($namespaces)->toHaveKey('std')
+        ->and($namespaces['std'])->toBe('Ivanfuhr\\StdComponents\\View\\Components');
 });
 
 it('renders a text input with the control name on the native element', function () {
-    $html = Blade::render('<x-ui::input name="email" type="email" placeholder="you@example.com" />');
+    $html = Blade::render('<x-std::input name="email" type="email" placeholder="you@example.com" />');
 
     expect($html)
         ->toContain('data-input')
@@ -24,7 +24,7 @@ it('renders a text input with the control name on the native element', function 
 
 it('merges wrapper class and forwards input:class to the control', function () {
     $html = Blade::render(
-        '<x-ui::input name="q" class="max-w-xs" input:class="font-mono" />',
+        '<x-std::input name="q" class="max-w-xs" input:class="font-mono" />',
     );
 
     expect($html)
@@ -34,21 +34,21 @@ it('merges wrapper class and forwards input:class to the control', function () {
 });
 
 it('marks the control invalid when the invalid prop is true', function () {
-    $html = Blade::render('<x-ui::input name="title" :invalid="true" />');
+    $html = Blade::render('<x-std::input name="title" :invalid="true" />');
 
     expect($html)->toContain('aria-invalid="true"');
 });
 
 it('renders leading and trailing slots', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::input name="search">
+        <x-std::input name="search">
             <x-slot:leading>
                 <span data-test="leading-icon">⌕</span>
             </x-slot:leading>
             <x-slot:trailing>
                 <span data-test="trailing-action">Clear</span>
             </x-slot:trailing>
-        </x-ui::input>
+        </x-std::input>
     BLADE);
 
     expect($html)
@@ -65,11 +65,11 @@ it('renders leading and trailing slots', function () {
 
 it('sizes icons in leading and trailing affixes to match the control', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::input name="search">
+        <x-std::input name="search">
             <x-slot:leading>
-                <x-ui::icon.loading />
+                <x-std::icon.loading />
             </x-slot:leading>
-        </x-ui::input>
+        </x-std::input>
     BLADE);
 
     expect($html)
@@ -80,7 +80,7 @@ it('sizes icons in leading and trailing affixes to match the control', function 
 
 it('renders prefix and suffix from attributes', function () {
     $html = Blade::render(
-        '<x-ui::input name="website" prefix="https://" suffix=".test" class="max-w-md" placeholder="example.com" />',
+        '<x-std::input name="website" prefix="https://" suffix=".test" class="max-w-md" placeholder="example.com" />',
     );
 
     expect($html)
@@ -96,7 +96,7 @@ it('renders prefix and suffix from attributes', function () {
 
 it('renders leading and trailing from attributes', function () {
     $html = Blade::render(
-        '<x-ui::input name="q" leading="⌕" trailing="⌘K" placeholder="Search" />',
+        '<x-std::input name="q" leading="⌕" trailing="⌘K" placeholder="Search" />',
     );
 
     expect($html)
@@ -109,11 +109,11 @@ it('renders leading and trailing from attributes', function () {
 
 it('prefers leading and trailing slots over attribute shorthands', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::input name="q" leading="ignored">
+        <x-std::input name="q" leading="ignored">
             <x-slot:leading>
                 <span data-test="slot-leading">from-slot</span>
             </x-slot:leading>
-        </x-ui::input>
+        </x-std::input>
     BLADE);
 
     expect($html)
@@ -123,11 +123,11 @@ it('prefers leading and trailing slots over attribute shorthands', function () {
 
 it('renders an input group with prefix and suffix', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::input.group>
-            <x-ui::input.group.prefix>https://</x-ui::input.group.prefix>
-            <x-ui::input name="website" in-group placeholder="example.com" />
-            <x-ui::input.group.suffix>.test</x-ui::input.group.suffix>
-        </x-ui::input.group>
+        <x-std::input.group>
+            <x-std::input.group.prefix>https://</x-std::input.group.prefix>
+            <x-std::input name="website" in-group placeholder="example.com" />
+            <x-std::input.group.suffix>.test</x-std::input.group.suffix>
+        </x-std::input.group>
     BLADE);
 
     expect($html)
@@ -139,7 +139,7 @@ it('renders an input group with prefix and suffix', function () {
 
 it('forwards disabled, readonly, and loading attributes to the native control', function () {
     $html = Blade::render(
-        '<x-ui::input name="email" disabled readonly data-loading />',
+        '<x-std::input name="email" disabled readonly data-loading />',
     );
 
     expect($html)
@@ -155,10 +155,10 @@ it('forwards disabled, readonly, and loading attributes to the native control', 
 
 it('renders input enhancement markers for mask, viewable, copyable, and counter', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::input name="phone" mask="(##) #####-####" counter maxlength="20" />
-        <x-ui::input name="plate" mask="AAA-#A##" />
-        <x-ui::input name="password" type="password" viewable />
-        <x-ui::input name="token" copyable />
+        <x-std::input name="phone" mask="(##) #####-####" counter maxlength="20" />
+        <x-std::input name="plate" mask="AAA-#A##" />
+        <x-std::input name="password" type="password" viewable />
+        <x-std::input name="token" copyable />
     BLADE);
 
     expect($html)
@@ -174,7 +174,7 @@ it('renders input enhancement markers for mask, viewable, copyable, and counter'
 });
 
 it('nests the character counter display inside the enhanced input root', function () {
-    $html = Blade::render('<x-ui::input name="title" counter maxlength="20" />');
+    $html = Blade::render('<x-std::input name="title" counter maxlength="20" />');
 
     $document = new DOMDocument;
     @$document->loadHTML($html);

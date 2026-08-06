@@ -11,5 +11,5 @@
         ])
     }}
 >
-    <x-ui::icon name="x" class="size-3.5" />
+    <x-std::icon name="x" class="size-3.5" />
 </button>

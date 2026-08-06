@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\View\ComponentAttributeBag;
 
-final class Textarea extends StencilComponent
+final class Textarea extends StdComponent
 {
     public function __construct(
         public bool $invalid = false,
@@ -16,9 +16,9 @@ final class Textarea extends StencilComponent
         public mixed $controlId = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.textarea.index';
+        return 'std-components::components.textarea.index';
     }
 
     /**
@@ -28,7 +28,7 @@ final class Textarea extends StencilComponent
     protected function resolveViewData(array $data = []): array
     {
         $fieldInvalid = (bool) ($data['fieldInvalid'] ?? false);
-        $isInvalid = $this->invalid || $fieldInvalid || stencil_field_has_errors($this->attributes->get('name'));
+        $isInvalid = $this->invalid || $fieldInvalid || std_field_has_errors($this->attributes->get('name'));
 
         $resolvedControlId = $this->attributes->get('id')
             ?? $this->controlId
@@ -42,9 +42,9 @@ final class Textarea extends StencilComponent
         $controlClasses = collect([
             'textarea__control',
             'block min-w-0',
-            stencil_textarea_surface_classes($this->size),
+            std_textarea_surface_classes($this->size),
             'placeholder:text-zinc-500 dark:placeholder:text-zinc-400',
-            stencil_invalid_field_classes(),
+            std_invalid_field_classes(),
             $isInvalid ? 'border-red-500 focus-visible:ring-red-500/20 dark:border-red-500' : null,
             $this->autosize ? 'resize-none overflow-hidden' : null,
         ])->filter()->implode(' ');
@@ -84,7 +84,7 @@ final class Textarea extends StencilComponent
 
         $controlExtraClass = $this->attributes->get('class:textarea') ?? $this->attributes->get('textarea:class');
 
-        $controlAttributes = stencil_apply_interaction($this->attributes
+        $controlAttributes = std_apply_interaction($this->attributes
             ->except(['class', 'class:textarea', 'textarea:class', 'autosize', 'counter', 'id'])
             ->class([$controlClasses, $controlExtraClass])
             ->merge([
@@ -106,7 +106,7 @@ final class Textarea extends StencilComponent
             $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);
         }
 
-        $controlAttributes = stencil_merge_described_by($controlAttributes, $this->aware('describedBy'));
+        $controlAttributes = std_merge_described_by($controlAttributes, $this->aware('describedBy'));
 
         return [
             'wrapperAttributes' => $wrapperAttributes,

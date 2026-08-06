@@ -1,12 +1,12 @@
-Single-panel expand/collapse ([shadcn Collapsible](https://ui.shadcn.com/docs/components/collapsible)). Subcomponents include `trigger` and `content`. Included in `@stencilScripts`.
+Single-panel expand/collapse ([shadcn Collapsible](https://ui.shadcn.com/docs/components/collapsible)). Subcomponents include `trigger` and `content`. Included in `@stdScripts`.
 
 ```blade
-<x-ui::collapsible>
-    <x-ui::collapsible.trigger>Toggle details</x-ui::collapsible.trigger>
-    <x-ui::collapsible.content>
+<x-std::collapsible>
+    <x-std::collapsible.trigger>Toggle details</x-std::collapsible.trigger>
+    <x-std::collapsible.content>
         Extra product information lives here.
-    </x-ui::collapsible.content>
-</x-ui::collapsible>
+    </x-std::collapsible.content>
+</x-std::collapsible>
 ```
 
 <br>

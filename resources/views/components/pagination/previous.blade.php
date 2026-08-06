@@ -1,8 +1,8 @@
-<x-ui::pagination.link
+<x-std::pagination.link
     :href="$href"
     :disabled="$disabled"
     {{ $attributes->class(['gap-1 px-2.5 w-auto min-h-11 min-w-11'])->merge(['aria-label' => __('Previous')]) }}
 >
-    <x-ui::icon name="chevron-left" class="size-4" />
+    <x-std::icon name="chevron-left" class="size-4" />
     <span class="hidden sm:inline">{{ $text ?? __('Previous') }}</span>
-</x-ui::pagination.link>
+</x-std::pagination.link>

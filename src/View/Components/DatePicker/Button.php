@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\DatePicker;
+namespace Ivanfuhr\StdComponents\View\Components\DatePicker;
 
 use Illuminate\Support\Facades\View;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Button extends StencilComponent
+final class Button extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.date-picker.button';
+        return 'std-components::components.date-picker.button';
     }
 
     /**
@@ -26,13 +26,13 @@ final class Button extends StencilComponent
         $clearable = View::getConsumableComponentData('clearable', false);
         $size = View::getConsumableComponentData('size', null);
 
-        $triggerAttributes = stencil_apply_interaction(
+        $triggerAttributes = std_apply_interaction(
             $this->attributes
                 ->class([
                     'date-picker__trigger',
                     'group flex min-w-0 flex-1 items-center justify-between gap-2 text-left',
-                    stencil_field_surface_classes($size, false, 'pointer'),
-                    stencil_invalid_field_classes(),
+                    std_field_surface_classes($size, false, 'pointer'),
+                    std_invalid_field_classes(),
                     $invalid ? 'border-red-500' : null,
                 ])
                 ->merge([

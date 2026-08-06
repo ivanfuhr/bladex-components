@@ -5,6 +5,6 @@
     $disabled = (bool) ($state['disabled'] ?? false);
 @endphp
 
-<x-ui::toggle :variant="$variant" :size="$size" :pressed="$pressed" :disabled="$disabled" aria-label="Toggle italic">
+<x-std::toggle :variant="$variant" :size="$size" :pressed="$pressed" :disabled="$disabled" aria-label="Toggle italic">
     Italic
-</x-ui::toggle>
+</x-std::toggle>

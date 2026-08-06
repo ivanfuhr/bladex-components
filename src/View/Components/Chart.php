@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\Support\Js;
 
-final class Chart extends StencilComponent
+final class Chart extends StdComponent
 {
     public function __construct(
         public mixed $value = null,
         public mixed $label = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.chart.index';
+        return 'std-components::components.chart.index';
     }
 
     protected function resolveViewData(array $data = []): array

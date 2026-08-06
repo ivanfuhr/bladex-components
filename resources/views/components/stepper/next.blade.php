@@ -1,4 +1,4 @@
-<x-ui::button
+<x-std::button
     type="button"
     variant="primary"
     {{
@@ -9,4 +9,4 @@
     }}
 >
     {{ $text ?? __('Next') }}
-</x-ui::button>
+</x-std::button>

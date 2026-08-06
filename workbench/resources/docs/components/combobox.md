@@ -1,48 +1,48 @@
-Accessible filterable combobox / autocomplete (WAI-ARIA combobox + listbox). Subcomponents include `input`, `content`, `empty`, `group`, `label`, `item`, and `separator`. Included in `@stencilScripts`. Single-select for now; typeahead filters options client-side and shows the empty state when nothing matches.
+Accessible filterable combobox / autocomplete (WAI-ARIA combobox + listbox). Subcomponents include `input`, `content`, `empty`, `group`, `label`, `item`, and `separator`. Included in `@stdScripts`. Single-select for now; typeahead filters options client-side and shows the empty state when nothing matches.
 
 Default `shortcut` wraps items with `combobox.input`, `combobox.content`, and `combobox.empty`. Set `:shortcut="false"` for full composition. Works inside `field` (inherits `invalid` / Laravel `$errors`).
 
 ```blade
-<x-ui::combobox name="framework" placeholder="Search frameworks…">
-    <x-ui::combobox.group>
-        <x-ui::combobox.label>PHP</x-ui::combobox.label>
-        <x-ui::combobox.item value="laravel">Laravel</x-ui::combobox.item>
-        <x-ui::combobox.item value="symfony">Symfony</x-ui::combobox.item>
-    </x-ui::combobox.group>
-    <x-ui::combobox.separator />
-    <x-ui::combobox.item value="react">React</x-ui::combobox.item>
-    <x-ui::combobox.item value="vue">Vue</x-ui::combobox.item>
-</x-ui::combobox>
+<x-std::combobox name="framework" placeholder="Search frameworks…">
+    <x-std::combobox.group>
+        <x-std::combobox.label>PHP</x-std::combobox.label>
+        <x-std::combobox.item value="laravel">Laravel</x-std::combobox.item>
+        <x-std::combobox.item value="symfony">Symfony</x-std::combobox.item>
+    </x-std::combobox.group>
+    <x-std::combobox.separator />
+    <x-std::combobox.item value="react">React</x-std::combobox.item>
+    <x-std::combobox.item value="vue">Vue</x-std::combobox.item>
+</x-std::combobox>
 
-<x-ui::combobox name="lang" size="sm" placeholder="Find a language…">
-    <x-ui::combobox.item value="php">PHP</x-ui::combobox.item>
-    <x-ui::combobox.item value="js">JavaScript</x-ui::combobox.item>
-</x-ui::combobox>
+<x-std::combobox name="lang" size="sm" placeholder="Find a language…">
+    <x-std::combobox.item value="php">PHP</x-std::combobox.item>
+    <x-std::combobox.item value="js">JavaScript</x-std::combobox.item>
+</x-std::combobox>
 
-<x-ui::combobox name="bad" placeholder="Invalid" invalid>
-    <x-ui::combobox.item value="x">Option</x-ui::combobox.item>
-</x-ui::combobox>
+<x-std::combobox name="bad" placeholder="Invalid" invalid>
+    <x-std::combobox.item value="x">Option</x-std::combobox.item>
+</x-std::combobox>
 
-<x-ui::combobox name="off" placeholder="Disabled" disabled>
-    <x-ui::combobox.item value="x">Option</x-ui::combobox.item>
-</x-ui::combobox>
+<x-std::combobox name="off" placeholder="Disabled" disabled>
+    <x-std::combobox.item value="x">Option</x-std::combobox.item>
+</x-std::combobox>
 
 {{-- Full composition --}}
-<x-ui::combobox name="framework" :shortcut="false">
-    <x-ui::combobox.input placeholder="Search frameworks…" />
-    <x-ui::combobox.content>
-        <x-ui::combobox.empty>No frameworks found.</x-ui::combobox.empty>
-        <x-ui::combobox.item value="laravel">Laravel</x-ui::combobox.item>
-    </x-ui::combobox.content>
-</x-ui::combobox>
+<x-std::combobox name="framework" :shortcut="false">
+    <x-std::combobox.input placeholder="Search frameworks…" />
+    <x-std::combobox.content>
+        <x-std::combobox.empty>No frameworks found.</x-std::combobox.empty>
+        <x-std::combobox.item value="laravel">Laravel</x-std::combobox.item>
+    </x-std::combobox.content>
+</x-std::combobox>
 
-<x-ui::field name="framework">
-    <x-ui::field.label>Framework</x-ui::field.label>
-    <x-ui::combobox name="framework" placeholder="Search…">
-        <x-ui::combobox.item value="laravel">Laravel</x-ui::combobox.item>
-    </x-ui::combobox>
-    <x-ui::field.errors name="framework" />
-</x-ui::field>
+<x-std::field name="framework">
+    <x-std::field.label>Framework</x-std::field.label>
+    <x-std::combobox name="framework" placeholder="Search…">
+        <x-std::combobox.item value="laravel">Laravel</x-std::combobox.item>
+    </x-std::combobox>
+    <x-std::field.errors name="framework" />
+</x-std::field>
 ```
 
 <br>

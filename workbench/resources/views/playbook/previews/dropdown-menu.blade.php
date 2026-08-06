@@ -2,21 +2,21 @@
     $align = $state['align'] ?? 'start';
 @endphp
 
-<x-ui::dropdown-menu :align="$align">
-    <x-ui::dropdown-menu.trigger>
-        <x-ui::button variant="outline">Open menu</x-ui::button>
-    </x-ui::dropdown-menu.trigger>
-    <x-ui::dropdown-menu.content>
-        <x-ui::dropdown-menu.label>Account</x-ui::dropdown-menu.label>
-        <x-ui::dropdown-menu.item>Profile</x-ui::dropdown-menu.item>
-        <x-ui::dropdown-menu.item>
+<x-std::dropdown-menu :align="$align">
+    <x-std::dropdown-menu.trigger>
+        <x-std::button variant="outline">Open menu</x-std::button>
+    </x-std::dropdown-menu.trigger>
+    <x-std::dropdown-menu.content>
+        <x-std::dropdown-menu.label>Account</x-std::dropdown-menu.label>
+        <x-std::dropdown-menu.item>Profile</x-std::dropdown-menu.item>
+        <x-std::dropdown-menu.item>
             Billing
-            <x-ui::dropdown-menu.shortcut>⌘B</x-ui::dropdown-menu.shortcut>
-        </x-ui::dropdown-menu.item>
-        <x-ui::dropdown-menu.separator />
-        <x-ui::dropdown-menu.item variant="danger">
+            <x-std::dropdown-menu.shortcut>⌘B</x-std::dropdown-menu.shortcut>
+        </x-std::dropdown-menu.item>
+        <x-std::dropdown-menu.separator />
+        <x-std::dropdown-menu.item variant="danger">
             Delete
-            <x-ui::dropdown-menu.shortcut>⌘⌫</x-ui::dropdown-menu.shortcut>
-        </x-ui::dropdown-menu.item>
-    </x-ui::dropdown-menu.content>
-</x-ui::dropdown-menu>
+            <x-std::dropdown-menu.shortcut>⌘⌫</x-std::dropdown-menu.shortcut>
+        </x-std::dropdown-menu.item>
+    </x-std::dropdown-menu.content>
+</x-std::dropdown-menu>

@@ -1,14 +1,14 @@
-Tabbed panels ([shadcn Tabs](https://ui.shadcn.com/docs/components/tabs), [Flux tabs](https://fluxui.dev/components/tabs)). Variants: `default`, `segmented`, `pills`, `line`. Included in `@stencilScripts`.
+Tabbed panels ([shadcn Tabs](https://ui.shadcn.com/docs/components/tabs), [Flux tabs](https://fluxui.dev/components/tabs)). Variants: `default`, `segmented`, `pills`, `line`. Included in `@stdScripts`.
 
 ```blade
-<x-ui::tabs default-value="account">
-    <x-ui::tabs.list>
-        <x-ui::tabs.trigger value="account">Account</x-ui::tabs.trigger>
-        <x-ui::tabs.trigger value="password">Password</x-ui::tabs.trigger>
-    </x-ui::tabs.list>
-    <x-ui::tabs.content value="account">Account settings</x-ui::tabs.content>
-    <x-ui::tabs.content value="password">Password settings</x-ui::tabs.content>
-</x-ui::tabs>
+<x-std::tabs default-value="account">
+    <x-std::tabs.list>
+        <x-std::tabs.trigger value="account">Account</x-std::tabs.trigger>
+        <x-std::tabs.trigger value="password">Password</x-std::tabs.trigger>
+    </x-std::tabs.list>
+    <x-std::tabs.content value="account">Account settings</x-std::tabs.content>
+    <x-std::tabs.content value="password">Password settings</x-std::tabs.content>
+</x-std::tabs>
 ```
 
 <br>

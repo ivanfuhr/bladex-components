@@ -1,5 +1,5 @@
 /**
- * Stencil — composable SVG charts (vanilla JS, no chart libraries).
+ * Std Components — composable SVG charts (vanilla JS, no chart libraries).
  */
 
 export const ROOT_SELECTOR = '[data-chart]';
@@ -1678,7 +1678,7 @@ function positionTooltip(root, overlay, plot, scales, state, activeIndex) {
     overlay.style.transform = `translate(${translateX}px, calc(-100% - ${gap}px))`;
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

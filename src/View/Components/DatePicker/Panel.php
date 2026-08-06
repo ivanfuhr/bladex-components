@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\DatePicker;
+namespace Ivanfuhr\StdComponents\View\Components\DatePicker;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Panel extends StencilComponent
+final class Panel extends StdComponent
 {
     public function __construct(
         public bool $range = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.date-picker.panel';
+        return 'std-components::components.date-picker.panel';
     }
 
     /**
@@ -27,7 +27,7 @@ final class Panel extends StencilComponent
             'panelLabel' => $this->range
                 ? __('Select a date range')
                 : __('Select a date'),
-            'panelId' => $this->attributes->get('panel-id') ?? stencil_ancestor_attribute('panelId'),
+            'panelId' => $this->attributes->get('panel-id') ?? std_ancestor_attribute('panelId'),
         ];
     }
 }

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\Support\Str;
 use Illuminate\View\ComponentAttributeBag;
 
-final class FileUpload extends StencilComponent
+final class FileUpload extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
@@ -22,9 +22,9 @@ final class FileUpload extends StencilComponent
         public bool $shortcut = true,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.file-upload.index';
+        return 'std-components::components.file-upload.index';
     }
 
     /**
@@ -36,7 +36,7 @@ final class FileUpload extends StencilComponent
         $fieldInvalid = (bool) ($data['fieldInvalid'] ?? false);
         $controlId = $data['controlId'] ?? null;
 
-        $invalid = $this->invalid || $fieldInvalid || stencil_field_has_errors($this->name);
+        $invalid = $this->invalid || $fieldInvalid || std_field_has_errors($this->name);
         $multiple = (bool) $this->multiple;
 
         $fileUploadId = filled($this->fileUploadId)

@@ -5,6 +5,6 @@
     $inline = (bool) ($state['inline'] ?? false);
 @endphp
 
-<x-ui::text :size="$size" :variant="$variant" :color="$color" :inline="$inline">
+<x-std::text :size="$size" :variant="$variant" :color="$color" :inline="$inline">
     Body copy with the configured size, variant, and color.
-</x-ui::text>
+</x-std::text>

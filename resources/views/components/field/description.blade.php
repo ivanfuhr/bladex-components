@@ -1,1 +1,1 @@
-<x-ui::field.message :id="$descriptionId" data-field-description> {{ $slot }} </x-ui::field.message>
+<x-std::field.message :id="$descriptionId" data-field-description> {{ $slot }} </x-std::field.message>

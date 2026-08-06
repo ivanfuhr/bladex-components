@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\View\ComponentAttributeBag;
 use Illuminate\View\ComponentSlot;
 
-final class Input extends StencilComponent
+final class Input extends StdComponent
 {
     public function __construct(
         public mixed $type = 'text',
@@ -24,9 +24,9 @@ final class Input extends StencilComponent
         public bool $counter = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.input.index';
+        return 'std-components::components.input.index';
     }
 
     /**
@@ -36,7 +36,7 @@ final class Input extends StencilComponent
     protected function resolveViewData(array $data = []): array
     {
         $fieldInvalid = (bool) ($data['fieldInvalid'] ?? false);
-        $invalid = $this->invalid || $fieldInvalid || stencil_field_has_errors($this->attributes->get('name'));
+        $invalid = $this->invalid || $fieldInvalid || std_field_has_errors($this->attributes->get('name'));
 
         $explicitControlId = $this->attributes->get('controlId')
             ?? $this->attributes->get('control-id');
@@ -98,9 +98,9 @@ final class Input extends StencilComponent
         $controlClasses = collect([
             'input__control',
             'flex w-full min-w-0',
-            stencil_field_surface_classes($this->size),
+            std_field_surface_classes($this->size),
             'placeholder:text-zinc-500 dark:placeholder:text-zinc-400',
-            stencil_invalid_field_classes(),
+            std_invalid_field_classes(),
             $leadingControlPadding,
             $trailingControlPadding,
             $invalid ? 'border-red-500 focus-visible:ring-red-500/20 dark:border-red-500' : null,
@@ -123,7 +123,7 @@ final class Input extends StencilComponent
 
         $controlExtraClass = $this->attributes->get('class:input') ?? $this->attributes->get('input:class');
 
-        $controlAttributes = stencil_apply_interaction($this->attributes
+        $controlAttributes = std_apply_interaction($this->attributes
             ->except(['class', 'class:input', 'input:class', 'prefix', 'suffix', 'leading', 'trailing', 'mask', 'viewable', 'copyable', 'counter', 'id'])
             ->class([$controlClasses, $controlExtraClass])
             ->merge([
@@ -189,7 +189,7 @@ final class Input extends StencilComponent
             $wrapperTagAttributes = $wrapperTagAttributes->merge(['data-input-counter' => true]);
         }
 
-        $controlAttributes = stencil_merge_described_by($controlAttributes, $this->aware('describedBy'));
+        $controlAttributes = std_merge_described_by($controlAttributes, $this->aware('describedBy'));
 
         return [
             'fieldInvalid' => $fieldInvalid,

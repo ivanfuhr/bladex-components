@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\Support\Icon;
+namespace Ivanfuhr\StdComponents\Support\Icon;
 
 use Illuminate\Contracts\Foundation\Application;
 use InvalidArgumentException;
@@ -20,7 +20,7 @@ final class IconPathResolver
         }
 
         return $this->app->resourcePath(
-            str_replace('resources/', '', (string) config('stencil.icons_path', 'views/vendor/stencil/icons')),
+            str_replace('resources/', '', (string) config('std-components.icons_path', 'views/vendor/std-components/icons')),
         );
     }
 
@@ -53,7 +53,7 @@ final class IconPathResolver
     public function lucideUrl(string $name): string
     {
         $template = (string) config(
-            'stencil.lucide_raw_url',
+            'std-components.lucide_raw_url',
             'https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/{name}.svg',
         );
 

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use InvalidArgumentException;
 
-final class Rating extends StencilComponent
+final class Rating extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
@@ -17,9 +17,9 @@ final class Rating extends StencilComponent
         public mixed $size = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.rating.index';
+        return 'std-components::components.rating.index';
     }
 
     protected function resolveViewData(array $data = []): array

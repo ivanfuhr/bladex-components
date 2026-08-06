@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Repeater;
+namespace Ivanfuhr\StdComponents\View\Components\Repeater;
 
 use Illuminate\Support\Facades\View;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Remove extends StencilComponent
+final class Remove extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.repeater.remove';
+        return 'std-components::components.repeater.remove';
     }
 
     /**

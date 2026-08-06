@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 
 it('registers the icon artisan command', function (): void {
-    expect(Artisan::all())->toHaveKey('stencil:icon');
+    expect(Artisan::all())->toHaveKey('std:icon');
 });
 
 it('imports lucide icons into the default icons path', function (): void {
-    $relativePath = 'storage/framework/testing/stencil-icons-'.getmypid();
+    $relativePath = 'storage/framework/testing/std-icons-'.getmypid();
     $iconsPath = app()->basePath($relativePath);
 
     if (is_dir($iconsPath)) {
@@ -26,7 +26,7 @@ it('imports lucide icons into the default icons path', function (): void {
         ),
     ]);
 
-    Artisan::call('stencil:icon', [
+    Artisan::call('std:icon', [
         'names' => ['search'],
         '--path' => $relativePath,
     ]);
@@ -42,7 +42,7 @@ it('imports lucide icons into the default icons path', function (): void {
 });
 
 it('renders the packaged loading icon', function (): void {
-    $html = Blade::render('<x-ui::icon.loading class="text-zinc-500" />');
+    $html = Blade::render('<x-std::icon.loading class="text-zinc-500" />');
 
     expect($html)
         ->toContain('data-icon')
@@ -53,7 +53,7 @@ it('renders the packaged loading icon', function (): void {
 });
 
 it('renders a dynamic icon wrapper for packaged icons', function (): void {
-    $html = Blade::render('<x-ui::icon name="search" />');
+    $html = Blade::render('<x-std::icon name="search" />');
 
     expect($html)->toContain('data-icon');
 });

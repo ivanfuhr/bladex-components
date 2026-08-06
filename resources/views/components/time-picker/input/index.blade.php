@@ -1,4 +1,4 @@
-<x-ui::input {{
+<x-std::input {{
     $attributes->merge([
         'type' => 'text',
         'placeholder' => $placeholder,

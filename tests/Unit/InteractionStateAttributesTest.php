@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\View\ComponentAttributeBag;
-use Ivanfuhr\Stencil\Support\Interaction\InteractionStateAttributes;
+use Ivanfuhr\StdComponents\Support\Interaction\InteractionStateAttributes;
 
 it('treats data-loading and aria-busy as loading states', function (): void {
     $state = app(InteractionStateAttributes::class);

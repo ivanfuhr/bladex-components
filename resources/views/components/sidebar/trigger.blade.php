@@ -24,7 +24,7 @@
         }}
     >
         @if ($slot->isEmpty())
-            <x-ui::icon name="panel-left" class="size-4 rtl:rotate-180" />
+            <x-std::icon name="panel-left" class="size-4 rtl:rotate-180" />
             <span class="sr-only">Toggle sidebar</span>
         @else
             {{ $slot }}

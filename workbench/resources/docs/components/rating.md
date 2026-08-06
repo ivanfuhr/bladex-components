@@ -1,7 +1,7 @@
-Star rating with numeric hidden value. Included in `@stencilScripts`.
+Star rating with numeric hidden value. Included in `@stdScripts`.
 
 ```blade
-<x-ui::rating name="score" :value="3" :max="5" />
+<x-std::rating name="score" :value="3" :max="5" />
 ```
 
 <br>

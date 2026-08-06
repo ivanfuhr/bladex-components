@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\Support\Str;
 use Illuminate\View\ComponentSlot;
 
-final class SwitchControl extends StencilComponent
+final class SwitchControl extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
@@ -19,9 +19,9 @@ final class SwitchControl extends StencilComponent
         public mixed $label = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.switch.index';
+        return 'std-components::components.switch.index';
     }
 
     /**
@@ -31,19 +31,19 @@ final class SwitchControl extends StencilComponent
     protected function resolveViewData(array $data = []): array
     {
         $fieldInvalid = (bool) ($data['fieldInvalid'] ?? false);
-        $isInvalid = $this->invalid || $fieldInvalid || stencil_field_has_errors($this->name);
+        $isInvalid = $this->invalid || $fieldInvalid || std_field_has_errors($this->name);
 
         $controlId = $this->attributes->get('id')
             ?? $this->controlId
             ?? (filled($this->name) ? $this->name : 'switch-'.Str::uuid()->toString());
 
-        $rootClasses = stencil_switch_root_classes($this->size);
-        $trackClasses = stencil_switch_track_classes($this->size);
-        $thumbClasses = stencil_switch_thumb_classes($this->size);
+        $rootClasses = std_switch_root_classes($this->size);
+        $trackClasses = std_switch_track_classes($this->size);
+        $thumbClasses = std_switch_thumb_classes($this->size);
 
         $wrapperClass = $this->attributes->get('class');
 
-        $controlAttributes = stencil_apply_interaction($this->attributes
+        $controlAttributes = std_apply_interaction($this->attributes
             ->except(['id', 'class'])
             ->class([
                 'switch__input',
@@ -78,7 +78,7 @@ final class SwitchControl extends StencilComponent
             $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);
         }
 
-        $controlAttributes = stencil_merge_described_by($controlAttributes, $this->aware('describedBy'));
+        $controlAttributes = std_merge_described_by($controlAttributes, $this->aware('describedBy'));
 
         $slot = $data['slot'] ?? null;
         $hasSlotLabel = $slot instanceof ComponentSlot ? ! $slot->isEmpty() : filled($slot);

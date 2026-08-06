@@ -14,7 +14,7 @@
                 tabindex="{{ $star['tabStop'] ? '0' : '-1' }}"
                 @if ($disabled) disabled @endif
             >
-                <x-ui::icon name="star" class="{{ $starSize }}" data-rating-star-icon />
+                <x-std::icon name="star" class="{{ $starSize }}" data-rating-star-icon />
             </button>
         @endforeach
     </div>

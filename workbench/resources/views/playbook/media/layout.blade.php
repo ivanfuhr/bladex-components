@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@yield('title', 'Stencil Media')</title>
-    <x-ui::fonts />
+    <title>@yield('title', 'Std Components Media')</title>
+    <x-std::fonts />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         /*

@@ -12,377 +12,377 @@ use Illuminate\Support\Facades\Blade;
  */
 dataset('component_regression_matrix', [
     'accordion' => [<<<'BLADE'
-        <x-ui::accordion exclusive transition bordered>
-            <x-ui::accordion.item value="one" :expanded="true">
-                <x-ui::accordion.trigger>One</x-ui::accordion.trigger>
-                <x-ui::accordion.content>First</x-ui::accordion.content>
-            </x-ui::accordion.item>
-            <x-ui::accordion.item value="two" disabled>
-                <x-ui::accordion.trigger>Two</x-ui::accordion.trigger>
-                <x-ui::accordion.content>Second</x-ui::accordion.content>
-            </x-ui::accordion.item>
-        </x-ui::accordion>
+        <x-std::accordion exclusive transition bordered>
+            <x-std::accordion.item value="one" :expanded="true">
+                <x-std::accordion.trigger>One</x-std::accordion.trigger>
+                <x-std::accordion.content>First</x-std::accordion.content>
+            </x-std::accordion.item>
+            <x-std::accordion.item value="two" disabled>
+                <x-std::accordion.trigger>Two</x-std::accordion.trigger>
+                <x-std::accordion.content>Second</x-std::accordion.content>
+            </x-std::accordion.item>
+        </x-std::accordion>
     BLADE, ['data-accordion', 'aria-expanded="true"', 'aria-controls=', 'role="region"']],
 
     'alert' => [<<<'BLADE'
-        <x-ui::alert variant="destructive" title="Heads up">
-            <x-ui::alert.description>Something failed.</x-ui::alert.description>
-        </x-ui::alert>
+        <x-std::alert variant="destructive" title="Heads up">
+            <x-std::alert.description>Something failed.</x-std::alert.description>
+        </x-std::alert>
     BLADE, ['data-alert', 'Heads up', 'Something failed.']],
 
     'avatar' => [<<<'BLADE'
-        <x-ui::avatar name="Ada Lovelace" size="lg" circle color="blue" />
+        <x-std::avatar name="Ada Lovelace" size="lg" circle color="blue" />
     BLADE, ['data-avatar', 'AL']],
 
     'badge' => [<<<'BLADE'
-        <x-ui::badge variant="secondary" color="green" size="sm" rounded>New</x-ui::badge>
+        <x-std::badge variant="secondary" color="green" size="sm" rounded>New</x-std::badge>
     BLADE, ['data-badge', 'New']],
 
     'breadcrumb' => [<<<'BLADE'
-        <x-ui::breadcrumb>
-            <x-ui::breadcrumb.list>
-                <x-ui::breadcrumb.item>
-                    <x-ui::breadcrumb.link href="/">Home</x-ui::breadcrumb.link>
-                </x-ui::breadcrumb.item>
-                <x-ui::breadcrumb.separator />
-                <x-ui::breadcrumb.item>
-                    <x-ui::breadcrumb.page>Current</x-ui::breadcrumb.page>
-                </x-ui::breadcrumb.item>
-            </x-ui::breadcrumb.list>
-        </x-ui::breadcrumb>
+        <x-std::breadcrumb>
+            <x-std::breadcrumb.list>
+                <x-std::breadcrumb.item>
+                    <x-std::breadcrumb.link href="/">Home</x-std::breadcrumb.link>
+                </x-std::breadcrumb.item>
+                <x-std::breadcrumb.separator />
+                <x-std::breadcrumb.item>
+                    <x-std::breadcrumb.page>Current</x-std::breadcrumb.page>
+                </x-std::breadcrumb.item>
+            </x-std::breadcrumb.list>
+        </x-std::breadcrumb>
     BLADE, ['data-breadcrumb', 'Home', 'Current']],
 
     'button' => [<<<'BLADE'
-        <x-ui::button variant="primary" size="sm" type="submit" disabled data-loading>Save</x-ui::button>
+        <x-std::button variant="primary" size="sm" type="submit" disabled data-loading>Save</x-std::button>
     BLADE, ['data-button', 'type="submit"', 'disabled', 'aria-busy="true"']],
 
     'button-group' => [<<<'BLADE'
-        <x-ui::button-group orientation="horizontal">
-            <x-ui::button>A</x-ui::button>
-            <x-ui::button-group.separator />
-            <x-ui::button>B</x-ui::button>
-        </x-ui::button-group>
+        <x-std::button-group orientation="horizontal">
+            <x-std::button>A</x-std::button>
+            <x-std::button-group.separator />
+            <x-std::button>B</x-std::button>
+        </x-std::button-group>
     BLADE, ['data-button-group', 'A', 'B']],
 
     'calendar' => [<<<'BLADE'
-        <x-ui::calendar mode="single" value="2026-07-29" with-today week-numbers size="default" />
+        <x-std::calendar mode="single" value="2026-07-29" with-today week-numbers size="default" />
     BLADE, ['data-calendar']],
 
     'card' => [<<<'BLADE'
-        <x-ui::card>
-            <x-ui::card.header>
-                <x-ui::card.title>Title</x-ui::card.title>
-                <x-ui::card.description>Desc</x-ui::card.description>
-            </x-ui::card.header>
-            <x-ui::card.content>Body</x-ui::card.content>
-            <x-ui::card.footer>Foot</x-ui::card.footer>
-        </x-ui::card>
+        <x-std::card>
+            <x-std::card.header>
+                <x-std::card.title>Title</x-std::card.title>
+                <x-std::card.description>Desc</x-std::card.description>
+            </x-std::card.header>
+            <x-std::card.content>Body</x-std::card.content>
+            <x-std::card.footer>Foot</x-std::card.footer>
+        </x-std::card>
     BLADE, ['data-card', 'Title', 'Body']],
 
     'chart' => [<<<'BLADE'
-        <x-ui::chart>
-            <x-ui::chart.summary>
-                <x-ui::chart.summary.value :value="42" label="Total" />
-            </x-ui::chart.summary>
-        </x-ui::chart>
+        <x-std::chart>
+            <x-std::chart.summary>
+                <x-std::chart.summary.value :value="42" label="Total" />
+            </x-std::chart.summary>
+        </x-std::chart>
     BLADE, ['data-chart', '42']],
 
     'checkbox' => [<<<'BLADE'
-        <x-ui::checkbox name="terms" value="yes" checked invalid size="sm" />
+        <x-std::checkbox name="terms" value="yes" checked invalid size="sm" />
     BLADE, ['data-checkbox', 'name="terms"', 'checked']],
 
     'collapsible' => [<<<'BLADE'
-        <x-ui::collapsible open transition>
-            <x-ui::collapsible.trigger>More</x-ui::collapsible.trigger>
-            <x-ui::collapsible.content>Details</x-ui::collapsible.content>
-        </x-ui::collapsible>
+        <x-std::collapsible open transition>
+            <x-std::collapsible.trigger>More</x-std::collapsible.trigger>
+            <x-std::collapsible.content>Details</x-std::collapsible.content>
+        </x-std::collapsible>
     BLADE, ['data-collapsible', 'aria-expanded="true"', 'aria-controls=', 'role="region"']],
 
     'scroll-area' => [<<<'BLADE'
-        <x-ui::scroll-area class="h-40" aria-label="List">
+        <x-std::scroll-area class="h-40" aria-label="List">
             <div>One</div>
             <div>Two</div>
-        </x-ui::scroll-area>
+        </x-std::scroll-area>
     BLADE, ['data-scroll-area', 'data-scroll-area-viewport', 'data-scroll-area-scrollbar', 'tabindex="0"']],
 
     'color-picker' => [<<<'BLADE'
-        <x-ui::color-picker name="accent" value="#112233" size="sm" />
+        <x-std::color-picker name="accent" value="#112233" size="sm" />
     BLADE, ['data-color-picker', 'name="accent"']],
 
     'combobox' => [<<<'BLADE'
-        <x-ui::combobox name="framework" placeholder="Search">
-            <x-ui::combobox.input />
-            <x-ui::combobox.content>
-                <x-ui::combobox.item value="laravel">Laravel</x-ui::combobox.item>
-            </x-ui::combobox.content>
-        </x-ui::combobox>
+        <x-std::combobox name="framework" placeholder="Search">
+            <x-std::combobox.input />
+            <x-std::combobox.content>
+                <x-std::combobox.item value="laravel">Laravel</x-std::combobox.item>
+            </x-std::combobox.content>
+        </x-std::combobox>
     BLADE, ['data-combobox', 'Laravel']],
 
     'command' => [<<<'BLADE'
-        <x-ui::command>
-            <x-ui::command.input placeholder="Type a command" />
-            <x-ui::command.list>
-                <x-ui::command.item value="calendar">Calendar</x-ui::command.item>
-            </x-ui::command.list>
-        </x-ui::command>
+        <x-std::command>
+            <x-std::command.input placeholder="Type a command" />
+            <x-std::command.list>
+                <x-std::command.item value="calendar">Calendar</x-std::command.item>
+            </x-std::command.list>
+        </x-std::command>
     BLADE, ['data-command', 'Calendar']],
 
     'date-picker' => [<<<'BLADE'
-        <x-ui::date-picker name="published_at" value="2026-07-29" clearable />
+        <x-std::date-picker name="published_at" value="2026-07-29" clearable />
     BLADE, ['data-date-picker', 'name="published_at"', 'data-calendar']],
 
     'datetime-picker' => [<<<'BLADE'
-        <x-ui::datetime-picker name="scheduled_at" value="2026-07-29T14:30:00+00:00" />
+        <x-std::datetime-picker name="scheduled_at" value="2026-07-29T14:30:00+00:00" />
     BLADE, ['data-datetime-picker', 'name="scheduled_at"']],
 
     'dialog' => [<<<'BLADE'
-        <x-ui::dialog>
-            <x-ui::dialog.trigger>
-                <x-ui::button>Open</x-ui::button>
-            </x-ui::dialog.trigger>
-            <x-ui::dialog.content>
-                <x-ui::dialog.header>
-                    <x-ui::dialog.title>Title</x-ui::dialog.title>
-                </x-ui::dialog.header>
-            </x-ui::dialog.content>
-        </x-ui::dialog>
+        <x-std::dialog>
+            <x-std::dialog.trigger>
+                <x-std::button>Open</x-std::button>
+            </x-std::dialog.trigger>
+            <x-std::dialog.content>
+                <x-std::dialog.header>
+                    <x-std::dialog.title>Title</x-std::dialog.title>
+                </x-std::dialog.header>
+            </x-std::dialog.content>
+        </x-std::dialog>
     BLADE, ['data-dialog', 'Title']],
 
     'dropdown-menu' => [<<<'BLADE'
-        <x-ui::dropdown-menu>
-            <x-ui::dropdown-menu.trigger>
-                <x-ui::button>Menu</x-ui::button>
-            </x-ui::dropdown-menu.trigger>
-            <x-ui::dropdown-menu.content>
-                <x-ui::dropdown-menu.item>Item</x-ui::dropdown-menu.item>
-            </x-ui::dropdown-menu.content>
-        </x-ui::dropdown-menu>
+        <x-std::dropdown-menu>
+            <x-std::dropdown-menu.trigger>
+                <x-std::button>Menu</x-std::button>
+            </x-std::dropdown-menu.trigger>
+            <x-std::dropdown-menu.content>
+                <x-std::dropdown-menu.item>Item</x-std::dropdown-menu.item>
+            </x-std::dropdown-menu.content>
+        </x-std::dropdown-menu>
     BLADE, ['data-dropdown-menu', 'Item']],
 
     'empty' => [<<<'BLADE'
-        <x-ui::empty>
-            <x-ui::empty.header>
-                <x-ui::empty.title>No results</x-ui::empty.title>
-                <x-ui::empty.description>Try again.</x-ui::empty.description>
-            </x-ui::empty.header>
-        </x-ui::empty>
+        <x-std::empty>
+            <x-std::empty.header>
+                <x-std::empty.title>No results</x-std::empty.title>
+                <x-std::empty.description>Try again.</x-std::empty.description>
+            </x-std::empty.header>
+        </x-std::empty>
     BLADE, ['data-empty', 'No results']],
 
     'field' => [<<<'BLADE'
-        <x-ui::field name="email">
-            <x-ui::field.label>Email</x-ui::field.label>
-            <x-ui::input name="email" />
-            <x-ui::field.description>We never share it.</x-ui::field.description>
-        </x-ui::field>
+        <x-std::field name="email">
+            <x-std::field.label>Email</x-std::field.label>
+            <x-std::input name="email" />
+            <x-std::field.description>We never share it.</x-std::field.description>
+        </x-std::field>
     BLADE, ['data-field', 'Email']],
 
     'file-upload' => [<<<'BLADE'
-        <x-ui::file-upload name="docs" multiple>
-            <x-ui::file-upload.dropzone />
-        </x-ui::file-upload>
+        <x-std::file-upload name="docs" multiple>
+            <x-std::file-upload.dropzone />
+        </x-std::file-upload>
     BLADE, ['data-file-upload', 'data-file-upload-dropzone']],
 
     'fonts' => [<<<'BLADE'
-        <x-ui::fonts />
+        <x-std::fonts />
     BLADE, ['fonts.googleapis.com', 'preconnect']],
 
     'grid' => [<<<'BLADE'
-        <x-ui::grid md="3">
-            <x-ui::grid.item span="full">Full</x-ui::grid.item>
-        </x-ui::grid>
+        <x-std::grid md="3">
+            <x-std::grid.item span="full">Full</x-std::grid.item>
+        </x-std::grid>
     BLADE, ['data-grid', 'data-grid-item', '@md:grid-cols-3', 'col-span-full']],
 
     'heading' => [<<<'BLADE'
-        <x-ui::heading level="2" variant="display">Hello</x-ui::heading>
+        <x-std::heading level="2" variant="display">Hello</x-std::heading>
     BLADE, ['Hello']],
 
     'icon' => [<<<'BLADE'
-        <x-ui::icon name="check" class="size-4" />
+        <x-std::icon name="check" class="size-4" />
     BLADE, ['data-icon']],
 
     'input' => [<<<'BLADE'
-        <x-ui::input name="title" value="Draft" size="sm" invalid copyable />
+        <x-std::input name="title" value="Draft" size="sm" invalid copyable />
     BLADE, ['data-input', 'name="title"', 'value="Draft"']],
 
     'input-currency' => [<<<'BLADE'
-        <x-ui::input.currency name="price" currency="BRL" locale="pt_BR" :value="1234" />
+        <x-std::input.currency name="price" currency="BRL" locale="pt_BR" :value="1234" />
     BLADE, ['data-input-currency', 'name="price"']],
 
     'input-otp' => [<<<'BLADE'
-        <x-ui::input-otp name="code" length="4" />
+        <x-std::input-otp name="code" length="4" />
     BLADE, ['data-input-otp', 'data-input-otp-slot']],
 
     'label' => [<<<'BLADE'
-        <x-ui::label for="email" required badge="Optional">Email</x-ui::label>
+        <x-std::label for="email" required badge="Optional">Email</x-std::label>
     BLADE, ['Email', 'for="email"']],
 
     'pagination' => [<<<'BLADE'
-        <x-ui::pagination>
-            <x-ui::pagination.content>
-                <x-ui::pagination.previous href="?page=1" />
-                <x-ui::pagination.item>
-                    <x-ui::pagination.link href="?page=1" :is-active="true">1</x-ui::pagination.link>
-                </x-ui::pagination.item>
-                <x-ui::pagination.next href="?page=2" />
-            </x-ui::pagination.content>
-        </x-ui::pagination>
+        <x-std::pagination>
+            <x-std::pagination.content>
+                <x-std::pagination.previous href="?page=1" />
+                <x-std::pagination.item>
+                    <x-std::pagination.link href="?page=1" :is-active="true">1</x-std::pagination.link>
+                </x-std::pagination.item>
+                <x-std::pagination.next href="?page=2" />
+            </x-std::pagination.content>
+        </x-std::pagination>
     BLADE, ['data-pagination', 'aria-current']],
 
     'pillbox' => [<<<'BLADE'
-        <x-ui::pillbox name="tags" :value="['php']" placeholder="Add tag" />
+        <x-std::pillbox name="tags" :value="['php']" placeholder="Add tag" />
     BLADE, ['data-pillbox', 'name="tags[]"', 'value="php"']],
 
     'popover' => [<<<'BLADE'
-        <x-ui::popover>
-            <x-ui::popover.trigger>
-                <x-ui::button>Open</x-ui::button>
-            </x-ui::popover.trigger>
-            <x-ui::popover.content>Popover body</x-ui::popover.content>
-        </x-ui::popover>
+        <x-std::popover>
+            <x-std::popover.trigger>
+                <x-std::button>Open</x-std::button>
+            </x-std::popover.trigger>
+            <x-std::popover.content>Popover body</x-std::popover.content>
+        </x-std::popover>
     BLADE, ['data-popover', 'Popover body']],
 
     'progress' => [<<<'BLADE'
-        <x-ui::progress :value="40" :max="100" size="sm" />
+        <x-std::progress :value="40" :max="100" size="sm" />
     BLADE, ['data-progress', 'aria-valuenow="40"']],
 
     'radio' => [<<<'BLADE'
-        <x-ui::radio.group name="plan" legend="Plan">
-            <x-ui::radio value="pro" checked>Pro</x-ui::radio>
-            <x-ui::radio value="free">Free</x-ui::radio>
-        </x-ui::radio.group>
+        <x-std::radio.group name="plan" legend="Plan">
+            <x-std::radio value="pro" checked>Pro</x-std::radio>
+            <x-std::radio value="free">Free</x-std::radio>
+        </x-std::radio.group>
     BLADE, ['data-radio', 'name="plan"', 'Pro']],
 
     'rating' => [<<<'BLADE'
-        <x-ui::rating name="score" :value="3" :max="5" />
+        <x-std::rating name="score" :value="3" :max="5" />
     BLADE, ['data-rating', 'name="score"']],
 
     'repeater' => [<<<'BLADE'
-        <x-ui::repeater name="guests" :value="[['name' => 'Ada']]" :min="1">
-            <x-ui::repeater.item>
-                <x-ui::input name="name" />
-            </x-ui::repeater.item>
-        </x-ui::repeater>
+        <x-std::repeater name="guests" :value="[['name' => 'Ada']]" :min="1">
+            <x-std::repeater.item>
+                <x-std::input name="name" />
+            </x-std::repeater.item>
+        </x-std::repeater>
     BLADE, ['data-repeater', 'name="guests']],
 
     'select' => [<<<'BLADE'
-        <x-ui::select name="role" placeholder="Pick">
-            <x-ui::select.trigger />
-            <x-ui::select.content>
-                <x-ui::select.item value="admin">Admin</x-ui::select.item>
-            </x-ui::select.content>
-        </x-ui::select>
+        <x-std::select name="role" placeholder="Pick">
+            <x-std::select.trigger />
+            <x-std::select.content>
+                <x-std::select.item value="admin">Admin</x-std::select.item>
+            </x-std::select.content>
+        </x-std::select>
     BLADE, ['data-select', 'Admin']],
 
     'separator' => [<<<'BLADE'
-        <x-ui::separator orientation="horizontal" />
+        <x-std::separator orientation="horizontal" />
     BLADE, ['data-separator']],
 
     'sidebar' => [<<<'BLADE'
-        <x-ui::sidebar.provider>
-            <x-ui::sidebar>
-                <x-ui::sidebar.header>Brand</x-ui::sidebar.header>
-                <x-ui::sidebar.content>
-                    <x-ui::sidebar.menu>
-                        <x-ui::sidebar.menu-item>
-                            <x-ui::sidebar.menu-button href="/">Home</x-ui::sidebar.menu-button>
-                        </x-ui::sidebar.menu-item>
-                    </x-ui::sidebar.menu>
-                </x-ui::sidebar.content>
-            </x-ui::sidebar>
-        </x-ui::sidebar.provider>
+        <x-std::sidebar.provider>
+            <x-std::sidebar>
+                <x-std::sidebar.header>Brand</x-std::sidebar.header>
+                <x-std::sidebar.content>
+                    <x-std::sidebar.menu>
+                        <x-std::sidebar.menu-item>
+                            <x-std::sidebar.menu-button href="/">Home</x-std::sidebar.menu-button>
+                        </x-std::sidebar.menu-item>
+                    </x-std::sidebar.menu>
+                </x-std::sidebar.content>
+            </x-std::sidebar>
+        </x-std::sidebar.provider>
     BLADE, ['data-sidebar-provider', 'Home']],
 
     'skeleton' => [<<<'BLADE'
-        <x-ui::skeleton class="h-4 w-32" />
+        <x-std::skeleton class="h-4 w-32" />
     BLADE, ['data-skeleton']],
 
     'slider' => [<<<'BLADE'
-        <x-ui::slider name="volume" :value="25" :min="0" :max="100" />
+        <x-std::slider name="volume" :value="25" :min="0" :max="100" />
     BLADE, ['data-slider', 'data-slider-thumb']],
 
     'stat' => [<<<'BLADE'
-        <x-ui::stat label="Revenue" value="$12k" description="MoM" trend="+4%" trend-direction="up" />
+        <x-std::stat label="Revenue" value="$12k" description="MoM" trend="+4%" trend-direction="up" />
     BLADE, ['data-stat', 'Revenue', '$12k']],
 
     'stepper' => [<<<'BLADE'
-        <x-ui::stepper default-value="1">
-            <x-ui::stepper.list>
-                <x-ui::stepper.item value="1">
-                    <x-ui::stepper.trigger>
-                        <x-ui::stepper.title>Start</x-ui::stepper.title>
-                    </x-ui::stepper.trigger>
-                </x-ui::stepper.item>
-            </x-ui::stepper.list>
-            <x-ui::stepper.content value="1">Step one</x-ui::stepper.content>
-        </x-ui::stepper>
+        <x-std::stepper default-value="1">
+            <x-std::stepper.list>
+                <x-std::stepper.item value="1">
+                    <x-std::stepper.trigger>
+                        <x-std::stepper.title>Start</x-std::stepper.title>
+                    </x-std::stepper.trigger>
+                </x-std::stepper.item>
+            </x-std::stepper.list>
+            <x-std::stepper.content value="1">Step one</x-std::stepper.content>
+        </x-std::stepper>
     BLADE, ['data-stepper', 'Start']],
 
     'switch' => [<<<'BLADE'
-        <x-ui::switch name="notify" checked />
+        <x-std::switch name="notify" checked />
     BLADE, ['data-switch', 'name="notify"']],
 
     'table' => [<<<'BLADE'
-        <x-ui::table>
-            <x-ui::table.header>
-                <x-ui::table.row>
-                    <x-ui::table.head>Name</x-ui::table.head>
-                </x-ui::table.row>
-            </x-ui::table.header>
-            <x-ui::table.body>
-                <x-ui::table.row>
-                    <x-ui::table.cell>Ada</x-ui::table.cell>
-                </x-ui::table.row>
-            </x-ui::table.body>
-        </x-ui::table>
+        <x-std::table>
+            <x-std::table.header>
+                <x-std::table.row>
+                    <x-std::table.head>Name</x-std::table.head>
+                </x-std::table.row>
+            </x-std::table.header>
+            <x-std::table.body>
+                <x-std::table.row>
+                    <x-std::table.cell>Ada</x-std::table.cell>
+                </x-std::table.row>
+            </x-std::table.body>
+        </x-std::table>
     BLADE, ['data-table', 'Ada']],
 
     'tabs' => [<<<'BLADE'
-        <x-ui::tabs default-value="a">
-            <x-ui::tabs.list>
-                <x-ui::tabs.trigger value="a">A</x-ui::tabs.trigger>
-                <x-ui::tabs.trigger value="b">B</x-ui::tabs.trigger>
-            </x-ui::tabs.list>
-            <x-ui::tabs.content value="a">Panel A</x-ui::tabs.content>
-            <x-ui::tabs.content value="b">Panel B</x-ui::tabs.content>
-        </x-ui::tabs>
+        <x-std::tabs default-value="a">
+            <x-std::tabs.list>
+                <x-std::tabs.trigger value="a">A</x-std::tabs.trigger>
+                <x-std::tabs.trigger value="b">B</x-std::tabs.trigger>
+            </x-std::tabs.list>
+            <x-std::tabs.content value="a">Panel A</x-std::tabs.content>
+            <x-std::tabs.content value="b">Panel B</x-std::tabs.content>
+        </x-std::tabs>
     BLADE, ['data-tabs', 'Panel A']],
 
     'text' => [<<<'BLADE'
-        <x-ui::text size="sm" variant="muted">Muted copy</x-ui::text>
+        <x-std::text size="sm" variant="muted">Muted copy</x-std::text>
     BLADE, ['Muted copy']],
 
     'textarea' => [<<<'BLADE'
-        <x-ui::textarea name="bio" autosize counter invalid>Hello</x-ui::textarea>
+        <x-std::textarea name="bio" autosize counter invalid>Hello</x-std::textarea>
     BLADE, ['data-textarea', 'name="bio"', 'Hello']],
 
     'time-picker' => [<<<'BLADE'
-        <x-ui::time-picker name="starts_at" value="09:30" />
+        <x-std::time-picker name="starts_at" value="09:30" />
     BLADE, ['data-time-picker', 'name="starts_at"']],
 
     'toast' => [<<<'BLADE'
-        <x-ui::toast.provider>
-            <x-ui::toast title="Saved" description="All good." />
-        </x-ui::toast.provider>
+        <x-std::toast.provider>
+            <x-std::toast title="Saved" description="All good." />
+        </x-std::toast.provider>
     BLADE, ['data-toast-provider', 'Saved']],
 
     'toggle' => [<<<'BLADE'
-        <x-ui::toggle :pressed="true" variant="outline" size="sm">Bold</x-ui::toggle>
+        <x-std::toggle :pressed="true" variant="outline" size="sm">Bold</x-std::toggle>
     BLADE, ['data-toggle', 'aria-pressed="true"']],
 
     'toggle-group' => [<<<'BLADE'
-        <x-ui::toggle-group type="single" default-value="left">
-            <x-ui::toggle-group.item value="left">Left</x-ui::toggle-group.item>
-            <x-ui::toggle-group.item value="right">Right</x-ui::toggle-group.item>
-        </x-ui::toggle-group>
+        <x-std::toggle-group type="single" default-value="left">
+            <x-std::toggle-group.item value="left">Left</x-std::toggle-group.item>
+            <x-std::toggle-group.item value="right">Right</x-std::toggle-group.item>
+        </x-std::toggle-group>
     BLADE, ['data-toggle-group', 'Left']],
 
     'tooltip' => [<<<'BLADE'
-        <x-ui::tooltip>
-            <x-ui::tooltip.trigger>
-                <x-ui::button>Hint</x-ui::button>
-            </x-ui::tooltip.trigger>
-            <x-ui::tooltip.content>Helpful tip</x-ui::tooltip.content>
-        </x-ui::tooltip>
+        <x-std::tooltip>
+            <x-std::tooltip.trigger>
+                <x-std::button>Hint</x-std::button>
+            </x-std::tooltip.trigger>
+            <x-std::tooltip.content>Helpful tip</x-std::tooltip.content>
+        </x-std::tooltip>
     BLADE, ['data-tooltip', 'Helpful tip']],
 ]);
 

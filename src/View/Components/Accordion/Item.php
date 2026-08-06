@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Accordion;
+namespace Ivanfuhr\StdComponents\View\Components\Accordion;
 
 use Illuminate\Support\Str;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Item extends StencilComponent
+final class Item extends StdComponent
 {
     public function __construct(
         public mixed $value = null,
@@ -18,9 +18,9 @@ final class Item extends StencilComponent
         public mixed $contentId = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.accordion.item';
+        return 'std-components::components.accordion.item';
     }
 
     /**

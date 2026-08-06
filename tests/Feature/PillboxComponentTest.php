@@ -9,7 +9,7 @@ use Illuminate\View\ViewException;
 
 it('renders a pillbox with hidden inputs and chip template', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::pillbox name="tags" :value="['laravel', 'php']" placeholder="Add tags…" />
+        <x-std::pillbox name="tags" :value="['laravel', 'php']" placeholder="Add tags…" />
     BLADE);
 
     expect($html)
@@ -24,13 +24,13 @@ it('renders a pillbox with hidden inputs and chip template', function () {
 });
 
 it('renders max attribute when provided', function () {
-    $html = Blade::render('<x-ui::pillbox name="tags" :max="5" />');
+    $html = Blade::render('<x-std::pillbox name="tags" :max="5" />');
 
     expect($html)->toContain('data-pillbox-max="5"');
 });
 
 it('requires a name attribute', function () {
-    Blade::render('<x-ui::pillbox />');
+    Blade::render('<x-std::pillbox />');
 })->throws(ViewException::class);
 
 it('marks pillbox invalid when inside field with errors', function () {
@@ -39,9 +39,9 @@ it('marks pillbox invalid when inside field with errors', function () {
     view()->share('errors', $errors);
 
     $html = Blade::render(<<<'BLADE'
-        <x-ui::field name="tags">
-            <x-ui::pillbox name="tags" />
-        </x-ui::field>
+        <x-std::field name="tags">
+            <x-std::pillbox name="tags" />
+        </x-std::field>
     BLADE);
 
     expect($html)->toContain('data-invalid="true"');

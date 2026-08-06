@@ -37,10 +37,10 @@
 @endphp
 
 <div class="w-full max-w-sm space-y-3">
-    <x-ui::text size="sm" variant="subtle"
-        >Scroll inside the panel — themed overlay bars follow the content.</x-ui::text>
+    <x-std::text size="sm" variant="subtle"
+        >Scroll inside the panel — themed overlay bars follow the content.</x-std::text>
 
-    <x-ui::scroll-area
+    <x-std::scroll-area
         class="h-56 rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950"
         :type="$type"
         :horizontal="$horizontal"
@@ -63,5 +63,5 @@
                 @endforeach
             </div>
         @endif
-    </x-ui::scroll-area>
+    </x-std::scroll-area>
 </div>

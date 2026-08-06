@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Blade;
 
 it('renders a textarea control with name', function () {
-    $html = Blade::render('<x-ui::textarea name="bio" placeholder="Tell us about yourself">Hello</x-ui::textarea>');
+    $html = Blade::render('<x-std::textarea name="bio" placeholder="Tell us about yourself">Hello</x-std::textarea>');
 
     expect($html)
         ->toContain('data-textarea')
@@ -15,7 +15,7 @@ it('renders a textarea control with name', function () {
 });
 
 it('wires scroll-area chrome on fixed-height textareas', function () {
-    $html = Blade::render('<x-ui::textarea name="bio" rows="3" />');
+    $html = Blade::render('<x-std::textarea name="bio" rows="3" />');
 
     expect($html)
         ->toContain('data-scroll-area')
@@ -25,7 +25,7 @@ it('wires scroll-area chrome on fixed-height textareas', function () {
 });
 
 it('skips scroll-area chrome when autosize', function () {
-    $html = Blade::render('<x-ui::textarea name="bio" autosize />');
+    $html = Blade::render('<x-std::textarea name="bio" autosize />');
 
     expect($html)
         ->toContain('data-textarea-autosize')
@@ -34,19 +34,19 @@ it('skips scroll-area chrome when autosize', function () {
 });
 
 it('marks textarea invalid when invalid prop is true', function () {
-    $html = Blade::render('<x-ui::textarea name="bio" :invalid="true" />');
+    $html = Blade::render('<x-std::textarea name="bio" :invalid="true" />');
 
     expect($html)->toContain('aria-invalid="true"');
 });
 
 it('respects disabled on textarea', function () {
-    $html = Blade::render('<x-ui::textarea name="bio" disabled />');
+    $html = Blade::render('<x-std::textarea name="bio" disabled />');
 
     expect($html)->toContain('disabled');
 });
 
 it('renders autosize and counter markers', function () {
-    $html = Blade::render('<x-ui::textarea name="bio" autosize counter maxlength="200" />');
+    $html = Blade::render('<x-std::textarea name="bio" autosize counter maxlength="200" />');
 
     expect($html)
         ->toContain('data-textarea-autosize')
@@ -56,7 +56,7 @@ it('renders autosize and counter markers', function () {
 });
 
 it('nests the character counter display inside the textarea root', function () {
-    $html = Blade::render('<x-ui::textarea name="bio" counter maxlength="200" />');
+    $html = Blade::render('<x-std::textarea name="bio" counter maxlength="200" />');
 
     $document = new DOMDocument;
     @$document->loadHTML($html);
@@ -87,7 +87,7 @@ it('nests the character counter display inside the textarea root', function () {
 
 it('keeps native attributes on the textarea control, not the wrapper', function () {
     $html = Blade::render(
-        '<x-ui::textarea name="bio" placeholder="About you" rows="4" maxlength="200" />',
+        '<x-std::textarea name="bio" placeholder="About you" rows="4" maxlength="200" />',
     );
 
     $document = new DOMDocument;

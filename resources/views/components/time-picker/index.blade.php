@@ -15,9 +15,9 @@
 
     @if ($shortcut)
         @if ($type === 'input')
-            <x-ui::time-picker.input :$placeholder :$invalid :$disabled :$clearable :$size :listbox-id="$listboxId" />
+            <x-std::time-picker.input :$placeholder :$invalid :$disabled :$clearable :$size :listbox-id="$listboxId" />
         @else
-            <x-ui::time-picker.button :$placeholder :$invalid :$disabled :$clearable :$size :listbox-id="$listboxId" />
+            <x-std::time-picker.button :$placeholder :$invalid :$disabled :$clearable :$size :listbox-id="$listboxId" />
         @endif
     @else
         {{ $slot }}

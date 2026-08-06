@@ -1,5 +1,5 @@
 /**
- * Stencil — code block copy button (vanilla JS, no Alpine).
+ * Std Components — code block copy button (vanilla JS, no Alpine).
  */
 
 const CODE_BLOCK_SELECTOR = '[data-code-block]';
@@ -44,9 +44,9 @@ function bindCodeBlock(root) {
 
         const text =
             source instanceof HTMLTemplateElement
-                ? source.content.textContent ?? ''
+                ? (source.content.textContent ?? '')
                 : content instanceof HTMLElement
-                  ? content.textContent ?? ''
+                  ? (content.textContent ?? '')
                   : '';
 
         if (text === '') {
@@ -68,7 +68,7 @@ function bindCodeBlock(root) {
     });
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

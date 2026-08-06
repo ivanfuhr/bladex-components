@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Blade;
 
 it('renders semantic heading tags with automatic font role', function (): void {
-    $html = Blade::render('<x-ui::heading :level="3">Title</x-ui::heading>');
+    $html = Blade::render('<x-std::heading :level="3">Title</x-std::heading>');
 
     expect($html)
         ->toContain('<h3')
@@ -15,8 +15,8 @@ it('renders semantic heading tags with automatic font role', function (): void {
 });
 
 it('uses configured default heading level and pairs with default text size', function (): void {
-    $heading = Blade::render('<x-ui::heading>Title</x-ui::heading>');
-    $text = Blade::render('<x-ui::text>Body</x-ui::text>');
+    $heading = Blade::render('<x-std::heading>Title</x-std::heading>');
+    $text = Blade::render('<x-std::text>Body</x-std::text>');
 
     expect($heading)
         ->toContain('<h2')
@@ -25,7 +25,7 @@ it('uses configured default heading level and pairs with default text size', fun
 });
 
 it('maps heading levels to the standardized size scale', function (int $level, string $sizeClass): void {
-    $html = Blade::render('<x-ui::heading :level="'.$level.'">H</x-ui::heading>');
+    $html = Blade::render('<x-std::heading :level="'.$level.'">H</x-std::heading>');
 
     expect($html)->toContain($sizeClass);
 })->with([
@@ -38,7 +38,7 @@ it('maps heading levels to the standardized size scale', function (int $level, s
 ]);
 
 it('applies subtle variant classes', function (): void {
-    $html = Blade::render('<x-ui::heading variant="subtle">Muted</x-ui::heading>');
+    $html = Blade::render('<x-std::heading variant="subtle">Muted</x-std::heading>');
 
     expect($html)
         ->toContain('text-zinc-500')

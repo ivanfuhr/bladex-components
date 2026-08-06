@@ -1,4 +1,4 @@
-<x-ui::text
+<x-std::text
     size="sm"
     :variant="$messageVariant"
     {{
@@ -10,4 +10,4 @@
     }}
 >
     {{ $slot }}
-</x-ui::text>
+</x-std::text>

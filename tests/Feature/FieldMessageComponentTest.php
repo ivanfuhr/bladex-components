@@ -7,7 +7,7 @@ use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;
 
 it('renders field error messages with alert role and error colors', function () {
-    $html = Blade::render('<x-ui::field.message variant="error">Too short.</x-ui::field.message>');
+    $html = Blade::render('<x-std::field.message variant="error">Too short.</x-std::field.message>');
 
     expect($html)
         ->toContain('data-field-message')
@@ -20,7 +20,7 @@ it('renders field error messages with alert role and error colors', function () 
 });
 
 it('treats the invalid prop as an error variant', function () {
-    $html = Blade::render('<x-ui::field.message :invalid="true">Required.</x-ui::field.message>');
+    $html = Blade::render('<x-std::field.message :invalid="true">Required.</x-std::field.message>');
 
     expect($html)
         ->toContain('data-field-message-variant="error"')
@@ -35,7 +35,7 @@ it('renders validation errors through the field errors helper', function () {
     $errors->put('default', $bag);
     view()->share('errors', $errors);
 
-    $html = Blade::render('<x-ui::field.errors name="title" />');
+    $html = Blade::render('<x-std::field.errors name="title" />');
 
     expect($html)
         ->toContain('data-field-message-variant="error"')
@@ -44,7 +44,7 @@ it('renders validation errors through the field errors helper', function () {
 });
 
 it('renders hint messages without alert role', function () {
-    $html = Blade::render('<x-ui::field.message>Optional hint.</x-ui::field.message>');
+    $html = Blade::render('<x-std::field.message>Optional hint.</x-std::field.message>');
 
     expect($html)
         ->toContain('data-field-message-variant="hint"')
@@ -53,7 +53,7 @@ it('renders hint messages without alert role', function () {
 });
 
 it('styles text variant error for custom validation markup', function () {
-    $html = Blade::render('<x-ui::text size="sm" variant="error">Invalid.</x-ui::text>');
+    $html = Blade::render('<x-std::text size="sm" variant="error">Invalid.</x-std::text>');
 
     expect($html)->toContain('text-red-600')->toContain('Invalid.');
 });

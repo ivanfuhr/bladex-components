@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\Support\Form;
+namespace Ivanfuhr\StdComponents\Support\Form;
 
-use Ivanfuhr\Stencil\Support\Interaction\InteractionStateClassMap;
-use Ivanfuhr\Stencil\Support\Typography\TypographyClassMap;
+use Ivanfuhr\StdComponents\Support\Interaction\InteractionStateClassMap;
+use Ivanfuhr\StdComponents\Support\Typography\TypographyClassMap;
 
 final class FormControlClassMap
 {
@@ -116,7 +116,7 @@ final class FormControlClassMap
     {
         $track = $size === 'sm' ? 'h-5 w-9' : 'h-6 w-11';
 
-        // Background colors live in stencil.css so :has(:checked) can win in the
+        // Background colors live in std-components.css so :has(:checked) can win in the
         // same @layer (utility bg-* would otherwise override component rules).
         return collect([
             'switch__track',

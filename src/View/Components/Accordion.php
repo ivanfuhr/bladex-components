@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Accordion extends StencilComponent
+final class Accordion extends StdComponent
 {
     public function __construct(
         public bool $exclusive = false,
@@ -14,9 +14,9 @@ final class Accordion extends StencilComponent
         public bool $bordered = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.accordion.index';
+        return 'std-components::components.accordion.index';
     }
 
     /**

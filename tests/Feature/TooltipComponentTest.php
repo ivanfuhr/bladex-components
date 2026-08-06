@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a tooltip with trigger and content', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::tooltip side="bottom">
-            <x-ui::tooltip.trigger>
-                <x-ui::button variant="outline">Hover</x-ui::button>
-            </x-ui::tooltip.trigger>
-            <x-ui::tooltip.content>Add to library</x-ui::tooltip.content>
-        </x-ui::tooltip>
+        <x-std::tooltip side="bottom">
+            <x-std::tooltip.trigger>
+                <x-std::button variant="outline">Hover</x-std::button>
+            </x-std::tooltip.trigger>
+            <x-std::tooltip.content>Add to library</x-std::tooltip.content>
+        </x-std::tooltip>
     BLADE);
 
     expect($html)

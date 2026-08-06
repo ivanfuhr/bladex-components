@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\Support\Typography;
+namespace Ivanfuhr\StdComponents\Support\Typography;
 
 final class GoogleFontsStylesheetBuilder
 {

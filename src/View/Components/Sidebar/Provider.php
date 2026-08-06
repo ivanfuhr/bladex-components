@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Sidebar;
+namespace Ivanfuhr\StdComponents\View\Components\Sidebar;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Provider extends StencilComponent
+final class Provider extends StdComponent
 {
     public function __construct(
         public bool $defaultOpen = true,
-        public mixed $storageKey = 'stencil-sidebar-state',
+        public mixed $storageKey = 'std-sidebar-state',
         public mixed $width = '16rem',
         public mixed $widthIcon = '3.5rem',
         public mixed $widthMobile = '18rem',
         public mixed $headerHeight = '4rem',
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.sidebar.provider';
+        return 'std-components::components.sidebar.provider';
     }
 
     /**
@@ -30,7 +30,7 @@ final class Provider extends StencilComponent
     {
         return [
             'isDefaultOpen' => $this->defaultOpen,
-            'style' => '--stencil-sidebar-width: '.e($this->width).'; --stencil-sidebar-width-icon: '.e($this->widthIcon).'; --stencil-sidebar-width-mobile: '.e($this->widthMobile).'; --stencil-header-height: '.e($this->headerHeight).';',
+            'style' => '--std-sidebar-width: '.e($this->width).'; --std-sidebar-width-icon: '.e($this->widthIcon).'; --std-sidebar-width-mobile: '.e($this->widthMobile).'; --std-header-height: '.e($this->headerHeight).';',
         ];
     }
 }

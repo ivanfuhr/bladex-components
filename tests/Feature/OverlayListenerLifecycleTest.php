@@ -20,7 +20,7 @@ it('overlay widgets tear down document listeners with createBindSignal', functio
         ->toContain("import { createBindSignal } from './shared/lifecycle.js'")
         ->toContain('createBindSignal(')
         ->toContain('{ signal }')
-        ->toContain('stencil:mount');
+        ->toContain('std:mount');
 })->with([
     'popover' => ['popover.js'],
     'sidebar' => ['sidebar.js'],
@@ -64,7 +64,7 @@ it('shared scroll lock helper is reference-counted and allowlists overlay panels
         ->toContain('options.signal?.addEventListener')
         ->toContain('[data-scroll-area-viewport]')
         ->toContain('syncNestedScrollAreas')
-        ->toContain("container.dataset.stencilScrollLocked = 'true'")
+        ->toContain("container.dataset.stdScrollLocked = 'true'")
         ->toContain('onLockedContainerScroll')
         ->toContain('onLockedContainerWheel')
         ->not->toContain("document.body.style.position = 'fixed'")

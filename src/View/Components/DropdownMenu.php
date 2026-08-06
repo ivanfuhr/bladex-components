@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class DropdownMenu extends StencilComponent
+final class DropdownMenu extends StdComponent
 {
     public function __construct(
         public mixed $align = 'start',
         public mixed $side = 'bottom',
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.dropdown-menu.index';
+        return 'std-components::components.dropdown-menu.index';
     }
 }

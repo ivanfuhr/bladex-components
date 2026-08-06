@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Blade;
 
 it('renders badge variants and sizes', function () {
-    $html = Blade::render('<x-ui::badge variant="destructive" size="lg" rounded>New</x-ui::badge>');
+    $html = Blade::render('<x-std::badge variant="destructive" size="lg" rounded>New</x-std::badge>');
 
     expect($html)
         ->toContain('data-badge')
@@ -17,8 +17,8 @@ it('renders badge variants and sizes', function () {
 });
 
 it('renders color badges and outline variant', function () {
-    $solid = Blade::render('<x-ui::badge color="lime">Beta</x-ui::badge>');
-    $outline = Blade::render('<x-ui::badge variant="outline">Draft</x-ui::badge>');
+    $solid = Blade::render('<x-std::badge color="lime">Beta</x-std::badge>');
+    $outline = Blade::render('<x-std::badge variant="outline">Draft</x-std::badge>');
 
     expect($solid)->toContain('bg-lime-100')->toContain('Beta');
     expect($outline)->toContain('border')->toContain('Draft');
@@ -26,10 +26,10 @@ it('renders color badges and outline variant', function () {
 
 it('renders removable badge close control', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::badge>
+        <x-std::badge>
             Admin
-            <x-ui::badge.close />
-        </x-ui::badge>
+            <x-std::badge.close />
+        </x-std::badge>
     BLADE);
 
     expect($html)
@@ -39,7 +39,7 @@ it('renders removable badge close control', function () {
 });
 
 it('renders as span when as anchor is requested without href', function () {
-    $html = Blade::render('<x-ui::badge as="a">Draft</x-ui::badge>');
+    $html = Blade::render('<x-std::badge as="a">Draft</x-std::badge>');
 
     expect($html)
         ->toContain('<span')

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Combobox;
+namespace Ivanfuhr\StdComponents\View\Components\Combobox;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Input extends StencilComponent
+final class Input extends StdComponent
 {
     public function __construct(
         public mixed $placeholder = null,
@@ -19,9 +19,9 @@ final class Input extends StencilComponent
         public bool $multiple = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.combobox.input';
+        return 'std-components::components.combobox.input';
     }
 
     /**
@@ -40,7 +40,7 @@ final class Input extends StencilComponent
         $awareListboxId = $data['listboxId'] ?? $this->listboxId;
         $awareControlId = $data['controlId'] ?? $this->controlId;
 
-        $isInvalid = $awareInvalid || $fieldInvalid || stencil_field_has_errors($name);
+        $isInvalid = $awareInvalid || $fieldInvalid || std_field_has_errors($name);
         $resolvedPlaceholder = filled($awarePlaceholder) ? $awarePlaceholder : null;
 
         $resolvedComboboxId = filled($awareComboboxId)
@@ -51,14 +51,14 @@ final class Input extends StencilComponent
             : (filled($resolvedComboboxId) ? $resolvedComboboxId.'-listbox' : null);
         $resolvedControlId = filled($awareControlId) ? $awareControlId : $resolvedComboboxId;
 
-        $inputAttributes = stencil_apply_interaction($this->attributes
+        $inputAttributes = std_apply_interaction($this->attributes
             ->except(['placeholder', 'invalid', 'disabled', 'size', 'comboboxId', 'listboxId', 'controlId'])
             ->class([
                 'combobox__input',
                 'group flex w-full min-w-0 !pr-9',
-                stencil_field_surface_classes($awareSize, false, 'text'),
+                std_field_surface_classes($awareSize, false, 'text'),
                 'placeholder:text-zinc-500 dark:placeholder:text-zinc-400',
-                stencil_invalid_field_classes(),
+                std_invalid_field_classes(),
                 'aria-expanded:border-zinc-300 aria-expanded:ring-2 aria-expanded:ring-zinc-950/10',
                 'dark:aria-expanded:border-zinc-600 dark:aria-expanded:ring-zinc-300/20',
                 $isInvalid ? 'border-red-500 focus-visible:ring-red-500/20 dark:border-red-500' : null,

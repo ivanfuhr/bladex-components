@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Tabs;
+namespace Ivanfuhr\StdComponents\View\Components\Tabs;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Provider extends StencilComponent
+final class Provider extends StdComponent
 {
     public function __construct(
         public mixed $tabsId = null,
@@ -15,8 +15,8 @@ final class Provider extends StencilComponent
         public mixed $orientation = 'horizontal',
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.tabs.provider';
+        return 'std-components::components.tabs.provider';
     }
 }

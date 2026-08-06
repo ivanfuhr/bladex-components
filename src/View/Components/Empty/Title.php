@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Empty;
+namespace Ivanfuhr\StdComponents\View\Components\Empty;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Title extends StencilComponent
+final class Title extends StdComponent
 {
     public function __construct(
         public int $level = 3,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.empty.title';
+        return 'std-components::components.empty.title';
     }
 
     protected function resolveViewData(array $data = []): array

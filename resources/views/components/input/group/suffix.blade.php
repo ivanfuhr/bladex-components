@@ -8,5 +8,5 @@
     }}
     data-input-group-suffix
 >
-    <x-ui::text inline size="sm" variant="subtle">{{ $slot }}</x-ui::text>
+    <x-std::text inline size="sm" variant="subtle">{{ $slot }}</x-std::text>
 </div>

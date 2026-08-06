@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Select;
+namespace Ivanfuhr\StdComponents\View\Components\Select;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Content extends StencilComponent
+final class Content extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.select.content';
+        return 'std-components::components.select.content';
     }
 
     /**
@@ -19,13 +19,13 @@ final class Content extends StencilComponent
      */
     protected function resolveViewData(array $data = []): array
     {
-        $size = $this->attributes->get('size') ?? stencil_ancestor_attribute('size');
-        $listboxId = $this->attributes->get('listbox-id') ?? stencil_ancestor_attribute('listboxId');
-        $multiple = (bool) ($this->attributes->get('multiple') ?? stencil_ancestor_attribute('multiple', false));
+        $size = $this->attributes->get('size') ?? std_ancestor_attribute('size');
+        $listboxId = $this->attributes->get('listbox-id') ?? std_ancestor_attribute('listboxId');
+        $multiple = (bool) ($this->attributes->get('multiple') ?? std_ancestor_attribute('multiple', false));
 
         $contentClasses = collect([
             'select__content',
-            stencil_select_listbox_classes($size),
+            std_select_listbox_classes($size),
         ])->implode(' ');
 
         $contentAttributes = $this->attributes

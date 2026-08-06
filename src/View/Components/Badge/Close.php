@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Badge;
+namespace Ivanfuhr\StdComponents\View\Components\Badge;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Close extends StencilComponent
+final class Close extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.badge.close';
+        return 'std-components::components.badge.close';
     }
 }

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
-final class Combobox extends StencilComponent
+final class Combobox extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
@@ -24,9 +24,9 @@ final class Combobox extends StencilComponent
         public mixed $display = 'count',
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.combobox.index';
+        return 'std-components::components.combobox.index';
     }
 
     /**
@@ -36,7 +36,7 @@ final class Combobox extends StencilComponent
     protected function resolveViewData(array $data = []): array
     {
         $fieldInvalid = (bool) $this->aware('fieldInvalid', false);
-        $invalid = $this->invalid || $fieldInvalid || stencil_field_has_errors($this->name);
+        $invalid = $this->invalid || $fieldInvalid || std_field_has_errors($this->name);
         $multiple = $this->multiple;
         $display = in_array($this->display, ['count', 'chips'], true) ? $this->display : 'count';
 

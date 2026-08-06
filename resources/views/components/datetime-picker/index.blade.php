@@ -13,7 +13,7 @@
     @endif
 
     @if ($shortcut)
-        <x-ui::date-picker.button
+        <x-std::date-picker.button
             :placeholder="$resolvedPlaceholder"
             :$invalid
             :$disabled
@@ -23,11 +23,11 @@
             data-datetime-picker-trigger
         />
 
-        <x-ui::datetime-picker.panel :panel-id="$panelId">
+        <x-std::datetime-picker.panel :panel-id="$panelId">
             {{-- Absolute time column on md+ so list height tracks the calendar (no dead space). --}}
             <div class="relative flex flex-col md:flex-row">
                 <div class="shrink-0 p-4">
-                    <x-ui::calendar
+                    <x-std::calendar
                         :value="$datePart"
                         :timezone="$resolvedTimezone"
                         :locale="$resolvedLocale"
@@ -39,11 +39,11 @@
 
                 <div class="hidden w-40 shrink-0 md:block" aria-hidden="true"></div>
 
-                <x-ui::datetime-picker.time-list :time-list-id="$timeListId" />
+                <x-std::datetime-picker.time-list :time-list-id="$timeListId" />
             </div>
 
-            <x-ui::datetime-picker.footer />
-        </x-ui::datetime-picker.panel>
+            <x-std::datetime-picker.footer />
+        </x-std::datetime-picker.panel>
     @else
         {{ $slot }}
     @endif

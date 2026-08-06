@@ -1,6 +1,6 @@
 @php
-    echo '<x-ui::radio.group name="plan" legend="Billing plan">
-        <x-ui::radio value="free">Free</x-ui::radio>
-        <x-ui::radio value="pro" :checked="true">Pro</x-ui::radio>
-    </x-ui::radio.group>';
+    echo '<x-std::radio.group name="plan" legend="Billing plan">
+        <x-std::radio value="free">Free</x-std::radio>
+        <x-std::radio value="pro" :checked="true">Pro</x-std::radio>
+    </x-std::radio.group>';
 @endphp

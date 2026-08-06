@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Avatar extends StencilComponent
+final class Avatar extends StdComponent
 {
     public function __construct(
         public mixed $src = null,
@@ -18,9 +18,9 @@ final class Avatar extends StencilComponent
         public mixed $as = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.avatar.index';
+        return 'std-components::components.avatar.index';
     }
 
     protected function resolveViewData(array $data = []): array

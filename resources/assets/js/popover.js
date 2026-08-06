@@ -1,5 +1,5 @@
 /**
- * Stencil — accessible popover overlay (vanilla JS, no Alpine).
+ * Std Components — accessible popover overlay (vanilla JS, no Alpine).
  */
 
 import { createBindSignal } from './shared/lifecycle.js';
@@ -65,7 +65,7 @@ function bindPopover(root) {
     }
 
     const signal = createBindSignal(root);
-    const portalMarker = document.createComment('stencil-popover-portal');
+    const portalMarker = document.createComment('std-popover-portal');
     let open = content.dataset.state === 'open' && !content.hidden;
     /** @type {(() => void) | null} */
     let releaseScrollLock = null;
@@ -130,7 +130,7 @@ function bindPopover(root) {
         }
 
         root.dispatchEvent(
-            new CustomEvent('stencil:popover:change', {
+            new CustomEvent('std:popover:change', {
                 bubbles: true,
                 detail: { open },
             }),
@@ -394,7 +394,7 @@ function positionContent(content, trigger, root) {
     content.style.left = `${left}px`;
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

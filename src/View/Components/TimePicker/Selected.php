@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\TimePicker;
+namespace Ivanfuhr\StdComponents\View\Components\TimePicker;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Selected extends StencilComponent
+final class Selected extends StdComponent
 {
     public function __construct(
         public mixed $placeholder = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.time-picker.selected';
+        return 'std-components::components.time-picker.selected';
     }
 }

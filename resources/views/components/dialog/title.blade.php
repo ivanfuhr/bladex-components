@@ -1,4 +1,4 @@
-<x-ui::heading
+<x-std::heading
     level="2"
     {{
         $attributes->except(['id'])->merge([
@@ -8,4 +8,4 @@
     }}
 >
     {{ $slot }}
-</x-ui::heading>
+</x-std::heading>

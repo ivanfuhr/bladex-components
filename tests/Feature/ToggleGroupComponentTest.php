@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a single toggle group with radiogroup semantics', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::toggle-group type="single" variant="outline" default-value="bold" aria-label="Format">
-            <x-ui::toggle-group.item value="bold">Bold</x-ui::toggle-group.item>
-            <x-ui::toggle-group.item value="italic">Italic</x-ui::toggle-group.item>
-        </x-ui::toggle-group>
+        <x-std::toggle-group type="single" variant="outline" default-value="bold" aria-label="Format">
+            <x-std::toggle-group.item value="bold">Bold</x-std::toggle-group.item>
+            <x-std::toggle-group.item value="italic">Italic</x-std::toggle-group.item>
+        </x-std::toggle-group>
     BLADE);
 
     expect($html)
@@ -25,11 +25,11 @@ it('renders a single toggle group with radiogroup semantics', function () {
 
 it('renders a multiple toggle group with aria-pressed items', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::toggle-group type="multiple" :default-value="['bold', 'italic']">
-            <x-ui::toggle-group.item value="bold">Bold</x-ui::toggle-group.item>
-            <x-ui::toggle-group.item value="italic">Italic</x-ui::toggle-group.item>
-            <x-ui::toggle-group.item value="underline">Underline</x-ui::toggle-group.item>
-        </x-ui::toggle-group>
+        <x-std::toggle-group type="multiple" :default-value="['bold', 'italic']">
+            <x-std::toggle-group.item value="bold">Bold</x-std::toggle-group.item>
+            <x-std::toggle-group.item value="italic">Italic</x-std::toggle-group.item>
+            <x-std::toggle-group.item value="underline">Underline</x-std::toggle-group.item>
+        </x-std::toggle-group>
     BLADE);
 
     expect($html)
@@ -41,10 +41,10 @@ it('renders a multiple toggle group with aria-pressed items', function () {
 
 it('supports vertical orientation and spacing', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::toggle-group orientation="vertical" :spacing="2" variant="outline">
-            <x-ui::toggle-group.item value="a">A</x-ui::toggle-group.item>
-            <x-ui::toggle-group.item value="b">B</x-ui::toggle-group.item>
-        </x-ui::toggle-group>
+        <x-std::toggle-group orientation="vertical" :spacing="2" variant="outline">
+            <x-std::toggle-group.item value="a">A</x-std::toggle-group.item>
+            <x-std::toggle-group.item value="b">B</x-std::toggle-group.item>
+        </x-std::toggle-group>
     BLADE);
 
     expect($html)

@@ -1,44 +1,44 @@
-Accessible modal layer on the native `<dialog>` element ([shadcn alert dialog](https://ui.shadcn.com/docs/components/base/alert-dialog) composition, [Flux modal](https://fluxui.dev/components/modal) ergonomics). Subcomponents include `trigger`, `content`, `header`, `title`, `description`, `footer`, `close`, `cancel`, and `action`. Included in `@stencilScripts`.
+Accessible modal layer on the native `<dialog>` element ([shadcn alert dialog](https://ui.shadcn.com/docs/components/base/alert-dialog) composition, [Flux modal](https://fluxui.dev/components/modal) ergonomics). Subcomponents include `trigger`, `content`, `header`, `title`, `description`, `footer`, `close`, `cancel`, and `action`. Included in `@stdScripts`.
 
-Named triggers can live anywhere on the page; use the same `name` on `dialog.trigger` and `dialog.content`. Control dialogs from JavaScript with `window.Stencil.dialog('name').show()` and `window.Stencil.dialogs.closeAll()`.
+Named triggers can live anywhere on the page; use the same `name` on `dialog.trigger` and `dialog.content`. Control dialogs from JavaScript with `window.StdComponents.dialog('name').show()` and `window.StdComponents.dialogs.closeAll()`.
 
 ```blade
-<x-ui::dialog>
-    <x-ui::dialog.trigger>
-        <x-ui::button variant="outline">Edit profile</x-ui::button>
-    </x-ui::dialog.trigger>
+<x-std::dialog>
+    <x-std::dialog.trigger>
+        <x-std::button variant="outline">Edit profile</x-std::button>
+    </x-std::dialog.trigger>
 
-    <x-ui::dialog.content>
-        <x-ui::dialog.header>
-            <x-ui::dialog.title>Update profile</x-ui::dialog.title>
-            <x-ui::dialog.description>Make changes to your personal details.</x-ui::dialog.description>
-        </x-ui::dialog.header>
+    <x-std::dialog.content>
+        <x-std::dialog.header>
+            <x-std::dialog.title>Update profile</x-std::dialog.title>
+            <x-std::dialog.description>Make changes to your personal details.</x-std::dialog.description>
+        </x-std::dialog.header>
 
-        <x-ui::input name="name" placeholder="Your name" class="mt-4" />
+        <x-std::input name="name" placeholder="Your name" class="mt-4" />
 
-        <x-ui::dialog.footer>
-            <x-ui::dialog.cancel>Cancel</x-ui::dialog.cancel>
-            <x-ui::dialog.action>Save changes</x-ui::dialog.action>
-        </x-ui::dialog.footer>
-    </x-ui::dialog.content>
-</x-ui::dialog>
+        <x-std::dialog.footer>
+            <x-std::dialog.cancel>Cancel</x-std::dialog.cancel>
+            <x-std::dialog.action>Save changes</x-std::dialog.action>
+        </x-std::dialog.footer>
+    </x-std::dialog.content>
+</x-std::dialog>
 
-<x-ui::dialog.trigger name="delete-project">
-    <x-ui::button variant="danger">Delete</x-ui::button>
-</x-ui::dialog.trigger>
+<x-std::dialog.trigger name="delete-project">
+    <x-std::button variant="danger">Delete</x-std::button>
+</x-std::dialog.trigger>
 
-<x-ui::dialog.content name="delete-project" size="sm" :alert="true">
-    <x-ui::dialog.header>
-        <x-ui::dialog.title>Delete project?</x-ui::dialog.title>
-        <x-ui::dialog.description>
+<x-std::dialog.content name="delete-project" size="sm" :alert="true">
+    <x-std::dialog.header>
+        <x-std::dialog.title>Delete project?</x-std::dialog.title>
+        <x-std::dialog.description>
             You're about to delete this project. This action cannot be reversed.
-        </x-ui::dialog.description>
-    </x-ui::dialog.header>
-    <x-ui::dialog.footer>
-        <x-ui::dialog.cancel>Cancel</x-ui::dialog.cancel>
-        <x-ui::dialog.action variant="danger">Delete project</x-ui::dialog.action>
-    </x-ui::dialog.footer>
-</x-ui::dialog.content>
+        </x-std::dialog.description>
+    </x-std::dialog.header>
+    <x-std::dialog.footer>
+        <x-std::dialog.cancel>Cancel</x-std::dialog.cancel>
+        <x-std::dialog.action variant="danger">Delete project</x-std::dialog.action>
+    </x-std::dialog.footer>
+</x-std::dialog.content>
 ```
 
 | Prop (on `content`) | Description |

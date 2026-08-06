@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Command;
+namespace Ivanfuhr\StdComponents\View\Components\Command;
 
 use Illuminate\Support\Facades\View;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class ListView extends StencilComponent
+final class ListView extends StdComponent
 {
     public function __construct(
         public mixed $listboxId = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.command.list';
+        return 'std-components::components.command.list';
     }
 
     /**

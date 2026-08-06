@@ -1,5 +1,5 @@
 /**
- * Stencil — accessible stepper / wizard steps (vanilla JS, no Alpine).
+ * Std Components — accessible stepper / wizard steps (vanilla JS, no Alpine).
  */
 
 const STEPPER_SELECTOR = '[data-stepper]';
@@ -125,7 +125,7 @@ function bindStepper(root) {
         }
 
         root.dispatchEvent(
-            new CustomEvent('stencil:stepper:change', {
+            new CustomEvent('std:stepper:change', {
                 bubbles: true,
                 detail: { value, index },
             }),
@@ -281,7 +281,7 @@ function bindStepper(root) {
     });
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

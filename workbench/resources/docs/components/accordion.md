@@ -1,18 +1,18 @@
-Accessible vertically stacked disclosures ([shadcn Accordion](https://ui.shadcn.com/docs/components/accordion), [Flux accordion](https://fluxui.dev/components/accordion)). Subcomponents include `item`, `trigger`, and `content`. Included in `@stencilScripts`.
+Accessible vertically stacked disclosures ([shadcn Accordion](https://ui.shadcn.com/docs/components/accordion), [Flux accordion](https://fluxui.dev/components/accordion)). Subcomponents include `item`, `trigger`, and `content`. Included in `@stdScripts`.
 
 ```blade
-<x-ui::accordion exclusive transition>
-    <x-ui::accordion.item value="shipping" :expanded="true">
-        <x-ui::accordion.trigger>What are your shipping options?</x-ui::accordion.trigger>
-        <x-ui::accordion.content>
+<x-std::accordion exclusive transition>
+    <x-std::accordion.item value="shipping" :expanded="true">
+        <x-std::accordion.trigger>What are your shipping options?</x-std::accordion.trigger>
+        <x-std::accordion.content>
             Standard (5–7 days), express (2–3 days), and overnight.
-        </x-ui::accordion.content>
-    </x-ui::accordion.item>
+        </x-std::accordion.content>
+    </x-std::accordion.item>
 
-    <x-ui::accordion.item heading="What is your return policy?">
+    <x-std::accordion.item heading="What is your return policy?">
         30-day money-back guarantee on unused items.
-    </x-ui::accordion.item>
-</x-ui::accordion>
+    </x-std::accordion.item>
+</x-std::accordion>
 ```
 
 | Prop | Description |

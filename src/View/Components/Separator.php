@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Separator extends StencilComponent
+final class Separator extends StdComponent
 {
     public function __construct(
         public mixed $orientation = 'horizontal',
         public bool $decorative = true,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.separator.index';
+        return 'std-components::components.separator.index';
     }
 
     protected function resolveViewData(array $data = []): array

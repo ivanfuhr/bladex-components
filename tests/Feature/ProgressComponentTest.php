@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Blade;
 
 it('renders a determinate progress bar', function () {
-    $html = Blade::render('<x-ui::progress :value="40" :max="100" />');
+    $html = Blade::render('<x-std::progress :value="40" :max="100" />');
 
     expect($html)
         ->toContain('role="progressbar"')
@@ -17,7 +17,7 @@ it('renders a determinate progress bar', function () {
 });
 
 it('renders an indeterminate progress bar', function () {
-    $html = Blade::render('<x-ui::progress indeterminate />');
+    $html = Blade::render('<x-std::progress indeterminate />');
 
     expect($html)
         ->toContain('data-indeterminate="true"')
@@ -28,7 +28,7 @@ it('renders an indeterminate progress bar', function () {
 });
 
 it('renders an accessible label and value text', function () {
-    $html = Blade::render('<x-ui::progress :value="40" label="Upload progress" />');
+    $html = Blade::render('<x-std::progress :value="40" label="Upload progress" />');
 
     expect($html)
         ->toContain('aria-label="Upload progress"')

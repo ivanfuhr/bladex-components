@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Chart\Tooltip;
+namespace Ivanfuhr\StdComponents\View\Components\Chart\Tooltip;
 
 use Illuminate\Support\Js;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Value extends StencilComponent
+final class Value extends StdComponent
 {
     public function __construct(
         public mixed $label = null,
@@ -17,9 +17,9 @@ final class Value extends StencilComponent
         public mixed $suffix = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.chart.tooltip.value';
+        return 'std-components::components.chart.tooltip.value';
     }
 
     protected function resolveViewData(array $data = []): array

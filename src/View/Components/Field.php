@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Throwable;
 
-final class Field extends StencilComponent
+final class Field extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
@@ -15,9 +15,9 @@ final class Field extends StencilComponent
         public mixed $orientation = 'block',
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.field.index';
+        return 'std-components::components.field.index';
     }
 
     /**
@@ -58,7 +58,7 @@ final class Field extends StencilComponent
             $controlId = $name;
         }
 
-        $resolvedFieldInvalid = $this->invalid || stencil_field_has_errors($name);
+        $resolvedFieldInvalid = $this->invalid || std_field_has_errors($name);
         $isInline = $this->orientation === 'inline';
 
         $descriptionId = filled($controlId) ? $controlId.'-description' : null;

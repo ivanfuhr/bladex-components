@@ -24,7 +24,7 @@
             aria-hidden="true"
             data-accordion-icon
         >
-            <x-ui::icon name="chevron-down" class="size-4" />
+            <x-std::icon name="chevron-down" class="size-4" />
         </span>
     </button>
 </h3>

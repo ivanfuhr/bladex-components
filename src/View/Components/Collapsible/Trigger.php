@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Collapsible;
+namespace Ivanfuhr\StdComponents\View\Components\Collapsible;
 
 use Illuminate\Support\Str;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Trigger extends StencilComponent
+final class Trigger extends StdComponent
 {
     public function __construct(
         public bool $asChild = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.collapsible.trigger';
+        return 'std-components::components.collapsible.trigger';
     }
 
     /**

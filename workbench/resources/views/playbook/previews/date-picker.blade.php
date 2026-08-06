@@ -4,7 +4,7 @@
     $withToday = (bool) ($state['withToday'] ?? true);
 @endphp
 
-<x-ui::date-picker
+<x-std::date-picker
     name="playbook_date"
     value="2026-07-29"
     :mode="$mode"

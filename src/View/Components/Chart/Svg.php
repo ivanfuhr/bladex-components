@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Chart;
+namespace Ivanfuhr\StdComponents\View\Components\Chart;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Svg extends StencilComponent
+final class Svg extends StdComponent
 {
     public function __construct(
         public mixed $gutter = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.chart.svg';
+        return 'std-components::components.chart.svg';
     }
 }

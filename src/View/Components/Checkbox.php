@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Checkbox extends StencilComponent
+final class Checkbox extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
@@ -15,9 +15,9 @@ final class Checkbox extends StencilComponent
         public mixed $controlId = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.checkbox.index';
+        return 'std-components::components.checkbox.index';
     }
 
     /**
@@ -27,19 +27,19 @@ final class Checkbox extends StencilComponent
     protected function resolveViewData(array $data = []): array
     {
         $fieldInvalid = (bool) ($data['fieldInvalid'] ?? false);
-        $isInvalid = $this->invalid || $fieldInvalid || stencil_field_has_errors($this->attributes->get('name') ?? $this->name);
+        $isInvalid = $this->invalid || $fieldInvalid || std_field_has_errors($this->attributes->get('name') ?? $this->name);
 
         $resolvedControlId = $this->attributes->get('id')
             ?? $this->controlId
             ?? $this->attributes->get('controlId')
             ?? (filled($this->name) ? $this->name : null);
 
-        // Checkmark SVG is applied in stencil.css — Tailwind does not emit
+        // Checkmark SVG is applied in std-components.css — Tailwind does not emit
         // checked:bg-[url(data:...)] when the class lives only inside a PHP string.
         // Checked fill utilities live in FormControlClassMap (Support is @source'd).
-        $controlClasses = stencil_checkbox_control_classes($this->size);
+        $controlClasses = std_checkbox_control_classes($this->size);
 
-        $controlAttributes = stencil_apply_interaction($this->attributes
+        $controlAttributes = std_apply_interaction($this->attributes
             ->except(['id'])
             ->class($controlClasses)
             ->merge([
@@ -69,7 +69,7 @@ final class Checkbox extends StencilComponent
             $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);
         }
 
-        $controlAttributes = stencil_merge_described_by($controlAttributes, $this->aware('describedBy'));
+        $controlAttributes = std_merge_described_by($controlAttributes, $this->aware('describedBy'));
 
         return [
             'fieldInvalid' => $fieldInvalid,

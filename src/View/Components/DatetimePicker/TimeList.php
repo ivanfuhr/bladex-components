@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\DatetimePicker;
+namespace Ivanfuhr\StdComponents\View\Components\DatetimePicker;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class TimeList extends StencilComponent
+final class TimeList extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.datetime-picker.time-list';
+        return 'std-components::components.datetime-picker.time-list';
     }
 
     /**
@@ -20,8 +20,8 @@ final class TimeList extends StencilComponent
     protected function resolveViewData(array $data = []): array
     {
         return [
-            'timeListId' => $this->attributes->get('time-list-id') ?? stencil_ancestor_attribute('timeListId'),
-            'timeListLabel' => stencil_ancestor_attribute('timeListLabel', __('Select time')),
+            'timeListId' => $this->attributes->get('time-list-id') ?? std_ancestor_attribute('timeListId'),
+            'timeListLabel' => std_ancestor_attribute('timeListLabel', __('Select time')),
         ];
     }
 }

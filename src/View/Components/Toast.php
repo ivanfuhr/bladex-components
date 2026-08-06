@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Toast extends StencilComponent
+final class Toast extends StdComponent
 {
     public function __construct(
         public mixed $variant = 'default',
@@ -16,9 +16,9 @@ final class Toast extends StencilComponent
         public bool $open = true,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.toast.index';
+        return 'std-components::components.toast.index';
     }
 
     /**

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Slider;
+namespace Ivanfuhr\StdComponents\View\Components\Slider;
 
 use Illuminate\Support\Facades\View;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Thumb extends StencilComponent
+final class Thumb extends StdComponent
 {
     public function __construct(
         public int $index = 0,
@@ -18,9 +18,9 @@ final class Thumb extends StencilComponent
         public mixed $size = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.slider.thumb';
+        return 'std-components::components.slider.thumb';
     }
 
     /**
@@ -34,7 +34,7 @@ final class Thumb extends StencilComponent
         $fieldInvalid = (bool) View::getConsumableComponentData('fieldInvalid', false);
         $name = View::getConsumableComponentData('name', null);
 
-        $isInvalid = $this->invalid || $fieldInvalid || stencil_field_has_errors($name);
+        $isInvalid = $this->invalid || $fieldInvalid || std_field_has_errors($name);
         $index = max(0, $this->index);
 
         $min = (float) View::getConsumableComponentData('min', 0);
@@ -81,7 +81,7 @@ final class Thumb extends StencilComponent
                 : __('Maximum'))
             : __('Value');
 
-        $thumbClasses = stencil_slider_thumb_classes($size);
+        $thumbClasses = std_slider_thumb_classes($size);
 
         $thumbAttributes = $this->attributes
             ->class($thumbClasses)
@@ -107,7 +107,7 @@ final class Thumb extends StencilComponent
             ]);
         }
 
-        $thumbAttributes = stencil_apply_interaction($thumbAttributes, nativeDisabled: false);
+        $thumbAttributes = std_apply_interaction($thumbAttributes, nativeDisabled: false);
 
         if ($disabled) {
             $thumbAttributes = $thumbAttributes
@@ -126,7 +126,7 @@ final class Thumb extends StencilComponent
             $thumbAttributes = $thumbAttributes->merge(['id' => $thumbId]);
         }
 
-        $thumbAttributes = stencil_merge_described_by($thumbAttributes, $this->aware('describedBy'));
+        $thumbAttributes = std_merge_described_by($thumbAttributes, $this->aware('describedBy'));
 
         return [
             'thumbAttributes' => $thumbAttributes,

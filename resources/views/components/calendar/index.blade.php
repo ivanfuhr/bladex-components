@@ -44,7 +44,7 @@
                 data-calendar-prev
                 aria-label="{{ __('Previous month') }}"
             >
-                <x-ui::icon name="chevron-left" class="size-4" />
+                <x-std::icon name="chevron-left" class="size-4" />
             </button>
             <button
                 type="button"
@@ -52,7 +52,7 @@
                 data-calendar-next
                 aria-label="{{ __('Next month') }}"
             >
-                <x-ui::icon name="chevron-right" class="size-4" />
+                <x-std::icon name="chevron-right" class="size-4" />
             </button>
         </div>
     </div>

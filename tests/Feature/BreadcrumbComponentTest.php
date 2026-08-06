@@ -6,17 +6,17 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a breadcrumb trail with links and current page', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::breadcrumb>
-            <x-ui::breadcrumb.list>
-                <x-ui::breadcrumb.item>
-                    <x-ui::breadcrumb.link href="/">Home</x-ui::breadcrumb.link>
-                </x-ui::breadcrumb.item>
-                <x-ui::breadcrumb.separator />
-                <x-ui::breadcrumb.item>
-                    <x-ui::breadcrumb.page>Settings</x-ui::breadcrumb.page>
-                </x-ui::breadcrumb.item>
-            </x-ui::breadcrumb.list>
-        </x-ui::breadcrumb>
+        <x-std::breadcrumb>
+            <x-std::breadcrumb.list>
+                <x-std::breadcrumb.item>
+                    <x-std::breadcrumb.link href="/">Home</x-std::breadcrumb.link>
+                </x-std::breadcrumb.item>
+                <x-std::breadcrumb.separator />
+                <x-std::breadcrumb.item>
+                    <x-std::breadcrumb.page>Settings</x-std::breadcrumb.page>
+                </x-std::breadcrumb.item>
+            </x-std::breadcrumb.list>
+        </x-std::breadcrumb>
     BLADE);
 
     expect($html)
@@ -32,15 +32,15 @@ it('renders a breadcrumb trail with links and current page', function () {
 
 it('supports flux-style item href shorthand and slash separators', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::breadcrumb>
-            <x-ui::breadcrumb.list>
-                <x-ui::breadcrumb.item href="/blog">Blog</x-ui::breadcrumb.item>
-                <x-ui::breadcrumb.separator type="slash" />
-                <x-ui::breadcrumb.item>
-                    <x-ui::breadcrumb.page>Post</x-ui::breadcrumb.page>
-                </x-ui::breadcrumb.item>
-            </x-ui::breadcrumb.list>
-        </x-ui::breadcrumb>
+        <x-std::breadcrumb>
+            <x-std::breadcrumb.list>
+                <x-std::breadcrumb.item href="/blog">Blog</x-std::breadcrumb.item>
+                <x-std::breadcrumb.separator type="slash" />
+                <x-std::breadcrumb.item>
+                    <x-std::breadcrumb.page>Post</x-std::breadcrumb.page>
+                </x-std::breadcrumb.item>
+            </x-std::breadcrumb.list>
+        </x-std::breadcrumb>
     BLADE);
 
     expect($html)
@@ -52,16 +52,16 @@ it('supports flux-style item href shorthand and slash separators', function () {
 
 it('allows responsive hiding via consumer classes', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::breadcrumb>
-            <x-ui::breadcrumb.list>
-                <x-ui::breadcrumb.item class="max-md:hidden">
-                    <x-ui::breadcrumb.link href="/">Home</x-ui::breadcrumb.link>
-                </x-ui::breadcrumb.item>
-                <x-ui::breadcrumb.item class="min-w-0 overflow-hidden">
-                    <x-ui::breadcrumb.page>Current</x-ui::breadcrumb.page>
-                </x-ui::breadcrumb.item>
-            </x-ui::breadcrumb.list>
-        </x-ui::breadcrumb>
+        <x-std::breadcrumb>
+            <x-std::breadcrumb.list>
+                <x-std::breadcrumb.item class="max-md:hidden">
+                    <x-std::breadcrumb.link href="/">Home</x-std::breadcrumb.link>
+                </x-std::breadcrumb.item>
+                <x-std::breadcrumb.item class="min-w-0 overflow-hidden">
+                    <x-std::breadcrumb.page>Current</x-std::breadcrumb.page>
+                </x-std::breadcrumb.item>
+            </x-std::breadcrumb.list>
+        </x-std::breadcrumb>
     BLADE);
 
     expect($html)
@@ -72,7 +72,7 @@ it('allows responsive hiding via consumer classes', function () {
 });
 
 it('renders ellipsis for collapsed trails', function () {
-    $html = Blade::render('<x-ui::breadcrumb.ellipsis />');
+    $html = Blade::render('<x-std::breadcrumb.ellipsis />');
 
     expect($html)
         ->toContain('data-breadcrumb-ellipsis')

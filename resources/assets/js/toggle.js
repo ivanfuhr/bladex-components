@@ -1,5 +1,5 @@
 /**
- * Stencil — accessible toggle button (vanilla JS, no Alpine).
+ * Std Components — accessible toggle button (vanilla JS, no Alpine).
  */
 
 const TOGGLE_SELECTOR = '[data-toggle]';
@@ -37,7 +37,7 @@ function bindToggle(button) {
         button.setAttribute('aria-pressed', pressed ? 'true' : 'false');
 
         button.dispatchEvent(
-            new CustomEvent('stencil:toggle:change', {
+            new CustomEvent('std:toggle:change', {
                 bubbles: true,
                 detail: { pressed },
             }),
@@ -53,7 +53,7 @@ function bindToggle(button) {
     });
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

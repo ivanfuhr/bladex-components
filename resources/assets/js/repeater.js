@@ -1,5 +1,5 @@
 /**
- * Stencil — dynamic form repeater for Laravel array fields (vanilla JS, no Alpine).
+ * Std Components — dynamic form repeater for Laravel array fields (vanilla JS, no Alpine).
  */
 
 const REPEATER_SELECTOR = '[data-repeater]';
@@ -63,7 +63,7 @@ function bindRepeater(root) {
      */
     function dispatchMount(item) {
         item.dispatchEvent(
-            new CustomEvent('stencil:mount', {
+            new CustomEvent('std:mount', {
                 bubbles: true,
                 detail: { root: item },
             }),
@@ -554,7 +554,7 @@ function bindRepeater(root) {
     hydrate();
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

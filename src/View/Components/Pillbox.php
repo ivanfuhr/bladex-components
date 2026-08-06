@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
-final class Pillbox extends StencilComponent
+final class Pillbox extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
@@ -21,9 +21,9 @@ final class Pillbox extends StencilComponent
         public mixed $controlId = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.pillbox.index';
+        return 'std-components::components.pillbox.index';
     }
 
     /**

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Combobox;
+namespace Ivanfuhr\StdComponents\View\Components\Combobox;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Chips extends StencilComponent
+final class Chips extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.combobox.chips';
+        return 'std-components::components.combobox.chips';
     }
 
     /**
@@ -19,9 +19,9 @@ final class Chips extends StencilComponent
      */
     protected function resolveViewData(array $data = []): array
     {
-        $placeholder = $this->attributes->get('placeholder') ?? stencil_ancestor_attribute('placeholder');
+        $placeholder = $this->attributes->get('placeholder') ?? std_ancestor_attribute('placeholder');
         $resolvedPlaceholder = filled($placeholder) ? $placeholder : null;
-        $size = stencil_ancestor_attribute('size');
+        $size = std_ancestor_attribute('size');
 
         $chipSizeClasses = $size === 'sm'
             ? 'text-xs px-1.5 py-0'

@@ -8,7 +8,7 @@
     $fieldName = $multiple ? 'industries' : 'industry';
 @endphp
 
-<x-ui::select
+<x-std::select
     :name="$fieldName"
     :placeholder="$placeholder"
     :invalid="$invalid"
@@ -18,13 +18,13 @@
     :display="$display"
     class="w-full max-w-md"
 >
-    <x-ui::select.group>
-        <x-ui::select.label>Creative</x-ui::select.label>
-        <x-ui::select.item value="photo">Photography</x-ui::select.item>
-        <x-ui::select.item value="design">Design services</x-ui::select.item>
-    </x-ui::select.group>
-    <x-ui::select.separator />
-    <x-ui::select.item value="web">Web development</x-ui::select.item>
-    <x-ui::select.item value="accounting">Accounting</x-ui::select.item>
-    <x-ui::select.item value="other">Other</x-ui::select.item>
-</x-ui::select>
+    <x-std::select.group>
+        <x-std::select.label>Creative</x-std::select.label>
+        <x-std::select.item value="photo">Photography</x-std::select.item>
+        <x-std::select.item value="design">Design services</x-std::select.item>
+    </x-std::select.group>
+    <x-std::select.separator />
+    <x-std::select.item value="web">Web development</x-std::select.item>
+    <x-std::select.item value="accounting">Accounting</x-std::select.item>
+    <x-std::select.item value="other">Other</x-std::select.item>
+</x-std::select>

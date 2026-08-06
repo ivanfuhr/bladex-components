@@ -1,7 +1,7 @@
 @php
     use Workbench\App\Playbook\PlaybookCode;
 
-    $name = (string) ($state['name'] ?? 'Stencil Inc.');
+    $name = (string) ($state['name'] ?? 'Std Components Inc.');
     $href = (string) ($state['href'] ?? '/');
     $useLogoUrl = (bool) ($state['use_logo_url'] ?? false);
 

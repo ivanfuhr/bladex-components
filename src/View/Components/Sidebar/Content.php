@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Sidebar;
+namespace Ivanfuhr\StdComponents\View\Components\Sidebar;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Content extends StencilComponent
+final class Content extends StdComponent
 {
     public function __construct(
         public string $type = 'hover',
         public int $scrollHideDelay = 600,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.sidebar.content';
+        return 'std-components::components.sidebar.content';
     }
 
     /**

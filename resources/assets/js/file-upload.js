@@ -1,5 +1,5 @@
 /**
- * Stencil — accessible file upload with drag-and-drop (vanilla JS, no Alpine).
+ * Std Components — accessible file upload with drag-and-drop (vanilla JS, no Alpine).
  */
 
 const FILE_UPLOAD_SELECTOR = '[data-file-upload]';
@@ -353,7 +353,7 @@ function bindFileUpload(root) {
     renderList();
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

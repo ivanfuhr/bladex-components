@@ -1,11 +1,11 @@
 @extends('workbench::layouts.playbook')
 
-@section('title', $playbook->title.' — Stencil Docs')
+@section('title', $playbook->title.' — Std Components Docs')
 
 @section('shell_breadcrumb')
     @include('workbench::playbook.partials.shell-breadcrumb', [
         'items' => [
-            ['label' => 'Stencil Docs', 'href' => route('playbook.index')],
+            ['label' => 'Std Components Docs', 'href' => route('playbook.index')],
             ['label' => 'Components', 'href' => route('playbook.index')],
             ['label' => $playbook->title, 'current' => true],
         ],
@@ -34,16 +34,16 @@
         <header class="space-y-4 border-b border-zinc-200/80 pb-8 dark:border-zinc-800">
             <div class="flex flex-wrap items-center gap-2">
                 <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">
-                    &lt;x-ui::<span class="text-zinc-800 dark:text-zinc-200">{{ $playbook->slug }}</span> /&gt;
+                    &lt;x-std::<span class="text-zinc-800 dark:text-zinc-200">{{ $playbook->slug }}</span> /&gt;
                 </p>
             </div>
 
             <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div class="min-w-0 space-y-3">
-                    <x-ui::heading :level="1">{{ $playbook->title }}</x-ui::heading>
-                    <x-ui::text class="max-w-prose text-base leading-7 text-zinc-600 dark:text-zinc-400">
+                    <x-std::heading :level="1">{{ $playbook->title }}</x-std::heading>
+                    <x-std::text class="max-w-prose text-base leading-7 text-zinc-600 dark:text-zinc-400">
                         {{ $playbook->description }}
-                    </x-ui::text>
+                    </x-std::text>
                 </div>
 
                 <nav class="flex shrink-0 flex-wrap items-center gap-3" aria-label="Page actions">
@@ -53,7 +53,6 @@
                     </a>
                 </nav>
             </div>
-
         </header>
 
         <div class="grid gap-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] xl:items-start xl:gap-12">
@@ -70,10 +69,12 @@
                 <section aria-labelledby="playground-code-heading" x-show="snippet.length > 0">
                     <h2 id="playground-code-heading" class="{{ $sectionHeadingClass }}">Playground output</h2>
                     <div
-                        class="mt-4 min-w-0 max-h-[min(28rem,50vh)] overflow-auto"
+                        class="mt-4 max-h-[min(28rem,50vh)] min-w-0 overflow-auto"
                         data-playbook-snippet
                         x-html="snippetHtml"
-                    >{!! $initialSnippetHtml !!}</div>
+                    >
+                        {!! $initialSnippetHtml !!}
+                    </div>
                 </section>
 
                 @if (count($playbook->controls) > 0)
@@ -101,17 +102,8 @@
                         ></p>
                     </div>
 
-                    <div
-                        id="playbook-canvas"
-                        class="playbook-stage mt-4"
-                        x-bind:aria-busy="loading.toString()"
-                    >
-                        <div
-                            class="playbook-stage__loading"
-                            x-show="loading"
-                            x-cloak
-                            aria-hidden="true"
-                        ></div>
+                    <div id="playbook-canvas" class="playbook-stage mt-4" x-bind:aria-busy="loading.toString()">
+                        <div class="playbook-stage__loading" x-show="loading" x-cloak aria-hidden="true"></div>
 
                         <div
                             @class([
@@ -146,15 +138,15 @@
                             href="{{ route('playbook.show', $previousPlaybook->slug) }}"
                             class="group block h-full rounded-xl focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:focus-visible:ring-zinc-300/20"
                         >
-                            <x-ui::card
+                            <x-std::card
                                 size="sm"
                                 class="h-full transition duration-200 group-hover:-translate-y-0.5 group-hover:border-zinc-300 group-hover:shadow-md motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 dark:group-hover:border-zinc-600 dark:group-hover:bg-zinc-900"
                             >
                                 <div class="flex min-h-full flex-col gap-1">
-                                    <x-ui::text size="sm" variant="subtle">Previous</x-ui::text>
-                                    <x-ui::text class="truncate font-medium">{{ $previousPlaybook->title }}</x-ui::text>
+                                    <x-std::text size="sm" variant="subtle">Previous</x-std::text>
+                                    <x-std::text class="truncate font-medium">{{ $previousPlaybook->title }}</x-std::text>
                                 </div>
-                            </x-ui::card>
+                            </x-std::card>
                         </a>
                     @endif
                 </div>
@@ -164,15 +156,15 @@
                             href="{{ route('playbook.show', $nextPlaybook->slug) }}"
                             class="group block h-full rounded-xl focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:focus-visible:ring-zinc-300/20"
                         >
-                            <x-ui::card
+                            <x-std::card
                                 size="sm"
                                 class="h-full transition duration-200 group-hover:-translate-y-0.5 group-hover:border-zinc-300 group-hover:shadow-md motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 dark:group-hover:border-zinc-600 dark:group-hover:bg-zinc-900"
                             >
                                 <div class="flex min-h-full flex-col items-end gap-1 text-right">
-                                    <x-ui::text size="sm" variant="subtle">Next</x-ui::text>
-                                    <x-ui::text class="truncate font-medium">{{ $nextPlaybook->title }}</x-ui::text>
+                                    <x-std::text size="sm" variant="subtle">Next</x-std::text>
+                                    <x-std::text class="truncate font-medium">{{ $nextPlaybook->title }}</x-std::text>
                                 </div>
-                            </x-ui::card>
+                            </x-std::card>
                         </a>
                     @endif
                 </div>

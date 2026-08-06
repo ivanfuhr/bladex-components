@@ -1,5 +1,5 @@
 /**
- * Stencil — date picker (vanilla JS).
+ * Std Components — date picker (vanilla JS).
  */
 
 import { bindCalendar } from './calendar.js';
@@ -20,15 +20,13 @@ const initialized = new WeakSet();
  * @param {ParentNode} root
  */
 export function initDatePickers(root = document) {
-    document
-        .querySelectorAll('[data-date-picker-panel][data-stencil-portaled]')
-        .forEach((panel) => {
-            if (!(panel instanceof HTMLElement) || panel.closest('[data-date-picker]')) {
-                return;
-            }
+    document.querySelectorAll('[data-date-picker-panel][data-std-portaled]').forEach((panel) => {
+        if (!(panel instanceof HTMLElement) || panel.closest('[data-date-picker]')) {
+            return;
+        }
 
-            panel.remove();
-        });
+        panel.remove();
+    });
 
     root.querySelectorAll(SELECTOR).forEach((element) => {
         if (!(element instanceof HTMLElement)) {
@@ -63,7 +61,7 @@ function bindDatePicker(root) {
 
     const locale = root.dataset.datePickerLocale ?? 'en';
     const withConfirmation = root.hasAttribute('data-date-picker-with-confirmation');
-    const portalMarker = document.createComment('stencil-date-picker-portal');
+    const portalMarker = document.createComment('std-date-picker-portal');
     const signal = createBindSignal(root);
     let isOpen = false;
     /** @type {(() => void) | null} */
@@ -275,7 +273,7 @@ function formatDisplay(value, range, locale) {
     return formatDateLabel(value, locale);
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

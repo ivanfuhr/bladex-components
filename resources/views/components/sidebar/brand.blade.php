@@ -16,7 +16,7 @@
     >
         @if ($showLogo)
             @if ($hasSlotLogo)
-                @include('stencil::components.brand.logo-media', [
+                @include('std-components::components.brand.logo-media', [
                     'logo' => $logo,
                     'logoDark' => $resolvedLogoDark,
                     'alt' => $alt,
@@ -24,7 +24,7 @@
                     'imageClasses' => $imageClasses,
                 ])
             @else
-                @include('stencil::components.brand.logo-media', [
+                @include('std-components::components.brand.logo-media', [
                     'logo' => $logo,
                     'logoDark' => $resolvedLogoDark,
                     'alt' => $alt,
@@ -48,7 +48,7 @@
     }}>
         @if ($showLogo)
             @if ($hasSlotLogo)
-                @include('stencil::components.brand.logo-media', [
+                @include('std-components::components.brand.logo-media', [
                     'logo' => $logo,
                     'logoDark' => $resolvedLogoDark,
                     'alt' => $alt,
@@ -56,7 +56,7 @@
                     'imageClasses' => $imageClasses,
                 ])
             @else
-                @include('stencil::components.brand.logo-media', [
+                @include('std-components::components.brand.logo-media', [
                     'logo' => $logo,
                     'logoDark' => $resolvedLogoDark,
                     'alt' => $alt,

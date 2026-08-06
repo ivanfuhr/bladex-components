@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Stepper;
+namespace Ivanfuhr\StdComponents\View\Components\Stepper;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Navigation extends StencilComponent
+final class Navigation extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.stepper.navigation';
+        return 'std-components::components.stepper.navigation';
     }
 }

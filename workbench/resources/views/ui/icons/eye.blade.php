@@ -1,9 +1,0 @@
-{{-- Icon: eye (Lucide, ISC) https://lucide.dev/icons/eye --}}
-@props([
-    'variant' => 'outline',
-])
-
-<x-ui::icon.lucide :variant="$variant" {{ $attributes }}>
-    <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
-    <circle cx="12" cy="12" r="3" />
-</x-ui::icon.lucide>

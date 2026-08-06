@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Empty;
+namespace Ivanfuhr\StdComponents\View\Components\Empty;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Media extends StencilComponent
+final class Media extends StdComponent
 {
     public function __construct(
         public mixed $variant = 'default',
         public mixed $icon = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.empty.media';
+        return 'std-components::components.empty.media';
     }
 
     protected function resolveViewData(array $data = []): array

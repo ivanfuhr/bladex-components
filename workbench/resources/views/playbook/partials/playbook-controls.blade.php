@@ -10,15 +10,13 @@
     $checkboxControls = $controlCollection->where('type', 'checkbox')->values();
 @endphp
 
-<x-ui::card size="sm" aria-labelledby="playbook-properties-heading">
-    <x-ui::card.header class="flex-row! items-center justify-between gap-3 space-y-0!">
-        <x-ui::card.title id="playbook-properties-heading">Properties</x-ui::card.title>
-        <x-ui::button variant="ghost" size="sm" type="button" @click="resetControls()">
-            Reset
-        </x-ui::button>
-    </x-ui::card.header>
+<x-std::card size="sm" aria-labelledby="playbook-properties-heading">
+    <x-std::card.header class="flex-row! items-center justify-between gap-3 space-y-0!">
+        <x-std::card.title id="playbook-properties-heading">Properties</x-std::card.title>
+        <x-std::button variant="ghost" size="sm" type="button" @click="resetControls()"> Reset </x-std::button>
+    </x-std::card.header>
 
-    <x-ui::card.content class="space-y-4">
+    <x-std::card.content class="space-y-4">
         <form class="space-y-4" @submit.prevent @change="handleControlChange($event)">
             @if ($selectControls->isNotEmpty() || $textControls->isNotEmpty())
                 <div class="space-y-4">
@@ -29,11 +27,11 @@
                             $controlValue = $defaultState[$control->key] ?? $control->default;
                         @endphp
 
-                        <x-ui::field>
-                            <x-ui::field.label>{{ $control->label }}</x-ui::field.label>
+                        <x-std::field>
+                            <x-std::field.label>{{ $control->label }}</x-std::field.label>
 
                             @if ($useToggleGroup)
-                                <x-ui::toggle-group
+                                <x-std::toggle-group
                                     type="single"
                                     variant="outline"
                                     size="sm"
@@ -45,13 +43,13 @@
                                     data-playbook-control-key="{{ $control->key }}"
                                 >
                                     @foreach ($control->options as $value => $label)
-                                        <x-ui::toggle-group.item :value="$value">
+                                        <x-std::toggle-group.item :value="$value">
                                             {{ $label }}
-                                        </x-ui::toggle-group.item>
+                                        </x-std::toggle-group.item>
                                     @endforeach
-                                </x-ui::toggle-group>
+                                </x-std::toggle-group>
                             @else
-                                <x-ui::select
+                                <x-std::select
                                     size="sm"
                                     :value="$controlValue"
                                     placeholder="Choose…"
@@ -59,50 +57,48 @@
                                     data-playbook-control-key="{{ $control->key }}"
                                 >
                                     @foreach ($control->options as $value => $label)
-                                        <x-ui::select.item :value="$value">{{ $label }}</x-ui::select.item>
+                                        <x-std::select.item :value="$value">{{ $label }}</x-std::select.item>
                                     @endforeach
-                                </x-ui::select>
+                                </x-std::select>
                             @endif
-                        </x-ui::field>
+                        </x-std::field>
                     @endforeach
 
                     @foreach ($textControls as $control)
-                        <x-ui::field>
-                            <x-ui::field.label for="control-{{ $control->key }}">
+                        <x-std::field>
+                            <x-std::field.label for="control-{{ $control->key }}">
                                 {{ $control->label }}
-                            </x-ui::field.label>
-                            <x-ui::input
+                            </x-std::field.label>
+                            <x-std::input
                                 id="control-{{ $control->key }}"
                                 size="sm"
                                 x-model="state.{{ $control->key }}"
                                 @input="queuePreview()"
                             />
-                        </x-ui::field>
+                        </x-std::field>
                     @endforeach
                 </div>
             @endif
 
             @if ($checkboxControls->isNotEmpty() && ($selectControls->isNotEmpty() || $textControls->isNotEmpty()))
-                <x-ui::separator />
+                <x-std::separator />
             @endif
 
             @if ($checkboxControls->isNotEmpty())
                 <div class="space-y-2">
                     @foreach ($checkboxControls as $control)
-                        <x-ui::field orientation="inline">
-                            <x-ui::field.label class="flex-1">
-                                {{ $control->label }}
-                            </x-ui::field.label>
-                            <x-ui::switch
+                        <x-std::field orientation="inline">
+                            <x-std::field.label class="flex-1"> {{ $control->label }} </x-std::field.label>
+                            <x-std::switch
                                 size="sm"
                                 x-model.boolean="state.{{ $control->key }}"
                                 @change="queuePreview()"
                                 :aria-label="$control->label"
                             />
-                        </x-ui::field>
+                        </x-std::field>
                     @endforeach
                 </div>
             @endif
         </form>
-    </x-ui::card.content>
-</x-ui::card>
+    </x-std::card.content>
+</x-std::card>

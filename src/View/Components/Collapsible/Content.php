@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Collapsible;
+namespace Ivanfuhr\StdComponents\View\Components\Collapsible;
 
 use Illuminate\Support\Str;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Content extends StencilComponent
+final class Content extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.collapsible.content';
+        return 'std-components::components.collapsible.content';
     }
 
     /**

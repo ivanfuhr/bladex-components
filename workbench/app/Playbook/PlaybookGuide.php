@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Workbench\App\Playbook;
 
 use Illuminate\Support\Str;
-use Ivanfuhr\Stencil\Support\Code\CodeHighlighter;
+use Ivanfuhr\StdComponents\Support\Code\CodeHighlighter;
 
 final class PlaybookGuide
 {

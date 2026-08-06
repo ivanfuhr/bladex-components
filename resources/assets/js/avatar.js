@@ -1,5 +1,5 @@
 /**
- * Stencil — avatar image fallback (vanilla JS, no Alpine).
+ * Std Components — avatar image fallback (vanilla JS, no Alpine).
  */
 
 const AVATAR_SELECTOR = '[data-avatar]';
@@ -54,7 +54,7 @@ function bindAvatar(avatar) {
     image.addEventListener('error', hideImage, { once: true });
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

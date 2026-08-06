@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\DatetimePicker;
+namespace Ivanfuhr\StdComponents\View\Components\DatetimePicker;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Panel extends StencilComponent
+final class Panel extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.datetime-picker.panel';
+        return 'std-components::components.datetime-picker.panel';
     }
 
     /**
@@ -21,7 +21,7 @@ final class Panel extends StencilComponent
     {
         return [
             'panelLabel' => __('Select date and time'),
-            'panelId' => $this->attributes->get('panel-id') ?? stencil_ancestor_attribute('panelId'),
+            'panelId' => $this->attributes->get('panel-id') ?? std_ancestor_attribute('panelId'),
         ];
     }
 }

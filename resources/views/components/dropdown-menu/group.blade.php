@@ -8,7 +8,7 @@
     ])
 }}>
     @if (filled($heading))
-        <x-ui::dropdown-menu.label :id="$headingId">{{ $heading }}</x-ui::dropdown-menu.label>
+        <x-std::dropdown-menu.label :id="$headingId">{{ $heading }}</x-std::dropdown-menu.label>
     @endif
     {{ $slot }}
 </div>

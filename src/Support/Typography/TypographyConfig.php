@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\Support\Typography;
+namespace Ivanfuhr\StdComponents\Support\Typography;
 
 use Illuminate\Support\Arr;
 
@@ -16,7 +16,7 @@ final class TypographyConfig
      */
     public function all(): array
     {
-        $base = config('stencil.typography', []);
+        $base = config('std-components.typography', []);
 
         if (! is_array($base)) {
             $base = [];

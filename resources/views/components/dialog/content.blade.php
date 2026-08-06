@@ -29,7 +29,7 @@
                         aria-hidden="true"
                         disabled
                     >
-                        <x-ui::icon name="x" class="size-4" />
+                        <x-std::icon name="x" class="size-4" />
                     </button>
                 @endif
 
@@ -59,7 +59,7 @@
                     data-dialog-close
                     aria-label="{{ __('Close') }}"
                 >
-                    <x-ui::icon name="x" class="size-4" />
+                    <x-std::icon name="x" class="size-4" />
                 </button>
             @endif
 

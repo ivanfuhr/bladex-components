@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Combobox;
+namespace Ivanfuhr\StdComponents\View\Components\Combobox;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class EmptyState extends StencilComponent
+final class EmptyState extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.combobox.empty';
+        return 'std-components::components.combobox.empty';
     }
 
     /**

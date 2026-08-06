@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Slider;
+namespace Ivanfuhr\StdComponents\View\Components\Slider;
 
 use Illuminate\Support\Facades\View;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Track extends StencilComponent
+final class Track extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.slider.track';
+        return 'std-components::components.slider.track';
     }
 
     /**
@@ -23,7 +23,7 @@ final class Track extends StencilComponent
         $size = View::getConsumableComponentData('size', null);
 
         return [
-            'railClasses' => stencil_slider_track_classes($size),
+            'railClasses' => std_slider_track_classes($size),
         ];
     }
 }

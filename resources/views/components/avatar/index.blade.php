@@ -26,13 +26,13 @@
 
 <{{ $tag }} {{ $avatarAttributes }}>
     @if (filled($src))
-        <x-ui::avatar.image :src="$src" :alt="$resolvedAlt" />
-        <x-ui::avatar.fallback>
-            {{ $resolvedInitials ?? mb_strtoupper(mb_substr((string) $resolvedAlt, 0, 1)) }}</x-ui::avatar.fallback>
+        <x-std::avatar.image :src="$src" :alt="$resolvedAlt" />
+        <x-std::avatar.fallback>
+            {{ $resolvedInitials ?? mb_strtoupper(mb_substr((string) $resolvedAlt, 0, 1)) }}</x-std::avatar.fallback>
     @elseif (! $slot->isEmpty())
         {{ $slot }}
     @elseif (filled($resolvedInitials))
-        <x-ui::avatar.fallback>{{ $resolvedInitials }}</x-ui::avatar.fallback>
+        <x-std::avatar.fallback>{{ $resolvedInitials }}</x-std::avatar.fallback>
     @else
         {{ $slot }}
     @endif

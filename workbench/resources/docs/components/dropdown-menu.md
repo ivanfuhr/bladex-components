@@ -1,17 +1,17 @@
-Accessible action menu ([shadcn Dropdown Menu](https://ui.shadcn.com/docs/components/dropdown-menu), [Flux dropdown](https://fluxui.dev/components/dropdown)). Included in `@stencilScripts`.
+Accessible action menu ([shadcn Dropdown Menu](https://ui.shadcn.com/docs/components/dropdown-menu), [Flux dropdown](https://fluxui.dev/components/dropdown)). Included in `@stdScripts`.
 
 ```blade
-<x-ui::dropdown-menu align="end">
-    <x-ui::dropdown-menu.trigger>
-        <x-ui::button variant="outline">Open</x-ui::button>
-    </x-ui::dropdown-menu.trigger>
-    <x-ui::dropdown-menu.content>
-        <x-ui::dropdown-menu.label>Account</x-ui::dropdown-menu.label>
-        <x-ui::dropdown-menu.item>Profile</x-ui::dropdown-menu.item>
-        <x-ui::dropdown-menu.separator />
-        <x-ui::dropdown-menu.item variant="danger" kbd="⌘⌫">Delete</x-ui::dropdown-menu.item>
-    </x-ui::dropdown-menu.content>
-</x-ui::dropdown-menu>
+<x-std::dropdown-menu align="end">
+    <x-std::dropdown-menu.trigger>
+        <x-std::button variant="outline">Open</x-std::button>
+    </x-std::dropdown-menu.trigger>
+    <x-std::dropdown-menu.content>
+        <x-std::dropdown-menu.label>Account</x-std::dropdown-menu.label>
+        <x-std::dropdown-menu.item>Profile</x-std::dropdown-menu.item>
+        <x-std::dropdown-menu.separator />
+        <x-std::dropdown-menu.item variant="danger" kbd="⌘⌫">Delete</x-std::dropdown-menu.item>
+    </x-std::dropdown-menu.content>
+</x-std::dropdown-menu>
 ```
 
 <br>

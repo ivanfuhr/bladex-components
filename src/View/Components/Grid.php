@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\View\ComponentAttributeBag;
-use Ivanfuhr\Stencil\Support\Grid\GridClassMap;
+use Ivanfuhr\StdComponents\Support\Grid\GridClassMap;
 
-final class Grid extends StencilComponent
+final class Grid extends StdComponent
 {
     public function __construct(
         public int $cols = 1,
@@ -19,9 +19,9 @@ final class Grid extends StencilComponent
         public bool $container = true,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.grid.index';
+        return 'std-components::components.grid.index';
     }
 
     /**

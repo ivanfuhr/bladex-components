@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Blade;
 
 it('renders switch with role switch', function () {
-    $html = Blade::render('<x-ui::switch name="notifications" :checked="true" />');
+    $html = Blade::render('<x-std::switch name="notifications" :checked="true" />');
 
     expect($html)
         ->toContain('data-switch')
@@ -20,7 +20,7 @@ it('renders switch with role switch', function () {
 });
 
 it('renders small switch with compact touch row height', function () {
-    $html = Blade::render('<x-ui::switch name="notifications" size="sm" />');
+    $html = Blade::render('<x-std::switch name="notifications" size="sm" />');
 
     expect($html)
         ->toContain('switch--sm')
@@ -28,7 +28,7 @@ it('renders small switch with compact touch row height', function () {
 });
 
 it('marks switch invalid when invalid prop is true', function () {
-    $html = Blade::render('<x-ui::switch name="notifications" :invalid="true" />');
+    $html = Blade::render('<x-std::switch name="notifications" :invalid="true" />');
 
     expect($html)->toContain('aria-invalid="true"');
 });

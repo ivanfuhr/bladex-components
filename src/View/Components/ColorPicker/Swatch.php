@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\ColorPicker;
+namespace Ivanfuhr\StdComponents\View\Components\ColorPicker;
 
 use Illuminate\Support\Facades\View;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Swatch extends StencilComponent
+final class Swatch extends StdComponent
 {
     public function __construct(
         public mixed $value = '#000000',
         public mixed $label = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.color-picker.swatch';
+        return 'std-components::components.color-picker.swatch';
     }
 
     /**

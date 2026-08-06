@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\DatePicker;
+namespace Ivanfuhr\StdComponents\View\Components\DatePicker;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Presets extends StencilComponent
+final class Presets extends StdComponent
 {
     public function __construct(
         public mixed $presets = [],
         public mixed $presetMeta = [],
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.date-picker.presets';
+        return 'std-components::components.date-picker.presets';
     }
 
     /**

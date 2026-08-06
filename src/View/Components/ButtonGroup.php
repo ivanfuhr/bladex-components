@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class ButtonGroup extends StencilComponent
+final class ButtonGroup extends StdComponent
 {
     public function __construct(
         public string $orientation = 'horizontal',
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.button-group.index';
+        return 'std-components::components.button-group.index';
     }
 
     /**

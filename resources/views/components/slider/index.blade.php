@@ -14,11 +14,11 @@
     @endforeach
 
     @if ($shortcut)
-        <x-ui::slider.track>
-            <x-ui::slider.range />
-        </x-ui::slider.track>
+        <x-std::slider.track>
+            <x-std::slider.range />
+        </x-std::slider.track>
         @foreach ($values as $index => $thumbValue)
-            <x-ui::slider.thumb
+            <x-std::slider.thumb
                 :index="$index"
                 :value="$thumbValue"
                 :range="$isRange"

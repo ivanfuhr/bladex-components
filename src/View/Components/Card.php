@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Card extends StencilComponent
+final class Card extends StdComponent
 {
     public function __construct(
         public mixed $size = 'default',
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.card.index';
+        return 'std-components::components.card.index';
     }
 
     protected function resolveViewData(array $data = []): array

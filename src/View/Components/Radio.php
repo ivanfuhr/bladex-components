@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\Support\Str;
 use Illuminate\View\ComponentSlot;
 
-final class Radio extends StencilComponent
+final class Radio extends StdComponent
 {
     public function __construct(
         public mixed $value = null,
@@ -17,9 +17,9 @@ final class Radio extends StencilComponent
         public mixed $label = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.radio.index';
+        return 'std-components::components.radio.index';
     }
 
     /**
@@ -28,16 +28,16 @@ final class Radio extends StencilComponent
      */
     protected function resolveViewData(array $data = []): array
     {
-        $name = stencil_ancestor_attribute('name');
-        $fieldInvalid = (bool) stencil_ancestor_attribute('fieldInvalid', false);
-        $isInvalid = $this->invalid || $fieldInvalid || stencil_field_has_errors($name);
+        $name = std_ancestor_attribute('name');
+        $fieldInvalid = (bool) std_ancestor_attribute('fieldInvalid', false);
+        $isInvalid = $this->invalid || $fieldInvalid || std_field_has_errors($name);
 
         $controlId = $this->attributes->get('id') ?? 'radio-'.Str::uuid()->toString();
 
         // Checked border utilities live in FormControlClassMap (Support is @source'd).
-        $controlClasses = stencil_radio_control_classes($this->size);
+        $controlClasses = std_radio_control_classes($this->size);
 
-        $controlAttributes = stencil_apply_interaction($this->attributes
+        $controlAttributes = std_apply_interaction($this->attributes
             ->except('id')
             ->class($controlClasses)
             ->merge([
@@ -64,7 +64,7 @@ final class Radio extends StencilComponent
             $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);
         }
 
-        $controlAttributes = stencil_merge_described_by($controlAttributes, $this->aware('describedBy'));
+        $controlAttributes = std_merge_described_by($controlAttributes, $this->aware('describedBy'));
 
         $slot = $data['slot'] ?? null;
         $hasSlotLabel = $slot instanceof ComponentSlot ? ! $slot->isEmpty() : filled($slot);

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Command;
+namespace Ivanfuhr\StdComponents\View\Components\Command;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Input extends StencilComponent
+final class Input extends StdComponent
 {
     public function __construct(
         public mixed $placeholder = null,
@@ -14,9 +14,9 @@ final class Input extends StencilComponent
         public mixed $listboxId = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.command.input';
+        return 'std-components::components.command.input';
     }
 
     /**

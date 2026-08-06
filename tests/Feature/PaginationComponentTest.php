@@ -7,22 +7,22 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders compound pagination controls', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::pagination>
-            <x-ui::pagination.content>
-                <x-ui::pagination.item>
-                    <x-ui::pagination.previous href="?page=1" />
-                </x-ui::pagination.item>
-                <x-ui::pagination.item>
-                    <x-ui::pagination.link href="?page=2" :is-active="true">2</x-ui::pagination.link>
-                </x-ui::pagination.item>
-                <x-ui::pagination.item>
-                    <x-ui::pagination.ellipsis />
-                </x-ui::pagination.item>
-                <x-ui::pagination.item>
-                    <x-ui::pagination.next href="?page=3" />
-                </x-ui::pagination.item>
-            </x-ui::pagination.content>
-        </x-ui::pagination>
+        <x-std::pagination>
+            <x-std::pagination.content>
+                <x-std::pagination.item>
+                    <x-std::pagination.previous href="?page=1" />
+                </x-std::pagination.item>
+                <x-std::pagination.item>
+                    <x-std::pagination.link href="?page=2" :is-active="true">2</x-std::pagination.link>
+                </x-std::pagination.item>
+                <x-std::pagination.item>
+                    <x-std::pagination.ellipsis />
+                </x-std::pagination.item>
+                <x-std::pagination.item>
+                    <x-std::pagination.next href="?page=3" />
+                </x-std::pagination.item>
+            </x-std::pagination.content>
+        </x-std::pagination>
     BLADE);
 
     expect($html)
@@ -42,7 +42,7 @@ it('renders pagination from a laravel paginator', function () {
         options: ['path' => '/orders'],
     );
 
-    $html = Blade::render('<x-ui::pagination :paginator="$paginator" />', [
+    $html = Blade::render('<x-std::pagination :paginator="$paginator" />', [
         'paginator' => $paginator,
     ]);
 

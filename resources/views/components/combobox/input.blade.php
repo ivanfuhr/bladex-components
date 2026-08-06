@@ -28,7 +28,7 @@
         @if (filled($resolvedListboxId)) aria-controls="{{ $resolvedListboxId }}" @endif
         @if ($disabled) disabled @endif
     >
-        <x-ui::icon
+        <x-std::icon
             name="chevron-down"
             class="{{ $chevronClasses }} text-zinc-500 transition-transform duration-200 dark:text-zinc-400"
             data-combobox-chevron

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\View\ViewException;
 
 it('renders a color picker with trigger, popover, and swatches', function () {
-    $html = Blade::render('<x-ui::color-picker name="brand_color" value="#3366cc" />');
+    $html = Blade::render('<x-std::color-picker name="brand_color" value="#3366cc" />');
 
     expect($html)
         ->toContain('data-color-picker')
@@ -22,7 +22,7 @@ it('renders a color picker with trigger, popover, and swatches', function () {
 });
 
 it('can hide swatches and enable the dropper', function () {
-    $html = Blade::render('<x-ui::color-picker name="brand_color" :swatches="false" :dropper="true" />');
+    $html = Blade::render('<x-std::color-picker name="brand_color" :swatches="false" :dropper="true" />');
 
     expect($html)
         ->not->toContain('data-color-picker-swatches')
@@ -31,16 +31,16 @@ it('can hide swatches and enable the dropper', function () {
 
 it('renders full compound structure without shortcut', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::color-picker name="brand_color" value="#3366cc" :shortcut="false">
-            <x-ui::color-picker.trigger current-value="#3366cc" popover-id="test-popover">
-                <x-ui::color-picker.hex current-value="#3366cc" popover-id="test-popover" />
-            </x-ui::color-picker.trigger>
-            <x-ui::color-picker.content popover-id="test-popover">
-                <x-ui::color-picker.area />
-                <x-ui::color-picker.hue />
-                <x-ui::color-picker.swatches :swatch-palette="[['#ef4444', '#ef4444']]" />
-            </x-ui::color-picker.content>
-        </x-ui::color-picker>
+        <x-std::color-picker name="brand_color" value="#3366cc" :shortcut="false">
+            <x-std::color-picker.trigger current-value="#3366cc" popover-id="test-popover">
+                <x-std::color-picker.hex current-value="#3366cc" popover-id="test-popover" />
+            </x-std::color-picker.trigger>
+            <x-std::color-picker.content popover-id="test-popover">
+                <x-std::color-picker.area />
+                <x-std::color-picker.hue />
+                <x-std::color-picker.swatches :swatch-palette="[['#ef4444', '#ef4444']]" />
+            </x-std::color-picker.content>
+        </x-std::color-picker>
     BLADE);
 
     expect($html)
@@ -54,7 +54,7 @@ it('renders full compound structure without shortcut', function () {
 });
 
 it('requires a name attribute', function () {
-    Blade::render('<x-ui::color-picker />');
+    Blade::render('<x-std::color-picker />');
 })->throws(ViewException::class);
 
 it('color picker script removes orphaned portaled popovers on remount', function () {
@@ -65,5 +65,5 @@ it('color picker script removes orphaned portaled popovers on remount', function
         ->toContain("popover.closest('[data-color-picker]')")
         ->toContain('popover.remove()')
         ->toContain('createBindSignal')
-        ->toContain('stencil:mount');
+        ->toContain('std:mount');
 });

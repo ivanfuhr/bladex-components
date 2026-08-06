@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\ToggleGroup;
+namespace Ivanfuhr\StdComponents\View\Components\ToggleGroup;
 
 use Illuminate\Support\Facades\View;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Item extends StencilComponent
+final class Item extends StdComponent
 {
     public function __construct(
         public mixed $value,
         public bool $disabled = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.toggle-group.item';
+        return 'std-components::components.toggle-group.item';
     }
 
     /**

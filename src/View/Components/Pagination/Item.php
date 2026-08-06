@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Pagination;
+namespace Ivanfuhr\StdComponents\View\Components\Pagination;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Item extends StencilComponent
+final class Item extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.pagination.item';
+        return 'std-components::components.pagination.item';
     }
 }

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Chart\Summary;
+namespace Ivanfuhr\StdComponents\View\Components\Chart\Summary;
 
 use Illuminate\Support\Js;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Value extends StencilComponent
+final class Value extends StdComponent
 {
     public function __construct(
         public mixed $field = null,
@@ -15,9 +15,9 @@ final class Value extends StencilComponent
         public mixed $fallback = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.chart.summary.value';
+        return 'std-components::components.chart.summary.value';
     }
 
     protected function resolveViewData(array $data = []): array

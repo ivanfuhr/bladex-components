@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Field;
+namespace Ivanfuhr\StdComponents\View\Components\Field;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Errors extends StencilComponent
+final class Errors extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.field.errors';
+        return 'std-components::components.field.errors';
     }
 
     /**

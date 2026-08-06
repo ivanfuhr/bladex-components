@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Accordion;
+namespace Ivanfuhr\StdComponents\View\Components\Accordion;
 
 use Illuminate\Support\Str;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Trigger extends StencilComponent
+final class Trigger extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.accordion.trigger';
+        return 'std-components::components.accordion.trigger';
     }
 
     /**

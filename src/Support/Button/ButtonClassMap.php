@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\Support\Button;
+namespace Ivanfuhr\StdComponents\Support\Button;
 
-use Ivanfuhr\Stencil\Support\Interaction\InteractionStateClassMap;
-use Ivanfuhr\Stencil\Support\Typography\TypographyClassMap;
+use Ivanfuhr\StdComponents\Support\Interaction\InteractionStateClassMap;
+use Ivanfuhr\StdComponents\Support\Typography\TypographyClassMap;
 
 final class ButtonClassMap
 {

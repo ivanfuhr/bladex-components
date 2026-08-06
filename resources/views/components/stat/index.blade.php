@@ -15,25 +15,25 @@
         <div class="flex items-start justify-between gap-3">
             <div class="min-w-0 space-y-1">
                 @if (filled($label))
-                    <x-ui::stat.label>{{ $label }}</x-ui::stat.label>
+                    <x-std::stat.label>{{ $label }}</x-std::stat.label>
                 @endif
                 @if (filled($value) || $value === 0 || $value === 0.0 || $value === '0')
-                    <x-ui::stat.value>{{ $value }}</x-ui::stat.value>
+                    <x-std::stat.value>{{ $value }}</x-std::stat.value>
                 @endif
             </div>
             @if (filled($icon))
-                <x-ui::stat.icon>
-                    <x-ui::icon :name="$icon" class="size-4" />
-                </x-ui::stat.icon>
+                <x-std::stat.icon>
+                    <x-std::icon :name="$icon" class="size-4" />
+                </x-std::stat.icon>
             @endif
         </div>
         @if (filled($description) || filled($trend))
             <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
                 @if (filled($trend))
-                    <x-ui::stat.trend :direction="$trendDirection">{{ $trend }}</x-ui::stat.trend>
+                    <x-std::stat.trend :direction="$trendDirection">{{ $trend }}</x-std::stat.trend>
                 @endif
                 @if (filled($description))
-                    <x-ui::stat.description>{{ $description }}</x-ui::stat.description>
+                    <x-std::stat.description>{{ $description }}</x-std::stat.description>
                 @endif
             </div>
         @endif

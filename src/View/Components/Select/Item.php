@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Select;
+namespace Ivanfuhr\StdComponents\View\Components\Select;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Item extends StencilComponent
+final class Item extends StdComponent
 {
     public function __construct(
         public mixed $value = null,
         public bool $disabled = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.select.item';
+        return 'std-components::components.select.item';
     }
 
     /**
@@ -24,12 +24,12 @@ final class Item extends StencilComponent
      */
     protected function resolveViewData(array $data = []): array
     {
-        $size = $this->attributes->get('size') ?? stencil_ancestor_attribute('size');
-        $listboxId = stencil_ancestor_attribute('listboxId');
+        $size = $this->attributes->get('size') ?? std_ancestor_attribute('size');
+        $listboxId = std_ancestor_attribute('listboxId');
 
         $itemClasses = collect([
             'select__item',
-            stencil_select_option_classes($size),
+            std_select_option_classes($size),
             'aria-selected:font-medium',
             '[&[aria-selected=true]_[data-select-item-check]]:opacity-100',
         ])->implode(' ');

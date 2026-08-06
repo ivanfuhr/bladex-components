@@ -1,5 +1,5 @@
 /**
- * Stencil — accessible scroll area with themed overlay scrollbars (vanilla JS).
+ * Std Components — accessible scroll area with themed overlay scrollbars (vanilla JS).
  *
  * Native scrolling (wheel, touch, keyboard) stays on the viewport. Scrollbar
  * chrome is presentational (aria-hidden) and only shims pointer drag/click.
@@ -54,7 +54,7 @@ function bindScrollArea(root) {
     let hideTimer = null;
     let scrolling = false;
     let pointerInside = false;
-    const isScrollLocked = () => viewport.dataset.stencilScrollLocked === 'true';
+    const isScrollLocked = () => viewport.dataset.stdScrollLocked === 'true';
 
     /**
      * @param {HTMLElement} scrollbar
@@ -451,7 +451,7 @@ function bindScrollArea(root) {
     }
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

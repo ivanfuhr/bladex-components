@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Table;
+namespace Ivanfuhr\StdComponents\View\Components\Table;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Head extends StencilComponent
+final class Head extends StdComponent
 {
     public function __construct(
         public bool $sortable = false,
@@ -14,8 +14,8 @@ final class Head extends StencilComponent
         public mixed $direction = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.table.head';
+        return 'std-components::components.table.head';
     }
 }

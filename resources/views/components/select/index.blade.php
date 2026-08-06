@@ -23,7 +23,7 @@
     @endif
 
     @if ($shortcut)
-        <x-ui::select.trigger
+        <x-std::select.trigger
             :size="$size"
             :invalid="$invalid"
             :disabled="$disabled"
@@ -34,15 +34,15 @@
             :control-id="$controlId"
         >
             @if ($multiple && $display === 'chips')
-                <x-ui::select.chips :placeholder="$placeholder" :size="$size" />
+                <x-std::select.chips :placeholder="$placeholder" :size="$size" />
             @else
-                <x-ui::select.value :placeholder="$placeholder" />
+                <x-std::select.value :placeholder="$placeholder" />
             @endif
-        </x-ui::select.trigger>
+        </x-std::select.trigger>
 
-        <x-ui::select.content :listbox-id="$listboxId" :size="$size" :multiple="$multiple">
+        <x-std::select.content :listbox-id="$listboxId" :size="$size" :multiple="$multiple">
             {{ $slot }}
-        </x-ui::select.content>
+        </x-std::select.content>
     @else
         {{ $slot }}
     @endif

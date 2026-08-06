@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Sidebar;
+namespace Ivanfuhr\StdComponents\View\Components\Sidebar;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class MenuAction extends StencilComponent
+final class MenuAction extends StdComponent
 {
     public function __construct(
         public bool $asChild = false,
         public bool $showOnHover = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.sidebar.menu-action';
+        return 'std-components::components.sidebar.menu-action';
     }
 
     /**

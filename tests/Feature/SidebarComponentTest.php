@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Blade;
 
 it('reflects provider default-open on trigger aria-expanded', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::sidebar.provider :default-open="false">
-            <x-ui::sidebar.trigger />
-        </x-ui::sidebar.provider>
+        <x-std::sidebar.provider :default-open="false">
+            <x-std::sidebar.trigger />
+        </x-std::sidebar.provider>
     BLADE);
 
     expect($html)->toContain('aria-expanded="false"');
@@ -16,29 +16,29 @@ it('reflects provider default-open on trigger aria-expanded', function () {
 
 it('renders a sidebar provider with shell landmarks and trigger', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::sidebar.provider storage-key="test-sidebar" :default-open="true">
-            <x-ui::sidebar collapsible="icon">
-                <x-ui::sidebar.header>Brand</x-ui::sidebar.header>
-                <x-ui::sidebar.content>
-                    <x-ui::sidebar.group>
-                        <x-ui::sidebar.group-label>Platform</x-ui::sidebar.group-label>
-                        <x-ui::sidebar.group-content>
-                            <x-ui::sidebar.menu>
-                                <x-ui::sidebar.menu-item>
-                                    <x-ui::sidebar.menu-button href="/" active>Home</x-ui::sidebar.menu-button>
-                                </x-ui::sidebar.menu-item>
-                            </x-ui::sidebar.menu>
-                        </x-ui::sidebar.group-content>
-                    </x-ui::sidebar.group>
-                </x-ui::sidebar.content>
-                <x-ui::sidebar.footer>Account</x-ui::sidebar.footer>
-                <x-ui::sidebar.rail />
-            </x-ui::sidebar>
-            <x-ui::sidebar.inset>
-                <x-ui::sidebar.trigger />
+        <x-std::sidebar.provider storage-key="test-sidebar" :default-open="true">
+            <x-std::sidebar collapsible="icon">
+                <x-std::sidebar.header>Brand</x-std::sidebar.header>
+                <x-std::sidebar.content>
+                    <x-std::sidebar.group>
+                        <x-std::sidebar.group-label>Platform</x-std::sidebar.group-label>
+                        <x-std::sidebar.group-content>
+                            <x-std::sidebar.menu>
+                                <x-std::sidebar.menu-item>
+                                    <x-std::sidebar.menu-button href="/" active>Home</x-std::sidebar.menu-button>
+                                </x-std::sidebar.menu-item>
+                            </x-std::sidebar.menu>
+                        </x-std::sidebar.group-content>
+                    </x-std::sidebar.group>
+                </x-std::sidebar.content>
+                <x-std::sidebar.footer>Account</x-std::sidebar.footer>
+                <x-std::sidebar.rail />
+            </x-std::sidebar>
+            <x-std::sidebar.inset>
+                <x-std::sidebar.trigger />
                 <p>Main</p>
-            </x-ui::sidebar.inset>
-        </x-ui::sidebar.provider>
+            </x-std::sidebar.inset>
+        </x-std::sidebar.provider>
     BLADE);
 
     expect($html)
@@ -70,9 +70,9 @@ it('renders a sidebar provider with shell landmarks and trigger', function () {
 
 it('forwards scroll-area options and body classes on sidebar content', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::sidebar.content class="gap-0" type="always" :scroll-hide-delay="200" aria-label="Docs navigation">
+        <x-std::sidebar.content class="gap-0" type="always" :scroll-hide-delay="200" aria-label="Docs navigation">
             <p>Nav</p>
-        </x-ui::sidebar.content>
+        </x-std::sidebar.content>
     BLADE);
 
     expect($html)
@@ -87,12 +87,12 @@ it('forwards scroll-area options and body classes on sidebar content', function 
 
 it('supports offcanvas and inset variants on the sidebar root', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::sidebar.provider>
-            <x-ui::sidebar collapsible="offcanvas" variant="inset" side="right">
-                <x-ui::sidebar.content>Nav</x-ui::sidebar.content>
-            </x-ui::sidebar>
-            <x-ui::sidebar.inset>Body</x-ui::sidebar.inset>
-        </x-ui::sidebar.provider>
+        <x-std::sidebar.provider>
+            <x-std::sidebar collapsible="offcanvas" variant="inset" side="right">
+                <x-std::sidebar.content>Nav</x-std::sidebar.content>
+            </x-std::sidebar>
+            <x-std::sidebar.inset>Body</x-std::sidebar.inset>
+        </x-std::sidebar.provider>
     BLADE);
 
     expect($html)
@@ -106,9 +106,9 @@ it('supports offcanvas and inset variants on the sidebar root', function () {
 
 it('renders a non-collapsible sidebar without backdrop or rail chrome', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::sidebar collapsible="none">
-            <x-ui::sidebar.content>Static</x-ui::sidebar.content>
-        </x-ui::sidebar>
+        <x-std::sidebar collapsible="none">
+            <x-std::sidebar.content>Static</x-std::sidebar.content>
+        </x-std::sidebar>
     BLADE);
 
     expect($html)
@@ -120,25 +120,25 @@ it('renders a non-collapsible sidebar without backdrop or rail chrome', function
 
 it('renders menu actions, badges, and nested submenus', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::sidebar.provider>
-            <x-ui::sidebar>
-                <x-ui::sidebar.content>
-                    <x-ui::sidebar.menu>
-                        <x-ui::sidebar.menu-item>
-                            <x-ui::sidebar.menu-button href="#">Projects</x-ui::sidebar.menu-button>
-                            <x-ui::sidebar.menu-action aria-label="Add project">+</x-ui::sidebar.menu-action>
-                            <x-ui::sidebar.menu-badge>3</x-ui::sidebar.menu-badge>
-                            <x-ui::sidebar.menu-sub>
-                                <x-ui::sidebar.menu-sub-item>
-                                    <x-ui::sidebar.menu-sub-button href="#" active>Alpha</x-ui::sidebar.menu-sub-button>
-                                </x-ui::sidebar.menu-sub-item>
-                            </x-ui::sidebar.menu-sub>
-                        </x-ui::sidebar.menu-item>
-                    </x-ui::sidebar.menu>
-                    <x-ui::sidebar.separator />
-                </x-ui::sidebar.content>
-            </x-ui::sidebar>
-        </x-ui::sidebar.provider>
+        <x-std::sidebar.provider>
+            <x-std::sidebar>
+                <x-std::sidebar.content>
+                    <x-std::sidebar.menu>
+                        <x-std::sidebar.menu-item>
+                            <x-std::sidebar.menu-button href="#">Projects</x-std::sidebar.menu-button>
+                            <x-std::sidebar.menu-action aria-label="Add project">+</x-std::sidebar.menu-action>
+                            <x-std::sidebar.menu-badge>3</x-std::sidebar.menu-badge>
+                            <x-std::sidebar.menu-sub>
+                                <x-std::sidebar.menu-sub-item>
+                                    <x-std::sidebar.menu-sub-button href="#" active>Alpha</x-std::sidebar.menu-sub-button>
+                                </x-std::sidebar.menu-sub-item>
+                            </x-std::sidebar.menu-sub>
+                        </x-std::sidebar.menu-item>
+                    </x-std::sidebar.menu>
+                    <x-std::sidebar.separator />
+                </x-std::sidebar.content>
+            </x-std::sidebar>
+        </x-std::sidebar.provider>
     BLADE);
 
     expect($html)
@@ -154,11 +154,11 @@ it('renders menu actions, badges, and nested submenus', function () {
 
 it('supports as-child trigger wrapping', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::sidebar.provider>
-            <x-ui::sidebar.trigger as-child>
-                <x-ui::button variant="outline" square>Toggle</x-ui::button>
-            </x-ui::sidebar.trigger>
-        </x-ui::sidebar.provider>
+        <x-std::sidebar.provider>
+            <x-std::sidebar.trigger as-child>
+                <x-std::button variant="outline" square>Toggle</x-std::button>
+            </x-std::sidebar.trigger>
+        </x-std::sidebar.provider>
     BLADE);
 
     expect($html)
@@ -169,20 +169,20 @@ it('supports as-child trigger wrapping', function () {
 
 it('wraps menu buttons with icon-mode tooltips and stronger active chrome', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::sidebar.provider>
-            <x-ui::sidebar collapsible="icon">
-                <x-ui::sidebar.content>
-                    <x-ui::sidebar.menu>
-                        <x-ui::sidebar.menu-item>
-                            <x-ui::sidebar.menu-button href="/" active tooltip="Home">
+        <x-std::sidebar.provider>
+            <x-std::sidebar collapsible="icon">
+                <x-std::sidebar.content>
+                    <x-std::sidebar.menu>
+                        <x-std::sidebar.menu-item>
+                            <x-std::sidebar.menu-button href="/" active tooltip="Home">
                                 Home
-                            </x-ui::sidebar.menu-button>
-                            <x-ui::sidebar.menu-badge>12</x-ui::sidebar.menu-badge>
-                        </x-ui::sidebar.menu-item>
-                    </x-ui::sidebar.menu>
-                </x-ui::sidebar.content>
-            </x-ui::sidebar>
-        </x-ui::sidebar.provider>
+                            </x-std::sidebar.menu-button>
+                            <x-std::sidebar.menu-badge>12</x-std::sidebar.menu-badge>
+                        </x-std::sidebar.menu-item>
+                    </x-std::sidebar.menu>
+                </x-std::sidebar.content>
+            </x-std::sidebar>
+        </x-std::sidebar.provider>
     BLADE);
 
     expect($html)
@@ -203,7 +203,7 @@ it('sidebar script tears down document and matchMedia listeners with createBindS
         ->toContain('createBindSignal')
         ->toContain("document.addEventListener('keydown', onKeydown, { signal })")
         ->toContain("media.addEventListener('change', onMediaChange, { signal })")
-        ->toContain('stencil:mount');
+        ->toContain('std:mount');
 });
 
 it('tooltip script gates sidebar menu tooltips to icon-collapsed mode', function () {

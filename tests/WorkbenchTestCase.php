@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\Tests;
+namespace Ivanfuhr\StdComponents\Tests;
 
 use Workbench\App\Providers\WorkbenchServiceProvider;
 

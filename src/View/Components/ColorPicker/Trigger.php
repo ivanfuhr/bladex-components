@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\ColorPicker;
+namespace Ivanfuhr\StdComponents\View\Components\ColorPicker;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Trigger extends StencilComponent
+final class Trigger extends StdComponent
 {
     public function __construct(
         public mixed $currentValue = '#000000',
@@ -16,9 +16,9 @@ final class Trigger extends StencilComponent
         public mixed $size = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.color-picker.trigger';
+        return 'std-components::components.color-picker.trigger';
     }
 
     /**
@@ -35,7 +35,7 @@ final class Trigger extends StencilComponent
             'relative flex min-w-0 overflow-hidden rounded-md border border-zinc-200 bg-white shadow-sm transition-colors',
             'focus-within:outline-none focus-within:ring-2 focus-within:ring-zinc-950/10 focus-within:ring-offset-0',
             'dark:border-zinc-800 dark:bg-zinc-950 dark:focus-within:ring-zinc-300/20',
-            stencil_invalid_field_classes(),
+            std_invalid_field_classes(),
             $this->invalid ? 'border-red-500 focus-within:ring-red-500/20 dark:border-red-500' : null,
             $isSmall ? 'h-8' : 'h-9',
             $this->disabled ? 'opacity-50' : null,

@@ -9,14 +9,14 @@ use Illuminate\View\ViewException;
 
 it('renders a repeater root with list host and item template', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::repeater name="members" :value="[['name' => 'Ada', 'role' => 'owner']]">
-            <x-ui::repeater.item>
-                <x-ui::input data-repeater-field="name" />
-                <x-ui::input data-repeater-field="role" />
-                <x-ui::repeater.remove />
-            </x-ui::repeater.item>
-            <x-ui::repeater.add>Add member</x-ui::repeater.add>
-        </x-ui::repeater>
+        <x-std::repeater name="members" :value="[['name' => 'Ada', 'role' => 'owner']]">
+            <x-std::repeater.item>
+                <x-std::input data-repeater-field="name" />
+                <x-std::input data-repeater-field="role" />
+                <x-std::repeater.remove />
+            </x-std::repeater.item>
+            <x-std::repeater.add>Add member</x-std::repeater.add>
+        </x-std::repeater>
     BLADE);
 
     expect($html)
@@ -34,11 +34,11 @@ it('renders a repeater root with list host and item template', function () {
 
 it('renders min and max data attributes', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::repeater name="members" :min="1" :max="5">
-            <x-ui::repeater.item>
-                <x-ui::input data-repeater-field="name" />
-            </x-ui::repeater.item>
-        </x-ui::repeater>
+        <x-std::repeater name="members" :min="1" :max="5">
+            <x-std::repeater.item>
+                <x-std::input data-repeater-field="name" />
+            </x-std::repeater.item>
+        </x-std::repeater>
     BLADE);
 
     expect($html)
@@ -48,11 +48,11 @@ it('renders min and max data attributes', function () {
 
 it('marks the repeater invalid when the invalid prop is true', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::repeater name="members" :invalid="true">
-            <x-ui::repeater.item>
-                <x-ui::input data-repeater-field="name" />
-            </x-ui::repeater.item>
-        </x-ui::repeater>
+        <x-std::repeater name="members" :invalid="true">
+            <x-std::repeater.item>
+                <x-std::input data-repeater-field="name" />
+            </x-std::repeater.item>
+        </x-std::repeater>
     BLADE);
 
     expect($html)
@@ -62,12 +62,12 @@ it('marks the repeater invalid when the invalid prop is true', function () {
 
 it('marks the repeater disabled when the disabled prop is true', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::repeater name="members" :disabled="true">
-            <x-ui::repeater.item>
-                <x-ui::input data-repeater-field="name" />
-            </x-ui::repeater.item>
-            <x-ui::repeater.add />
-        </x-ui::repeater>
+        <x-std::repeater name="members" :disabled="true">
+            <x-std::repeater.item>
+                <x-std::input data-repeater-field="name" />
+            </x-std::repeater.item>
+            <x-std::repeater.add />
+        </x-std::repeater>
     BLADE);
 
     expect($html)->toContain('data-disabled="true"');
@@ -80,13 +80,13 @@ it('inherits field invalid state from the field wrapper', function () {
     view()->share('errors', $errors);
 
     $html = Blade::render(<<<'BLADE'
-        <x-ui::field name="members">
-            <x-ui::repeater name="members">
-                <x-ui::repeater.item>
-                    <x-ui::input data-repeater-field="name" />
-                </x-ui::repeater.item>
-            </x-ui::repeater>
-        </x-ui::field>
+        <x-std::field name="members">
+            <x-std::repeater name="members">
+                <x-std::repeater.item>
+                    <x-std::input data-repeater-field="name" />
+                </x-std::repeater.item>
+            </x-std::repeater>
+        </x-std::field>
     BLADE);
 
     expect($html)->toContain('data-invalid="true"');
@@ -94,23 +94,23 @@ it('inherits field invalid state from the field wrapper', function () {
 
 it('requires a name attribute', function () {
     Blade::render(<<<'BLADE'
-        <x-ui::repeater>
-            <x-ui::repeater.item>
-                <x-ui::input data-repeater-field="name" />
-            </x-ui::repeater.item>
-        </x-ui::repeater>
+        <x-std::repeater>
+            <x-std::repeater.item>
+                <x-std::input data-repeater-field="name" />
+            </x-std::repeater.item>
+        </x-std::repeater>
     BLADE);
 })->throws(ViewException::class);
 
 it('uses translated labels for add and remove actions', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::repeater name="members">
-            <x-ui::repeater.item>
-                <x-ui::input data-repeater-field="name" />
-                <x-ui::repeater.remove />
-            </x-ui::repeater.item>
-            <x-ui::repeater.add />
-        </x-ui::repeater>
+        <x-std::repeater name="members">
+            <x-std::repeater.item>
+                <x-std::input data-repeater-field="name" />
+                <x-std::repeater.remove />
+            </x-std::repeater.item>
+            <x-std::repeater.add />
+        </x-std::repeater>
     BLADE);
 
     expect($html)
@@ -120,14 +120,14 @@ it('uses translated labels for add and remove actions', function () {
 
 it('renders duplicate and sortable markers', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::repeater name="members" sortable>
-            <x-ui::repeater.item>
-                <x-ui::repeater.handle />
-                <x-ui::input data-repeater-field="name" />
-                <x-ui::repeater.duplicate />
-                <x-ui::repeater.remove />
-            </x-ui::repeater.item>
-        </x-ui::repeater>
+        <x-std::repeater name="members" sortable>
+            <x-std::repeater.item>
+                <x-std::repeater.handle />
+                <x-std::input data-repeater-field="name" />
+                <x-std::repeater.duplicate />
+                <x-std::repeater.remove />
+            </x-std::repeater.item>
+        </x-std::repeater>
     BLADE);
 
     expect($html)

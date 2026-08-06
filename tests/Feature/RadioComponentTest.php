@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders radio group and items with a shared name', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::radio.group name="plan" legend="Plan">
-            <x-ui::radio value="free">Free</x-ui::radio>
-            <x-ui::radio value="pro" :checked="true">Pro</x-ui::radio>
-        </x-ui::radio.group>
+        <x-std::radio.group name="plan" legend="Plan">
+            <x-std::radio value="free">Free</x-std::radio>
+            <x-std::radio value="pro" :checked="true">Pro</x-std::radio>
+        </x-std::radio.group>
     BLADE);
 
     expect($html)

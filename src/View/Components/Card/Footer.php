@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Card;
+namespace Ivanfuhr\StdComponents\View\Components\Card;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Footer extends StencilComponent
+final class Footer extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.card.footer';
+        return 'std-components::components.card.footer';
     }
 }

@@ -1,5 +1,5 @@
 /**
- * Stencil — currency input (formatted display, float hidden value).
+ * Std Components — currency input (formatted display, float hidden value).
  */
 
 const INPUT_CURRENCY_SELECTOR = '[data-input-currency]';
@@ -202,7 +202,7 @@ function bindInputCurrency(root) {
     });
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

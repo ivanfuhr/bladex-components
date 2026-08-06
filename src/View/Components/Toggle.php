@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Toggle extends StencilComponent
+final class Toggle extends StdComponent
 {
     public function __construct(
         public bool $pressed = false,
@@ -12,9 +12,9 @@ final class Toggle extends StencilComponent
         public mixed $size = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.toggle.index';
+        return 'std-components::components.toggle.index';
     }
 
     /**
@@ -55,7 +55,7 @@ final class Toggle extends StencilComponent
             ]),
         };
 
-        $mergedAttributes = stencil_apply_interaction($this->attributes
+        $mergedAttributes = std_apply_interaction($this->attributes
             ->class([
                 'toggle',
                 'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium',

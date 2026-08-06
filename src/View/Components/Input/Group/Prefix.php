@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Input\Group;
+namespace Ivanfuhr\StdComponents\View\Components\Input\Group;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Prefix extends StencilComponent
+final class Prefix extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.input.group.prefix';
+        return 'std-components::components.input.group.prefix';
     }
 }

@@ -1,5 +1,5 @@
 /**
- * Stencil — accessible dropdown menu (vanilla JS, no Alpine).
+ * Std Components — accessible dropdown menu (vanilla JS, no Alpine).
  */
 
 import { createBindSignal } from './shared/lifecycle.js';
@@ -60,7 +60,7 @@ function bindDropdownMenu(root) {
     let activeIndex = -1;
     /** @type {(() => void) | null} */
     let releaseScrollLock = null;
-    const portalMarker = document.createComment('stencil-dropdown-menu-portal');
+    const portalMarker = document.createComment('std-dropdown-menu-portal');
     const signal = createBindSignal(root);
 
     trigger.setAttribute('aria-haspopup', 'menu');
@@ -132,7 +132,7 @@ function bindDropdownMenu(root) {
         }
 
         root.dispatchEvent(
-            new CustomEvent('stencil:dropdown-menu:change', {
+            new CustomEvent('std:dropdown-menu:change', {
                 bubbles: true,
                 detail: { open },
             }),
@@ -429,7 +429,7 @@ function positionContent(content, trigger, root) {
     content.style.left = `${left}px`;
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

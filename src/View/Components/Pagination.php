@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-final class Pagination extends StencilComponent
+final class Pagination extends StdComponent
 {
     public function __construct(
         public mixed $paginator = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.pagination.index';
+        return 'std-components::components.pagination.index';
     }
 
     /**

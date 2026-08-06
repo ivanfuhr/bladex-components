@@ -3,12 +3,12 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Http;
-use Ivanfuhr\Stencil\Support\Icon\IconPathResolver;
+use Ivanfuhr\StdComponents\Support\Icon\IconPathResolver;
 
 /**
  * @return list<string>
  */
-function defaultStencilTestIconNames(): array
+function defaultStdTestIconNames(): array
 {
     return [
         'calendar',
@@ -39,9 +39,9 @@ function defaultStencilTestIconNames(): array
  *
  * @param  list<string>|null  $names
  */
-function seedStencilTestIcons(?array $names = null): void
+function seedStdTestIcons(?array $names = null): void
 {
-    $names = $names ?? defaultStencilTestIconNames();
+    $names = $names ?? defaultStdTestIconNames();
     $iconsPath = dirname(__DIR__, 2).'/resources/views/icons';
 
     foreach ($names as $name) {

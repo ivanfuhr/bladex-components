@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\Support\Code;
+namespace Ivanfuhr\StdComponents\Support\Code;
 
 final class CodeHighlighter
 {
@@ -116,7 +116,7 @@ final class CodeHighlighter
         return $this->scan($code, [
             'comment' => '/#[^\n]*/',
             'string' => '/"(?:\\\\.|[^"\\\\])*"|\'(?:\\\\.|[^\'\\\\])*\'/',
-            'flag' => '/--?[\w-]+(?:=[^\s]+)?/',
+            'flag' => '/(?<=^|\s)--?[\w-]+(?:=[^\s]+)?/',
             'command' => '/(?<=^|\n)[A-Za-z_][\w.-]*/',
         ]);
     }

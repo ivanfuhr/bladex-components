@@ -2,8 +2,8 @@
     <input {{ $controlAttributes }} />
 
     @if ($hasSlotLabel)
-        <x-ui::label :for="$controlId" class="!font-normal"> {{ $slot }} </x-ui::label>
+        <x-std::label :for="$controlId" class="!font-normal"> {{ $slot }} </x-std::label>
     @elseif (filled($label))
-        <x-ui::label :for="$controlId" class="!font-normal"> {{ $label }} </x-ui::label>
+        <x-std::label :for="$controlId" class="!font-normal"> {{ $label }} </x-std::label>
     @endif
 </div>

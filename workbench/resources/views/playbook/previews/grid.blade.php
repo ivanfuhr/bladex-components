@@ -5,8 +5,8 @@
     $showSpan = (bool) ($state['show_span'] ?? true);
 @endphp
 
-<x-ui::grid :md="$md" :sm="$sm" gap="4" class="w-full max-w-3xl" :container="$container">
-    <x-ui::stat
+<x-std::grid :md="$md" :sm="$sm" gap="4" class="w-full max-w-3xl" :container="$container">
+    <x-std::stat
         label="Registrations"
         value="248"
         trend="+12.4%"
@@ -14,7 +14,7 @@
         description="vs last 7 days"
         icon="file"
     />
-    <x-ui::stat
+    <x-std::stat
         label="Revenue"
         value="R$ 46.8k"
         trend="+8.2%"
@@ -23,8 +23,8 @@
         icon="clock"
     />
     @if ($showSpan)
-        <x-ui::grid.item span="full">
-            <x-ui::stat
+        <x-std::grid.item span="full">
+            <x-std::stat
                 variant="muted"
                 label="Check-in rate"
                 value="64%"
@@ -33,9 +33,9 @@
                 description="Full-width row via grid.item"
                 icon="check"
             />
-        </x-ui::grid.item>
+        </x-std::grid.item>
     @else
-        <x-ui::stat
+        <x-std::stat
             label="Check-in rate"
             value="64%"
             trend="−2.1%"
@@ -44,4 +44,4 @@
             icon="check"
         />
     @endif
-</x-ui::grid>
+</x-std::grid>

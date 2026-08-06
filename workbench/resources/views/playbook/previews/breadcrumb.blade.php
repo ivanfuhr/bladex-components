@@ -2,14 +2,14 @@
     $separator = ($state['separator'] ?? 'chevron') === 'slash' ? 'slash' : null;
 @endphp
 
-<x-ui::breadcrumb>
-    <x-ui::breadcrumb.list>
-        <x-ui::breadcrumb.item href="#">Home</x-ui::breadcrumb.item>
-        <x-ui::breadcrumb.separator :type="$separator" />
-        <x-ui::breadcrumb.item href="#">Settings</x-ui::breadcrumb.item>
-        <x-ui::breadcrumb.separator :type="$separator" />
-        <x-ui::breadcrumb.item>
-            <x-ui::breadcrumb.page>Profile</x-ui::breadcrumb.page>
-        </x-ui::breadcrumb.item>
-    </x-ui::breadcrumb.list>
-</x-ui::breadcrumb>
+<x-std::breadcrumb>
+    <x-std::breadcrumb.list>
+        <x-std::breadcrumb.item href="#">Home</x-std::breadcrumb.item>
+        <x-std::breadcrumb.separator :type="$separator" />
+        <x-std::breadcrumb.item href="#">Settings</x-std::breadcrumb.item>
+        <x-std::breadcrumb.separator :type="$separator" />
+        <x-std::breadcrumb.item>
+            <x-std::breadcrumb.page>Profile</x-std::breadcrumb.page>
+        </x-std::breadcrumb.item>
+    </x-std::breadcrumb.list>
+</x-std::breadcrumb>

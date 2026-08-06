@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Blade;
 
 it('renders google font assets and css variables', function (): void {
-    $html = Blade::render('<x-ui::fonts />');
+    $html = Blade::render('<x-std::fonts />');
 
     expect($html)
         ->toContain('rel="preconnect"')
@@ -16,9 +16,9 @@ it('renders google font assets and css variables', function (): void {
 });
 
 it('renders nothing when no fonts are configured', function (): void {
-    config(['stencil.typography.fonts' => []]);
+    config(['std-components.typography.fonts' => []]);
 
-    $html = Blade::render('<x-ui::fonts />');
+    $html = Blade::render('<x-std::fonts />');
 
     expect(trim($html))->toBe('');
 });

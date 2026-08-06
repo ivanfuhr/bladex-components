@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders an accordion with compound item trigger and content', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::accordion exclusive>
-            <x-ui::accordion.item value="shipping" :expanded="true">
-                <x-ui::accordion.trigger>Shipping options</x-ui::accordion.trigger>
-                <x-ui::accordion.content>Standard and express.</x-ui::accordion.content>
-            </x-ui::accordion.item>
-        </x-ui::accordion>
+        <x-std::accordion exclusive>
+            <x-std::accordion.item value="shipping" :expanded="true">
+                <x-std::accordion.trigger>Shipping options</x-std::accordion.trigger>
+                <x-std::accordion.content>Standard and express.</x-std::accordion.content>
+            </x-std::accordion.item>
+        </x-std::accordion>
     BLADE);
 
     expect($html)
@@ -29,11 +29,11 @@ it('renders an accordion with compound item trigger and content', function () {
 
 it('supports flux-style heading shorthand and disabled items', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::accordion>
-            <x-ui::accordion.item heading="Refund policy" disabled>
+        <x-std::accordion>
+            <x-std::accordion.item heading="Refund policy" disabled>
                 30-day money-back guarantee.
-            </x-ui::accordion.item>
-        </x-ui::accordion>
+            </x-std::accordion.item>
+        </x-std::accordion>
     BLADE);
 
     expect($html)
@@ -45,12 +45,12 @@ it('supports flux-style heading shorthand and disabled items', function () {
 
 it('wires aria-controls between trigger and content', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::accordion>
-            <x-ui::accordion.item value="a" trigger-id="acc-trigger-a" content-id="acc-content-a">
-                <x-ui::accordion.trigger>Title</x-ui::accordion.trigger>
-                <x-ui::accordion.content>Body</x-ui::accordion.content>
-            </x-ui::accordion.item>
-        </x-ui::accordion>
+        <x-std::accordion>
+            <x-std::accordion.item value="a" trigger-id="acc-trigger-a" content-id="acc-content-a">
+                <x-std::accordion.trigger>Title</x-std::accordion.trigger>
+                <x-std::accordion.content>Body</x-std::accordion.content>
+            </x-std::accordion.item>
+        </x-std::accordion>
     BLADE);
 
     expect($html)
@@ -61,7 +61,7 @@ it('wires aria-controls between trigger and content', function () {
 });
 
 it('marks multiple mode when exclusive is false', function () {
-    $html = Blade::render('<x-ui::accordion :multiple="true" transition variant="reverse" bordered />');
+    $html = Blade::render('<x-std::accordion :multiple="true" transition variant="reverse" bordered />');
 
     expect($html)
         ->toContain('data-accordion-exclusive="false"')
@@ -72,12 +72,12 @@ it('marks multiple mode when exclusive is false', function () {
 
 it('hides closed transition panels from the accessibility tree', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::accordion transition>
-            <x-ui::accordion.item value="a">
-                <x-ui::accordion.trigger>Title</x-ui::accordion.trigger>
-                <x-ui::accordion.content>Body</x-ui::accordion.content>
-            </x-ui::accordion.item>
-        </x-ui::accordion>
+        <x-std::accordion transition>
+            <x-std::accordion.item value="a">
+                <x-std::accordion.trigger>Title</x-std::accordion.trigger>
+                <x-std::accordion.content>Body</x-std::accordion.content>
+            </x-std::accordion.item>
+        </x-std::accordion>
     BLADE);
 
     expect($html)

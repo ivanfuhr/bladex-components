@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Blade;
-use Ivanfuhr\Stencil\Support\Icon\IconVariant;
-use Ivanfuhr\Stencil\Support\Icon\LucideIconStubGenerator;
+use Ivanfuhr\StdComponents\Support\Icon\IconVariant;
+use Ivanfuhr\StdComponents\Support\Icon\LucideIconStubGenerator;
 
 it('normalizes lucide icon variants', function (): void {
     expect(IconVariant::normalize('solid'))->toBe('outline')
@@ -23,7 +23,7 @@ SVG;
 
     expect($stub)
         ->toContain('@props([')
-        ->toContain('<x-ui::icon.lucide')
+        ->toContain('<x-std::icon.lucide')
         ->toContain('<circle cx="11" cy="11" r="8"/>')
         ->not->toContain('width="24"');
 });
@@ -47,9 +47,9 @@ SVG;
 });
 
 it('lets explicit size classes override the lucide variant box', function (): void {
-    seedStencilTestIcons(['upload']);
+    seedStdTestIcons(['upload']);
 
-    $html = Blade::render('<x-ui::icon name="upload" class="size-6 text-zinc-600" />');
+    $html = Blade::render('<x-std::icon name="upload" class="size-6 text-zinc-600" />');
 
     expect($html)
         ->toContain('block shrink-0')

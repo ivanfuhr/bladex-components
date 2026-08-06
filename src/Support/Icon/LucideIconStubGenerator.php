@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\Support\Icon;
+namespace Ivanfuhr\StdComponents\Support\Icon;
 
 use InvalidArgumentException;
 use RuntimeException;
@@ -22,9 +22,9 @@ final class LucideIconStubGenerator
     'variant' => 'outline',
 ])
 
-<x-ui::icon.lucide :variant="\$variant" {{ \$attributes }}>
+<x-std::icon.lucide :variant="\$variant" {{ \$attributes }}>
 {$inner}
-</x-ui::icon.lucide>
+</x-std::icon.lucide>
 BLADE;
     }
 

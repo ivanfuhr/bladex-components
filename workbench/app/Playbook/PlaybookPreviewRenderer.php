@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Workbench\App\Playbook;
 
 use Illuminate\Contracts\View\Factory as ViewFactory;
-use Ivanfuhr\Stencil\Support\Code\CodeHighlighter;
+use Ivanfuhr\StdComponents\Support\Code\CodeHighlighter;
 
 final class PlaybookPreviewRenderer
 {

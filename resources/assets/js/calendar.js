@@ -1,5 +1,5 @@
 /**
- * Stencil — calendar grid (vanilla JS).
+ * Std Components — calendar grid (vanilla JS).
  */
 
 import { DateValue } from './shared/date-value.js';
@@ -711,7 +711,7 @@ function isSelectable(day, config, today) {
     return true;
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

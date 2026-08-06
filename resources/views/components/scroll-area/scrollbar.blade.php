@@ -1,6 +1,6 @@
 <div {{ $scrollbarAttributes }}>
     @if ($slot->isEmpty())
-        <x-ui::scroll-area.thumb />
+        <x-std::scroll-area.thumb />
     @else
         {{ $slot }}
     @endif

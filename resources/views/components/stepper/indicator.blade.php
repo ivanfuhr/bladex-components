@@ -28,7 +28,7 @@
             $isCompleted ? 'inline-flex' : 'hidden',
             'group-data-[state=completed]/step:inline-flex group-data-[state=active]/step:hidden group-data-[state=inactive]/step:hidden',
         ])>
-            <x-ui::icon name="check" class="size-4" />
+            <x-std::icon name="check" class="size-4" />
         </span>
     @endif
 </span>

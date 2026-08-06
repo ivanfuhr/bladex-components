@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Command;
+namespace Ivanfuhr\StdComponents\View\Components\Command;
 
 use Illuminate\Support\Str;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Group extends StencilComponent
+final class Group extends StdComponent
 {
     public function __construct(
         public mixed $heading = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.command.group';
+        return 'std-components::components.command.group';
     }
 
     /**

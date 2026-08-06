@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\Console\Commands;
+namespace Ivanfuhr\StdComponents\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Ivanfuhr\Stencil\Support\Icon\IconPathResolver;
-use Ivanfuhr\Stencil\Support\Icon\LucideIconInstaller;
+use Ivanfuhr\StdComponents\Support\Icon\IconPathResolver;
+use Ivanfuhr\StdComponents\Support\Icon\LucideIconInstaller;
 use Throwable;
 
 use function Laravel\Prompts\text;
 
 class IconCommand extends Command
 {
-    protected $signature = 'stencil:icon
+    protected $signature = 'std:icon
                             {names?* : Lucide icon names to import (see lucide.dev/icons)}
                             {--force : Overwrite existing icon stubs}
                             {--path= : Destination directory relative to the application base path}';

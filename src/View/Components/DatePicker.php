@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
-final class DatePicker extends StencilComponent
+final class DatePicker extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
@@ -42,9 +42,9 @@ final class DatePicker extends StencilComponent
         public mixed $allTimeStart = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.date-picker.index';
+        return 'std-components::components.date-picker.index';
     }
 
     /**
@@ -56,9 +56,9 @@ final class DatePicker extends StencilComponent
         $fieldInvalid = (bool) ($data['fieldInvalid'] ?? false);
         $invalid = $this->invalid || $fieldInvalid;
         $range = $this->mode === 'range';
-        $resolvedTimezone = stencil_resolve_timezone($this->timezone);
+        $resolvedTimezone = std_resolve_timezone($this->timezone);
         $resolvedLocale = $this->locale ?? app()->getLocale();
-        $resolvedValue = stencil_normalize_date_value($this->value, $this->mode);
+        $resolvedValue = std_normalize_date_value($this->value, $this->mode);
         $monthCount = (int) ($this->months ?? ($range ? 2 : 1));
 
         $presetKeys = $this->withPresets
@@ -66,7 +66,7 @@ final class DatePicker extends StencilComponent
             : null;
 
         $presetMeta = $presetKeys
-            ? stencil_date_preset_metadata(
+            ? std_date_preset_metadata(
                 $presetKeys,
                 filled($this->allTimeStart) ? Carbon::parse($this->allTimeStart) : null,
             )

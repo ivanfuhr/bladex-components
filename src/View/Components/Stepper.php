@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\Support\Str;
 
-final class Stepper extends StencilComponent
+final class Stepper extends StdComponent
 {
     public function __construct(
         public mixed $defaultValue = null,
@@ -15,9 +15,9 @@ final class Stepper extends StencilComponent
         public mixed $stepperId = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.stepper.index';
+        return 'std-components::components.stepper.index';
     }
 
     /**

@@ -5,7 +5,7 @@
     $placeholder = (string) ($state['placeholder'] ?? 'Search frameworks…');
 @endphp
 
-<x-ui::combobox
+<x-std::combobox
     name="framework"
     :placeholder="$placeholder"
     :invalid="$invalid"
@@ -13,19 +13,19 @@
     :size="$size"
     class="w-full max-w-md"
 >
-    <x-ui::combobox.group>
-        <x-ui::combobox.label>PHP</x-ui::combobox.label>
-        <x-ui::combobox.item value="laravel">Laravel</x-ui::combobox.item>
-        <x-ui::combobox.item value="symfony">Symfony</x-ui::combobox.item>
-    </x-ui::combobox.group>
-    <x-ui::combobox.separator />
-    <x-ui::combobox.group>
-        <x-ui::combobox.label>JavaScript</x-ui::combobox.label>
-        <x-ui::combobox.item value="react">React</x-ui::combobox.item>
-        <x-ui::combobox.item value="vue">Vue</x-ui::combobox.item>
-        <x-ui::combobox.item value="svelte">Svelte</x-ui::combobox.item>
-    </x-ui::combobox.group>
-    <x-ui::combobox.separator />
-    <x-ui::combobox.item value="rails">Ruby on Rails</x-ui::combobox.item>
-    <x-ui::combobox.item value="django">Django</x-ui::combobox.item>
-</x-ui::combobox>
+    <x-std::combobox.group>
+        <x-std::combobox.label>PHP</x-std::combobox.label>
+        <x-std::combobox.item value="laravel">Laravel</x-std::combobox.item>
+        <x-std::combobox.item value="symfony">Symfony</x-std::combobox.item>
+    </x-std::combobox.group>
+    <x-std::combobox.separator />
+    <x-std::combobox.group>
+        <x-std::combobox.label>JavaScript</x-std::combobox.label>
+        <x-std::combobox.item value="react">React</x-std::combobox.item>
+        <x-std::combobox.item value="vue">Vue</x-std::combobox.item>
+        <x-std::combobox.item value="svelte">Svelte</x-std::combobox.item>
+    </x-std::combobox.group>
+    <x-std::combobox.separator />
+    <x-std::combobox.item value="rails">Ruby on Rails</x-std::combobox.item>
+    <x-std::combobox.item value="django">Django</x-std::combobox.item>
+</x-std::combobox>

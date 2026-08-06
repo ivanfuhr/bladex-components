@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a button group with role group', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::button-group aria-label="Actions">
-            <x-ui::button variant="outline">One</x-ui::button>
-            <x-ui::button variant="outline">Two</x-ui::button>
-        </x-ui::button-group>
+        <x-std::button-group aria-label="Actions">
+            <x-std::button variant="outline">One</x-std::button>
+            <x-std::button variant="outline">Two</x-std::button>
+        </x-std::button-group>
     BLADE);
 
     expect($html)
@@ -23,10 +23,10 @@ it('renders a button group with role group', function () {
 
 it('supports vertical orientation', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::button-group orientation="vertical">
-            <x-ui::button>Up</x-ui::button>
-            <x-ui::button>Down</x-ui::button>
-        </x-ui::button-group>
+        <x-std::button-group orientation="vertical">
+            <x-std::button>Up</x-std::button>
+            <x-std::button>Down</x-std::button>
+        </x-std::button-group>
     BLADE);
 
     expect($html)
@@ -36,12 +36,12 @@ it('supports vertical orientation', function () {
 
 it('renders separator and text affixes', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::button-group>
-            <x-ui::button-group.text>https://</x-ui::button-group.text>
-            <x-ui::button variant="outline">Copy</x-ui::button>
-            <x-ui::button-group.separator />
-            <x-ui::button variant="outline">Paste</x-ui::button>
-        </x-ui::button-group>
+        <x-std::button-group>
+            <x-std::button-group.text>https://</x-std::button-group.text>
+            <x-std::button variant="outline">Copy</x-std::button>
+            <x-std::button-group.separator />
+            <x-std::button variant="outline">Paste</x-std::button>
+        </x-std::button-group>
     BLADE);
 
     expect($html)

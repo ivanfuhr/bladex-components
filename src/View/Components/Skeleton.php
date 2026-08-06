@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Skeleton extends StencilComponent
+final class Skeleton extends StdComponent
 {
     public function __construct(
         public mixed $rounded = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.skeleton.index';
+        return 'std-components::components.skeleton.index';
     }
 
     protected function resolveViewData(array $data = []): array

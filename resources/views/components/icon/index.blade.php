@@ -7,7 +7,7 @@
     $iconAttributes = $attributes->except(['name', 'variant']);
 @endphp
 
-@include('stencil::icons.'.$icon, [
+@include('std-components::icons.'.$icon, [
     'variant' => $variant,
     'attributes' => $iconAttributes,
 ])

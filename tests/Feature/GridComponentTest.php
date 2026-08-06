@@ -3,13 +3,13 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Blade;
-use Ivanfuhr\Stencil\Support\Grid\GridClassMap;
+use Ivanfuhr\StdComponents\Support\Grid\GridClassMap;
 
 it('renders a default grid with container query root', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::grid>
+        <x-std::grid>
             <div>One</div>
-        </x-ui::grid>
+        </x-std::grid>
     BLADE);
 
     expect($html)
@@ -24,7 +24,7 @@ it('renders a default grid with container query root', function () {
 });
 
 it('wraps the track grid so container queries respond to the wrapper width', function () {
-    $html = Blade::render('<x-ui::grid md="3" class="max-w-3xl" />');
+    $html = Blade::render('<x-std::grid md="3" class="max-w-3xl" />');
 
     expect($html)
         ->toContain('class="@container max-w-3xl"')
@@ -33,9 +33,9 @@ it('wraps the track grid so container queries respond to the wrapper width', fun
 
 it('renders container breakpoint column utilities from scalar props', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::grid md="3" sm="2" gap="5">
+        <x-std::grid md="3" sm="2" gap="5">
             <div>Cell</div>
-        </x-ui::grid>
+        </x-std::grid>
     BLADE);
 
     expect($html)
@@ -46,7 +46,7 @@ it('renders container breakpoint column utilities from scalar props', function (
 
 it('renders viewport breakpoint column utilities when container is disabled', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::grid md="3" :container="false" />
+        <x-std::grid md="3" :container="false" />
     BLADE);
 
     expect($html)
@@ -57,18 +57,18 @@ it('renders viewport breakpoint column utilities when container is disabled', fu
 });
 
 it('renders a fixed column count', function () {
-    $html = Blade::render('<x-ui::grid :cols="3" />');
+    $html = Blade::render('<x-std::grid :cols="3" />');
 
     expect($html)->toContain('grid-cols-3');
 });
 
 it('renders grid item span utilities', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::grid sm="2">
-            <x-ui::grid.item span="full">Full</x-ui::grid.item>
-            <x-ui::grid.item :span="2">Half</x-ui::grid.item>
-            <x-ui::grid.item :span="1" md="full">Responsive</x-ui::grid.item>
-        </x-ui::grid>
+        <x-std::grid sm="2">
+            <x-std::grid.item span="full">Full</x-std::grid.item>
+            <x-std::grid.item :span="2">Half</x-std::grid.item>
+            <x-std::grid.item :span="1" md="full">Responsive</x-std::grid.item>
+        </x-std::grid>
     BLADE);
 
     expect($html)
@@ -82,9 +82,9 @@ it('renders grid item span utilities', function () {
 
 it('renders viewport span utilities when the parent grid disables container queries', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::grid sm="2" :container="false">
-            <x-ui::grid.item md="full">Full</x-ui::grid.item>
-        </x-ui::grid>
+        <x-std::grid sm="2" :container="false">
+            <x-std::grid.item md="full">Full</x-std::grid.item>
+        </x-std::grid>
     BLADE);
 
     expect($html)
@@ -93,7 +93,7 @@ it('renders viewport span utilities when the parent grid disables container quer
 });
 
 it('merges caller classes onto the grid root', function () {
-    $html = Blade::render('<x-ui::grid class="max-w-3xl" md="3" />');
+    $html = Blade::render('<x-std::grid class="max-w-3xl" md="3" />');
 
     expect($html)->toContain('max-w-3xl');
 });

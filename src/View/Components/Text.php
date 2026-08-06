@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Text extends StencilComponent
+final class Text extends StdComponent
 {
     public function __construct(
         public mixed $size = null,
@@ -13,9 +13,9 @@ final class Text extends StencilComponent
         public bool $inline = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.text.index';
+        return 'std-components::components.text.index';
     }
 
     /**
@@ -25,7 +25,7 @@ final class Text extends StencilComponent
     protected function resolveViewData(array $data = []): array
     {
         return [
-            'classes' => stencil_text_classes($this->size, $this->variant, $this->color),
+            'classes' => std_text_classes($this->size, $this->variant, $this->color),
         ];
     }
 }

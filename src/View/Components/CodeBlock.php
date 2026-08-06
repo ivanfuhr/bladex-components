@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\View\ComponentAttributeBag;
 use Illuminate\View\ComponentSlot;
-use Ivanfuhr\Stencil\Support\Code\CodeHighlighter;
+use Ivanfuhr\StdComponents\Support\Code\CodeHighlighter;
 
-final class CodeBlock extends StencilComponent
+final class CodeBlock extends StdComponent
 {
     public function __construct(
         public ?string $language = 'blade',
@@ -17,9 +17,9 @@ final class CodeBlock extends StencilComponent
         public bool $inline = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.code-block.index';
+        return 'std-components::components.code-block.index';
     }
 
     /**

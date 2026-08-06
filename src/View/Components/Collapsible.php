@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\Support\Str;
 
-final class Collapsible extends StencilComponent
+final class Collapsible extends StdComponent
 {
     public string $triggerId;
 
@@ -25,9 +25,9 @@ final class Collapsible extends StencilComponent
         $this->contentId = $contentId ?? $baseId.'-content';
     }
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.collapsible.index';
+        return 'std-components::components.collapsible.index';
     }
 
     /**

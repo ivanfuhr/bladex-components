@@ -1,0 +1,14 @@
+/**
+ * Std Components — Tailwind v4 @source paths for workbench.
+ */
+@import "../../../resources/tailwind/std-components.css";
+
+@source "../../views/**/*.blade.php";
+@source "../../../resources/views/**/*.blade.php";
+@source "../../../src/Support/**/*.php";
+@source "../../../src/View/Components/Dialog/Content.php";
+@source "../../../src/View/Components/Command/Dialog.php";
+@source "../../../src/View/Components/Header.php";
+@source "../../../src/View/Components/Main.php";
+@source "../../../src/View/Components/Sidebar/**/*.php";
+/* Component PHP class maps (non-dialog): Support/Tailwind/ComponentClassSources.php via Support/**. */

@@ -10,8 +10,8 @@
     </div>
 @elseif ($hasTooltip)
     {{-- display:contents keeps menu-button a layout sibling of badge/action for absolute positioning --}}
-    <x-ui::tooltip side="right" class="contents!" data-sidebar-menu-tooltip>
-        <x-ui::tooltip.trigger class="contents!">
+    <x-std::tooltip side="right" class="contents!" data-sidebar-menu-tooltip>
+        <x-std::tooltip.trigger class="contents!">
             <{{ $tag }}
                 {{
                     $attributes->class($classes)->merge([
@@ -27,9 +27,9 @@
             >
                 {{ $slot }}
             </{{ $tag }}>
-        </x-ui::tooltip.trigger>
-        <x-ui::tooltip.content side="right"> {{ $tooltip }} </x-ui::tooltip.content>
-    </x-ui::tooltip>
+        </x-std::tooltip.trigger>
+        <x-std::tooltip.content side="right"> {{ $tooltip }} </x-std::tooltip.content>
+    </x-std::tooltip>
 @else
     <{{ $tag }}
         {{

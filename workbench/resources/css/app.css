@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
-/* stencil-start */
-@import "./stencil.css";
-/* stencil-end */
+/* std-start */
+@import "./std-components.css";
+/* std-end */
 
 @layer components {
     .docs-prose {

@@ -7,7 +7,7 @@ namespace Workbench\App\Playbook;
 final class PlaybookCode
 {
     /** Blade tag prefix shown in playbook snippets (owned / registry install). */
-    public const string COMPONENT_PREFIX = 'x-ui::';
+    public const string COMPONENT_PREFIX = 'x-std::';
 
     public static function component(string $name): string
     {

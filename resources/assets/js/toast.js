@@ -1,5 +1,5 @@
 /**
- * Stencil — toast / sonner-style notifications (vanilla JS, no Alpine).
+ * Std Components — toast / sonner-style notifications (vanilla JS, no Alpine).
  */
 
 const PROVIDER_SELECTOR = '[data-toast-provider]';
@@ -136,7 +136,7 @@ function bindToast(toastEl) {
         toastEl.dataset.state = 'closed';
         toastEl.hidden = true;
         toastEl.classList.add('hidden');
-        toastEl.dispatchEvent(new CustomEvent('stencil:toast:dismiss', { bubbles: true }));
+        toastEl.dispatchEvent(new CustomEvent('std:toast:dismiss', { bubbles: true }));
         window.setTimeout(() => toastEl.remove(), 150);
     };
 
@@ -199,11 +199,11 @@ function bindToast(toastEl) {
 }
 
 if (typeof window !== 'undefined') {
-    window.Stencil = window.Stencil ?? {};
-    window.Stencil.toast = toast;
+    window.StdComponents = window.StdComponents ?? {};
+    window.StdComponents.toast = toast;
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

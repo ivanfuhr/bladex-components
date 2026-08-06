@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a page header variant for hero toolbars', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::header variant="page" :border="false">
+        <x-std::header variant="page" :border="false">
             <div>Title block</div>
             <div>Actions</div>
-        </x-ui::header>
+        </x-std::header>
     BLADE);
 
     expect($html)
@@ -21,7 +21,7 @@ it('renders a page header variant for hero toolbars', function () {
 });
 
 it('renders shell header variant by default', function () {
-    $html = Blade::render('<x-ui::header>Toolbar</x-ui::header>');
+    $html = Blade::render('<x-std::header>Toolbar</x-std::header>');
 
     expect($html)
         ->toContain('data-header-variant="shell"')
@@ -34,9 +34,9 @@ it('renders shell header variant by default', function () {
 
 it('renders a layout main content landmark', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::main container>
+        <x-std::main container>
             <p>Body</p>
-        </x-ui::main>
+        </x-std::main>
     BLADE);
 
     expect($html)
@@ -55,9 +55,9 @@ it('renders a layout main content landmark', function () {
 
 it('forwards landmark attributes to main and content classes to the scroll body', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::main id="app-main" tabindex="-1" aria-label="Primary" class="gap-8" type="always">
+        <x-std::main id="app-main" tabindex="-1" aria-label="Primary" class="gap-8" type="always">
             <p>Body</p>
-        </x-ui::main>
+        </x-std::main>
     BLADE);
 
     expect($html)
@@ -80,24 +80,24 @@ it('forwards landmark attributes to main and content classes to the scroll body'
 
 it('renders sidebar brand, spacer, and collapse controls', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::sidebar.provider>
-            <x-ui::sidebar collapsible="icon">
-                <x-ui::sidebar.header>
-                    <x-ui::sidebar.brand href="/" name="Acme Inc.">
+        <x-std::sidebar.provider>
+            <x-std::sidebar collapsible="icon">
+                <x-std::sidebar.header>
+                    <x-std::sidebar.brand href="/" name="Acme Inc.">
                         <x-slot:logo><span>S</span></x-slot:logo>
-                    </x-ui::sidebar.brand>
-                    <x-ui::sidebar.collapse />
-                </x-ui::sidebar.header>
-                <x-ui::sidebar.content>Nav</x-ui::sidebar.content>
-                <x-ui::sidebar.spacer />
-            </x-ui::sidebar>
-            <x-ui::sidebar.inset>
-                <x-ui::header>
-                    <x-ui::sidebar.trigger />
-                </x-ui::header>
-                <x-ui::main>Content</x-ui::main>
-            </x-ui::sidebar.inset>
-        </x-ui::sidebar.provider>
+                    </x-std::sidebar.brand>
+                    <x-std::sidebar.collapse />
+                </x-std::sidebar.header>
+                <x-std::sidebar.content>Nav</x-std::sidebar.content>
+                <x-std::sidebar.spacer />
+            </x-std::sidebar>
+            <x-std::sidebar.inset>
+                <x-std::header>
+                    <x-std::sidebar.trigger />
+                </x-std::header>
+                <x-std::main>Content</x-std::main>
+            </x-std::sidebar.inset>
+        </x-std::sidebar.provider>
     BLADE);
 
     expect($html)
@@ -107,7 +107,7 @@ it('renders sidebar brand, spacer, and collapse controls', function () {
         ->toContain('data-header')
         ->toContain('data-main')
         ->toContain('group/sidebar-wrapper')
-        ->toContain('--stencil-sidebar-width-icon: 3.5rem')
+        ->toContain('--std-sidebar-width-icon: 3.5rem')
         ->toContain('h-16')
         ->toContain('Acme Inc.')
         ->toContain('Content');
@@ -115,19 +115,19 @@ it('renders sidebar brand, spacer, and collapse controls', function () {
 
 it('renders sidebar brand with logo url and dark variant', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::sidebar.provider>
-            <x-ui::sidebar collapsible="icon">
-                <x-ui::sidebar.header>
-                    <x-ui::sidebar.brand
+        <x-std::sidebar.provider>
+            <x-std::sidebar collapsible="icon">
+                <x-std::sidebar.header>
+                    <x-std::sidebar.brand
                         href="/"
                         name="Acme Inc."
                         logo="/logo-light.svg"
                         logo-dark="/logo-dark.svg"
                         alt="Acme"
                     />
-                </x-ui::sidebar.header>
-            </x-ui::sidebar>
-        </x-ui::sidebar.provider>
+                </x-std::sidebar.header>
+            </x-std::sidebar>
+        </x-std::sidebar.provider>
     BLADE);
 
     expect($html)

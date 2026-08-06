@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\TimePicker;
+namespace Ivanfuhr\StdComponents\View\Components\TimePicker;
 
 use Illuminate\Support\Facades\View;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Input extends StencilComponent
+final class Input extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.time-picker.input.index';
+        return 'std-components::components.time-picker.input.index';
     }
 
     /**

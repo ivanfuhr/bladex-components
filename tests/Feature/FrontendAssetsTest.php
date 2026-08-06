@@ -3,16 +3,16 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Blade;
-use Ivanfuhr\Stencil\Assets\FrontendAssets;
+use Ivanfuhr\StdComponents\Assets\FrontendAssets;
 
-it('compiles stencilScripts directive', function () {
-    $compiled = Blade::compileString('@stencilScripts');
+it('compiles stdScripts directive', function () {
+    $compiled = Blade::compileString('@stdScripts');
 
     expect($compiled)->toContain('FrontendAssets::scripts');
 });
 
-it('compiles stencilStyles directive', function () {
-    $compiled = Blade::compileString('@stencilStyles');
+it('compiles stdStyles directive', function () {
+    $compiled = Blade::compileString('@stdStyles');
 
     expect($compiled)->toContain('FrontendAssets::styles');
 });
@@ -23,7 +23,7 @@ it('renders script tag once per request', function () {
 
     expect($first)
         ->toContain('<script')
-        ->toContain('/stencil/stencil.js')
+        ->toContain('/std-components/std-components.js')
         ->and($second)->toBe('');
 });
 
@@ -35,19 +35,19 @@ it('renders stylesheet link once per request', function () {
 
     expect($first)
         ->toContain('<link')
-        ->toContain('/stencil/stencil.css')
+        ->toContain('/std-components/std-components.css')
         ->and($second)->toBe('');
 });
 
-it('serves stencil javascript route', function () {
-    $response = $this->get('/stencil/stencil.js');
+it('serves std-components javascript route', function () {
+    $response = $this->get('/std-components/std-components.js');
 
     $response->assertOk();
     $response->assertHeader('content-type', 'application/javascript; charset=utf-8');
 });
 
-it('serves stencil stylesheet route', function () {
-    $response = $this->get('/stencil/stencil.css');
+it('serves std-components stylesheet route', function () {
+    $response = $this->get('/std-components/std-components.css');
 
     $response->assertOk();
     $response->assertHeader('content-type', 'text/css; charset=utf-8');

@@ -10,8 +10,8 @@
     ])
 }}>
     @if (filled($heading))
-        <x-ui::accordion.trigger> {{ $heading }} </x-ui::accordion.trigger>
-        <x-ui::accordion.content> {{ $slot }} </x-ui::accordion.content>
+        <x-std::accordion.trigger> {{ $heading }} </x-std::accordion.trigger>
+        <x-std::accordion.content> {{ $slot }} </x-std::accordion.content>
     @else
         {{ $slot }}
     @endif

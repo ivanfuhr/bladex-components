@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Blade;
 
 it('renders a toggle with aria-pressed', function () {
-    $html = Blade::render('<x-ui::toggle :pressed="true">Bold</x-ui::toggle>');
+    $html = Blade::render('<x-std::toggle :pressed="true">Bold</x-std::toggle>');
 
     expect($html)
         ->toContain('data-toggle')
@@ -16,7 +16,7 @@ it('renders a toggle with aria-pressed', function () {
 });
 
 it('renders outline and size variants', function () {
-    $html = Blade::render('<x-ui::toggle variant="outline" size="sm">Italic</x-ui::toggle>');
+    $html = Blade::render('<x-std::toggle variant="outline" size="sm">Italic</x-std::toggle>');
 
     expect($html)
         ->toContain('data-variant="outline"')
@@ -27,7 +27,7 @@ it('renders outline and size variants', function () {
 });
 
 it('forwards disabled state', function () {
-    $html = Blade::render('<x-ui::toggle disabled>Off</x-ui::toggle>');
+    $html = Blade::render('<x-std::toggle disabled>Off</x-std::toggle>');
 
     expect($html)->toContain('disabled');
 });

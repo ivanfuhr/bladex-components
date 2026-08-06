@@ -18,10 +18,15 @@
 @endphp
 
 <div class="relative min-h-48 w-full space-y-3">
-    <x-ui::toast.provider :position="$position" class="!relative !inset-auto !max-w-sm !translate-x-0">
-        <x-ui::toast :variant="$variant" :title="$titles[$key]" :description="$descriptions[$key]" :duration="999999" />
-    </x-ui::toast.provider>
-    <x-ui::text size="sm" variant="subtle">
+    <x-std::toast.provider :position="$position" class="!relative !inset-auto !max-w-sm !translate-x-0">
+        <x-std::toast
+            :variant="$variant"
+            :title="$titles[$key]"
+            :description="$descriptions[$key]"
+            :duration="999999"
+        />
+    </x-std::toast.provider>
+    <x-std::text size="sm" variant="subtle">
         Position is simulated inside this relative stage — not a viewport corner.
-    </x-ui::text>
+    </x-std::text>
 </div>

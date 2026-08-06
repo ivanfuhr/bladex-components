@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Chart;
+namespace Ivanfuhr\StdComponents\View\Components\Chart;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class ZeroLine extends StencilComponent
+final class ZeroLine extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.chart.zero-line';
+        return 'std-components::components.chart.zero-line';
     }
 }

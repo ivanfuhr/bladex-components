@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Command;
+namespace Ivanfuhr\StdComponents\View\Components\Command;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Shortcut extends StencilComponent
+final class Shortcut extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.command.shortcut';
+        return 'std-components::components.command.shortcut';
     }
 }

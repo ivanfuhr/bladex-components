@@ -10,7 +10,7 @@
     ];
 @endphp
 
-<x-ui::repeater
+<x-std::repeater
     name="members"
     :value="$value"
     :min="$min"
@@ -19,13 +19,13 @@
     :disabled="$disabled"
     class="w-full max-w-xl"
 >
-    <x-ui::repeater.item>
+    <x-std::repeater.item>
         <div class="grid gap-3 sm:grid-cols-2">
-            <x-ui::input data-repeater-field="name" placeholder="Name" />
-            <x-ui::input data-repeater-field="role" placeholder="Role" />
+            <x-std::input data-repeater-field="name" placeholder="Name" />
+            <x-std::input data-repeater-field="role" placeholder="Role" />
         </div>
-        <x-ui::repeater.remove />
-    </x-ui::repeater.item>
+        <x-std::repeater.remove />
+    </x-std::repeater.item>
 
-    <x-ui::repeater.add>Add member</x-ui::repeater.add>
-</x-ui::repeater>
+    <x-std::repeater.add>Add member</x-std::repeater.add>
+</x-std::repeater>

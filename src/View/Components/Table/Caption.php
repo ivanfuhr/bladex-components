@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Table;
+namespace Ivanfuhr\StdComponents\View\Components\Table;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Caption extends StencilComponent
+final class Caption extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.table.caption';
+        return 'std-components::components.table.caption';
     }
 }

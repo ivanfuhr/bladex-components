@@ -1,4 +1,4 @@
-<x-ui::text
+<x-std::text
     variant="subtle"
     {{
         $attributes->except(['id'])->merge([
@@ -8,4 +8,4 @@
     }}
 >
     {{ $slot }}
-</x-ui::text>
+</x-std::text>

@@ -950,7 +950,7 @@ final class PlaybookRegistry
         return new ComponentPlaybook(
             slug: 'checkbox',
             title: 'Checkbox',
-            description: 'Native checkbox with Stencil choice-control styling.',
+            description: 'Native checkbox with Std Components choice-control styling.',
             controls: $controls,
             defaultState: [
                 'size' => 'default',
@@ -1101,12 +1101,12 @@ final class PlaybookRegistry
             title: 'Brand',
             description: 'Application logo and name for headers and navbars. Supports image URLs, dark-mode logos, and a custom logo slot.',
             controls: [
-                new PlaybookControl('name', 'Name', 'text', [], 'Stencil Inc.'),
+                new PlaybookControl('name', 'Name', 'text', [], 'Std Components Inc.'),
                 new PlaybookControl('href', 'Href', 'text', [], '/'),
                 new PlaybookControl('use_logo_url', 'Use logo URL', 'checkbox', [], false),
             ],
             defaultState: [
-                'name' => 'Stencil Inc.',
+                'name' => 'Std Components Inc.',
                 'href' => '/',
                 'use_logo_url' => false,
             ],
@@ -1119,7 +1119,7 @@ final class PlaybookRegistry
         return new ComponentPlaybook(
             slug: 'sidebar',
             title: 'Sidebar',
-            description: 'App-shell layout with icon collapse, brand, header, and main — pairs with x-ui::header inside sidebar.inset.',
+            description: 'App-shell layout with icon collapse, brand, header, and main — pairs with x-std::header inside sidebar.inset.',
             controls: [
                 new PlaybookControl('collapsible', 'Collapsible', 'select', [
                     'icon' => 'Icon',
@@ -1629,7 +1629,7 @@ final class PlaybookRegistry
         return new ComponentPlaybook(
             slug: 'icons',
             title: 'Icons',
-            description: 'On-demand Lucide icons — outline, mini, and micro sizes via stencil:icon.',
+            description: 'On-demand Lucide icons — outline, mini, and micro sizes via std:icon.',
             controls: [
                 new PlaybookControl('size', 'Size', 'select', [
                     'micro' => 'Micro (12px)',

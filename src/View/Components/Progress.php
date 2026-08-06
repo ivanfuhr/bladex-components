@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Progress extends StencilComponent
+final class Progress extends StdComponent
 {
     public function __construct(
         public int $value = 0,
@@ -14,9 +14,9 @@ final class Progress extends StencilComponent
         public ?string $label = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.progress.index';
+        return 'std-components::components.progress.index';
     }
 
     protected function resolveViewData(array $data = []): array

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Chart;
+namespace Ivanfuhr\StdComponents\View\Components\Chart;
 
 use Illuminate\Support\Js;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Legend extends StencilComponent
+final class Legend extends StdComponent
 {
     public function __construct(
         public mixed $label = null,
@@ -15,9 +15,9 @@ final class Legend extends StencilComponent
         public mixed $format = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.chart.legend.index';
+        return 'std-components::components.chart.legend.index';
     }
 
     protected function resolveViewData(array $data = []): array

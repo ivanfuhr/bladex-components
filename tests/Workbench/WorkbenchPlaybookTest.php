@@ -106,8 +106,8 @@ it('renders the getting started documentation page', function () {
 
     $response->assertOk();
     $response->assertSee('Getting started');
-    $response->assertSee('composer require ivanfuhr/stencil', false);
-    $response->assertSee('@stencilStyles', false);
+    $response->assertSee('composer require ivanfuhr/std-components', false);
+    $response->assertSee('@stdStyles', false);
 });
 
 it('bridges playground pages to media when a media view exists', function () {
@@ -128,7 +128,7 @@ it('loads a single widget runtime on playbook chrome pages', function () {
         ->toContain('id="playbook-canvas"')
         ->toContain('x-html="html"')
         ->toContain('playbookPreview(')
-        ->and($html)->not->toContain('/stencil/stencil.js');
+        ->and($html)->not->toContain('/std-components/std-components.js');
 });
 
 it('returns interactive accordion, collapsible, and scroll-area markup from the preview endpoint', function (string $slug, string $marker) {

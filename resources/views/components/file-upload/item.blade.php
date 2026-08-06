@@ -1,6 +1,6 @@
 <li {{ $itemAttributes }}>
     <span class="flex size-9 shrink-0 items-center justify-center rounded-md bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
-        <x-ui::icon name="file" class="size-4" data-file-upload-item-icon />
+        <x-std::icon name="file" class="size-4" data-file-upload-item-icon />
     </span>
 
     <span class="flex min-w-0 flex-1 flex-col gap-0.5">
@@ -20,7 +20,7 @@
         @if (isset($actions) && ! $actions->isEmpty())
             {{ $actions }}
         @else
-            <x-ui::file-upload.item.remove :disabled="$disabled" />
+            <x-std::file-upload.item.remove :disabled="$disabled" />
         @endif
     </span>
 </li>

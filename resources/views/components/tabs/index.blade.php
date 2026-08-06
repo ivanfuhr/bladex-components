@@ -1,4 +1,4 @@
-<x-ui::tabs.provider :tabs-id="$tabsId" :default-value="$defaultValue" :variant="$variant" :orientation="$orientation">
+<x-std::tabs.provider :tabs-id="$tabsId" :default-value="$defaultValue" :variant="$variant" :orientation="$orientation">
     <div {{
         $attributes->class([
             'tabs',
@@ -13,4 +13,4 @@
     }}>
         {{ $slot }}
     </div>
-</x-ui::tabs.provider>
+</x-std::tabs.provider>

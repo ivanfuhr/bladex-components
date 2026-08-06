@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\ScrollArea;
+namespace Ivanfuhr\StdComponents\View\Components\ScrollArea;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Corner extends StencilComponent
+final class Corner extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.scroll-area.corner';
+        return 'std-components::components.scroll-area.corner';
     }
 
     /**

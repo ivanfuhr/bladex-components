@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Tooltip;
+namespace Ivanfuhr\StdComponents\View\Components\Tooltip;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Content extends StencilComponent
+final class Content extends StdComponent
 {
     public function __construct(
         public mixed $side = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.tooltip.content';
+        return 'std-components::components.tooltip.content';
     }
 
     /**

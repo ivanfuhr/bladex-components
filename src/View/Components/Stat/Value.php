@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Stat;
+namespace Ivanfuhr\StdComponents\View\Components\Stat;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Value extends StencilComponent
+final class Value extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.stat.value';
+        return 'std-components::components.stat.value';
     }
 }

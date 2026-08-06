@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Sidebar;
+namespace Ivanfuhr\StdComponents\View\Components\Sidebar;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Menu extends StencilComponent
+final class Menu extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.sidebar.menu';
+        return 'std-components::components.sidebar.menu';
     }
 }

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Brand extends StencilComponent
+final class Brand extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
@@ -14,9 +14,9 @@ final class Brand extends StencilComponent
         public mixed $href = '/',
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.brand.index';
+        return 'std-components::components.brand.index';
     }
 
     /**

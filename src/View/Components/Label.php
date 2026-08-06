@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Label extends StencilComponent
+final class Label extends StdComponent
 {
     public function __construct(
         public mixed $for = null,
@@ -12,9 +12,9 @@ final class Label extends StencilComponent
         public bool $required = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.label.index';
+        return 'std-components::components.label.index';
     }
 
     /**
@@ -26,7 +26,7 @@ final class Label extends StencilComponent
         $classes = collect([
             'label',
             'inline-flex items-center gap-2',
-            stencil_label_classes(),
+            std_label_classes(),
         ])->implode(' ');
 
         $labelAttributes = $this->attributes

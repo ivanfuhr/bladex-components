@@ -1,5 +1,5 @@
 <div class="date-picker__input-trigger flex w-full items-center gap-2" data-date-picker-trigger>
-    <x-ui::input {{
+    <x-std::input {{
         $attributes->merge([
             'type' => 'text',
             'placeholder' => $placeholder,
@@ -19,7 +19,7 @@
             data-date-picker-clear
             aria-label="{{ __('Clear date') }}"
         >
-            <x-ui::icon name="x" class="size-4" />
+            <x-std::icon name="x" class="size-4" />
         </button>
     @endif
 </div>

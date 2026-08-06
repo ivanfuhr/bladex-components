@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Main extends StencilComponent
+final class Main extends StdComponent
 {
     public function __construct(
         public bool $container = false,
@@ -12,9 +12,9 @@ final class Main extends StencilComponent
         public int $scrollHideDelay = 600,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.main.index';
+        return 'std-components::components.main.index';
     }
 
     /**

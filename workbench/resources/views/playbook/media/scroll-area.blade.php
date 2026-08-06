@@ -1,19 +1,19 @@
 @extends('workbench::playbook.media.layout')
 
-@section('title', 'Scroll Area — Stencil')
+@section('title', 'Scroll Area — Std Components')
 
 @section('content')
     <div class="space-y-10">
         <div class="space-y-1">
-            <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-ui::scroll-area /&gt;</p>
-            <x-ui::heading :level="2">Scroll Area</x-ui::heading>
-            <x-ui::text size="sm" variant="subtle">Native scrolling with themed overlay scrollbars.</x-ui::text>
+            <p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">&lt;x-std::scroll-area /&gt;</p>
+            <x-std::heading :level="2">Scroll Area</x-std::heading>
+            <x-std::text size="sm" variant="subtle">Native scrolling with themed overlay scrollbars.</x-std::text>
         </div>
 
         <div class="grid max-w-2xl gap-6 sm:grid-cols-2">
             <div class="space-y-3">
-                <x-ui::text size="sm" variant="subtle">Vertical</x-ui::text>
-                <x-ui::scroll-area
+                <x-std::text size="sm" variant="subtle">Vertical</x-std::text>
+                <x-std::scroll-area
                     class="h-48 rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950"
                     type="always"
                     aria-label="Vertical tags"
@@ -25,12 +25,12 @@
                             </div>
                         @endforeach
                     </div>
-                </x-ui::scroll-area>
+                </x-std::scroll-area>
             </div>
 
             <div class="space-y-3">
-                <x-ui::text size="sm" variant="subtle">Both axes</x-ui::text>
-                <x-ui::scroll-area
+                <x-std::text size="sm" variant="subtle">Both axes</x-std::text>
+                <x-std::scroll-area
                     class="h-48 rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950"
                     type="always"
                     horizontal
@@ -45,7 +45,7 @@
                             @endforeach
                         </div>
                     </div>
-                </x-ui::scroll-area>
+                </x-std::scroll-area>
             </div>
         </div>
     </div>

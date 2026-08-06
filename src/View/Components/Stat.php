@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Stat extends StencilComponent
+final class Stat extends StdComponent
 {
     public function __construct(
         public mixed $label = null,
@@ -16,9 +16,9 @@ final class Stat extends StencilComponent
         public mixed $variant = 'default',
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.stat.index';
+        return 'std-components::components.stat.index';
     }
 
     /**

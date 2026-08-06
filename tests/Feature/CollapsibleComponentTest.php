@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a closed collapsible with trigger and content', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::collapsible>
-            <x-ui::collapsible.trigger>Toggle details</x-ui::collapsible.trigger>
-            <x-ui::collapsible.content>Hidden by default.</x-ui::collapsible.content>
-        </x-ui::collapsible>
+        <x-std::collapsible>
+            <x-std::collapsible.trigger>Toggle details</x-std::collapsible.trigger>
+            <x-std::collapsible.content>Hidden by default.</x-std::collapsible.content>
+        </x-std::collapsible>
     BLADE);
 
     expect($html)
@@ -25,10 +25,10 @@ it('renders a closed collapsible with trigger and content', function () {
 
 it('renders an open collapsible and disabled state', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::collapsible :open="true" disabled transition>
-            <x-ui::collapsible.trigger>Open panel</x-ui::collapsible.trigger>
-            <x-ui::collapsible.content>Visible content.</x-ui::collapsible.content>
-        </x-ui::collapsible>
+        <x-std::collapsible :open="true" disabled transition>
+            <x-std::collapsible.trigger>Open panel</x-std::collapsible.trigger>
+            <x-std::collapsible.content>Visible content.</x-std::collapsible.content>
+        </x-std::collapsible>
     BLADE);
 
     expect($html)
@@ -42,10 +42,10 @@ it('renders an open collapsible and disabled state', function () {
 
 it('keeps closed transition content inert for assistive tech', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::collapsible transition>
-            <x-ui::collapsible.trigger>Toggle</x-ui::collapsible.trigger>
-            <x-ui::collapsible.content>Hidden body.</x-ui::collapsible.content>
-        </x-ui::collapsible>
+        <x-std::collapsible transition>
+            <x-std::collapsible.trigger>Toggle</x-std::collapsible.trigger>
+            <x-std::collapsible.content>Hidden body.</x-std::collapsible.content>
+        </x-std::collapsible>
     BLADE);
 
     expect($html)
@@ -56,12 +56,12 @@ it('keeps closed transition content inert for assistive tech', function () {
 
 it('supports as-child trigger wrapping', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::collapsible>
-            <x-ui::collapsible.trigger as-child>
-                <x-ui::button variant="outline">More</x-ui::button>
-            </x-ui::collapsible.trigger>
-            <x-ui::collapsible.content>Details</x-ui::collapsible.content>
-        </x-ui::collapsible>
+        <x-std::collapsible>
+            <x-std::collapsible.trigger as-child>
+                <x-std::button variant="outline">More</x-std::button>
+            </x-std::collapsible.trigger>
+            <x-std::collapsible.content>Details</x-std::collapsible.content>
+        </x-std::collapsible>
     BLADE);
 
     expect($html)
@@ -73,10 +73,10 @@ it('supports as-child trigger wrapping', function () {
 
 it('wires aria-controls between trigger and content on the server', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::collapsible trigger-id="col-trigger" content-id="col-content">
-            <x-ui::collapsible.trigger>Toggle</x-ui::collapsible.trigger>
-            <x-ui::collapsible.content>Body</x-ui::collapsible.content>
-        </x-ui::collapsible>
+        <x-std::collapsible trigger-id="col-trigger" content-id="col-content">
+            <x-std::collapsible.trigger>Toggle</x-std::collapsible.trigger>
+            <x-std::collapsible.content>Body</x-std::collapsible.content>
+        </x-std::collapsible>
     BLADE);
 
     expect($html)
@@ -91,10 +91,10 @@ it('wires aria-controls between trigger and content on the server', function () 
 
 it('keeps auto-generated trigger and content ids consistent', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::collapsible>
-            <x-ui::collapsible.trigger>Toggle</x-ui::collapsible.trigger>
-            <x-ui::collapsible.content>Body</x-ui::collapsible.content>
-        </x-ui::collapsible>
+        <x-std::collapsible>
+            <x-std::collapsible.trigger>Toggle</x-std::collapsible.trigger>
+            <x-std::collapsible.content>Body</x-std::collapsible.content>
+        </x-std::collapsible>
     BLADE);
 
     preg_match('/aria-controls="([^"]+)"/', $html, $controls);

@@ -1,34 +1,34 @@
-Multi-step wizard indicator ([Filament Wizard](https://filamentphp.com/docs/3.x/forms/layout/wizard), [shadcn community steppers](https://github.com/francozeta/stepper)). Horizontal or vertical, with complete / current / upcoming states. Included in `@stencilScripts`.
+Multi-step wizard indicator ([Filament Wizard](https://filamentphp.com/docs/3.x/forms/layout/wizard), [shadcn community steppers](https://github.com/francozeta/stepper)). Horizontal or vertical, with complete / current / upcoming states. Included in `@stdScripts`.
 
 ```blade
-<x-ui::stepper default-value="account">
-    <x-ui::stepper.list>
-        <x-ui::stepper.item value="account" :step="1">
-            <x-ui::stepper.trigger>
-                <x-ui::stepper.indicator />
-                <x-ui::stepper.label>
-                    <x-ui::stepper.title>Account</x-ui::stepper.title>
-                    <x-ui::stepper.description>Profile details</x-ui::stepper.description>
-                </x-ui::stepper.label>
-            </x-ui::stepper.trigger>
-            <x-ui::stepper.separator />
-        </x-ui::stepper.item>
-        <x-ui::stepper.item value="workspace" :step="2">
-            <x-ui::stepper.trigger>
-                <x-ui::stepper.indicator />
-                <x-ui::stepper.title>Workspace</x-ui::stepper.title>
-            </x-ui::stepper.trigger>
-        </x-ui::stepper.item>
-    </x-ui::stepper.list>
+<x-std::stepper default-value="account">
+    <x-std::stepper.list>
+        <x-std::stepper.item value="account" :step="1">
+            <x-std::stepper.trigger>
+                <x-std::stepper.indicator />
+                <x-std::stepper.label>
+                    <x-std::stepper.title>Account</x-std::stepper.title>
+                    <x-std::stepper.description>Profile details</x-std::stepper.description>
+                </x-std::stepper.label>
+            </x-std::stepper.trigger>
+            <x-std::stepper.separator />
+        </x-std::stepper.item>
+        <x-std::stepper.item value="workspace" :step="2">
+            <x-std::stepper.trigger>
+                <x-std::stepper.indicator />
+                <x-std::stepper.title>Workspace</x-std::stepper.title>
+            </x-std::stepper.trigger>
+        </x-std::stepper.item>
+    </x-std::stepper.list>
 
-    <x-ui::stepper.content value="account">Account details</x-ui::stepper.content>
-    <x-ui::stepper.content value="workspace">Workspace details</x-ui::stepper.content>
+    <x-std::stepper.content value="account">Account details</x-std::stepper.content>
+    <x-std::stepper.content value="workspace">Workspace details</x-std::stepper.content>
 
-    <x-ui::stepper.navigation>
-        <x-ui::stepper.previous />
-        <x-ui::stepper.next />
-    </x-ui::stepper.navigation>
-</x-ui::stepper>
+    <x-std::stepper.navigation>
+        <x-std::stepper.previous />
+        <x-std::stepper.next />
+    </x-std::stepper.navigation>
+</x-std::stepper>
 ```
 
 <br>

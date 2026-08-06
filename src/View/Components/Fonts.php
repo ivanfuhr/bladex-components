@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Fonts extends StencilComponent
+final class Fonts extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.fonts';
+        return 'std-components::components.fonts';
     }
 
     /**
@@ -18,8 +18,8 @@ final class Fonts extends StencilComponent
     protected function resolveViewData(array $data = []): array
     {
         return [
-            'stylesheetUrl' => stencil_google_fonts_url(),
-            'cssVariables' => stencil_css_font_variables(),
+            'stylesheetUrl' => std_google_fonts_url(),
+            'cssVariables' => std_css_font_variables(),
         ];
     }
 }

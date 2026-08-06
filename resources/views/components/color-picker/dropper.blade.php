@@ -10,9 +10,9 @@
     hidden
     @if ($disabled) disabled @endif
 >
-    <x-ui::icon.lucide class="size-4">
+    <x-std::icon.lucide class="size-4">
         <path d="m2 22 1-1h3l9.5-9.5a2.12 2.12 0 0 0-3-3L3 18v3Z" />
         <path d="M15 6l3 3" />
         <path d="m18 3 3 3" />
-    </x-ui::icon.lucide>
+    </x-std::icon.lucide>
 </button>

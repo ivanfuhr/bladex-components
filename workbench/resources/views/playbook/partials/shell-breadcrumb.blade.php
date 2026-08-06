@@ -22,36 +22,36 @@
     <div {{ $attributes->class(['min-w-0 flex-1 overflow-hidden']) }}>
         @if ($hasAncestors)
             <div class="md:hidden">
-                <x-ui::dropdown-menu align="start">
-                    <x-ui::dropdown-menu.trigger>
+                <x-std::dropdown-menu align="start">
+                    <x-std::dropdown-menu.trigger>
                         <button
                             type="button"
-                            class="inline-flex h-11 max-w-full min-w-0 items-center gap-1.5 rounded-md px-1 text-sm transition-colors hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300/20"
+                            class="inline-flex h-11 max-w-full min-w-0 items-center gap-1.5 rounded-md px-1 text-sm transition-colors hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-zinc-950/10 focus-visible:outline-none dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300/20"
                             aria-label="{{ __('Show breadcrumb trail') }}"
                         >
-                            <x-ui::icon
+                            <x-std::icon
                                 name="chevron-right"
                                 class="size-3.5 shrink-0 text-zinc-400 dark:text-zinc-500"
                             />
                             <span class="truncate font-normal text-zinc-950 dark:text-zinc-50">
                                 {{ $current['label'] }}
                             </span>
-                            <x-ui::icon
+                            <x-std::icon
                                 name="chevron-down"
                                 class="size-3.5 shrink-0 text-zinc-400 dark:text-zinc-500"
                             />
                         </button>
-                    </x-ui::dropdown-menu.trigger>
-                    <x-ui::dropdown-menu.content class="min-w-48">
+                    </x-std::dropdown-menu.trigger>
+                    <x-std::dropdown-menu.content class="min-w-48">
                         @foreach ($ancestors as $ancestor)
-                            <x-ui::dropdown-menu.item :href="$ancestor['href']">
+                            <x-std::dropdown-menu.item :href="$ancestor['href']">
                                 {{ $ancestor['label'] }}
-                            </x-ui::dropdown-menu.item>
+                            </x-std::dropdown-menu.item>
                         @endforeach
-                        <x-ui::dropdown-menu.separator />
-                        <x-ui::dropdown-menu.label>{{ $current['label'] }}</x-ui::dropdown-menu.label>
-                    </x-ui::dropdown-menu.content>
-                </x-ui::dropdown-menu>
+                        <x-std::dropdown-menu.separator />
+                        <x-std::dropdown-menu.label>{{ $current['label'] }}</x-std::dropdown-menu.label>
+                    </x-std::dropdown-menu.content>
+                </x-std::dropdown-menu>
             </div>
         @else
             <p class="truncate px-1 text-sm font-normal text-zinc-950 md:hidden dark:text-zinc-50">
@@ -59,25 +59,26 @@
             </p>
         @endif
 
-        <x-ui::breadcrumb class="hidden min-w-0 md:block">
-            <x-ui::breadcrumb.list>
+        <x-std::breadcrumb class="hidden min-w-0 md:block">
+            <x-std::breadcrumb.list>
                 @foreach ($trail as $item)
                     @if (! $loop->last)
-                        <x-ui::breadcrumb.item>
+                        <x-std::breadcrumb.item>
                             @if ($item['href'])
-                                <x-ui::breadcrumb.link :href="$item['href']">{{ $item['label'] }}</x-ui::breadcrumb.link>
+                                <x-std::breadcrumb.link :href="$item['href']">
+                                    {{ $item['label'] }}</x-std::breadcrumb.link>
                             @else
-                                <x-ui::breadcrumb.page>{{ $item['label'] }}</x-ui::breadcrumb.page>
+                                <x-std::breadcrumb.page>{{ $item['label'] }}</x-std::breadcrumb.page>
                             @endif
-                        </x-ui::breadcrumb.item>
-                        <x-ui::breadcrumb.separator />
+                        </x-std::breadcrumb.item>
+                        <x-std::breadcrumb.separator />
                     @else
-                        <x-ui::breadcrumb.item class="min-w-0 overflow-hidden">
-                            <x-ui::breadcrumb.page>{{ $item['label'] }}</x-ui::breadcrumb.page>
-                        </x-ui::breadcrumb.item>
+                        <x-std::breadcrumb.item class="min-w-0 overflow-hidden">
+                            <x-std::breadcrumb.page>{{ $item['label'] }}</x-std::breadcrumb.page>
+                        </x-std::breadcrumb.item>
                     @endif
                 @endforeach
-            </x-ui::breadcrumb.list>
-        </x-ui::breadcrumb>
+            </x-std::breadcrumb.list>
+        </x-std::breadcrumb>
     </div>
 @endif

@@ -32,7 +32,7 @@
                 data-pillbox-chip-remove
                 aria-label="{{ __('Remove tag') }}"
             >
-                <x-ui::icon name="x" class="{{ $size === 'sm' ? 'size-3' : 'size-3.5' }}" />
+                <x-std::icon name="x" class="{{ $size === 'sm' ? 'size-3' : 'size-3.5' }}" />
             </button>
         </span>
     </template>

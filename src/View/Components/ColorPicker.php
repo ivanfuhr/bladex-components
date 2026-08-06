@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
-final class ColorPicker extends StencilComponent
+final class ColorPicker extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
@@ -21,9 +21,9 @@ final class ColorPicker extends StencilComponent
         public bool $shortcut = true,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.color-picker.index';
+        return 'std-components::components.color-picker.index';
     }
 
     /**

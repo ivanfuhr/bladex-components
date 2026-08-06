@@ -5,5 +5,5 @@
 @endphp
 
 <div class="max-w-md space-y-2">
-    <x-ui::progress :value="$value" :size="$size" :indeterminate="$indeterminate" />
+    <x-std::progress :value="$value" :size="$size" :indeterminate="$indeterminate" />
 </div>

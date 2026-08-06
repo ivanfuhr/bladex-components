@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a toast provider and toast message', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::toast.provider position="top-right">
-            <x-ui::toast variant="success" title="Saved" description="Your changes were saved." />
-        </x-ui::toast.provider>
+        <x-std::toast.provider position="top-right">
+            <x-std::toast variant="success" title="Saved" description="Your changes were saved." />
+        </x-std::toast.provider>
     BLADE);
 
     expect($html)
@@ -26,7 +26,7 @@ it('renders a toast provider and toast message', function () {
 
 it('uses alert role for danger toast variants', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::toast variant="danger" title="Failed" description="Could not save." />
+        <x-std::toast variant="danger" title="Failed" description="Could not save." />
     BLADE);
 
     expect($html)
@@ -38,7 +38,7 @@ it('uses alert role for danger toast variants', function () {
 });
 
 it('renders default variant icons for success toasts', function () {
-    $html = Blade::render('<x-ui::toast variant="success" title="Saved" description="Done." />');
+    $html = Blade::render('<x-std::toast variant="success" title="Saved" description="Done." />');
 
     expect($html)
         ->toContain('data-toast-icon')

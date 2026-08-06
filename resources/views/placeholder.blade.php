@@ -1,5 +1,5 @@
 <div class="space-y-2">
-    <x-ui::heading :level="2">{{ __('Stencil') }}</x-ui::heading>
+    <x-std::heading :level="2">{{ __('Std Components') }}</x-std::heading>
 
-    <x-ui::text>{{ __('Stencil placeholder translation.') }}</x-ui::text>
+    <x-std::text>{{ __('Std Components placeholder translation.') }}</x-std::text>
 </div>

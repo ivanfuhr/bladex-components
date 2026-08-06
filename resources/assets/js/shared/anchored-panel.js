@@ -106,7 +106,7 @@ export function ensurePanelPortaled(panel, markerParent, portalMarker) {
     }
 
     document.body.appendChild(panel);
-    panel.dataset.stencilPortaled = 'true';
+    panel.dataset.stdPortaled = 'true';
 }
 
 /**
@@ -127,7 +127,7 @@ export function restorePanelFromPortal(panel, markerParent, portalMarker) {
         }
     }
 
-    delete panel.dataset.stencilPortaled;
+    delete panel.dataset.stdPortaled;
 }
 
 /**

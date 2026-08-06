@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\Support\Str;
 
-final class DatetimePicker extends StencilComponent
+final class DatetimePicker extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
@@ -24,9 +24,9 @@ final class DatetimePicker extends StencilComponent
         public bool $shortcut = true,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.datetime-picker.index';
+        return 'std-components::components.datetime-picker.index';
     }
 
     /**
@@ -37,9 +37,9 @@ final class DatetimePicker extends StencilComponent
     {
         $fieldInvalid = (bool) ($data['fieldInvalid'] ?? false);
         $invalid = $this->invalid || $fieldInvalid;
-        $resolvedTimezone = stencil_resolve_timezone($this->timezone);
+        $resolvedTimezone = std_resolve_timezone($this->timezone);
         $resolvedLocale = $this->locale ?? app()->getLocale();
-        $resolvedValue = stencil_normalize_datetime_value($this->value, $resolvedTimezone);
+        $resolvedValue = std_normalize_datetime_value($this->value, $resolvedTimezone);
         $resolvedPlaceholder = $this->placeholder ?? __('Select date and time');
 
         $datePart = $resolvedValue ? explode('T', $resolvedValue)[0] : '';

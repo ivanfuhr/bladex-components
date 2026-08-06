@@ -1,5 +1,5 @@
 ---
-name: Stencil
+name: Std Components
 description: Tailwind-native Blade UI primitives with zinc Operate tooling chrome
 colors:
   primary: "#18181b"
@@ -80,13 +80,13 @@ components:
     height: "auto"
 ---
 
-# Design System: Stencil
+# Design System: Std Components
 
 ## Overview
 
 **Creative North Star: "The Zinc Workbench"**
 
-Stencil’s visual system is a restrained, zinc-first Operate kit for Laravel Blade. Shipped `x-ui::*` primitives and the workbench playbook share the same material language: flat tonal surfaces, hairline borders, soft one-step shadows, and Inter for both body and headings. Brand expression lives in precision (mono `x-ui::` labels, tight tracking, consistent focus rings) rather than decorative color.
+Std Components’ visual system is a restrained, zinc-first Operate kit for Laravel Blade. Shipped `x-std::*` primitives and the workbench playbook share the same material language: flat tonal surfaces, hairline borders, soft one-step shadows, and Inter for both body and headings. Brand expression lives in precision (mono `x-std::` labels, tight tracking, consistent focus rings) rather than decorative color.
 
 The playbook chrome is **dev tooling**, not a marketing surface. It keeps the same zinc Operate look as the components: catalog cards, sticky control rails, and preview stages that feel like an IDE adjacent to the product—not a second brand.
 
@@ -120,12 +120,12 @@ A cool zinc scale carries almost all UI; semantic red is reserved for danger and
 
 **Display Font:** Inter (with ui-sans-serif, system-ui)
 **Body Font:** Inter (same stack)
-**Label/Mono Font:** ui-monospace stack for `x-ui::slug` labels and code blocks
+**Label/Mono Font:** ui-monospace stack for `x-std::slug` labels and code blocks
 
 **Character:** Technical, dense, Laravel-native. One sans family for hierarchy via size and weight, not a display/body pairing.
 
 ### Hierarchy
-- **Title** (600, ~1.25rem+): Page and section headings via `x-ui::heading`.
+- **Title** (600, ~1.25rem+): Page and section headings via `x-std::heading`.
 - **Body** (400, 1rem / leading-6): Descriptions and control labels.
 - **Label** (600, 0.75rem, tracked uppercase sparingly): Properties panel eyebrow, Workbench badge.
 - **Mono** (400, 0.75rem): Component API crumbs and snippet panes.
@@ -166,7 +166,7 @@ Corner language is soft but not pill-heavy: controls `rounded-lg` (8px), panels/
 
 ### Playbook chrome
 - **Monogram:** “S” in a 36×36 bordered tile linking home
-- **Dark mode:** Global theme toggle labeled “Dark mode”; persist `stencil-playbook-dark`; FOUC-safe inline head script applies `dark` + `scheme-dark` before paint
+- **Dark mode:** Global theme toggle labeled “Dark mode”; persist `std-playbook-dark`; FOUC-safe inline head script applies `dark` + `scheme-dark` before paint
 - **Skip link:** Targets `#playbook-main` with `tabindex="-1"`
 - **Preview stage:** `#playbook-canvas` with `aria-busy` while refreshing; short `aria-live` status text—not the entire canvas as a live region
 - **Focus:** Logo, title, Showcase, Catalog share the same focus-visible ring vocabulary
@@ -183,7 +183,7 @@ Corner language is soft but not pill-heavy: controls `rounded-lg` (8px), panels/
 ## Do's and Don'ts
 
 ### Do:
-- **Do** keep playbook chrome on the zinc Operate system already used by `x-ui::*`.
+- **Do** keep playbook chrome on the zinc Operate system already used by `x-std::*`.
 - **Do** group catalog entries by category so recognition beats recall.
 - **Do** honor `prefers-reduced-motion` for decorative hover translates.
 - **Do** surface preview and clipboard failures in the short status live region.
@@ -191,5 +191,5 @@ Corner language is soft but not pill-heavy: controls `rounded-lg` (8px), panels/
 ### Don't:
 - **Don't** invent a purple/indigo marketing theme for the package or playbook.
 - **Don't** put `aria-live` on the entire preview canvas (announces noisy HTML churn).
-- **Don't** use “BX” or any leftover monogram—canonical mark is Stencil “S”.
-- **Don't** treat playbook chrome as a second product brand separate from Stencil.
+- **Don't** use “BX” or any leftover monogram—canonical mark is Std Components mark.
+- **Don't** treat playbook chrome as a second product brand separate from Std Components.

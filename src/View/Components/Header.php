@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Header extends StencilComponent
+final class Header extends StdComponent
 {
     public function __construct(
         public mixed $variant = 'shell',
@@ -12,9 +12,9 @@ final class Header extends StencilComponent
         public bool $border = true,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.header.index';
+        return 'std-components::components.header.index';
     }
 
     /**

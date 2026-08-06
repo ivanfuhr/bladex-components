@@ -1,13 +1,13 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "ivanfuhr/stencil",
-    "description": "Stencil — powerful components for Laravel Blade.",
+    "name": "ivanfuhr/std-components",
+    "description": "Std Components — powerful components for Laravel Blade.",
     "keywords": [
         "laravel",
         "ivanfuhr",
-        "stencil"
+        "std-components"
     ],
-    "homepage": "https://github.com/ivanfuhr/stencil",
+    "homepage": "https://github.com/ivanfuhr/std-components",
     "license": "MIT",
     "authors": [
         {
@@ -33,12 +33,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Ivanfuhr\\Stencil\\": "src/"
+            "Ivanfuhr\\StdComponents\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Ivanfuhr\\Stencil\\Tests\\": "tests/",
+            "Ivanfuhr\\StdComponents\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/",
             "Workbench\\Database\\Factories\\": "workbench/database/factories/",
             "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
@@ -104,7 +104,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Ivanfuhr\\Stencil\\StencilServiceProvider"
+                "Ivanfuhr\\StdComponents\\StdComponentsServiceProvider"
             ]
         }
     },

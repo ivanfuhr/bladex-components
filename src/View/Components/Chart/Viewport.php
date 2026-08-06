@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Chart;
+namespace Ivanfuhr\StdComponents\View\Components\Chart;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Viewport extends StencilComponent
+final class Viewport extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.chart.viewport';
+        return 'std-components::components.chart.viewport';
     }
 }

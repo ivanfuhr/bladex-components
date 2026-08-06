@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\ColorPicker;
+namespace Ivanfuhr\StdComponents\View\Components\ColorPicker;
 
 use Illuminate\Support\Facades\View;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Dropper extends StencilComponent
+final class Dropper extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.color-picker.dropper';
+        return 'std-components::components.color-picker.dropper';
     }
 
     /**

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\Support\Str;
 
-final class Slider extends StencilComponent
+final class Slider extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
@@ -22,9 +22,9 @@ final class Slider extends StencilComponent
         public bool $shortcut = true,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.slider.index';
+        return 'std-components::components.slider.index';
     }
 
     /**
@@ -36,7 +36,7 @@ final class Slider extends StencilComponent
         $fieldInvalid = (bool) ($data['fieldInvalid'] ?? false);
         $controlId = $data['controlId'] ?? null;
 
-        $invalid = $this->invalid || $fieldInvalid || stencil_field_has_errors($this->name);
+        $invalid = $this->invalid || $fieldInvalid || std_field_has_errors($this->name);
         $min = (float) $this->min;
         $max = (float) $this->max;
 
@@ -101,7 +101,7 @@ final class Slider extends StencilComponent
 
         $rootAttributes = $this->attributes
             ->class([
-                stencil_slider_root_classes($this->size),
+                std_slider_root_classes($this->size),
                 'w-full' => ! filled($this->attributes->get('class')),
             ])
             ->merge([

@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a shortcut scroll area with viewport and vertical scrollbar', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::scroll-area class="h-72" aria-label="Tags">
+        <x-std::scroll-area class="h-72" aria-label="Tags">
             <div>Alpha</div>
             <div>Bravo</div>
-        </x-ui::scroll-area>
+        </x-std::scroll-area>
     BLADE);
 
     expect($html)
@@ -32,9 +32,9 @@ it('renders a shortcut scroll area with viewport and vertical scrollbar', functi
 
 it('renders horizontal scrollbar and corner in shortcut mode', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::scroll-area class="h-48 w-64" horizontal>
+        <x-std::scroll-area class="h-48 w-64" horizontal>
             Wide content
-        </x-ui::scroll-area>
+        </x-std::scroll-area>
     BLADE);
 
     expect($html)
@@ -46,9 +46,9 @@ it('renders horizontal scrollbar and corner in shortcut mode', function () {
 
 it('supports type and scroll hide delay props', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::scroll-area type="always" :scroll-hide-delay="200">
+        <x-std::scroll-area type="always" :scroll-hide-delay="200">
             Always visible chrome
-        </x-ui::scroll-area>
+        </x-std::scroll-area>
     BLADE);
 
     expect($html)
@@ -59,9 +59,9 @@ it('supports type and scroll hide delay props', function () {
 
 it('falls back to hover for unknown type values', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::scroll-area type="bogus">
+        <x-std::scroll-area type="bogus">
             Content
-        </x-ui::scroll-area>
+        </x-std::scroll-area>
     BLADE);
 
     expect($html)->toContain('data-scroll-area-type="hover"');
@@ -69,14 +69,14 @@ it('falls back to hover for unknown type values', function () {
 
 it('supports full composition without shortcut', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::scroll-area class="h-72" :shortcut="false">
-            <x-ui::scroll-area.viewport>
+        <x-std::scroll-area class="h-72" :shortcut="false">
+            <x-std::scroll-area.viewport>
                 Custom body
-            </x-ui::scroll-area.viewport>
-            <x-ui::scroll-area.scrollbar orientation="vertical" />
-            <x-ui::scroll-area.scrollbar orientation="horizontal" />
-            <x-ui::scroll-area.corner />
-        </x-ui::scroll-area>
+            </x-std::scroll-area.viewport>
+            <x-std::scroll-area.scrollbar orientation="vertical" />
+            <x-std::scroll-area.scrollbar orientation="horizontal" />
+            <x-std::scroll-area.corner />
+        </x-std::scroll-area>
     BLADE);
 
     expect($html)
@@ -90,12 +90,12 @@ it('supports full composition without shortcut', function () {
 
 it('allows custom thumb inside scrollbar slot', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::scroll-area :shortcut="false">
-            <x-ui::scroll-area.viewport>Body</x-ui::scroll-area.viewport>
-            <x-ui::scroll-area.scrollbar>
-                <x-ui::scroll-area.thumb class="bg-red-500" />
-            </x-ui::scroll-area.scrollbar>
-        </x-ui::scroll-area>
+        <x-std::scroll-area :shortcut="false">
+            <x-std::scroll-area.viewport>Body</x-std::scroll-area.viewport>
+            <x-std::scroll-area.scrollbar>
+                <x-std::scroll-area.thumb class="bg-red-500" />
+            </x-std::scroll-area.scrollbar>
+        </x-std::scroll-area>
     BLADE);
 
     expect($html)
@@ -111,11 +111,11 @@ it('scroll area script uses lifecycle teardown and mount hooks', function () {
         ->toContain("import { createBindSignal } from './shared/lifecycle.js'")
         ->toContain('createBindSignal(')
         ->toContain('{ signal }')
-        ->toContain('stencil:mount')
+        ->toContain('std:mount')
         ->toContain('export function initScrollAreas')
         ->toContain('ResizeObserver')
         ->toContain('data-scroll-area-thumb')
         ->toContain('HTMLTextAreaElement')
-        ->toContain('stencilScrollLocked')
-        ->toContain("if (isScrollLocked())");
+        ->toContain('stdScrollLocked')
+        ->toContain('if (isScrollLocked())');
 });

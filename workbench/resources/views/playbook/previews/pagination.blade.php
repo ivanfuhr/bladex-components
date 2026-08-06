@@ -2,30 +2,30 @@
     $showEllipsis = (bool) ($state['show_ellipsis'] ?? true);
 @endphp
 
-<x-ui::pagination>
-    <x-ui::pagination.content>
-        <x-ui::pagination.item>
-            <x-ui::pagination.previous href="#" />
-        </x-ui::pagination.item>
-        <x-ui::pagination.item>
-            <x-ui::pagination.link href="#">1</x-ui::pagination.link>
-        </x-ui::pagination.item>
-        <x-ui::pagination.item>
-            <x-ui::pagination.link href="#" :is-active="true">2</x-ui::pagination.link>
-        </x-ui::pagination.item>
-        <x-ui::pagination.item>
-            <x-ui::pagination.link href="#">3</x-ui::pagination.link>
-        </x-ui::pagination.item>
+<x-std::pagination>
+    <x-std::pagination.content>
+        <x-std::pagination.item>
+            <x-std::pagination.previous href="#" />
+        </x-std::pagination.item>
+        <x-std::pagination.item>
+            <x-std::pagination.link href="#">1</x-std::pagination.link>
+        </x-std::pagination.item>
+        <x-std::pagination.item>
+            <x-std::pagination.link href="#" :is-active="true">2</x-std::pagination.link>
+        </x-std::pagination.item>
+        <x-std::pagination.item>
+            <x-std::pagination.link href="#">3</x-std::pagination.link>
+        </x-std::pagination.item>
         @if ($showEllipsis)
-            <x-ui::pagination.item>
-                <x-ui::pagination.ellipsis />
-            </x-ui::pagination.item>
-            <x-ui::pagination.item>
-                <x-ui::pagination.link href="#">12</x-ui::pagination.link>
-            </x-ui::pagination.item>
+            <x-std::pagination.item>
+                <x-std::pagination.ellipsis />
+            </x-std::pagination.item>
+            <x-std::pagination.item>
+                <x-std::pagination.link href="#">12</x-std::pagination.link>
+            </x-std::pagination.item>
         @endif
-        <x-ui::pagination.item>
-            <x-ui::pagination.next href="#" />
-        </x-ui::pagination.item>
-    </x-ui::pagination.content>
-</x-ui::pagination>
+        <x-std::pagination.item>
+            <x-std::pagination.next href="#" />
+        </x-std::pagination.item>
+    </x-std::pagination.content>
+</x-std::pagination>

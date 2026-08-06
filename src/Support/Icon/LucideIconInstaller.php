@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\Support\Icon;
+namespace Ivanfuhr\StdComponents\Support\Icon;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\File;

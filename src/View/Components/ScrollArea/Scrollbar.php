@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\ScrollArea;
+namespace Ivanfuhr\StdComponents\View\Components\ScrollArea;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Scrollbar extends StencilComponent
+final class Scrollbar extends StdComponent
 {
     public function __construct(
         public string $orientation = 'vertical',
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.scroll-area.scrollbar';
+        return 'std-components::components.scroll-area.scrollbar';
     }
 
     /**

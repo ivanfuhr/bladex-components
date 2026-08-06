@@ -1,5 +1,5 @@
 /**
- * Stencil — time picker (vanilla JS).
+ * Std Components — time picker (vanilla JS).
  */
 
 import {
@@ -18,15 +18,13 @@ const initialized = new WeakSet();
  * @param {ParentNode} root
  */
 export function initTimePickers(root = document) {
-    document
-        .querySelectorAll('[data-time-picker-panel][data-stencil-portaled]')
-        .forEach((panel) => {
-            if (!(panel instanceof HTMLElement) || panel.closest('[data-time-picker]')) {
-                return;
-            }
+    document.querySelectorAll('[data-time-picker-panel][data-std-portaled]').forEach((panel) => {
+        if (!(panel instanceof HTMLElement) || panel.closest('[data-time-picker]')) {
+            return;
+        }
 
-            panel.remove();
-        });
+        panel.remove();
+    });
 
     root.querySelectorAll(SELECTOR).forEach((element) => {
         if (!(element instanceof HTMLElement) || initialized.has(element)) {
@@ -61,7 +59,7 @@ function bindTimePicker(root) {
         .map((v) => v.trim())
         .filter(Boolean);
 
-    const portalMarker = document.createComment('stencil-time-picker-portal');
+    const portalMarker = document.createComment('std-time-picker-portal');
     const signal = createBindSignal(root);
     let open = false;
     /** @type {(() => void) | null} */
@@ -347,7 +345,7 @@ function buildOptions(step, withSeconds, unavailable) {
     return options;
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

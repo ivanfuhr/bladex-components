@@ -6,17 +6,17 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a dropdown menu with trigger content and items', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::dropdown-menu align="end">
-            <x-ui::dropdown-menu.trigger>
-                <x-ui::button variant="outline">Open</x-ui::button>
-            </x-ui::dropdown-menu.trigger>
-            <x-ui::dropdown-menu.content>
-                <x-ui::dropdown-menu.label>Account</x-ui::dropdown-menu.label>
-                <x-ui::dropdown-menu.item>Profile</x-ui::dropdown-menu.item>
-                <x-ui::dropdown-menu.separator />
-                <x-ui::dropdown-menu.item variant="danger" kbd="⌘⌫">Delete</x-ui::dropdown-menu.item>
-            </x-ui::dropdown-menu.content>
-        </x-ui::dropdown-menu>
+        <x-std::dropdown-menu align="end">
+            <x-std::dropdown-menu.trigger>
+                <x-std::button variant="outline">Open</x-std::button>
+            </x-std::dropdown-menu.trigger>
+            <x-std::dropdown-menu.content>
+                <x-std::dropdown-menu.label>Account</x-std::dropdown-menu.label>
+                <x-std::dropdown-menu.item>Profile</x-std::dropdown-menu.item>
+                <x-std::dropdown-menu.separator />
+                <x-std::dropdown-menu.item variant="danger" kbd="⌘⌫">Delete</x-std::dropdown-menu.item>
+            </x-std::dropdown-menu.content>
+        </x-std::dropdown-menu>
     BLADE);
 
     expect($html)
@@ -40,17 +40,17 @@ it('renders a dropdown menu with trigger content and items', function () {
 
 it('supports grouped items and disabled state', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::dropdown-menu>
-            <x-ui::dropdown-menu.trigger>
+        <x-std::dropdown-menu>
+            <x-std::dropdown-menu.trigger>
                 <button type="button">Menu</button>
-            </x-ui::dropdown-menu.trigger>
-            <x-ui::dropdown-menu.content>
-                <x-ui::dropdown-menu.group heading="Billing">
-                    <x-ui::dropdown-menu.item href="/invoices">Invoices</x-ui::dropdown-menu.item>
-                    <x-ui::dropdown-menu.item disabled>Payouts</x-ui::dropdown-menu.item>
-                </x-ui::dropdown-menu.group>
-            </x-ui::dropdown-menu.content>
-        </x-ui::dropdown-menu>
+            </x-std::dropdown-menu.trigger>
+            <x-std::dropdown-menu.content>
+                <x-std::dropdown-menu.group heading="Billing">
+                    <x-std::dropdown-menu.item href="/invoices">Invoices</x-std::dropdown-menu.item>
+                    <x-std::dropdown-menu.item disabled>Payouts</x-std::dropdown-menu.item>
+                </x-std::dropdown-menu.group>
+            </x-std::dropdown-menu.content>
+        </x-std::dropdown-menu>
     BLADE);
 
     expect($html)
@@ -64,14 +64,14 @@ it('supports grouped items and disabled state', function () {
 
 it('marks menu content as a closed menu region for the widget script', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::dropdown-menu>
-            <x-ui::dropdown-menu.trigger>
+        <x-std::dropdown-menu>
+            <x-std::dropdown-menu.trigger>
                 <button type="button">Open</button>
-            </x-ui::dropdown-menu.trigger>
-            <x-ui::dropdown-menu.content>
-                <x-ui::dropdown-menu.item>One</x-ui::dropdown-menu.item>
-            </x-ui::dropdown-menu.content>
-        </x-ui::dropdown-menu>
+            </x-std::dropdown-menu.trigger>
+            <x-std::dropdown-menu.content>
+                <x-std::dropdown-menu.item>One</x-std::dropdown-menu.item>
+            </x-std::dropdown-menu.content>
+        </x-std::dropdown-menu>
     BLADE);
 
     expect($html)
@@ -92,7 +92,7 @@ it('dropdown menu script removes orphaned portaled content on remount', function
         ->toContain("content.closest('[data-dropdown-menu]')")
         ->toContain('content.remove()')
         ->toContain('createBindSignal')
-        ->toContain('stencil:mount');
+        ->toContain('std:mount');
 });
 
 it('dropdown menu script locks page scroll while open instead of closing on scroll', function () {

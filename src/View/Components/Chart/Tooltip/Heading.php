@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Chart\Tooltip;
+namespace Ivanfuhr\StdComponents\View\Components\Chart\Tooltip;
 
 use Illuminate\Support\Js;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Heading extends StencilComponent
+final class Heading extends StdComponent
 {
     public function __construct(
         public mixed $field = 'date',
         public mixed $format = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.chart.tooltip.heading';
+        return 'std-components::components.chart.tooltip.heading';
     }
 
     protected function resolveViewData(array $data = []): array

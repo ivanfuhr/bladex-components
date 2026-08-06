@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Combobox;
+namespace Ivanfuhr\StdComponents\View\Components\Combobox;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Separator extends StencilComponent
+final class Separator extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.combobox.separator';
+        return 'std-components::components.combobox.separator';
     }
 }

@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\FileUpload\Item;
+namespace Ivanfuhr\StdComponents\View\Components\FileUpload\Item;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Remove extends StencilComponent
+final class Remove extends StdComponent
 {
     public function __construct(
         public bool $disabled = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.file-upload.item.remove';
+        return 'std-components::components.file-upload.item.remove';
     }
 
     /**

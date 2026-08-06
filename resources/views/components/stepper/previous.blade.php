@@ -1,4 +1,4 @@
-<x-ui::button
+<x-std::button
     type="button"
     variant="outline"
     {{
@@ -9,4 +9,4 @@
     }}
 >
     {{ $text ?? __('Previous') }}
-</x-ui::button>
+</x-std::button>

@@ -1,5 +1,5 @@
 /**
- * Stencil — accessible tooltips (vanilla JS, no Alpine).
+ * Std Components — accessible tooltips (vanilla JS, no Alpine).
  */
 
 const ROOT_SELECTOR = '[data-tooltip]';
@@ -188,7 +188,7 @@ function positionTooltip(content, trigger, side) {
     content.style.left = `${left}px`;
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

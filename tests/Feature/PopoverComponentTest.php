@@ -6,14 +6,14 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a popover with trigger and dialog content', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::popover align="end" side="bottom">
-            <x-ui::popover.trigger>
-                <x-ui::button variant="outline">Open</x-ui::button>
-            </x-ui::popover.trigger>
-            <x-ui::popover.content>
+        <x-std::popover align="end" side="bottom">
+            <x-std::popover.trigger>
+                <x-std::button variant="outline">Open</x-std::button>
+            </x-std::popover.trigger>
+            <x-std::popover.content>
                 <p>Panel body</p>
-            </x-ui::popover.content>
-        </x-ui::popover>
+            </x-std::popover.content>
+        </x-std::popover>
     BLADE);
 
     expect($html)
@@ -32,14 +32,14 @@ it('renders a popover with trigger and dialog content', function () {
 
 it('can render popover content initially open', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::popover>
-            <x-ui::popover.trigger>
+        <x-std::popover>
+            <x-std::popover.trigger>
                 <button type="button">Open</button>
-            </x-ui::popover.trigger>
-            <x-ui::popover.content :open="true">
+            </x-std::popover.trigger>
+            <x-std::popover.content :open="true">
                 Visible
-            </x-ui::popover.content>
-        </x-ui::popover>
+            </x-std::popover.content>
+        </x-std::popover>
     BLADE);
 
     expect($html)
@@ -63,7 +63,7 @@ it('popover script tears down document listeners with createBindSignal', functio
     expect($source)
         ->toContain('createBindSignal')
         ->toContain('{ signal }')
-        ->toContain('stencil:mount')
+        ->toContain('std:mount')
         ->toContain('ensureAriaLabelledBy')
         ->toContain('ensureContentPortaled')
         ->toContain('restoreContentFromPortal');

@@ -3,4 +3,4 @@
     $variant = $state['variant'] === 'default' ? null : $state['variant'];
 @endphp
 
-<x-ui::heading :level="$level" :variant="$variant"> Page title at level {{ $level }} </x-ui::heading>
+<x-std::heading :level="$level" :variant="$variant"> Page title at level {{ $level }} </x-std::heading>

@@ -1,5 +1,5 @@
 /**
- * Stencil — accessible collapsible panel (vanilla JS, no Alpine).
+ * Std Components — accessible collapsible panel (vanilla JS, no Alpine).
  */
 
 const COLLAPSIBLE_SELECTOR = '[data-collapsible]';
@@ -101,7 +101,7 @@ function toggle(root) {
     applyState(root, open);
 
     root.dispatchEvent(
-        new CustomEvent('stencil:collapsible:change', {
+        new CustomEvent('std:collapsible:change', {
             bubbles: true,
             detail: { open },
         }),
@@ -158,7 +158,7 @@ function applyState(root, open) {
     }
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

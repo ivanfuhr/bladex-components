@@ -1,0 +1,137 @@
+/**
+ * Std Components — Tailwind v4 @source paths for owned UI.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@source "../../views/**/*.blade.php";
+@source "../../../app/Support/StdComponents/**/*.php";
+
+@layer components {
+    /*
+     * Checkbox checkmark — keep the data-URL here so Vite/Tailwind always emit it.
+     * Putting checked:bg-[url(data:...)] only in Blade PHP strings is not scanned.
+     */
+    .choice-control[data-checkbox-control]:checked {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3E%3Cpath d='M12.207 4.793a1 1 0 0 1 0 1.414l-5 5a1 1 0 0 1-1.414 0l-2.5-2.5a1 1 0 0 1 1.414-1.414L6.5 9.086l4.293-4.293a1 1 0 0 1 1.414 0z'/%3E%3C/svg%3E");
+        background-size: 75% 75%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .dark .choice-control[data-checkbox-control]:checked {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2318181b'%3E%3Cpath d='M12.207 4.793a1 1 0 0 1 0 1.414l-5 5a1 1 0 0 1-1.414 0l-2.5-2.5a1 1 0 0 1 1.414-1.414L6.5 9.086l4.293-4.293a1 1 0 0 1 1.414 0z'/%3E%3C/svg%3E");
+    }
+
+    /* Radio inner dot — avoid thick-border hacks that read as a solid disc on size-4. */
+    .choice-control[data-radio-control]:checked {
+        background-image: radial-gradient(circle, var(--color-zinc-900) 0%, var(--color-zinc-900) 40%, transparent 45%);
+    }
+
+    .dark .choice-control[data-radio-control]:checked {
+        background-image: radial-gradient(circle, var(--color-zinc-50) 0%, var(--color-zinc-50) 40%, transparent 45%);
+    }
+
+    .switch [data-switch-thumb] {
+        translate: 0;
+    }
+
+    .switch [data-switch-track] {
+        @apply bg-zinc-200 dark:bg-zinc-700;
+    }
+
+    .switch:has(:disabled) {
+        @apply cursor-not-allowed opacity-50;
+    }
+
+    .switch:has(:focus-visible) [data-switch-track] {
+        @apply outline-none ring-2 ring-zinc-950/10 ring-offset-2 ring-offset-white;
+    }
+
+    .dark .switch:has(:focus-visible) [data-switch-track] {
+        @apply ring-zinc-300/20 ring-offset-zinc-950;
+    }
+
+    .switch:has(:checked) [data-switch-track] {
+        @apply bg-zinc-900;
+    }
+
+    .dark .switch:has(:checked) [data-switch-track] {
+        @apply bg-zinc-50;
+    }
+
+    .switch:has(:checked) [data-switch-thumb] {
+        @apply translate-x-5;
+    }
+
+    .dark .switch:has(:checked) [data-switch-thumb] {
+        @apply bg-zinc-900;
+    }
+
+    .switch--sm:has(:checked) [data-switch-thumb] {
+        @apply translate-x-4;
+    }
+
+    .switch:has([aria-invalid="true"]) [data-switch-track] {
+        @apply border border-red-500 ring-2 ring-red-500/20;
+    }
+
+    .dark .switch:has([aria-invalid="true"]) [data-switch-track] {
+        @apply border-red-500;
+    }
+
+    /*
+     * Scroll area — native overflow + hidden OS chrome; themed overlay bars are JS-driven.
+     */
+    .scroll-area__viewport {
+        overflow: scroll;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .scroll-area__viewport::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Textarea reuses scroll-area chrome; hide the native control scrollbar. */
+    .textarea__control[data-scroll-area-viewport] {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .textarea__control[data-scroll-area-viewport]::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scroll-area__scrollbar[data-orientation='vertical'] .scroll-area__thumb {
+        width: 100%;
+    }
+
+    .scroll-area__scrollbar[data-orientation='horizontal'] .scroll-area__thumb {
+        height: 100%;
+    }
+
+    .scroll-area__scrollbar[data-state='hidden'],
+    .scroll-area__corner[data-state='hidden'] {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .scroll-area__scrollbar[data-state='visible'],
+    .scroll-area__corner[data-state='visible'] {
+        opacity: 1;
+    }
+}
+
+/*
+ * Native <dialog> open visibility. Unlayered so it cannot invert Tailwind
+ * cascade layer order if this file is ever linked before a Vite build.
+ */
+.dialog__content:is(:open, [open]) {
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .dialog__content:is(:open, [open]) {
+        scale: 1;
+    }
+}

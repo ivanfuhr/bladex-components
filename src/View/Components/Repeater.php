@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
 
-final class Repeater extends StencilComponent
+final class Repeater extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
@@ -20,9 +20,9 @@ final class Repeater extends StencilComponent
         public mixed $size = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.repeater.index';
+        return 'std-components::components.repeater.index';
     }
 
     /**

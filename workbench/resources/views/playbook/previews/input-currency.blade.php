@@ -7,7 +7,7 @@
     $locale = (string) ($state['locale'] ?? 'pt_BR');
 @endphp
 
-<x-ui::input.currency
+<x-std::input.currency
     name="amount"
     :value="$value"
     :currency="$currency"

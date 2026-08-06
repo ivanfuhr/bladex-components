@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Grid;
+namespace Ivanfuhr\StdComponents\View\Components\Grid;
 
-use Ivanfuhr\Stencil\Support\Grid\GridClassMap;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\Support\Grid\GridClassMap;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Item extends StencilComponent
+final class Item extends StdComponent
 {
     public function __construct(
         public mixed $span = 1,
@@ -17,9 +17,9 @@ final class Item extends StencilComponent
         public mixed $xl = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.grid.item';
+        return 'std-components::components.grid.item';
     }
 
     /**

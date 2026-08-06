@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\ColorPicker;
+namespace Ivanfuhr\StdComponents\View\Components\ColorPicker;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Hex extends StencilComponent
+final class Hex extends StdComponent
 {
     public function __construct(
         public mixed $currentValue = '#000000',
@@ -17,9 +17,9 @@ final class Hex extends StencilComponent
         public mixed $size = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.color-picker.hex';
+        return 'std-components::components.color-picker.hex';
     }
 
     /**
@@ -33,7 +33,7 @@ final class Hex extends StencilComponent
         $hexClasses = collect([
             'color-picker__hex',
             'min-w-0 flex-1 border-0 bg-transparent shadow-none',
-            stencil_input_control_classes($this->size),
+            std_input_control_classes($this->size),
             'font-mono uppercase tracking-wide text-zinc-950 placeholder:text-zinc-500',
             'focus-visible:outline-none focus-visible:ring-0',
             'dark:text-zinc-50 dark:placeholder:text-zinc-400',
@@ -41,7 +41,7 @@ final class Hex extends StencilComponent
             $this->invalid ? 'text-red-950 dark:text-red-50' : null,
         ])->filter()->implode(' ');
 
-        $hexAttributes = stencil_apply_interaction(
+        $hexAttributes = std_apply_interaction(
             $this->attributes
                 ->class($hexClasses)
                 ->merge([

@@ -1,5 +1,5 @@
 /**
- * Stencil — accessible toggle group (vanilla JS, no Alpine).
+ * Std Components — accessible toggle group (vanilla JS, no Alpine).
  */
 
 const GROUP_SELECTOR = '[data-toggle-group]';
@@ -86,7 +86,7 @@ function bindToggleGroup(root) {
         root.dataset.value = unique.join(',');
 
         root.dispatchEvent(
-            new CustomEvent('stencil:toggle-group:change', {
+            new CustomEvent('std:toggle-group:change', {
                 bubbles: true,
                 detail: {
                     type,
@@ -191,7 +191,7 @@ function bindToggleGroup(root) {
     });
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\TimePicker;
+namespace Ivanfuhr\StdComponents\View\Components\TimePicker;
 
 use Illuminate\Support\Facades\View;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Button extends StencilComponent
+final class Button extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.time-picker.button';
+        return 'std-components::components.time-picker.button';
     }
 
     /**
@@ -26,12 +26,12 @@ final class Button extends StencilComponent
         $clearable = View::getConsumableComponentData('clearable', false);
         $size = View::getConsumableComponentData('size', null);
 
-        $triggerAttributes = stencil_apply_interaction(
+        $triggerAttributes = std_apply_interaction(
             $this->attributes
                 ->class([
                     'time-picker__trigger',
                     'group flex min-w-0 flex-1 items-center justify-between gap-2 text-left',
-                    stencil_field_surface_classes($size, false, 'pointer'),
+                    std_field_surface_classes($size, false, 'pointer'),
                     $invalid ? 'border-red-500' : null,
                 ])
                 ->merge([

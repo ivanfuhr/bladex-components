@@ -1,8 +1,8 @@
-Scrollable time list with optional seconds and clear. Included in `@stencilScripts`.
+Scrollable time list with optional seconds and clear. Included in `@stdScripts`.
 
 ```blade
-<x-ui::time-picker name="starts_at" value="09:15" clearable />
-<x-ui::time-picker name="ends_at" value="14:30:00" with-seconds />
+<x-std::time-picker name="starts_at" value="09:15" clearable />
+<x-std::time-picker name="ends_at" value="14:30:00" with-seconds />
 ```
 
 <br>

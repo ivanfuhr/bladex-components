@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Pagination;
+namespace Ivanfuhr\StdComponents\View\Components\Pagination;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Next extends StencilComponent
+final class Next extends StdComponent
 {
     public function __construct(
         public mixed $href = null,
@@ -14,8 +14,8 @@ final class Next extends StencilComponent
         public mixed $text = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.pagination.next';
+        return 'std-components::components.pagination.next';
     }
 }

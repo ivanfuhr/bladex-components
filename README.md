@@ -1,17 +1,17 @@
 <div align="center">
 
 <a href="#table-of-contents">
-  <img src="docs/images/banner.png" alt="Stencil — the modern component system for Laravel Blade" />
+  <img src="docs/images/banner.png" alt="Std Components — the modern component system for Laravel Blade" />
 </a>
 
-**Composable Blade primitives for Laravel — class components, `x-ui::*`, and Tailwind v4.**
+**Composable Blade primitives for Laravel — class components, `x-std::*`, and Tailwind v4.**
 
 <p>
-    <a href="https://packagist.org/packages/ivanfuhr/stencil"><img src="https://img.shields.io/packagist/v/ivanfuhr/stencil.svg?style=flat-square" alt="Packagist"></a>
-    <a href="https://packagist.org/packages/ivanfuhr/stencil"><img src="https://img.shields.io/packagist/php-v/ivanfuhr/stencil.svg?style=flat-square" alt="PHP from Packagist"></a>
-    <a href="https://packagist.org/packages/ivanfuhr/stencil"><img src="https://badge.laravel.cloud/badge/ivanfuhr/stencil?style=flat" alt="Laravel versions"></a>
-    <a href="https://github.com/ivanfuhr/stencil/actions"><img alt="GitHub Workflow Status (main)" src="https://img.shields.io/github/actions/workflow/status/ivanfuhr/stencil/tests.yml?branch=main&label=Tests&style=flat-square"></a>
-    <a href="https://packagist.org/packages/ivanfuhr/stencil"><img src="https://img.shields.io/packagist/dt/ivanfuhr/stencil.svg?style=flat-square" alt="Total Downloads"></a>
+    <a href="https://packagist.org/packages/ivanfuhr/std-components"><img src="https://img.shields.io/packagist/v/ivanfuhr/std-components.svg?style=flat-square" alt="Packagist"></a>
+    <a href="https://packagist.org/packages/ivanfuhr/std-components"><img src="https://img.shields.io/packagist/php-v/ivanfuhr/std-components.svg?style=flat-square" alt="PHP from Packagist"></a>
+    <a href="https://packagist.org/packages/ivanfuhr/std-components"><img src="https://badge.laravel.cloud/badge/ivanfuhr/std-components?style=flat" alt="Laravel versions"></a>
+    <a href="https://github.com/ivanfuhr/std-components/actions"><img alt="GitHub Workflow Status (main)" src="https://img.shields.io/github/actions/workflow/status/ivanfuhr/std-components/tests.yml?branch=main&label=Tests&style=flat-square"></a>
+    <a href="https://packagist.org/packages/ivanfuhr/std-components"><img src="https://img.shields.io/packagist/dt/ivanfuhr/std-components.svg?style=flat-square" alt="Total Downloads"></a>
 </p>
 
 </div>
@@ -27,59 +27,59 @@
 
 <br>
 
-Install the package, add the layout directives, import Tailwind entry CSS, and use `x-ui::*` components directly from the package.
+Install the package, add the layout directives, import Tailwind entry CSS, and use `x-std::*` components directly from the package.
 
 ---
 
 ## Installation
 
 ```bash
-composer require ivanfuhr/stencil
+composer require ivanfuhr/std-components
 ```
 
 Optional config publish:
 
 ```bash
-php artisan vendor:publish --tag=stencil-config
+php artisan vendor:publish --tag=std-components-config
 ```
 
 <br>
 
 ## Usage
 
-Add Stencil assets to your layout:
+Add Std Components assets to your layout:
 
 ```blade
 <head>
-    @stencilStyles
-    <x-ui::fonts />
+    @stdStyles
+    <x-std::fonts />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-    <x-ui::input name="email" />
-    @stencilScripts
+    <x-std::input name="email" />
+    @stdScripts
 </body>
 ```
 
-`@stencilScripts` and `@stencilStyles` serve the bundled runtime from `/stencil/stencil.js` and `/stencil/stencil.css` (no publish required). Override with `['url' => asset('vendor/stencil/stencil.js')]` when using published assets.
+`@stdScripts` and `@stdStyles` serve the bundled runtime from `/std-components/std-components.js` and `/std-components/std-components.css` (no publish required). Override with `['url' => asset('vendor/std-components/std-components.js')]` when using published assets.
 
 ### Assets
 
 | Directive | Description |
 | --- | --- |
-| `@stencilStyles` | Base Stencil CSS (tokens, component layers) |
-| `@stencilScripts` | Vanilla JS runtime for interactive components |
+| `@stdStyles` | Base Std Components CSS (tokens, component layers) |
+| `@stdScripts` | Vanilla JS runtime for interactive components |
 
 Publish static assets (optional):
 
 ```bash
-php artisan vendor:publish --tag=stencil-assets
+php artisan vendor:publish --tag=std-components-assets
 ```
 
 Import extra Lucide icons:
 
 ```bash
-php artisan stencil:icon search grip-vertical
+php artisan std:icon search grip-vertical
 ```
 
 ### Tailwind CSS
@@ -88,14 +88,14 @@ Import the package Tailwind entry in your app CSS (class-based dark mode via `.d
 
 ```css
 @import "tailwindcss";
-@import "../../vendor/ivanfuhr/stencil/resources/css/stencil.css";
+@import "../../vendor/ivanfuhr/std-components/resources/css/std-components.css";
 ```
 
 <br>
 
 ## Documentation
 
-Component guides, live playgrounds, and copy-ready Blade snippets live in the **Stencil Docs** workbench:
+Component guides, live playgrounds, and copy-ready Blade snippets live in the **Std Components Docs** workbench:
 
 ```bash
 composer playbook   # opens http://127.0.0.1:8000/playbook/getting-started
@@ -115,7 +115,7 @@ From there you can browse **Getting started**, search the full catalog (⌘K), a
 | **Display** | Avatar, Card, Grid, Stat, Chart, Table, Scroll Area, Separator, Icons |
 | **Date & time** | Calendar, Date Picker, Time Picker, Datetime Picker |
 
-Interactive components work with `@stencilScripts` in your layout — no per-component JavaScript install step.
+Interactive components work with `@stdScripts` in your layout — no per-component JavaScript install step.
 
 <br>
 

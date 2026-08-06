@@ -20,57 +20,57 @@
 
 <div class="w-full max-w-3xl">
     @if ($variant === 'bar')
-        <x-ui::chart :value="$barData" label="Monthly revenue" class="aspect-[3/1] w-full">
-            <x-ui::chart.svg gutter="24 16 40 56">
-                <x-ui::chart.bar field="revenue" class="text-[var(--chart-3)]" width="70%" />
-                <x-ui::chart.axis axis="x" field="month">
-                    <x-ui::chart.axis.line />
-                    <x-ui::chart.axis.tick />
-                </x-ui::chart.axis>
-                <x-ui::chart.axis axis="y" tick-prefix="$" :format="['maximumFractionDigits' => 0]">
-                    <x-ui::chart.axis.grid />
-                    <x-ui::chart.axis.tick />
-                </x-ui::chart.axis>
-                <x-ui::chart.cursor type="area" />
-            </x-ui::chart.svg>
-            <x-ui::chart.tooltip>
-                <x-ui::chart.tooltip.heading field="month" />
-                <x-ui::chart.tooltip.value field="revenue" label="Revenue" prefix="$" />
-            </x-ui::chart.tooltip>
-        </x-ui::chart>
+        <x-std::chart :value="$barData" label="Monthly revenue" class="aspect-[3/1] w-full">
+            <x-std::chart.svg gutter="24 16 40 56">
+                <x-std::chart.bar field="revenue" class="text-[var(--chart-3)]" width="70%" />
+                <x-std::chart.axis axis="x" field="month">
+                    <x-std::chart.axis.line />
+                    <x-std::chart.axis.tick />
+                </x-std::chart.axis>
+                <x-std::chart.axis axis="y" tick-prefix="$" :format="['maximumFractionDigits' => 0]">
+                    <x-std::chart.axis.grid />
+                    <x-std::chart.axis.tick />
+                </x-std::chart.axis>
+                <x-std::chart.cursor type="area" />
+            </x-std::chart.svg>
+            <x-std::chart.tooltip>
+                <x-std::chart.tooltip.heading field="month" />
+                <x-std::chart.tooltip.value field="revenue" label="Revenue" prefix="$" />
+            </x-std::chart.tooltip>
+        </x-std::chart>
     @elseif ($variant === 'area')
-        <x-ui::chart :value="$lineData" label="Daily visitors" class="aspect-[3/1] w-full">
-            <x-ui::chart.svg>
-                <x-ui::chart.line field="visitors" class="text-[var(--chart-3)]" curve="none" />
-                <x-ui::chart.area field="visitors" class="text-[var(--chart-3)]/25" curve="none" />
-                <x-ui::chart.axis axis="x" field="date">
-                    <x-ui::chart.axis.tick />
-                </x-ui::chart.axis>
-                <x-ui::chart.axis axis="y">
-                    <x-ui::chart.axis.grid />
-                    <x-ui::chart.axis.tick />
-                </x-ui::chart.axis>
-            </x-ui::chart.svg>
-        </x-ui::chart>
+        <x-std::chart :value="$lineData" label="Daily visitors" class="aspect-[3/1] w-full">
+            <x-std::chart.svg>
+                <x-std::chart.line field="visitors" class="text-[var(--chart-3)]" curve="none" />
+                <x-std::chart.area field="visitors" class="text-[var(--chart-3)]/25" curve="none" />
+                <x-std::chart.axis axis="x" field="date">
+                    <x-std::chart.axis.tick />
+                </x-std::chart.axis>
+                <x-std::chart.axis axis="y">
+                    <x-std::chart.axis.grid />
+                    <x-std::chart.axis.tick />
+                </x-std::chart.axis>
+            </x-std::chart.svg>
+        </x-std::chart>
     @else
-        <x-ui::chart :value="$lineData" label="Daily visitors" class="aspect-[3/1] w-full">
-            <x-ui::chart.svg>
-                <x-ui::chart.line field="visitors" class="text-[var(--chart-3)]" />
-                <x-ui::chart.point field="visitors" class="text-[var(--chart-3)]" />
-                <x-ui::chart.axis axis="x" field="date">
-                    <x-ui::chart.axis.line />
-                    <x-ui::chart.axis.tick />
-                </x-ui::chart.axis>
-                <x-ui::chart.axis axis="y">
-                    <x-ui::chart.axis.grid />
-                    <x-ui::chart.axis.tick />
-                </x-ui::chart.axis>
-                <x-ui::chart.cursor />
-            </x-ui::chart.svg>
-            <x-ui::chart.tooltip>
-                <x-ui::chart.tooltip.heading field="date" />
-                <x-ui::chart.tooltip.value field="visitors" label="Visitors" />
-            </x-ui::chart.tooltip>
-        </x-ui::chart>
+        <x-std::chart :value="$lineData" label="Daily visitors" class="aspect-[3/1] w-full">
+            <x-std::chart.svg>
+                <x-std::chart.line field="visitors" class="text-[var(--chart-3)]" />
+                <x-std::chart.point field="visitors" class="text-[var(--chart-3)]" />
+                <x-std::chart.axis axis="x" field="date">
+                    <x-std::chart.axis.line />
+                    <x-std::chart.axis.tick />
+                </x-std::chart.axis>
+                <x-std::chart.axis axis="y">
+                    <x-std::chart.axis.grid />
+                    <x-std::chart.axis.tick />
+                </x-std::chart.axis>
+                <x-std::chart.cursor />
+            </x-std::chart.svg>
+            <x-std::chart.tooltip>
+                <x-std::chart.tooltip.heading field="date" />
+                <x-std::chart.tooltip.value field="visitors" label="Visitors" />
+            </x-std::chart.tooltip>
+        </x-std::chart>
     @endif
 </div>

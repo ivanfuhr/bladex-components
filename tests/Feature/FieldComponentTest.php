@@ -8,9 +8,9 @@ use Illuminate\Support\ViewErrorBag;
 
 it('renders field root with orientation markers', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::field orientation="inline" name="email">
-            <x-ui::field.label>Email</x-ui::field.label>
-        </x-ui::field>
+        <x-std::field orientation="inline" name="email">
+            <x-std::field.label>Email</x-std::field.label>
+        </x-std::field>
     BLADE);
 
     expect($html)
@@ -25,10 +25,10 @@ it('marks field invalid when the error bag has messages for the name', function 
     view()->share('errors', $errors);
 
     $html = Blade::render(<<<'BLADE'
-        <x-ui::field name="email">
-            <x-ui::input name="email" />
-            <x-ui::field.errors name="email" />
-        </x-ui::field>
+        <x-std::field name="email">
+            <x-std::input name="email" />
+            <x-std::field.errors name="email" />
+        </x-std::field>
     BLADE);
 
     expect($html)
@@ -38,7 +38,7 @@ it('marks field invalid when the error bag has messages for the name', function 
 });
 
 it('renders field description using the message primitive', function () {
-    $html = Blade::render('<x-ui::field.description>Helper copy.</x-ui::field.description>');
+    $html = Blade::render('<x-std::field.description>Helper copy.</x-std::field.description>');
 
     expect($html)
         ->toContain('data-field-message')
@@ -47,10 +47,10 @@ it('renders field description using the message primitive', function () {
 
 it('associates field labels with nested controls via control id', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::field name="email">
-            <x-ui::field.label>Email</x-ui::field.label>
-            <x-ui::input name="email" type="email" />
-        </x-ui::field>
+        <x-std::field name="email">
+            <x-std::field.label>Email</x-std::field.label>
+            <x-std::input name="email" type="email" />
+        </x-std::field>
     BLADE);
 
     expect($html)
@@ -60,10 +60,10 @@ it('associates field labels with nested controls via control id', function () {
 
 it('associates checkbox labels so clicking the label toggles the control', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::field name="terms" orientation="inline">
-            <x-ui::checkbox name="terms" />
-            <x-ui::field.label>Accept terms</x-ui::field.label>
-        </x-ui::field>
+        <x-std::field name="terms" orientation="inline">
+            <x-std::checkbox name="terms" />
+            <x-std::field.label>Accept terms</x-std::field.label>
+        </x-std::field>
     BLADE);
 
     expect($html)
@@ -74,10 +74,10 @@ it('associates checkbox labels so clicking the label toggles the control', funct
 
 it('respects an explicit control-id over the field name', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::field name="email" control-id="signup-email">
-            <x-ui::field.label>Email</x-ui::field.label>
-            <x-ui::input name="email" type="email" />
-        </x-ui::field>
+        <x-std::field name="email" control-id="signup-email">
+            <x-std::field.label>Email</x-std::field.label>
+            <x-std::input name="email" type="email" />
+        </x-std::field>
     BLADE);
 
     expect($html)
@@ -92,12 +92,12 @@ it('wires aria-describedby from field description and errors to nested controls'
     view()->share('errors', $errors);
 
     $html = Blade::render(<<<'BLADE'
-        <x-ui::field name="email">
-            <x-ui::field.label>Email</x-ui::field.label>
-            <x-ui::input name="email" type="email" />
-            <x-ui::field.description>We never share your email.</x-ui::field.description>
-            <x-ui::field.errors name="email" />
-        </x-ui::field>
+        <x-std::field name="email">
+            <x-std::field.label>Email</x-std::field.label>
+            <x-std::input name="email" type="email" />
+            <x-std::field.description>We never share your email.</x-std::field.description>
+            <x-std::field.errors name="email" />
+        </x-std::field>
     BLADE);
 
     expect($html)
@@ -117,7 +117,7 @@ it('renders wildcard field errors for indexed validation keys', function () {
     $errors->put('default', $bag);
     view()->share('errors', $errors);
 
-    $html = Blade::render('<x-ui::field.errors name="members.*.name" />');
+    $html = Blade::render('<x-std::field.errors name="members.*.name" />');
 
     expect($html)
         ->toContain('Name is required.')

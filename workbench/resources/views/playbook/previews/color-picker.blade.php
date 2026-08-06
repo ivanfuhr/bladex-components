@@ -3,7 +3,7 @@
     $disabled = (bool) ($state['disabled'] ?? false);
 @endphp
 
-<x-ui::color-picker
+<x-std::color-picker
     name="brand_color"
     value="#3366cc"
     :invalid="$invalid"

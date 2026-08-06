@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Dialog;
+namespace Ivanfuhr\StdComponents\View\Components\Dialog;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Trigger extends StencilComponent
+final class Trigger extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.dialog.trigger';
+        return 'std-components::components.dialog.trigger';
     }
 }

@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, '..');
 const distDir = path.join(root, 'resources', 'dist');
 const entry = path.join(root, 'resources', 'assets', 'builds', 'cdn.js');
-const outfile = path.join(distDir, 'stencil.js');
+const outfile = path.join(distDir, 'std-components.js');
 
 if (!fs.existsSync(distDir)) {
     fs.mkdirSync(distDir, { recursive: true });
@@ -27,7 +27,7 @@ const buildOptions = {
 if (watch) {
     const context = await esbuild.context(buildOptions);
     await context.watch();
-    console.log('Watching stencil.js...');
+    console.log('Watching std-components.js...');
 } else {
     await esbuild.build(buildOptions);
     console.log(`Built ${path.relative(root, outfile)}`);

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\Support\Interaction;
+namespace Ivanfuhr\StdComponents\Support\Interaction;
 
 use Illuminate\View\ComponentAttributeBag;
 

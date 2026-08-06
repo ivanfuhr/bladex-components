@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Breadcrumb;
+namespace Ivanfuhr\StdComponents\View\Components\Breadcrumb;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Separator extends StencilComponent
+final class Separator extends StdComponent
 {
     public function __construct(
         public mixed $type = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.breadcrumb.separator';
+        return 'std-components::components.breadcrumb.separator';
     }
 }

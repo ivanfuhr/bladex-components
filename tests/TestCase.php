@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\Tests;
+namespace Ivanfuhr\StdComponents\Tests;
 
-use Ivanfuhr\Stencil\StencilServiceProvider;
+use Ivanfuhr\StdComponents\StdComponentsServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
@@ -12,7 +12,7 @@ abstract class TestCase extends Orchestra
     protected function getPackageProviders($app): array
     {
         return [
-            StencilServiceProvider::class,
+            StdComponentsServiceProvider::class,
         ];
     }
 
@@ -20,7 +20,7 @@ abstract class TestCase extends Orchestra
     {
         $app['config']->set(
             'view.compiled',
-            sys_get_temp_dir().'/stencil-views-'.getmypid(),
+            sys_get_temp_dir().'/std-components-views-'.getmypid(),
         );
     }
 }

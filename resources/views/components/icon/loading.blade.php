@@ -1,4 +1,4 @@
-@include('stencil::internals.loading-icon', [
+@include('std-components::internals.loading-icon', [
     'variant' => $variant,
     'class' => $attributes->get('class'),
 ])

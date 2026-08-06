@@ -6,7 +6,7 @@
     $accept = filled($state['accept'] ?? null) ? (string) $state['accept'] : null;
 @endphp
 
-<x-ui::file-upload
+<x-std::file-upload
     name="attachments"
     :accept="$accept"
     :multiple="$multiple"

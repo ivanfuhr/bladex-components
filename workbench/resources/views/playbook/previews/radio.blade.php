@@ -3,10 +3,10 @@
     $invalid = (bool) ($state['invalid'] ?? false);
 @endphp
 
-<x-ui::field :invalid="$invalid" class="max-w-md">
-    <x-ui::radio.group name="plan" legend="Billing plan">
-        <x-ui::radio value="free" :size="$size">Free</x-ui::radio>
-        <x-ui::radio value="pro" :size="$size" :checked="true">Pro</x-ui::radio>
-        <x-ui::radio value="team" :size="$size">Team</x-ui::radio>
-    </x-ui::radio.group>
-</x-ui::field>
+<x-std::field :invalid="$invalid" class="max-w-md">
+    <x-std::radio.group name="plan" legend="Billing plan">
+        <x-std::radio value="free" :size="$size">Free</x-std::radio>
+        <x-std::radio value="pro" :size="$size" :checked="true">Pro</x-std::radio>
+        <x-std::radio value="team" :size="$size">Team</x-std::radio>
+    </x-std::radio.group>
+</x-std::field>

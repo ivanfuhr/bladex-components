@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Command;
+namespace Ivanfuhr\StdComponents\View\Components\Command;
 
 use Illuminate\Support\Facades\View;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Item extends StencilComponent
+final class Item extends StdComponent
 {
     public function __construct(
         public mixed $value = null,
@@ -18,9 +18,9 @@ final class Item extends StencilComponent
         public bool $keepOpen = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.command.item';
+        return 'std-components::components.command.item';
     }
 
     /**

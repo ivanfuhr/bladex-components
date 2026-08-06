@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Combobox;
+namespace Ivanfuhr\StdComponents\View\Components\Combobox;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Content extends StencilComponent
+final class Content extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.combobox.content';
+        return 'std-components::components.combobox.content';
     }
 
     /**
@@ -19,10 +19,10 @@ final class Content extends StencilComponent
      */
     protected function resolveViewData(array $data = []): array
     {
-        $listboxId = $this->attributes->get('listbox-id') ?? stencil_ancestor_attribute('listboxId');
-        $comboboxId = stencil_ancestor_attribute('comboboxId');
-        $name = stencil_ancestor_attribute('name');
-        $size = $this->attributes->get('size') ?? stencil_ancestor_attribute('size');
+        $listboxId = $this->attributes->get('listbox-id') ?? std_ancestor_attribute('listboxId');
+        $comboboxId = std_ancestor_attribute('comboboxId');
+        $name = std_ancestor_attribute('name');
+        $size = $this->attributes->get('size') ?? std_ancestor_attribute('size');
 
         $resolvedComboboxId = filled($comboboxId)
             ? $comboboxId
@@ -33,7 +33,7 @@ final class Content extends StencilComponent
 
         $contentClasses = collect([
             'combobox__content',
-            stencil_select_listbox_classes($size),
+            std_select_listbox_classes($size),
         ])->implode(' ');
 
         $contentAttributes = $this->attributes
@@ -46,7 +46,7 @@ final class Content extends StencilComponent
             ])
             ->merge(['data-combobox-content' => '']);
 
-        $multiple = (bool) stencil_ancestor_attribute('multiple', false);
+        $multiple = (bool) std_ancestor_attribute('multiple', false);
 
         if ($multiple) {
             $contentAttributes = $contentAttributes->merge(['aria-multiselectable' => 'true']);

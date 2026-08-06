@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
-use Ivanfuhr\Stencil\Support\Icon\LucideIconInstaller;
+use Ivanfuhr\StdComponents\Support\Icon\LucideIconInstaller;
 
 it('downloads and writes lucide icon stubs', function (): void {
     $relativePath = 'storage/framework/testing/lucide-installer-'.getmypid();

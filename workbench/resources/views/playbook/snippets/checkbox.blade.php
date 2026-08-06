@@ -1,3 +1,3 @@
 @php
-    echo '<x-ui::checkbox name="terms" value="1" />';
+    echo '<x-std::checkbox name="terms" value="1" />';
 @endphp

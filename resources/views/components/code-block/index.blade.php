@@ -10,12 +10,7 @@
                     <span></span>
                 @endif
 
-                <button
-                    type="button"
-                    class="code-block__copy"
-                    data-code-block-copy
-                    aria-label="{{ __('Copy code') }}"
-                >
+                <button type="button" class="code-block__copy" data-code-block-copy aria-label="{{ __('Copy code') }}">
                     {{ __('Copy') }}
                 </button>
             </div>

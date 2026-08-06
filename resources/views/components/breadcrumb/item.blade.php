@@ -7,7 +7,7 @@
     ])
 }}>
     @if (filled($href))
-        <x-ui::breadcrumb.link :href="$href">{{ $slot }}</x-ui::breadcrumb.link>
+        <x-std::breadcrumb.link :href="$href">{{ $slot }}</x-std::breadcrumb.link>
     @elseif (! $slot->isEmpty())
         {{ $slot }}
     @endif

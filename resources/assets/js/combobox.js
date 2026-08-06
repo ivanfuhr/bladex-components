@@ -1,5 +1,5 @@
 /**
- * Stencil — filterable combobox / autocomplete (vanilla JS, no Alpine).
+ * Std Components — filterable combobox / autocomplete (vanilla JS, no Alpine).
  */
 
 import { createBindSignal } from './shared/lifecycle.js';
@@ -82,7 +82,7 @@ function bindCombobox(root) {
     const placeholderFromChips =
         chipsEl instanceof HTMLElement ? (chipsEl.getAttribute('data-placeholder') ?? '') : '';
 
-    const portalMarker = document.createComment('stencil-combobox-portal');
+    const portalMarker = document.createComment('std-combobox-portal');
     let portalInserted = false;
     const signal = createBindSignal(root);
 
@@ -776,7 +776,7 @@ function bindCombobox(root) {
     syncFromValue();
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

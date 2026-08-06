@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Slider;
+namespace Ivanfuhr\StdComponents\View\Components\Slider;
 
 use Illuminate\Support\Facades\View;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Range extends StencilComponent
+final class Range extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.slider.range';
+        return 'std-components::components.slider.range';
     }
 
     /**
@@ -69,7 +69,7 @@ final class Range extends StencilComponent
         $end = max(0, min(100, $end));
 
         return [
-            'rangeClasses' => stencil_slider_range_classes(),
+            'rangeClasses' => std_slider_range_classes(),
             'rangeStart' => $start,
             'rangeEnd' => $end,
         ];

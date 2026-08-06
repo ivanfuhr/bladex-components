@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\DropdownMenu;
+namespace Ivanfuhr\StdComponents\View\Components\DropdownMenu;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Separator extends StencilComponent
+final class Separator extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.dropdown-menu.separator';
+        return 'std-components::components.dropdown-menu.separator';
     }
 }

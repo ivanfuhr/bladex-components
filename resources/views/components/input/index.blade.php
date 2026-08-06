@@ -1,7 +1,7 @@
 @if ($hasGroupAffix)
-    <x-ui::input.group @class([$userClass])>
+    <x-std::input.group @class([$userClass])>
         @if ($prefixText !== null)
-            <x-ui::input.group.prefix>{{ $prefixText }}</x-ui::input.group.prefix>
+            <x-std::input.group.prefix>{{ $prefixText }}</x-std::input.group.prefix>
         @endif
 
         <div {{ $wrapperTagAttributes }}>
@@ -10,12 +10,12 @@
                     @if ($leadingContent instanceof \Illuminate\View\ComponentSlot)
                         {{ $leadingContent }}
                     @else
-                        <x-ui::text
+                        <x-std::text
                             inline
                             size="sm"
                             variant="subtle"
                             class="input__leading-text"
-                        >{{ $leadingContent }}</x-ui::text>
+                        >{{ $leadingContent }}</x-std::text>
                     @endif
                 </div>
             @endif
@@ -27,12 +27,12 @@
                     @if ($trailingContent instanceof \Illuminate\View\ComponentSlot)
                         {{ $trailingContent }}
                     @else
-                        <x-ui::text
+                        <x-std::text
                             inline
                             size="sm"
                             variant="subtle"
                             class="input__trailing-text"
-                        >{{ $trailingContent }}</x-ui::text>
+                        >{{ $trailingContent }}</x-std::text>
                     @endif
                 </div>
             @endif
@@ -47,7 +47,7 @@
                             aria-label="{{ __('Toggle password visibility') }}"
                             aria-pressed="false"
                         >
-                            <x-ui::icon name="eye" class="size-4" />
+                            <x-std::icon name="eye" class="size-4" />
                         </button>
                     @endif
 
@@ -58,7 +58,7 @@
                             data-input-copy
                             aria-label="{{ __('Copy to clipboard') }}"
                         >
-                            <x-ui::icon name="clipboard" class="size-4" />
+                            <x-std::icon name="clipboard" class="size-4" />
                         </button>
                     @endif
                 </div>
@@ -75,9 +75,9 @@
         </div>
 
         @if ($suffixText !== null)
-            <x-ui::input.group.suffix>{{ $suffixText }}</x-ui::input.group.suffix>
+            <x-std::input.group.suffix>{{ $suffixText }}</x-std::input.group.suffix>
         @endif
-    </x-ui::input.group>
+    </x-std::input.group>
 @else
     <div {{ $wrapperTagAttributes }}>
         @if ($hasLeading)
@@ -85,12 +85,12 @@
                 @if ($leadingContent instanceof \Illuminate\View\ComponentSlot)
                     {{ $leadingContent }}
                 @else
-                    <x-ui::text
+                    <x-std::text
                         inline
                         size="sm"
                         variant="subtle"
                         class="input__leading-text"
-                    >{{ $leadingContent }}</x-ui::text>
+                    >{{ $leadingContent }}</x-std::text>
                 @endif
             </div>
         @endif
@@ -102,12 +102,12 @@
                 @if ($trailingContent instanceof \Illuminate\View\ComponentSlot)
                     {{ $trailingContent }}
                 @else
-                    <x-ui::text
+                    <x-std::text
                         inline
                         size="sm"
                         variant="subtle"
                         class="input__trailing-text"
-                    >{{ $trailingContent }}</x-ui::text>
+                    >{{ $trailingContent }}</x-std::text>
                 @endif
             </div>
         @endif
@@ -122,7 +122,7 @@
                         aria-label="{{ __('Toggle password visibility') }}"
                         aria-pressed="false"
                     >
-                        <x-ui::icon name="eye" class="size-4" />
+                        <x-std::icon name="eye" class="size-4" />
                     </button>
                 @endif
 
@@ -133,7 +133,7 @@
                         data-input-copy
                         aria-label="{{ __('Copy to clipboard') }}"
                     >
-                        <x-ui::icon name="clipboard" class="size-4" />
+                        <x-std::icon name="clipboard" class="size-4" />
                     </button>
                 @endif
             </div>

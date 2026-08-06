@@ -6,15 +6,15 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a dialog with trigger, content, and data attributes', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::dialog>
-            <x-ui::dialog.trigger>Open</x-ui::dialog.trigger>
-            <x-ui::dialog.content>
-                <x-ui::dialog.header>
-                    <x-ui::dialog.title>Title</x-ui::dialog.title>
-                    <x-ui::dialog.description>Description</x-ui::dialog.description>
-                </x-ui::dialog.header>
-            </x-ui::dialog.content>
-        </x-ui::dialog>
+        <x-std::dialog>
+            <x-std::dialog.trigger>Open</x-std::dialog.trigger>
+            <x-std::dialog.content>
+                <x-std::dialog.header>
+                    <x-std::dialog.title>Title</x-std::dialog.title>
+                    <x-std::dialog.description>Description</x-std::dialog.description>
+                </x-std::dialog.header>
+            </x-std::dialog.content>
+        </x-std::dialog>
     BLADE);
 
     expect($html)
@@ -34,9 +34,9 @@ it('renders a dialog with trigger, content, and data attributes', function () {
 });
 
 it('keeps dialog open-visibility CSS wired for Tailwind scanners', function () {
-    $tailwind = (string) file_get_contents(dirname(__DIR__, 2).'/resources/tailwind/stencil.css');
-    $package = (string) file_get_contents(dirname(__DIR__, 2).'/resources/css/stencil.css');
-    $workbench = (string) file_get_contents(dirname(__DIR__, 2).'/workbench/resources/css/stencil.css');
+    $tailwind = (string) file_get_contents(dirname(__DIR__, 2).'/resources/tailwind/std-components.css');
+    $package = (string) file_get_contents(dirname(__DIR__, 2).'/resources/css/std-components.css');
+    $workbench = (string) file_get_contents(dirname(__DIR__, 2).'/workbench/resources/css/std-components.css');
 
     foreach ([$tailwind, $package] as $css) {
         expect($css)
@@ -57,10 +57,10 @@ it('keeps dialog open-visibility CSS wired for Tailwind scanners', function () {
 
 it('wires matching title and description ids for aria labelling', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::dialog.content>
-            <x-ui::dialog.title>Confirm</x-ui::dialog.title>
-            <x-ui::dialog.description>This cannot be undone.</x-ui::dialog.description>
-        </x-ui::dialog.content>
+        <x-std::dialog.content>
+            <x-std::dialog.title>Confirm</x-std::dialog.title>
+            <x-std::dialog.description>This cannot be undone.</x-std::dialog.description>
+        </x-std::dialog.content>
     BLADE);
 
     expect($html)->toMatch('/aria-labelledby="([^"]+)"/');
@@ -79,9 +79,9 @@ it('wires matching title and description ids for aria labelling', function () {
 
 it('omits aria-describedby when no description is present', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::dialog.content>
-            <x-ui::dialog.title>Confirm</x-ui::dialog.title>
-        </x-ui::dialog.content>
+        <x-std::dialog.content>
+            <x-std::dialog.title>Confirm</x-std::dialog.title>
+        </x-std::dialog.content>
     BLADE);
 
     expect($html)
@@ -91,9 +91,9 @@ it('omits aria-describedby when no description is present', function () {
 
 it('renders alert dialog semantics and small size', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::dialog.content name="delete" size="sm" :alert="true" :closable="false">
-            <x-ui::dialog.title>Delete project?</x-ui::dialog.title>
-        </x-ui::dialog.content>
+        <x-std::dialog.content name="delete" size="sm" :alert="true" :closable="false">
+            <x-std::dialog.title>Delete project?</x-std::dialog.title>
+        </x-std::dialog.content>
     BLADE);
 
     expect($html)
@@ -105,8 +105,8 @@ it('renders alert dialog semantics and small size', function () {
 
 it('renders named triggers for flux-style composition', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::dialog.trigger name="confirm">Delete</x-ui::dialog.trigger>
-        <x-ui::dialog.content name="confirm">Body</x-ui::dialog.content>
+        <x-std::dialog.trigger name="confirm">Delete</x-std::dialog.trigger>
+        <x-std::dialog.content name="confirm">Body</x-std::dialog.content>
     BLADE);
 
     expect($html)
@@ -115,13 +115,13 @@ it('renders named triggers for flux-style composition', function () {
 });
 
 it('marks dialog as non-dismissible when configured', function () {
-    $html = Blade::render('<x-ui::dialog.content :dismissible="false">Locked</x-ui::dialog.content>');
+    $html = Blade::render('<x-std::dialog.content :dismissible="false">Locked</x-std::dialog.content>');
 
     expect($html)->toContain('data-dialog-dismissible="false"');
 });
 
 it('renders flyout dialog positioning classes', function () {
-    $html = Blade::render('<x-ui::dialog.content flyout flyout-position="left">Panel</x-ui::dialog.content>');
+    $html = Blade::render('<x-std::dialog.content flyout flyout-position="left">Panel</x-std::dialog.content>');
 
     expect($html)
         ->toContain('data-dialog-flyout="true"')
@@ -130,9 +130,9 @@ it('renders flyout dialog positioning classes', function () {
 
 it('centers preview panels without fixed positioning offsets', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::dialog.content preview>
-            <x-ui::dialog.title>Preview</x-ui::dialog.title>
-        </x-ui::dialog.content>
+        <x-std::dialog.content preview>
+            <x-std::dialog.title>Preview</x-std::dialog.title>
+        </x-std::dialog.content>
     BLADE);
 
     expect($html)
@@ -148,7 +148,7 @@ it('centers preview panels without fixed positioning offsets', function () {
 });
 
 it('renders dialog cancel helper with close behavior', function () {
-    $html = Blade::render('<x-ui::dialog.cancel>Cancel</x-ui::dialog.cancel>');
+    $html = Blade::render('<x-std::dialog.cancel>Cancel</x-std::dialog.cancel>');
 
     expect($html)
         ->toContain('data-dialog-close')

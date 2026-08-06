@@ -1,5 +1,5 @@
 /**
- * Stencil runtime bundle — imports all component modules (each self-initializes).
+ * Std Components runtime bundle — imports all component modules (each self-initializes).
  */
 
 import '../js/accordion.js';
@@ -37,5 +37,5 @@ import '../js/toggle.js';
 import '../js/tooltip.js';
 
 if (typeof window !== 'undefined') {
-    window.Stencil = window.Stencil ?? {};
+    window.StdComponents = window.StdComponents ?? {};
 }

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Sidebar;
+namespace Ivanfuhr\StdComponents\View\Components\Sidebar;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Brand extends StencilComponent
+final class Brand extends StdComponent
 {
     public function __construct(
         public mixed $href = '#',
@@ -16,9 +16,9 @@ final class Brand extends StencilComponent
         public mixed $alt = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.sidebar.brand';
+        return 'std-components::components.sidebar.brand';
     }
 
     /**

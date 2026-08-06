@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Dialog extends StencilComponent
+final class Dialog extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.dialog.index';
+        return 'std-components::components.dialog.index';
     }
 }

@@ -117,7 +117,7 @@ function bladePathToViewName(string $bladePath): string
 {
     $view = preg_replace('/\.blade\.php$/', '', $bladePath) ?? $bladePath;
 
-    return 'stencil::components.'.str_replace('/', '.', $view);
+    return 'std-components::components.'.str_replace('/', '.', $view);
 }
 
 function kebabToPascal(string $segment): string
@@ -175,7 +175,7 @@ function inferPropType(string $name, string $default): string
  */
 function generateClassSource(string $className, string $namespacePath, string $viewName, array $props): string
 {
-    $namespace = 'Ivanfuhr\\Stencil\\View\\Components';
+    $namespace = 'Ivanfuhr\\StdComponents\\View\\Components';
 
     if ($namespacePath !== '') {
         $namespace .= '\\'.str_replace('/', '\\', $namespacePath);
@@ -199,11 +199,11 @@ declare(strict_types=1);
 
 namespace {$namespace};
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class {$className} extends StencilComponent
+final class {$className} extends StdComponent
 {{$constructor}
-    protected function stencilView(): string
+    protected function stdView(): string
     {
         return '{$viewName}';
     }

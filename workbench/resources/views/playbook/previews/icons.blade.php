@@ -11,8 +11,8 @@
 <div class="grid max-w-md grid-cols-5 gap-4">
     @foreach ($icons as $icon)
         <div class="flex flex-col items-center gap-2 text-center">
-            <x-ui::icon :name="$icon" class="{{ $sizeClass }}" />
-            <x-ui::text size="sm" variant="subtle">{{ $icon }}</x-ui::text>
+            <x-std::icon :name="$icon" class="{{ $sizeClass }}" />
+            <x-std::text size="sm" variant="subtle">{{ $icon }}</x-std::text>
         </div>
     @endforeach
 </div>

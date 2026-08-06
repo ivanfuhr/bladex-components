@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Dialog;
+namespace Ivanfuhr\StdComponents\View\Components\Dialog;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Header extends StencilComponent
+final class Header extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.dialog.header';
+        return 'std-components::components.dialog.header';
     }
 }

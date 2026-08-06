@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Field;
+namespace Ivanfuhr\StdComponents\View\Components\Field;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Message extends StencilComponent
+final class Message extends StdComponent
 {
     public function __construct(
         public mixed $variant = 'hint',
         public bool $invalid = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.field.message';
+        return 'std-components::components.field.message';
     }
 
     /**

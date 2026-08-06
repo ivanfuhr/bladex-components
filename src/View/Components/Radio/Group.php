@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Radio;
+namespace Ivanfuhr\StdComponents\View\Components\Radio;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Group extends StencilComponent
+final class Group extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
@@ -15,9 +15,9 @@ final class Group extends StencilComponent
         public bool $invalid = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.radio.group';
+        return 'std-components::components.radio.group';
     }
 
     /**

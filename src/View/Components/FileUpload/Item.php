@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\FileUpload;
+namespace Ivanfuhr\StdComponents\View\Components\FileUpload;
 
 use Illuminate\Support\Facades\View;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Item extends StencilComponent
+final class Item extends StdComponent
 {
     public function __construct(
         public mixed $heading = null,
@@ -16,9 +16,9 @@ final class Item extends StencilComponent
         public bool $invalid = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.file-upload.item';
+        return 'std-components::components.file-upload.item';
     }
 
     /**

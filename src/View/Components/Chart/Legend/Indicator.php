@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Chart\Legend;
+namespace Ivanfuhr\StdComponents\View\Components\Chart\Legend;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Indicator extends StencilComponent
+final class Indicator extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.chart.legend.indicator';
+        return 'std-components::components.chart.legend.indicator';
     }
 }

@@ -7,9 +7,9 @@
 
     @if ($shortcut)
         @if ($useSeparator)
-            <x-ui::input-otp.group>
+            <x-std::input-otp.group>
                 @for ($i = 0; $i < $half; $i++)
-                    <x-ui::input-otp.slot
+                    <x-std::input-otp.slot
                         :index="$i"
                         :value="$scalarValue"
                         :invalid="$invalid"
@@ -20,13 +20,13 @@
                         :control-id="$controlId"
                     />
                 @endfor
-            </x-ui::input-otp.group>
+            </x-std::input-otp.group>
 
-            <x-ui::input-otp.separator />
+            <x-std::input-otp.separator />
 
-            <x-ui::input-otp.group>
+            <x-std::input-otp.group>
                 @for ($i = $half; $i < $length; $i++)
-                    <x-ui::input-otp.slot
+                    <x-std::input-otp.slot
                         :index="$i"
                         :value="$scalarValue"
                         :invalid="$invalid"
@@ -37,11 +37,11 @@
                         :control-id="$controlId"
                     />
                 @endfor
-            </x-ui::input-otp.group>
+            </x-std::input-otp.group>
         @else
-            <x-ui::input-otp.group>
+            <x-std::input-otp.group>
                 @for ($i = 0; $i < $length; $i++)
-                    <x-ui::input-otp.slot
+                    <x-std::input-otp.slot
                         :index="$i"
                         :value="$scalarValue"
                         :invalid="$invalid"
@@ -52,7 +52,7 @@
                         :control-id="$controlId"
                     />
                 @endfor
-            </x-ui::input-otp.group>
+            </x-std::input-otp.group>
         @endif
     @else
         {{ $slot }}

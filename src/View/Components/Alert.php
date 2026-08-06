@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Alert extends StencilComponent
+final class Alert extends StdComponent
 {
     public function __construct(
         public mixed $variant = 'default',
@@ -13,9 +13,9 @@ final class Alert extends StencilComponent
         public bool $showIcon = true,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.alert.index';
+        return 'std-components::components.alert.index';
     }
 
     protected function resolveViewData(array $data = []): array

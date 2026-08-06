@@ -33,7 +33,7 @@
         PlaybookCode::attribute('variant', $variant, 'sidebar'),
     ]))."\n";
     $code .= '        <'.$header.'>'."\n";
-    $code .= '            <'.$brand.' href="/" name="Stencil Inc." />'."\n";
+    $code .= '            <'.$brand.' href="/" name="Std Components Inc." />'."\n";
     $code .= '            <'.$collapse.' />'."\n";
     $code .= '        </'.$header.'>'."\n";
     $code .= '        <'.$content.'>'."\n";

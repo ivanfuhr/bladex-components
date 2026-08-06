@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Chart;
+namespace Ivanfuhr\StdComponents\View\Components\Chart;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Bar extends StencilComponent
+final class Bar extends StdComponent
 {
     public function __construct(
         public mixed $field = null,
@@ -15,8 +15,8 @@ final class Bar extends StencilComponent
         public mixed $width = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.chart.bar';
+        return 'std-components::components.chart.bar';
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Ivanfuhr\Stencil\Support\Typography\TypographyConfig;
+use Ivanfuhr\StdComponents\Support\Typography\TypographyConfig;
 
 it('falls back heading role to sans when display font is missing', function (): void {
     $roles = app(TypographyConfig::class)->roles();
@@ -13,7 +13,7 @@ it('falls back heading role to sans when display font is missing', function (): 
 
 it('reads typography roles from package config', function (): void {
     config([
-        'stencil.typography' => [
+        'std-components.typography' => [
             'fonts' => [
                 'sans' => [
                     'provider' => 'google',

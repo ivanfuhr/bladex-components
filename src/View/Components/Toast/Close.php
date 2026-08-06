@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Toast;
+namespace Ivanfuhr\StdComponents\View\Components\Toast;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Close extends StencilComponent
+final class Close extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.toast.close';
+        return 'std-components::components.toast.close';
     }
 }

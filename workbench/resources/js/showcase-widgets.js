@@ -1,6 +1,6 @@
 /**
- * Wire package widget scripts that are not yet copied into workbench/views/ui.
- * Side-effect imports register DOMContentLoaded / stencil:mount handlers.
+ * Wire package widget scripts that are not yet copied into workbench/views/std.
+ * Side-effect imports register DOMContentLoaded / std:mount handlers.
  */
 import '../../../resources/assets/js/tabs.js';
 import '../../../resources/assets/js/toggle.js';

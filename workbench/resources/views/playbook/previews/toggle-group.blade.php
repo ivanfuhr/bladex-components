@@ -7,7 +7,7 @@
     $defaultValue = $type === 'multiple' ? ['bold', 'italic'] : 'bold';
 @endphp
 
-<x-ui::toggle-group
+<x-std::toggle-group
     :type="$type"
     :variant="$variant"
     :size="$size"
@@ -16,7 +16,7 @@
     :default-value="$defaultValue"
     aria-label="Text formatting"
 >
-    <x-ui::toggle-group.item value="bold">Bold</x-ui::toggle-group.item>
-    <x-ui::toggle-group.item value="italic">Italic</x-ui::toggle-group.item>
-    <x-ui::toggle-group.item value="underline">Underline</x-ui::toggle-group.item>
-</x-ui::toggle-group>
+    <x-std::toggle-group.item value="bold">Bold</x-std::toggle-group.item>
+    <x-std::toggle-group.item value="italic">Italic</x-std::toggle-group.item>
+    <x-std::toggle-group.item value="underline">Underline</x-std::toggle-group.item>
+</x-std::toggle-group>

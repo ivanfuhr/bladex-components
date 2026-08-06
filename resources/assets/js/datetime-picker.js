@@ -1,5 +1,5 @@
 /**
- * Stencil — datetime picker (vanilla JS).
+ * Std Components — datetime picker (vanilla JS).
  */
 
 import { bindCalendar } from './calendar.js';
@@ -21,7 +21,7 @@ const initialized = new WeakSet();
  */
 export function initDatetimePickers(root = document) {
     document
-        .querySelectorAll('[data-datetime-picker-panel][data-stencil-portaled]')
+        .querySelectorAll('[data-datetime-picker-panel][data-std-portaled]')
         .forEach((panel) => {
             if (!(panel instanceof HTMLElement) || panel.closest('[data-datetime-picker]')) {
                 return;
@@ -61,7 +61,7 @@ function bindDatetimePicker(root) {
     const timeZone = root.dataset.datetimePickerTimezone ?? 'UTC';
     const withSeconds = root.hasAttribute('data-datetime-picker-seconds');
     const step = parseInt(root.dataset.datetimePickerStep ?? '30', 10) || 30;
-    const portalMarker = document.createComment('stencil-datetime-picker-portal');
+    const portalMarker = document.createComment('std-datetime-picker-portal');
     const signal = createBindSignal(root);
     let isOpen = false;
     /** @type {(() => void) | null} */
@@ -381,7 +381,7 @@ function bindDatetimePicker(root) {
     }
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

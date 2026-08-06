@@ -10,7 +10,7 @@
 }}>
     @if (filled($icon))
         <span aria-hidden="true">
-            <x-ui::icon :name="$icon" class="size-6" />
+            <x-std::icon :name="$icon" class="size-6" />
         </span>
     @endif
     {{ $slot }}

@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Blade;
 
 it('uses status role and polite live region for info alerts', function () {
-    $html = Blade::render('<x-ui::alert variant="info" title="Tip">Note</x-ui::alert>');
+    $html = Blade::render('<x-std::alert variant="info" title="Tip">Note</x-std::alert>');
 
     expect($html)
         ->toContain('role="status"')
@@ -15,7 +15,7 @@ it('uses status role and polite live region for info alerts', function () {
 });
 
 it('uses alert role and assertive live region for danger alerts', function () {
-    $html = Blade::render('<x-ui::alert variant="danger" title="Failed">Error</x-ui::alert>');
+    $html = Blade::render('<x-std::alert variant="danger" title="Failed">Error</x-std::alert>');
 
     expect($html)
         ->toContain('role="alert"')
@@ -25,7 +25,7 @@ it('uses alert role and assertive live region for danger alerts', function () {
 });
 
 it('renders default variant icons when enabled', function () {
-    $html = Blade::render('<x-ui::alert variant="success" title="Saved">Done</x-ui::alert>');
+    $html = Blade::render('<x-std::alert variant="success" title="Saved">Done</x-std::alert>');
 
     expect($html)
         ->toContain('data-alert-icon')

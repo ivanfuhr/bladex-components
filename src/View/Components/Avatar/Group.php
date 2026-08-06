@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Avatar;
+namespace Ivanfuhr\StdComponents\View\Components\Avatar;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Group extends StencilComponent
+final class Group extends StdComponent
 {
     public function __construct(
         public mixed $label = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.avatar.group';
+        return 'std-components::components.avatar.group';
     }
 }

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class Calendar extends StencilComponent
+final class Calendar extends StdComponent
 {
     public function __construct(
         public mixed $mode = 'single',
@@ -28,9 +28,9 @@ final class Calendar extends StencilComponent
         public mixed $maxRange = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.calendar.index';
+        return 'std-components::components.calendar.index';
     }
 
     /**
@@ -41,9 +41,9 @@ final class Calendar extends StencilComponent
     {
         $range = $this->mode === 'range';
         $monthCount = (int) ($this->months ?? ($range ? 2 : 1));
-        $resolvedTimezone = stencil_resolve_timezone($this->timezone);
+        $resolvedTimezone = std_resolve_timezone($this->timezone);
         $resolvedLocale = $this->locale ?? app()->getLocale();
-        $resolvedValue = stencil_normalize_date_value($this->value, $this->mode);
+        $resolvedValue = std_normalize_date_value($this->value, $this->mode);
 
         $unavailable = $this->unavailable;
 

@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Toast;
+namespace Ivanfuhr\StdComponents\View\Components\Toast;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Provider extends StencilComponent
+final class Provider extends StdComponent
 {
     public function __construct(
         public mixed $position = 'bottom-right',
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.toast.provider';
+        return 'std-components::components.toast.provider';
     }
 
     /**

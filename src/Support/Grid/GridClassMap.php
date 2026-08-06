@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\Support\Grid;
+namespace Ivanfuhr\StdComponents\Support\Grid;
 
 final class GridClassMap
 {

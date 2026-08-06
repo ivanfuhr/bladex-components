@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use Ivanfuhr\Stencil\Support\Code\CodeHighlighter;
+use Ivanfuhr\StdComponents\Support\Code\CodeHighlighter;
 
 it('highlights blade tags, attributes, and directives', function () {
     $code = <<<'BLADE'
-<x-ui::button-group aria-label="Actions">
-    <x-ui::button variant="outline">Archive</x-ui::button>
-</x-ui::button-group>
+<x-std::button-group aria-label="Actions">
+    <x-std::button variant="outline">Archive</x-std::button>
+</x-std::button-group>
 BLADE;
 
     $html = (new CodeHighlighter)->highlight($code, 'blade');
@@ -17,7 +17,7 @@ BLADE;
         ->toContain('code-block__token--tag')
         ->toContain('code-block__token--attr')
         ->toContain('code-block__token--string')
-        ->toContain('x-ui::button-group')
+        ->toContain('x-std::button-group')
         ->toContain('aria-label')
         ->toContain('&quot;Actions&quot;');
 });
@@ -33,7 +33,7 @@ it('highlights blade echo and comment syntax', function () {
 });
 
 it('highlights bash commands and flags', function () {
-    $code = "composer require ivanfuhr/stencil\nphp artisan vendor:publish --tag=stencil-config";
+    $code = "composer require ivanfuhr/std-components\nphp artisan vendor:publish --tag=std-components-config";
 
     $html = (new CodeHighlighter)->highlight($code, 'bash');
 
@@ -41,11 +41,11 @@ it('highlights bash commands and flags', function () {
         ->toContain('code-block__token--command')
         ->toContain('code-block__token--flag')
         ->toContain('composer')
-        ->toContain('--tag=stencil-config');
+        ->toContain('--tag=std-components-config');
 });
 
 it('wraps markdown code blocks with the code block chrome', function () {
-    $markdownHtml = '<pre><code class="language-blade">&lt;x-ui::button&gt;Save&lt;/x-ui::button&gt;</code></pre>';
+    $markdownHtml = '<pre><code class="language-blade">&lt;x-std::button&gt;Save&lt;/x-std::button&gt;</code></pre>';
 
     $html = (new CodeHighlighter)->highlightHtmlDocument($markdownHtml);
 
@@ -54,5 +54,5 @@ it('wraps markdown code blocks with the code block chrome', function () {
         ->toContain('data-code-block-copy')
         ->toContain('code-block__token--tag')
         ->toContain('language-blade')
-        ->toContain('&lt;x-ui::button&gt;');
+        ->toContain('&lt;x-std::button&gt;');
 });

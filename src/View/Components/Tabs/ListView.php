@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Tabs;
+namespace Ivanfuhr\StdComponents\View\Components\Tabs;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class ListView extends StencilComponent
+final class ListView extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.tabs.list';
+        return 'std-components::components.tabs.list';
     }
 
     /**

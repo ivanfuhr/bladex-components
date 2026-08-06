@@ -1,10 +1,10 @@
 <div class="flex w-full min-w-0 items-center gap-2">
     <button {{ $triggerAttributes }} data-date-picker-trigger>
         <span class="flex min-w-0 flex-1 items-center gap-2">
-            <x-ui::icon name="calendar" class="size-4 shrink-0 opacity-50" />
-            <x-ui::date-picker.selected :$placeholder />
+            <x-std::icon name="calendar" class="size-4 shrink-0 opacity-50" />
+            <x-std::date-picker.selected :$placeholder />
         </span>
-        <x-ui::icon name="chevron-down" class="size-4 shrink-0 opacity-50" />
+        <x-std::icon name="chevron-down" class="size-4 shrink-0 opacity-50" />
     </button>
     @if ($clearable)
         <button
@@ -13,7 +13,7 @@
             data-date-picker-clear
             aria-label="{{ __('Clear date') }}"
         >
-            <x-ui::icon name="x" class="size-4" />
+            <x-std::icon name="x" class="size-4" />
         </button>
     @endif
 </div>

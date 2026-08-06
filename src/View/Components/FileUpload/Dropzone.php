@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\FileUpload;
+namespace Ivanfuhr\StdComponents\View\Components\FileUpload;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Dropzone extends StencilComponent
+final class Dropzone extends StdComponent
 {
     public function __construct(
         public mixed $heading = null,
@@ -15,9 +15,9 @@ final class Dropzone extends StencilComponent
         public bool $invalid = false,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.file-upload.dropzone';
+        return 'std-components::components.file-upload.dropzone';
     }
 
     /**
@@ -47,14 +47,14 @@ final class Dropzone extends StencilComponent
             'dark:focus-visible:ring-zinc-300/20',
             'data-[dragging=true]:border-zinc-900 data-[dragging=true]:bg-zinc-50',
             'dark:data-[dragging=true]:border-zinc-50 dark:data-[dragging=true]:bg-zinc-900',
-            stencil_invalid_field_classes(),
+            std_invalid_field_classes(),
             $this->inline ? 'min-h-16 flex-row gap-3 py-3' : 'min-h-36 py-8',
             $size === 'sm' ? ($this->inline ? 'min-h-12 py-2' : 'min-h-28 py-6') : null,
             $isInvalid ? 'border-red-500 dark:border-red-500' : null,
             $disabled ? 'pointer-events-none cursor-not-allowed opacity-50' : null,
         ])->filter()->implode(' ');
 
-        $dropzoneAttributes = stencil_apply_interaction($this->attributes
+        $dropzoneAttributes = std_apply_interaction($this->attributes
             ->except(['heading', 'text', 'inline'])
             ->class($dropzoneClasses)
             ->merge([

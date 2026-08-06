@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Blade;
 
 it('renders a select root with hidden input and data attributes', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::select name="industry" placeholder="Choose…">
-            <x-ui::select.item value="photo">Photography</x-ui::select.item>
-        </x-ui::select>
+        <x-std::select name="industry" placeholder="Choose…">
+            <x-std::select.item value="photo">Photography</x-std::select.item>
+        </x-std::select>
     BLADE);
 
     expect($html)
@@ -25,9 +25,9 @@ it('renders a select root with hidden input and data attributes', function () {
 
 it('renders shortcut mode with placeholder on the value element', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::select name="industry" placeholder="Choose industry…">
-            <x-ui::select.item value="other">Other</x-ui::select.item>
-        </x-ui::select>
+        <x-std::select name="industry" placeholder="Choose industry…">
+            <x-std::select.item value="other">Other</x-std::select.item>
+        </x-std::select>
     BLADE);
 
     expect($html)
@@ -37,14 +37,14 @@ it('renders shortcut mode with placeholder on the value element', function () {
 
 it('renders full compound structure without duplicating trigger wrapper', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::select name="role" :shortcut="false">
-            <x-ui::select.trigger>
-                <x-ui::select.value placeholder="Role" />
-            </x-ui::select.trigger>
-            <x-ui::select.content>
-                <x-ui::select.item value="admin">Admin</x-ui::select.item>
-            </x-ui::select.content>
-        </x-ui::select>
+        <x-std::select name="role" :shortcut="false">
+            <x-std::select.trigger>
+                <x-std::select.value placeholder="Role" />
+            </x-std::select.trigger>
+            <x-std::select.content>
+                <x-std::select.item value="admin">Admin</x-std::select.item>
+            </x-std::select.content>
+        </x-std::select>
     BLADE);
 
     expect($html)
@@ -60,9 +60,9 @@ it('renders full compound structure without duplicating trigger wrapper', functi
 
 it('marks the trigger invalid when the invalid prop is true', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::select name="industry" :invalid="true" placeholder="Choose…">
-            <x-ui::select.item value="a">A</x-ui::select.item>
-        </x-ui::select>
+        <x-std::select name="industry" :invalid="true" placeholder="Choose…">
+            <x-std::select.item value="a">A</x-std::select.item>
+        </x-std::select>
     BLADE);
 
     expect($html)->toContain('aria-invalid="true"');
@@ -70,9 +70,9 @@ it('marks the trigger invalid when the invalid prop is true', function () {
 
 it('disables the trigger when the disabled prop is true', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::select name="industry" :disabled="true" placeholder="Choose…">
-            <x-ui::select.item value="a">A</x-ui::select.item>
-        </x-ui::select>
+        <x-std::select name="industry" :disabled="true" placeholder="Choose…">
+            <x-std::select.item value="a">A</x-std::select.item>
+        </x-std::select>
     BLADE);
 
     expect($html)->toContain('disabled');
@@ -80,19 +80,19 @@ it('disables the trigger when the disabled prop is true', function () {
 
 it('renders group label and separator markup', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::select name="fruit" placeholder="Fruit" :shortcut="false">
-            <x-ui::select.trigger>
-                <x-ui::select.value />
-            </x-ui::select.trigger>
-            <x-ui::select.content>
-                <x-ui::select.group>
-                    <x-ui::select.label>Citrus</x-ui::select.label>
-                    <x-ui::select.item value="orange">Orange</x-ui::select.item>
-                </x-ui::select.group>
-                <x-ui::select.separator />
-                <x-ui::select.item value="apple">Apple</x-ui::select.item>
-            </x-ui::select.content>
-        </x-ui::select>
+        <x-std::select name="fruit" placeholder="Fruit" :shortcut="false">
+            <x-std::select.trigger>
+                <x-std::select.value />
+            </x-std::select.trigger>
+            <x-std::select.content>
+                <x-std::select.group>
+                    <x-std::select.label>Citrus</x-std::select.label>
+                    <x-std::select.item value="orange">Orange</x-std::select.item>
+                </x-std::select.group>
+                <x-std::select.separator />
+                <x-std::select.item value="apple">Apple</x-std::select.item>
+            </x-std::select.content>
+        </x-std::select>
     BLADE);
 
     expect($html)
@@ -104,9 +104,9 @@ it('renders group label and separator markup', function () {
 
 it('defaults to full width when no custom class is provided', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::select name="industry" placeholder="Choose…">
-            <x-ui::select.item value="a">A</x-ui::select.item>
-        </x-ui::select>
+        <x-std::select name="industry" placeholder="Choose…">
+            <x-std::select.item value="a">A</x-std::select.item>
+        </x-std::select>
     BLADE);
 
     expect($html)->toContain('class="select relative min-w-0 w-full"');
@@ -114,9 +114,9 @@ it('defaults to full width when no custom class is provided', function () {
 
 it('allows width utilities on the root to override the default w-full', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::select name="industry" class="w-36" placeholder="Choose…">
-            <x-ui::select.item value="a">A</x-ui::select.item>
-        </x-ui::select>
+        <x-std::select name="industry" class="w-36" placeholder="Choose…">
+            <x-std::select.item value="a">A</x-std::select.item>
+        </x-std::select>
     BLADE);
 
     expect($html)->toContain('class="select relative min-w-0 w-36"');
@@ -124,9 +124,9 @@ it('allows width utilities on the root to override the default w-full', function
 
 it('styles select options with hover feedback', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::select name="x" placeholder="X">
-            <x-ui::select.item value="a">A</x-ui::select.item>
-        </x-ui::select>
+        <x-std::select name="x" placeholder="X">
+            <x-std::select.item value="a">A</x-std::select.item>
+        </x-std::select>
     BLADE);
 
     expect($html)
@@ -136,9 +136,9 @@ it('styles select options with hover feedback', function () {
 
 it('uses a pointer cursor on the select trigger', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::select name="x" placeholder="X">
-            <x-ui::select.item value="a">A</x-ui::select.item>
-        </x-ui::select>
+        <x-std::select name="x" placeholder="X">
+            <x-std::select.item value="a">A</x-std::select.item>
+        </x-std::select>
     BLADE);
 
     expect($html)
@@ -148,9 +148,9 @@ it('uses a pointer cursor on the select trigger', function () {
 
 it('marks disabled items with data-disabled', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::select name="x" placeholder="X">
-            <x-ui::select.item value="a" :disabled="true">Locked</x-ui::select.item>
-        </x-ui::select>
+        <x-std::select name="x" placeholder="X">
+            <x-std::select.item value="a" :disabled="true">Locked</x-std::select.item>
+        </x-std::select>
     BLADE);
 
     expect($html)
@@ -160,9 +160,9 @@ it('marks disabled items with data-disabled', function () {
 
 it('normalizes the field name and exposes multiple data attributes', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::select name="tags" :multiple="true" placeholder="Choose…">
-            <x-ui::select.item value="a">A</x-ui::select.item>
-        </x-ui::select>
+        <x-std::select name="tags" :multiple="true" placeholder="Choose…">
+            <x-std::select.item value="a">A</x-std::select.item>
+        </x-std::select>
     BLADE);
 
     expect($html)
@@ -175,10 +175,10 @@ it('normalizes the field name and exposes multiple data attributes', function ()
 
 it('renders one hidden input per selected value for multiple selects', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::select name="tags" :multiple="true" :value="['photo', 'web']" placeholder="Choose…">
-            <x-ui::select.item value="photo">Photo</x-ui::select.item>
-            <x-ui::select.item value="web">Web</x-ui::select.item>
-        </x-ui::select>
+        <x-std::select name="tags" :multiple="true" :value="['photo', 'web']" placeholder="Choose…">
+            <x-std::select.item value="photo">Photo</x-std::select.item>
+            <x-std::select.item value="web">Web</x-std::select.item>
+        </x-std::select>
     BLADE);
 
     expect($html)
@@ -191,14 +191,14 @@ it('renders one hidden input per selected value for multiple selects', function 
 
 it('marks the listbox as multiselectable when multiple is true', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::select name="tags" :multiple="true" placeholder="Choose…" :shortcut="false">
-            <x-ui::select.trigger>
-                <x-ui::select.value placeholder="Choose…" />
-            </x-ui::select.trigger>
-            <x-ui::select.content>
-                <x-ui::select.item value="a">A</x-ui::select.item>
-            </x-ui::select.content>
-        </x-ui::select>
+        <x-std::select name="tags" :multiple="true" placeholder="Choose…" :shortcut="false">
+            <x-std::select.trigger>
+                <x-std::select.value placeholder="Choose…" />
+            </x-std::select.trigger>
+            <x-std::select.content>
+                <x-std::select.item value="a">A</x-std::select.item>
+            </x-std::select.content>
+        </x-std::select>
     BLADE);
 
     expect($html)->toContain('aria-multiselectable="true"');
@@ -206,9 +206,9 @@ it('marks the listbox as multiselectable when multiple is true', function () {
 
 it('renders chips primitives and chip template when display is chips', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::select name="tags" :multiple="true" display="chips" placeholder="Choose…">
-            <x-ui::select.item value="a">A</x-ui::select.item>
-        </x-ui::select>
+        <x-std::select name="tags" :multiple="true" display="chips" placeholder="Choose…">
+            <x-std::select.item value="a">A</x-std::select.item>
+        </x-std::select>
     BLADE);
 
     expect($html)
@@ -219,14 +219,14 @@ it('renders chips primitives and chip template when display is chips', function 
 
 it('supports compound multiple layout with a single trigger', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::select name="roles" :multiple="true" :shortcut="false">
-            <x-ui::select.trigger>
-                <x-ui::select.value placeholder="Roles" />
-            </x-ui::select.trigger>
-            <x-ui::select.content>
-                <x-ui::select.item value="admin">Admin</x-ui::select.item>
-            </x-ui::select.content>
-        </x-ui::select>
+        <x-std::select name="roles" :multiple="true" :shortcut="false">
+            <x-std::select.trigger>
+                <x-std::select.value placeholder="Roles" />
+            </x-std::select.trigger>
+            <x-std::select.content>
+                <x-std::select.item value="admin">Admin</x-std::select.item>
+            </x-std::select.content>
+        </x-std::select>
     BLADE);
 
     expect($html)
@@ -246,5 +246,5 @@ it('select script removes orphaned portaled content on remount', function () {
         ->toContain("content.closest('[data-select]')")
         ->toContain('content.remove()')
         ->toContain('createBindSignal')
-        ->toContain('stencil:mount');
+        ->toContain('std:mount');
 });

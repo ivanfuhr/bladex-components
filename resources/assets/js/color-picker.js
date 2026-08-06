@@ -1,5 +1,5 @@
 /**
- * Stencil — color picker with SV canvas, hue slider, and swatch palette (vanilla JS).
+ * Std Components — color picker with SV canvas, hue slider, and swatch palette (vanilla JS).
  */
 
 import { createBindSignal } from './shared/lifecycle.js';
@@ -270,7 +270,7 @@ function bindColorPicker(root) {
 
     const swatchesContainer = popover.querySelector('[data-color-picker-swatches]');
 
-    const portalMarker = document.createComment('stencil-color-picker-portal');
+    const portalMarker = document.createComment('std-color-picker-portal');
     let portalInserted = false;
     const signal = createBindSignal(root);
     let open = false;
@@ -774,7 +774,7 @@ function bindColorPicker(root) {
     }
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

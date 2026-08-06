@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Blade;
 
 it('renders paragraph text by default', function (): void {
-    $html = Blade::render('<x-ui::text>Hello</x-ui::text>');
+    $html = Blade::render('<x-std::text>Hello</x-std::text>');
 
     expect($html)
         ->toContain('<p')
@@ -16,13 +16,13 @@ it('renders paragraph text by default', function (): void {
 });
 
 it('renders inline span text when requested', function (): void {
-    $html = Blade::render('<x-ui::text inline>Inline</x-ui::text>');
+    $html = Blade::render('<x-std::text inline>Inline</x-std::text>');
 
     expect($html)->toContain('<span')->toContain('Inline');
 });
 
 it('applies size variant and color props', function (): void {
-    $html = Blade::render('<x-ui::text size="lg" variant="strong" color="blue">Copy</x-ui::text>');
+    $html = Blade::render('<x-std::text size="lg" variant="strong" color="blue">Copy</x-std::text>');
 
     expect($html)
         ->toContain('text-lg')
@@ -31,7 +31,7 @@ it('applies size variant and color props', function (): void {
 });
 
 it('merges consumer classes on the root element', function (): void {
-    $html = Blade::render('<x-ui::text class="mt-2">Copy</x-ui::text>');
+    $html = Blade::render('<x-std::text class="mt-2">Copy</x-std::text>');
 
     expect($html)->toContain('mt-2');
 });

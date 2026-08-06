@@ -1,5 +1,5 @@
 /**
- * Stencil — composable app-shell sidebar (vanilla JS, no Alpine).
+ * Std Components — composable app-shell sidebar (vanilla JS, no Alpine).
  * Desktop collapse/expand + mobile overlay; persists open state in localStorage.
  */
 
@@ -36,7 +36,7 @@ export function initSidebars(root = document) {
  * @param {HTMLElement} provider
  */
 function bindSidebarProvider(provider) {
-    const storageKey = provider.dataset.storageKey || 'stencil-sidebar-state';
+    const storageKey = provider.dataset.storageKey || 'std-sidebar-state';
     const defaultOpen = provider.dataset.defaultOpen !== 'false';
     const media = window.matchMedia(MOBILE_QUERY);
     const signal = createBindSignal(provider);
@@ -74,7 +74,7 @@ function bindSidebarProvider(provider) {
         });
 
         document.documentElement.classList.toggle(
-            'stencil-sidebar-mobile-open',
+            'std-sidebar-mobile-open',
             isMobile && openMobile,
         );
     };
@@ -87,7 +87,7 @@ function bindSidebarProvider(provider) {
         writeStoredOpen(storageKey, open);
         sync();
         provider.dispatchEvent(
-            new CustomEvent('stencil:sidebar:change', {
+            new CustomEvent('std:sidebar:change', {
                 bubbles: true,
                 detail: { open, openMobile, isMobile },
             }),
@@ -101,7 +101,7 @@ function bindSidebarProvider(provider) {
         openMobile = next;
         sync();
         provider.dispatchEvent(
-            new CustomEvent('stencil:sidebar:change', {
+            new CustomEvent('std:sidebar:change', {
                 bubbles: true,
                 detail: { open, openMobile, isMobile },
             }),
@@ -241,7 +241,7 @@ function writeStoredOpen(key, open) {
     }
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

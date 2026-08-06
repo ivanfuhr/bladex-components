@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Select;
+namespace Ivanfuhr\StdComponents\View\Components\Select;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Chip extends StencilComponent
+final class Chip extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.select.chip';
+        return 'std-components::components.select.chip';
     }
 
     /**
@@ -19,7 +19,7 @@ final class Chip extends StencilComponent
      */
     protected function resolveViewData(array $data = []): array
     {
-        $size = $this->attributes->get('size') ?? stencil_ancestor_attribute('size');
+        $size = $this->attributes->get('size') ?? std_ancestor_attribute('size');
 
         $chipSizeClasses = $size === 'sm'
             ? 'text-xs px-1.5 py-0'

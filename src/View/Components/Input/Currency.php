@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Input;
+namespace Ivanfuhr\StdComponents\View\Components\Input;
 
 use Illuminate\Support\Number;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Currency extends StencilComponent
+final class Currency extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
@@ -21,9 +21,9 @@ final class Currency extends StencilComponent
         public mixed $controlId = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.input.currency';
+        return 'std-components::components.input.currency';
     }
 
     /**
@@ -33,7 +33,7 @@ final class Currency extends StencilComponent
     protected function resolveViewData(array $data = []): array
     {
         $fieldInvalid = (bool) ($data['fieldInvalid'] ?? false);
-        $invalid = $this->invalid || $fieldInvalid || stencil_field_has_errors($this->name);
+        $invalid = $this->invalid || $fieldInvalid || std_field_has_errors($this->name);
 
         $resolvedControlId = $this->attributes->get('id')
             ?? $this->controlId
@@ -75,9 +75,9 @@ final class Currency extends StencilComponent
             'input__control',
             'input-currency__control',
             'flex w-full min-w-0',
-            stencil_field_surface_classes($this->size),
+            std_field_surface_classes($this->size),
             'placeholder:text-zinc-500 dark:placeholder:text-zinc-400',
-            stencil_invalid_field_classes(),
+            std_invalid_field_classes(),
             $invalid ? 'border-red-500 focus-visible:ring-red-500/20 dark:border-red-500' : null,
         ])->filter()->implode(' ');
 
@@ -91,7 +91,7 @@ final class Currency extends StencilComponent
 
         $controlExtraClass = $this->attributes->get('class:input') ?? $this->attributes->get('input:class');
 
-        $controlAttributes = stencil_apply_interaction($this->attributes
+        $controlAttributes = std_apply_interaction($this->attributes
             ->except(['class', 'class:input', 'input:class', 'name', 'value', 'currency', 'locale', 'precision', 'mode', 'id'])
             ->class([$controlClasses, $controlExtraClass])
             ->merge([
@@ -112,7 +112,7 @@ final class Currency extends StencilComponent
             $controlAttributes = $controlAttributes->merge(['aria-invalid' => 'true']);
         }
 
-        $controlAttributes = stencil_merge_described_by($controlAttributes, $this->aware('describedBy'));
+        $controlAttributes = std_merge_described_by($controlAttributes, $this->aware('describedBy'));
 
         return [
             'mode' => $mode,

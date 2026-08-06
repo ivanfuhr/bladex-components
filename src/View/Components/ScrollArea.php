@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
-final class ScrollArea extends StencilComponent
+final class ScrollArea extends StdComponent
 {
     public function __construct(
         public string $type = 'hover',
@@ -13,9 +13,9 @@ final class ScrollArea extends StencilComponent
         public bool $shortcut = true,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.scroll-area.index';
+        return 'std-components::components.scroll-area.index';
     }
 
     /**

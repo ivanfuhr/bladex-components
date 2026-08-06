@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\View\ComponentSlot;
-use Ivanfuhr\Stencil\Support\Button\ButtonClassMap;
-use Ivanfuhr\Stencil\Support\Interaction\InteractionStateAttributes;
+use Ivanfuhr\StdComponents\Support\Button\ButtonClassMap;
+use Ivanfuhr\StdComponents\Support\Interaction\InteractionStateAttributes;
 
-final class Button extends StencilComponent
+final class Button extends StdComponent
 {
     public function __construct(
         public string $variant = 'outline',
@@ -23,9 +23,9 @@ final class Button extends StencilComponent
         public mixed $trailing = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.button.index';
+        return 'std-components::components.button.index';
     }
 
     /**

@@ -1,26 +1,26 @@
-On-demand [Lucide](https://lucide.dev/icons/) icons — `outline` (16px), `mini` (20px), and `micro` (12px) variants. The built-in loading spinner ships with the package. Use `php artisan stencil:icon` to publish additional Lucide icons.
+On-demand [Lucide](https://lucide.dev/icons/) icons — `outline` (16px), `mini` (20px), and `micro` (12px) variants. The built-in loading spinner ships with the package. Use `php artisan std:icon` to publish additional Lucide icons.
 
 ```bash
-php artisan stencil:icon search
+php artisan std:icon search
 ```
 
 ```blade
-<x-ui::icon.loading class="size-4" />
-<x-ui::icon.loading class="size-5" />
-<x-ui::icon.loading class="size-3" />
+<x-std::icon.loading class="size-4" />
+<x-std::icon.loading class="size-5" />
+<x-std::icon.loading class="size-3" />
 
-<x-ui::input name="search" placeholder="Search…">
+<x-std::input name="search" placeholder="Search…">
     <x-slot:leading>
-        <x-ui::icon.loading />
+        <x-std::icon.loading />
     </x-slot:leading>
-</x-ui::input>
+</x-std::input>
 
-<x-ui::button variant="primary">
+<x-std::button variant="primary">
     <x-slot:leading>
-        <x-ui::icon.loading class="animate-spin" />
+        <x-std::icon.loading class="animate-spin" />
     </x-slot:leading>
     Saving…
-</x-ui::button>
+</x-std::button>
 ```
 
 <br>

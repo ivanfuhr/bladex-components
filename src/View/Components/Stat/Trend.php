@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Stat;
+namespace Ivanfuhr\StdComponents\View\Components\Stat;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Trend extends StencilComponent
+final class Trend extends StdComponent
 {
     public function __construct(
         public mixed $direction = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.stat.trend';
+        return 'std-components::components.stat.trend';
     }
 
     protected function resolveViewData(array $data = []): array

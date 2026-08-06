@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Blade;
 
 it('renders an avatar image with fallback initials from name', function () {
-    $html = Blade::render('<x-ui::avatar src="https://example.com/a.jpg" name="Caleb Porzio" circle size="lg" />');
+    $html = Blade::render('<x-std::avatar src="https://example.com/a.jpg" name="Caleb Porzio" circle size="lg" />');
 
     expect($html)
         ->toContain('data-avatar')
@@ -19,7 +19,7 @@ it('renders an avatar image with fallback initials from name', function () {
 });
 
 it('renders initials-only avatar with color', function () {
-    $html = Blade::render('<x-ui::avatar name="Ada Lovelace" color="violet" initials="AL" />');
+    $html = Blade::render('<x-std::avatar name="Ada Lovelace" color="violet" initials="AL" />');
 
     expect($html)
         ->toContain('AL')
@@ -31,10 +31,10 @@ it('renders initials-only avatar with color', function () {
 
 it('supports compound image and fallback composition', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::avatar size="sm">
-            <x-ui::avatar.image src="/me.jpg" alt="Me" />
-            <x-ui::avatar.fallback>ME</x-ui::avatar.fallback>
-        </x-ui::avatar>
+        <x-std::avatar size="sm">
+            <x-std::avatar.image src="/me.jpg" alt="Me" />
+            <x-std::avatar.fallback>ME</x-std::avatar.fallback>
+        </x-std::avatar>
     BLADE);
 
     expect($html)
@@ -46,10 +46,10 @@ it('supports compound image and fallback composition', function () {
 
 it('renders avatar groups with overlapping rings', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::avatar.group>
-            <x-ui::avatar name="One" />
-            <x-ui::avatar name="Two" />
-        </x-ui::avatar.group>
+        <x-std::avatar.group>
+            <x-std::avatar name="One" />
+            <x-std::avatar name="Two" />
+        </x-std::avatar.group>
     BLADE);
 
     expect($html)
@@ -60,10 +60,10 @@ it('renders avatar groups with overlapping rings', function () {
 
 it('renders avatar group labels when provided', function () {
     $html = Blade::render(<<<'BLADE'
-        <x-ui::avatar.group label="Project contributors">
-            <x-ui::avatar name="One" />
-            <x-ui::avatar name="Two" />
-        </x-ui::avatar.group>
+        <x-std::avatar.group label="Project contributors">
+            <x-std::avatar name="One" />
+            <x-std::avatar name="Two" />
+        </x-std::avatar.group>
     BLADE);
 
     expect($html)

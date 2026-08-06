@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Carbon\Carbon;
-use Ivanfuhr\Stencil\Support\Date\DateFormatter;
-use Ivanfuhr\Stencil\Support\Date\DateRange;
-use Ivanfuhr\Stencil\Support\Date\DateRangePreset;
+use Ivanfuhr\StdComponents\Support\Date\DateFormatter;
+use Ivanfuhr\StdComponents\Support\Date\DateRange;
+use Ivanfuhr\StdComponents\Support\Date\DateRangePreset;
 
 it('builds last month preset range', function () {
     Carbon::setTestNow(Carbon::parse('2026-03-15'));

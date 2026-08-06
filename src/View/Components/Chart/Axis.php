@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Chart;
+namespace Ivanfuhr\StdComponents\View\Components\Chart;
 
 use Illuminate\Support\Js;
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Axis extends StencilComponent
+final class Axis extends StdComponent
 {
     public function __construct(
         public mixed $axis = 'x',
@@ -22,9 +22,9 @@ final class Axis extends StencilComponent
         public mixed $tickEnd = null,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.chart.axis.index';
+        return 'std-components::components.chart.axis.index';
     }
 
     protected function resolveViewData(array $data = []): array

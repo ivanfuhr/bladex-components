@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use Ivanfuhr\Stencil\Support\Form\FormControlClassMap;
-use Ivanfuhr\Stencil\Support\Tailwind\ComponentClassSources;
+use Ivanfuhr\StdComponents\Support\Form\FormControlClassMap;
+use Ivanfuhr\StdComponents\Support\Tailwind\ComponentClassSources;
 
 it('keeps cascade layer lock, dialog safety net, and Support scan wiring', function () {
-    $tailwind = (string) file_get_contents(dirname(__DIR__, 2).'/resources/tailwind/stencil.css');
-    $package = (string) file_get_contents(dirname(__DIR__, 2).'/resources/css/stencil.css');
-    $workbench = (string) file_get_contents(dirname(__DIR__, 2).'/workbench/resources/css/stencil.css');
+    $tailwind = (string) file_get_contents(dirname(__DIR__, 2).'/resources/tailwind/std-components.css');
+    $package = (string) file_get_contents(dirname(__DIR__, 2).'/resources/css/std-components.css');
+    $workbench = (string) file_get_contents(dirname(__DIR__, 2).'/workbench/resources/css/std-components.css');
 
     foreach ([$tailwind, $package] as $css) {
         expect($css)

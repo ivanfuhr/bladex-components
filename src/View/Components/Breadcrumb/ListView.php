@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Breadcrumb;
+namespace Ivanfuhr\StdComponents\View\Components\Breadcrumb;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class ListView extends StencilComponent
+final class ListView extends StdComponent
 {
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.breadcrumb.list';
+        return 'std-components::components.breadcrumb.list';
     }
 }

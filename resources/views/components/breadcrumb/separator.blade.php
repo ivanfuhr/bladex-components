@@ -13,6 +13,6 @@
     @elseif ($type === 'slash')
         <span class="text-zinc-400 dark:text-zinc-500">/</span>
     @else
-        <x-ui::icon name="chevron-right" class="size-3.5 text-zinc-400 dark:text-zinc-500" />
+        <x-std::icon name="chevron-right" class="size-3.5 text-zinc-400 dark:text-zinc-500" />
     @endif
 </li>

@@ -27,7 +27,7 @@
 @endphp
 
 <div class="max-w-xl">
-    <x-ui::alert :variant="$variant" :title="$titles[$key]" :icon="$showIcon ? $icons[$key] : null">
-        <x-ui::alert.description>{{ $descriptions[$key] }}</x-ui::alert.description>
-    </x-ui::alert>
+    <x-std::alert :variant="$variant" :title="$titles[$key]" :icon="$showIcon ? $icons[$key] : null">
+        <x-std::alert.description>{{ $descriptions[$key] }}</x-std::alert.description>
+    </x-std::alert>
 </div>

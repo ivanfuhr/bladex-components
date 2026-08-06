@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\View\ComponentAttributeBag;
 use RuntimeException;
 
-final class Icon extends StencilComponent
+final class Icon extends StdComponent
 {
     public function __construct(
         public string $name = '',
@@ -26,9 +26,9 @@ final class Icon extends StencilComponent
         return parent::resolve($data);
     }
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.icon.index';
+        return 'std-components::components.icon.index';
     }
 
     /**
@@ -39,11 +39,11 @@ final class Icon extends StencilComponent
     {
         $name = $this->name !== '' ? $this->name : (string) ($data['name'] ?? $this->attributes->get('name', ''));
 
-        $resolvedName = stencil_normalize_icon_name($name);
-        $iconPath = stencil_resolved_icons_path().'/'.$resolvedName.'.blade.php';
+        $resolvedName = std_normalize_icon_name($name);
+        $iconPath = std_resolved_icons_path().'/'.$resolvedName.'.blade.php';
 
         if (! is_file($iconPath)) {
-            throw new RuntimeException("Icon [{$resolvedName}] is not installed. Run: php artisan stencil:icon {$resolvedName}");
+            throw new RuntimeException("Icon [{$resolvedName}] is not installed. Run: php artisan std:icon {$resolvedName}");
         }
 
         return [

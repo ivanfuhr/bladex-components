@@ -15,7 +15,7 @@
         aria-label="{{ __('Color swatches') }}"
     >
         @foreach ($palette as $swatch)
-            <x-ui::color-picker.swatch :value="$swatch['value']" :label="$swatch['label']" />
+            <x-std::color-picker.swatch :value="$swatch['value']" :label="$swatch['label']" />
         @endforeach
     </div>
 @endif

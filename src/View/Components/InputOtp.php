@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components;
+namespace Ivanfuhr\StdComponents\View\Components;
 
 use Illuminate\Support\Str;
 
-final class InputOtp extends StencilComponent
+final class InputOtp extends StdComponent
 {
     public function __construct(
         public mixed $name = null,
@@ -21,9 +21,9 @@ final class InputOtp extends StencilComponent
         public bool $shortcut = true,
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.input-otp.index';
+        return 'std-components::components.input-otp.index';
     }
 
     /**
@@ -33,7 +33,7 @@ final class InputOtp extends StencilComponent
     protected function resolveViewData(array $data = []): array
     {
         $fieldInvalid = (bool) ($data['fieldInvalid'] ?? false);
-        $invalid = $this->invalid || $fieldInvalid || stencil_field_has_errors($this->name);
+        $invalid = $this->invalid || $fieldInvalid || std_field_has_errors($this->name);
 
         $length = max(1, $this->length);
         $mode = in_array($this->mode, ['numeric', 'alphanumeric'], true) ? $this->mode : 'numeric';

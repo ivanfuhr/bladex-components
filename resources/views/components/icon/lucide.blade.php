@@ -3,9 +3,9 @@
 ])
 
 @php
-    $normalizedVariant = stencil_normalize_icon_variant($variant);
-    $strokeWidth = stencil_icon_variant_resolve($normalizedVariant)[1];
-    $pixelSize = stencil_icon_variant_resolve($normalizedVariant)[2];
+    $normalizedVariant = std_normalize_icon_variant($variant);
+    $strokeWidth = std_icon_variant_resolve($normalizedVariant)[1];
+    $pixelSize = std_icon_variant_resolve($normalizedVariant)[2];
 
     // Consumer size utilities (e.g. size-6) must win over the variant default.
     // Mixing size-4 + size-6 makes stroke weight look broken at the resolved box.
@@ -14,7 +14,7 @@
 
     $iconClasses = $hasExplicitSize
         ? 'block shrink-0'
-        : stencil_icon_variant_class_string($normalizedVariant);
+        : std_icon_variant_class_string($normalizedVariant);
 @endphp
 
 <svg

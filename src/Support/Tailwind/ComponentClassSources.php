@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\Support\Tailwind;
+namespace Ivanfuhr\StdComponents\Support\Tailwind;
 
 /**
  * Tailwind v4 scan surface for class strings that live in View/Components PHP maps.

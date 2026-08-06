@@ -1,5 +1,5 @@
 /**
- * Stencil — pillbox / tags input (vanilla JS, no Alpine).
+ * Std Components — pillbox / tags input (vanilla JS, no Alpine).
  */
 
 const PILLBOX_SELECTOR = '[data-pillbox]';
@@ -226,7 +226,7 @@ function bindPillbox(root) {
     render();
 }
 
-document.addEventListener('stencil:mount', (event) => {
+document.addEventListener('std:mount', (event) => {
     if (!(event instanceof CustomEvent)) {
         return;
     }

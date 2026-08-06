@@ -7,7 +7,7 @@
 @endphp
 
 <div class="w-full max-w-xs">
-    <x-ui::time-picker
+    <x-std::time-picker
         name="playbook_time"
         :value="$value"
         :with-seconds="$withSeconds"

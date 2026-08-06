@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Ivanfuhr\Stencil\View\Components\Icon;
+namespace Ivanfuhr\StdComponents\View\Components\Icon;
 
-use Ivanfuhr\Stencil\View\Components\StencilComponent;
+use Ivanfuhr\StdComponents\View\Components\StdComponent;
 
-final class Lucide extends StencilComponent
+final class Lucide extends StdComponent
 {
     public function __construct(
         public mixed $variant = 'outline',
     ) {}
 
-    protected function stencilView(): string
+    protected function stdView(): string
     {
-        return 'stencil::components.icon.lucide';
+        return 'std-components::components.icon.lucide';
     }
 }
